@@ -1,0 +1,38 @@
+.footer {
+	align: center;
+	width: 960px;
+	margin: auto;
+	margin-top: 0px;
+	border: 0px solid;
+	font-size: 11px;
+	background-color: #B29774;
+	padding-top: 4px;
+	padding-bottom: 0px;
+}
+
+.footer_left {
+	float: left;
+	font-style: italic;
+	padding-left: 5px;
+}
+
+.footer_center {
+	margin: auto;
+	width: 40%;
+	border: 0px solid;
+	text-align: center;
+}
+
+.footer_right {
+	float: right;
+	padding-right: 10px;
+}
+
+.footer a {
+	text-decoration: none;
+	color: #222;
+}
+.footer a:hover {
+	text-decoration: underline;
+	color: #111;
+}

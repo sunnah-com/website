@@ -1,0 +1,100 @@
+.menu{
+	border:0px;
+    border-style: solid;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-left:20px;
+	background:#bb9554;
+	font-family: Verdana, Lucida Sans Unicode, Bitstream Vera Sans, Trebuchet Unicode MS, Lucida Grande, Helvetica, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+    /*width: 100%;*/
+	}
+.menu ul{ /* This is the main menu background */
+	background:#bb9554;
+	height:40px;
+	list-style:none;
+	margin-left:0; /* 12.5%; */
+	margin-right:0;/* 12.5%; */
+	padding:0;
+	}
+	.menu li{
+		float:left;
+		padding:0px;
+		font-size:16px;
+		}
+	.menu li a{
+		background:#bb9554 /* url("/images/separator.gif") center right no-repeat */;
+		color:#000;
+		display:block;
+		font-weight:normal;
+		line-height:40px;
+		margin:0px;
+		padding:0px 20px;
+		text-align:center;
+		text-decoration:none;
+		}
+	.menu li .selectedMenuItem a {
+		background:#444 /* url("/images/separator.gif") center right no-repeat */;
+		color: #f8e49f;
+	}
+	.menu li ul{
+		background:#bb9554;
+		display:none;
+		height:auto;
+		padding:0px;
+		margin:0px;
+		border:0px;
+		position:absolute;
+		width:225px;
+		z-index:200;
+		/*top:1em;
+		/*left:0;*/
+		}
+	.menu li:hover ul{
+		display:block;
+		
+		}
+    .menu li:hover a{
+        background: #000 url("/images/hover.png") bottom center no-repeat;
+        color:#f8e49f;
+        text-decoration:none;
+        }
+    .menu li:hover ul li a{
+        background: #bb9554;
+        color:#000;
+        text-decoration:none;
+        }
+    .menu li:hover ul li:hover a{
+        background: #000 url("/images/hover_sub2.png") left center no-repeat;
+        color:#f8e49f;
+        text-decoration:none;
+        }
+	.menu li li {
+		background:url('images/sub_sep.gif') bottom left no-repeat;
+		display:block;
+		float:none;
+		margin:0px;
+		padding:0px;
+		width:225px;
+		}
+	.menu li ul a{
+		display:block;
+		height:35px;
+      
+		font-size:14px;
+		font-style:normal;
+		margin:0px;
+		padding:0px 10px 0px 15px;
+		text-align:left;
+		}
+	.menu p{
+		clear:left;
+		}	
+
+.headerSearch {
+  vertical-align: center;
+  padding-top: 5px;
+  float: right;
+  padding-right: 20px;
+}	

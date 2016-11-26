@@ -1,0 +1,42 @@
+.jcarousel-skin-jcskin .jcarousel-container {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+   border-radius: 10px;
+    border: 0px solid #346F97;
+	height: 350px;
+}
+
+.jcarousel-skin-jcskin .jcarousel-direction-rtl {
+	direction: rtl;
+}
+
+.jcarousel-skin-jcskin .jcarousel-container-horizontal {
+    width: 100%;
+    height: 100%;
+    padding: 0px 0px;
+}
+
+.jcarousel-skin-jcskin .jcarousel-clip {
+    overflow: hidden;
+}
+
+.jcarousel-skin-jcskin .jcarousel-clip-horizontal {
+    width:  328px;
+    height: 390px;
+}
+
+.jcarousel-skin-jcskin .jcarousel-item {
+    width: 328px;
+    height: 390px;
+	margin-top: 20px;
+}
+
+.jcarousel-skin-jcskin .jcarousel-item-horizontal {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+
+.jcarousel-skin-jcskin .jcarousel-item-placeholder {
+}
+

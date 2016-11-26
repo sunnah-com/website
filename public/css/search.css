@@ -1,0 +1,64 @@
+@charset "utf-8";
+/* CSS Document */
+
+.input_search{
+	background-color:#dee;
+	border:1px solid #897346;
+	height: 19px;
+	padding-top: 0px;
+}
+.search_button{
+	background-color:#867044;
+	color:#fff;
+	font-size:13px;
+	border:none;
+	padding-top: 2px;
+	padding-left:10px;
+	padding-right:10px;
+	cursor:pointer;
+	height: 22px;
+}
+.search_button:hover {
+	color: #F2F296;
+}
+
+.breadcrumbs_search{
+	font-size:14px;
+	color:#08081a;
+	text-decoration:none;
+	padding-bottom: 5px;
+	padding-left: 28px;
+}
+.breadcrumbs_search a{
+	font-size:14px;
+	color:#96691e;
+	text-decoration:none;
+}
+.breadcrumbs_search a:hover {
+	text-decoration:underline;
+}
+.breadcrumbs_search a:visited {
+	color: #634614;
+	text-decoration:none;
+}
+
+.pages_numb{
+    font-size:12px;
+    color:#08081a;
+    text-decoration:none;
+    text-align:center;
+    padding:15px;
+}
+.pages_numb a{
+    font-size:12px;
+    color:#bcac81;
+    text-decoration:none;
+}
+
+.pages_numb a:hover {
+    font-size:12px;
+    color:#08081a;
+    text-decoration:none;
+}
+
+

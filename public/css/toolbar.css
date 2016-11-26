@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* TOOLBAR */
+	#toolbar {
+		z-index: 1;
+		/* position: absolute; */
+		height: 18px;
+		font-size: 12px;
+		font-family: Arial;
+		padding-top: 3px;
+		width: 100%;
+		margin-left: auto;
+		line-height: normal;
+		background-color: #09081a;/* #BB9554; */
+	}
+	
+	#toolbarLeft {
+		float: left;
+		padding-left: 8px;
+	}
+	#toolbarRight {
+		color: #e0ab1f; /* #ACBA5A; */
+		float: right;
+		padding-right: 8px;
+	}
+	#toolbarRight a {
+		color: #fff;
+		text-decoration: none;
+		padding:0 3px;
+	}
+	#toolbarRight a:hover {
+		color: #96691E;
+		text-decoration: underline;
+	}
+	
+	#toolbarRight span {
+		color: #e0ab1f; /*#ACBA5A;*/
+		font-weight: bold;
+		padding: 0 3px;
+	}

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html lang="en-US">
+	<head>
+		<style type="text/css" media="screen">
+			body {
+				font: 11px arial;
+			}
+			.suggest_link {
+				background-color: #FFFFFF;
+				padding: 2px 6px 2px 6px;
+			}
+			.suggest_link_over {
+				background-color: #3366CC;
+				padding: 2px 6px 2px 6px;
+			}
+			#search_suggest {
+				position: absolute; 
+				background-color: #FFFFFF; 
+				text-align: left; 
+				border: 1px solid #000000;			
+			}		
+		</style>
+		<script language="JavaScript" type="text/javascript" src="ajax_search_solr.js"></script>
+	</head>
+	<body>
+		<h3><a href="http://www.sunnah.com/autocomplete/solrsuggest.html" style="color: #000000; text-decoration: none;">Simple AJAX Search Suggest</a></h3>
+
+
+         <div style="width: 500px;">
+<p>Mock sunnah.com auto complete using solr's auto-suggest feature</p>
+   <form id="frmSearch" action="http://www.sunnah.com/search/">
+                                <input type="text" id="txtSearch" name="txtSearch" alt="Search Criteria" onkeyup="searchSuggest();" autocomplete="off" />
+                                <input type="submit" id="cmdSearch" name="cmdSearch" value="Search" alt="Run Search" /><br />
+                                <div id="search_suggest">
+                                </div>
+                        </form>
+                </div>
+
+
+
+
+	</body>
+</html>

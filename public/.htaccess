@@ -1,0 +1,20 @@
+AddType font/ttf .ttf
+AddType font/otf .otf
+
+RewriteEngine on
+
+RewriteRule ^view/(.*)$ /$1 [R,L]
+RewriteRule ^muslim/muslim(.*)$ /muslim$1 [R,L]
+RewriteRule ^contact/*$ /contact.php [L]
+
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_URI} ^/trac(/|$) [OR]
+RewriteCond %{REQUEST_URI} ^/webalizer(/|$) [OR]
+RewriteCond %{REQUEST_URI} ^/admin(/|$) [OR]
+RewriteCond %{REQUEST_URI} ^/munin(/|$)
+RewriteRule ^.*$ - [NC,L]
+
+RewriteRule . index.php

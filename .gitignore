@@ -1,0 +1,4 @@
+/vendor
+/public/application.log
+/application/config/config.ini
+/application/sesCreds.txt

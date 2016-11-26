@@ -1,0 +1,55 @@
+@charset "utf-8";
+/* CSS Document */
+
+.collection_titles {
+    width: 49%;
+    float: left;
+    border: 0px solid;
+}
+
+.english_collection_title {
+	font-size: 15px;
+    display: inline;
+    float: left;
+    direction: ltr;
+    padding-top: 2px;
+    margin-top: auto;
+    width: 50%;
+    text-align: right;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border: 0px solid;
+}
+.arabic_collection_title {
+	font-size: 26px;
+    line-height: 30px;
+    display: inline;
+    float: left;
+    direction: rtl;
+    width: 42%;
+    text-align: left;
+    padding-left: 0px;
+    border: 0px solid;
+    font-family: 'Trebuchet MS', Arial, Helvetica;
+}
+.collection_annotation {
+    display: none;
+    float: left;
+    width: 0%;
+    text-align: left;
+    border: 0px solid;
+    line-height: 32px;
+    font-size: 11px;
+    font-family: Verdana;
+	padding-right: 10px;
+}
+
+.collection_titles a {
+	text-decoration: none;
+	color:#5c4923;
+	line-height: 30px;
+}
+.collection_titles a:hover {
+	text-decoration: none;
+	color:#ab7b1c;
+}

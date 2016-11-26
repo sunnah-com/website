@@ -1,0 +1,113 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+@font-face {
+	font-family: "me_quran";
+	src: local("me_quran"), url("/css/fonts/me_quran.ttf"); 
+} 
+*/	
+/* format ("truetype"); */
+
+body{ 
+	margin:0;
+	padding:0;
+	background-color:#e8e1d9;
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height:1.5;
+}
+body img { border:none}
+p{ padding:0; margin:0}
+ul,li{ padding:0; margin:0}
+di,dl,dd{ padding:0; margin:0;clear:both;}
+
+.arabic_basic {
+    direction: rtl;
+    font-family: /* KFGQPC Uthmanic Script HAFS, Scheherazade,*/ /* Traditional Arabic,*/ Trebuchet MS, Arial, Helvetica;
+	font-size: 20px;
+}
+
+.float{ float:left;}
+.clear{ clear:both}
+
+.title{
+	font-size:14px;
+	color:#08081a;
+	text-decoration:none;
+}
+.about {
+	width: 60%;
+    padding-left: 10%;
+	text-align: justify;
+    padding-top: 10px;
+    font-size: 12px;
+    font-family: Verdana, Times New Roman;
+}
+
+.about .section {
+    font-size: 16px;
+    padding-bottom: 5px;
+}
+
+.about .content {
+    padding-bottom: 20px;
+}
+
+.about .content a {
+    text-decoration: none;
+    color: #634d22;
+}
+
+.about .content a:hover {
+    text-decoration: underline;
+}
+
+
+.breadcrumbs{
+	font-size:14px;
+	color:#08081a;
+	text-decoration:none;
+	padding-bottom:10px;
+	padding-left: 20px;
+}
+.breadcrumbs a{
+	font-size:14px;
+	color:#96691e;
+	text-decoration:none;
+}
+.breadcrumbs a:hover {
+	text-decoration:underline;
+}
+.breadcrumbs a:visited {
+	color: #634614;
+	text-decoration:none;
+}
+
+
+.breadcrumbs_search{
+	font-size:14px;
+	color:#08081a;
+	text-decoration:none;
+	padding-bottom: 5px;
+	padding-left: 28px;
+}
+.breadcrumbs_search a{
+	font-size:14px;
+	color:#96691e;
+	text-decoration:none;
+}
+.breadcrumbs_search a:hover {
+	text-decoration:underline;
+}
+.breadcrumbs_search a:visited {
+	color: #634614;
+	text-decoration:none;
+}
+
+.separator2 {
+    background-image:url(../images/vline_index.jpg);
+    background-repeat: repeat-y;
+    background-position:right top;
+}
+

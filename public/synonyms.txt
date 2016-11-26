@@ -1,0 +1,320 @@
+# the asf licenses this file to you under the apache license, version 2.0
+# (the "license"); you may not use this file except in compliance with
+# the license.  you may obtain a copy of the license at
+#
+#     http://www.apache.org/licenses/license-2.0
+#
+# unless required by applicable law or agreed to in writing, software
+# distributed under the license is distributed on an "as is" basis,
+# without warranties or conditions of any kind, either express or implied.
+# see the license for the specific language governing permissions and
+# limitations under the license.
+
+#-----------------------------------------------------------------------
+#some test synonym mappings unlikely to appear in real input text
+aaafoo => aaabar
+bbbfoo => bbbfoo bbbbar
+cccfoo => cccbar cccbaz
+fooaaa,baraaa,bazaaa
+
+# some synonym groups specific to this example
+#gb,gib,gigabyte,gigabytes
+# mb,mib,megabyte,megabytes
+# television, televisions, tv, tvs
+#notice we use "gib" instead of "gib" so any worddelimiterfilter coming
+#after us won't split it into two words.
+
+# synonym mappings can be used for spelling correction too
+# pixima => pixma
+
+
+jesus, isa, eesa, messiah
+zakat, chariti, alm, zakah, zakaah
+sawm, fasting, siyam, saum, roza, rozay
+salah, salat, salaat, salaah, prayer, salawat, namaz, solat, sholat, shalat, solah
+moses, musa, moosa
+prophet, nabi, rasul, rasool, nabee, apostle, rasoolullah
+ibrahim, abraham, ibraheem
+qiyamah, day of judgement, yawm ad deen, qiyaamah, judgement
+idris, enoch
+nuh, noah
+hud, eber
+salih, shelah
+lut, lot
+ismail, ishmael
+ishaq, issac
+yaqub, jacob, yaqoob
+yusuf, joseph, yousef, yousuf, yusef
+ayub, job, ayoob
+thul kifl, ezekiel
+yunus, jonah, younus
+shu’aib, jethro, shuaib
+haroun, aaron, haroon
+dawood, david, dawoud
+sulaiman, solomon
+ilyas, elijah
+al-yasa, elisha
+zakaria, zechariah, zachary, zachariah, zach
+yahya, john the baptist, john
+envy, hasad
+atfal, tifl, child, children, baby, offspring
+adhaab, punishment, torture, punish
+haj, hajj, pilgrim, pilgrimage, pilgrimag 
+bida, biddah, innovation, innovate, bidah, innov
+tawaf, circumambulate, tawaaf
+supplication, dua, du'a, supplic
+believer, muslim, mumin, muhsin, believers, mohsin, believ
+kafir, disbeliever, kuffar, kufaar, disbelievers, kaafir, kufr, disbeliev
+amal, action, deed
+good deeds, hasanat, ajr, reward, good deeds
+migrate, migration, hijra, hijrah, migrat
+taubah, tauba, repent, repentence, tawbah, tawba
+ramadan, ramadaan, ramzan, ramadhan, ramzaan, ramadhaan
+tawheed, oneness, tawhid, tauhid, tauheed, tawhe, tauhe
+shaheed, witness, wit
+shuhadaa, shaheed, martyr
+halal, lawful, halaal
+haram, unlawful, forbidden, forbid, haraam, unlaw
+quran, qur'an, quraan, kitab, book, furqan, koran
+barakah, barakat, blessing, blessings, barakaah, bless
+covenent, meethaq, mithaq, mithaaq, coven
+dunya, world
+hereafter, akhirah, akhirat, akira, akirah
+deen, religion, islam
+islam, submit, submission, submiss
+dhikr, zikr, remember, rememberance, rememb
+shukr, thank, grateful, gratitude, thankful, grate, gratitud
+fitna, fitnah, trial, trials, tribulation, fitan, fattan, controversy, chaos, seduce, trial & temptations, tribul, controversi, chao, seduc, temptat
+eman, eeman, iman, faith, imaan 
+jannat, jannah, paradise, janna, paradis, garden
+ghusl, ghoosl, gusl, bath, shower, bathe
+junub, junoob, janaba, janaaba, janabaa
+janat al-firdaws, janat al firdous, firdaws, firadous, firdaus, al-firdaus
+jahannam, jahanum, hellfire, hell, fire, naar
+ilm, knowledge, knowledg
+taqwa, fear of allah, muttaqi, muttaqun, mutaqoon
+ummah, nation, generation
+wudu, wudoo, wuzu, ablut, wudhoo
+thawab, reward, jaza, sawab
+ulama, scholars, alim, scholar, ulemah, ulema, ulema
+milad, maulid, birth, mawlid
+purification, taharah, tahara, tahaara, purif
+sahaba, sahabi, companion, companions
+muhammad, muhammed, mohammad, mohammed, muham, moham
+noor, munawwar, light, anwar
+sahabiyyat, sahabiyat, female companion, female companions
+ummahatul mumineen, wives of prophet(saw), azwaj mutahharat
+wives, wife
+kahf, cave
+maryam, mariam, marium, mary
+aasiya, asiya, aasiyah
+fard, obligatory, mandatory, fardh, obligatori, mandatori
+mustahab, recommended, recommend
+makrooh, disliked, makruh, makroo, dislik
+nadheer, nazeer, warner, warning, warn
+nafil, voluntary, nafl, voluntari
+takbeer, takbir, allahuakbar, allaahuakbar, allah is the greatest
+tahmeed, tahmid, alhamdulillah
+tasbeeh, tasbih, subhanallah, subhaanallah
+tahleel, talil, laailaaha illallaah, kalima
+khushu, khushoo, khushuu, concentration, khushoo, concentr
+mubah, allowed, permitted, mubah, allow, permit
+miraj, meraj, ascension, israa wal miraj, isra wal miraj, israa wal miraaj, ascens
+fatima, fathimah, fathima, faatima, faathimah
+zeenat, zeenah, adornment, beauty, decor, decoration, beautified, adorn, beauti
+hidayat, hidayah, guidance, hidaaya, hadi, hidayaath, guidanc
+munafiq, munaafiqoon, munafiqun, hypocrite, hypocrites, munaafiq, hypocrit, hypocrisi
+dajjal, dajaal, dajjaal, false masiah, false messiah
+zihar, zeehar
+lian, lian, leean, leean
+dinar, dirham, money, currency, monei, currenc
+munkir, munkar, nakir, nakar, angel of death
+barzakh, partition, partit
+grave, qabr, qubur, graves
+yawm, day, ayyam, days
+layl, layal, night, nights
+fajr, fajar, morning, morn
+zuhr, dhuhr, midmorning, dhor, midmorn
+asr, asar, late evening
+isha, night
+maghrib, sunset
+tayammum, tayyamum
+awqiyyah, awqiyah, measure, weight, uqiya, measur
+awrah, awra
+daf, tambourine
+daiy, daee, dawa, dawah, calling to islam
+dhimmi, zimmi
+jizyah, jizya, tax, jiziyah, jizyah, nominal tax
+deen, din, way of life
+fatwah, fatwa, fatawa
+ghazi, muslim soldier, warrior, mujaahid, mujahid
+hadeeth, hadith, hadees, hadis
+hadith qudsi, hadeeth qudsi
+ghazwa, ghazwat, military expedition, expedition, expedit, militari
+halaqah, halaqa, halqa
+jahil, jaahil, jaahiliyyah, jaahiliya, jahiliyyah, ignorance, ignorant, ignor
+haq, haqq, truth
+batil, baatil, false, falsehood, fals
+hifdh, hifz, haafiz, hafiz, haafidh, hafidh, memorize, commit to memory, memor, memori
+had, hadd, hudud, hudood, limits set by allah
+ijtihad, ijtehad, ijtehaad, ijtihaad
+imaam, imam, emam, emaam, religious leader
+iman, eman, imaan, emaan, faith
+injil, injeel, new testament, bible, testament, bibl
+torah, torat
+inshallah, inshalla, inshaallah, inshaalla
+iqaama, iqaamah, iqama, iqamah
+istighfar, istighfaar, astaghfar, astaghfirullah
+jazakallahkhair, jazakallahukhair, jazakallakhair, jazakallakhaier, jak
+jalbab, jilbab, jilbaab, abaya, abaaya
+saqifah, saqifa, a shelter with a roof
+raihanillah, fragrance, scent, fragranc
+nasihah, advice, naseeha, nasiha, naseehah, sincere good advice, advic
+salam, greetings of peace, salaam ,salaams, salaam alaikum, peac
+ansar, ansaar, ansari, helper
+aisha, aishah, aisyah
+jinn, jin, jinni, ginn, gin
+kalam, kalaam, kalaamullah, kalaamallah
+khalifa, khalifah, khaleefa, khaleefah, caliph, caliphate, amir ul mumineen, ameer al muminin
+khandaq, ditch
+khatib, khateeb, speaker, orater
+khutbah, khutba, speech, sermon, friday sermon, kutba
+mannan, one who reminds others of what he has given to them
+mahr, mehr, dowry, bridal-money, bridal money
+mahram, mahrim, maram
+safa, mount safa
+marwa, marwah, mount marwah
+masjid, masgid, masajid, mosque, place of prayer, masaajid, mosqu
+mawla, mawlaya
+mihrab, mihraab
+mina, minah
+minbar, minbaar, pulpit
+muadh-dhin, muazzin, person who calls adhan, muadhin
+muhajir, muhaajir, emigrant, emigr
+murabit, muraabit
+musadafin, musadafin
+musaylama, musaylamah al kadhdhab
+mus-haf, mushaf, mushaaf, copy of quran
+mushawara, mushawarah
+mushrik, mushrikeen, polythiest
+nasab, lineage, geneology, lineag, geneolog
+p.b.u.h., peace be upon  him, pbuh
+s.a.w, sallallahu alayhi wasallam
+qadi, qaadi, qadhi, qaadhi, judge, judg
+qaaidin, qaideen
+qari, qaari
+qibla, qiblah, kiblah
+qisas, qisaas
+qiyas, qiyaas
+quraysh, kuraysh, quraish, kuraish, quraishi
+r.a, radiallahu anhu, radiallahu anha, radi allahu anhum, raziallahu anhu
+rakat, rakaat, rakat, rakaat
+ruku, ruku, rukoo
+rutb, rutab, ripe date
+sabirin, sabireen 
+sabr, sabar, patience, steadfastness, patienc, steadfast
+sadaqa, sadaqah, sadaka
+sahifa, saheefa, sahifah, saheefah, page, manuscript
+sayee, saii, seven times from safa to marwa
+sayyid, sayyed, chief, leader
+shahada, shahadah, shahaada, shahaadah 
+shaik, shaikh, sheikh, shaykh
+shariah, shariah, sharia
+shura, shuura, shoora, consultation, consult
+seera, seerah, sira, sirah
+tharthar, excessive speech
+mutashaddiq, slander, 
+muthafaihiqun, arrogant, arrogance
+khazz, silk and wool
+zann, suspicion
+al-wajur, an oral medicine
+khamr, intoxicants, khamar, alcohol, intoxicant, wine, intoxic
+al-ajwah, ajwa, ajwah, black date
+ash-shuniz, black seed, shuneez
+muhajireen, muhajirin, immigrants, muhajir, muhaajir, emigrant
+ansaar, ansars, helpers
+aws, aus 
+khazraj, al-khazraj
+saraya, muslim cavalry units, sariya, sariyya, single muslim cavalry unit
+badr, badar
+jerusalam, jerusalem, bait-ul-maqdis, bait al maktas, dome of the rock
+aqiqah, aqeeqah, akikah, akeekah
+arafa, arafah, arafat 
+ashura, ashoora, ashoora
+aurah, awrah, awrah
+lahd, grave, niche
+zina, fornication, adultery, fornicate, zinaa, fornic, adulteri
+abd, male slave, abd
+ad, aad, aad
+adhaan, adaan, adhan
+ahkaam, ahkam, orders
+fatiha, fateeha, al-fatiha
+ameen, amin
+ayat, aya
+ayatal kursi, kursi
+baia, bayyah, bayah, baya, pledge, pledg
+baqi, jannatul baqi, cemetary, cemetari
+barrah, barah, pious, piou
+dajjal, dajal, addajjal, addajal, fake messiah, false messiah
+blood money, diya, diyyah, diyaah
+duha, dooha, forenoon, fore noon
+hadath, sexual discharge, passing wind, urinate, call of nature, fart
+haya, hayaah, hayah, shy, shyness, modesty, modesti
+cave, kahf, hira
+iftar, iftaar, breaking fast, break fast
+ihram, ehram, ihraam
+ihsaan, ehsaan, ihsan, ehsan
+imaam, imam
+istikhara, istikara, counsel, isthikara, isthikhara, seeking decision, decision
+itikaf, itekhaaf, ithikaaf, itikaaf, ithikaaf, ihtikaf
+jihad, jihaad
+jumua, jummah, jumma, jumah, friday, fridai
+kabbah, kabah, kaba
+khuff, leather socks, sock
+kuniya, kunya, qunya
+miqat, meeqat
+miswak, toothbrush, miswaak, arak, siwak
+muta, muta, temporary marriage
+muzdalifa, muzdalifah
+nikkah, nikah, nikka, nika, marriage, matrimony, married, marriage contract, marriag, matrimoni, marri
+qadar, qadr, preordainment, pre ordainment, pre- ordainment, preordain
+sahw, sahu, forgetfulness, sujood al-sahw
+sahoor, sehri, sahur, suhoor, suhur
+say, saee, sai
+sayid, sayyid, master
+tahajjud, tahajud, night prayer, qiyam
+tarawih, taraweeh, tarawee, taraawi, taraavi
+tayammum, tayamum
+jabal, mountain, tur, uhud
+umra, umrah
+wali, auliya, awliya
+waqf, endowment, endow
+yaqin, yaqeen, yakeen
+zam-zam, zumzum, zamzam, zum-zum
+a'isha, aisha, ayesha, ai'sha, aysha, a'isha, a`isha, aisyah, aishah, ayeshah
+abu hurayrah, abu hurairah, aboo hurayrah, aboo hurairah
+abdullah, abdallah, abdulah, 'abdullah, 'abdallah
+umar, omar, 'umar, 'omar, 'umer
+bin, ibn
+masud, mas'ud, mas'ood, masood
+uthman, 'uthman, usman, 'usman, authman
+ali, 'ali
+zubair, zubayr
+kalid, khalid
+sumayya, sumaya, soumaya, soumya
+zainab, zaynab
+khadijeh, khadija, khadijah
+zaid, zayd
+abu bakr, aboo bakr
+belal, bilal, belaal, bilaal
+hufsa, hafsa
+juwayriya, juweria, jooweria, juwaria
+safiyya, safiyyah, safiya, safiyah
+maimoona, maymoona, maymuna
+asma, asmaa
+jaabir, jabir
+saad, saud
+hassan, hasan
+salim, saleem
+luqman, looqman
+abdul rahman, abdul-rahman, abdurrahman, abdurahman

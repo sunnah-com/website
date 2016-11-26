@@ -1,0 +1,104 @@
+.menu{
+	border:0px;
+    border-style: solid;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: auto;
+	width: 100%;
+	padding-left:0px;
+	background:#b29774;
+	font-family: Verdana, Lucida Sans Unicode, Bitstream Vera Sans, Trebuchet Unicode MS, Lucida Grande, Helvetica, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+    /*width: 100%;*/
+	}
+.menu ul{ /* This is the main menu background */
+	/* background:#bb9554; */
+        background: #b29774;
+	height:30px;
+	list-style:none;
+	margin-left:0; /* 12.5%; */
+	margin-right:0;/* 12.5%; */
+	
+	padding:0;
+	}
+	.menu li{
+		float:left;
+		padding:0px;
+		font-size:14px;
+		}
+	.menu li a{
+		background:#b29774 /* url("/images/separator.gif") center right no-repeat */;
+		color:#000;
+		display:block;
+		font-weight:normal;
+		line-height:30px;
+		margin:0px;
+		padding:0px 20px;
+		text-align:center;
+		text-decoration:none;
+		}
+	.menu li .selectedMenuItem a {
+		background:#867044 /* url("/images/separator.gif") center right no-repeat */;
+		color: #000000;
+	}
+	.menu li ul{
+		background:#b29774;
+		display:none;
+		height:auto;
+		padding:0px;
+		margin:0px;
+		border:0px;
+		position:absolute;
+		width:225px;
+		z-index:200;
+		/*top:1em;
+		/*left:0;*/
+		}
+	.menu li:hover ul{
+		display:block;
+		
+		}
+    .menu li:hover a{
+        background: #000000 url("/images/hover.png") bottom center no-repeat;
+        color:#B29774;
+        text-decoration:none;
+        }
+    .menu li:hover ul li a{
+        background: #b29774;
+        color:#000;
+        text-decoration:none;
+        }
+    .menu li:hover ul li:hover a{
+        background: #000000 url("/images/hover_sub2.png") left center no-repeat;
+        color:#B29774;
+        text-decoration:none;
+        }
+	.menu li li {
+		/*background:url('/images/sub_sep.gif') bottom left no-repeat;*/
+		display:block;
+		float:none;
+		margin:0px;
+		padding:0px;
+		width:225px;
+		}
+	.menu li ul a{
+		display:block;
+		height:35px;
+      
+		font-size:13px;
+		font-style:normal;
+		margin:0px;
+		padding:0px 10px 0px 15px;
+		text-align:left;
+		}
+	.menu p{
+		clear:left;
+		}	
+
+.headerSearch {
+  vertical-align: center;
+  padding-top: 5px;
+  float: right;
+  padding-right: 20px;
+}	

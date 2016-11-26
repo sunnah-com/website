@@ -1,0 +1,8 @@
+{
+  "require": {
+    "yiisoft/yii": "1.1.15"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.6"
+  }
+}

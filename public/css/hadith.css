@@ -1,0 +1,211 @@
+@charset "utf-8";
+/* CSS Document */
+
+.search_english_text {
+	/*font-size: 12px;*/
+	color:#08081a;
+	text-decoration:none;
+	padding-left:28px;
+	text-align: justify;
+	padding-top: 15px;
+	padding-bottom: 20px;
+}
+
+.search_arabic_text {
+	direction:rtl;
+	color:#08081a;
+	text-decoration:none;
+	padding-left:28px;
+	text-align: justify;
+}
+
+
+.hline{
+	background:url(../images/hline.jpg) repeat;
+	height:2px;
+	margin-bottom:25px;
+	margin-top:6px;	
+	width: 80%;
+}
+
+.AllHadith {
+	padding-right:5%; 
+	padding-left:6%; 
+	padding-top: 20px; 
+	margin:0;
+}
+.hadithEnv {
+	background-image:url(../images/hadith_icon.png);
+	background-repeat:no-repeat;
+	background-position:top left;
+	width: 80%;
+	float: left;
+}
+.hadith_narrated {
+	font-size:14px;
+	font-weight:bold;
+	color:#29640c;
+	text-decoration:none;
+	padding-bottom:8px;
+	padding-left:28px;
+}
+
+.text_details{
+	font-size:13px;
+	color:#08081a;
+	text-decoration:none;
+	padding-left:28px;
+	text-align: justify;
+	padding-bottom: 10px;
+}
+
+.arabic_hadith_full {
+	padding-left:28px;
+	text-align:justify; 
+	direction:rtl;
+	font-size: 24px;
+}
+
+.urdu_hadith_full {
+	padding-left:28px;
+	text-align:justify;
+	direction:rtl;
+	font-family: Jameel Noori Nastaleeq, Nafees Web Naskh, Urdu Naskh Asiatype;
+	font-size: 24px;
+	text-decoration:none;
+	padding-bottom: 10px;
+	color:#08081a;
+}
+
+.indonesian_hadith_full{
+	font-size:13px;
+	color:#08081a;
+	text-decoration:none;
+	padding-left:28px;
+	text-align: justify;
+	padding-bottom: 10px;
+}
+
+.arabic_annotation {
+	padding-left:28px;
+	text-align:justify; 
+	direction:rtl;
+	font-size: 18px;
+}
+
+.arabic_sanad {
+	text-align:justify; 
+	direction:rtl;
+	color: gray;
+}
+
+.arabic_text_details {
+	 text-align:justify; 
+	 direction:rtl;
+}
+
+.urdu_sanad { 
+	color: gray;
+}
+
+.hadith_annotation {
+	width: 80%;
+	font-size:13px;
+	color:#08081a;
+	text-decoration:none;
+	text-align: justify;
+	padding-right: 20%;
+	border: 0px solid;
+}
+
+
+.hadith_permalink {
+	font-size: 10px;
+	text-decoration: none;
+	line-height: 11px;
+	text-align: left;
+	font-family: Verdana, sans-serif;
+	border-width: 0px;
+	border-style: solid;
+	padding-left: 15px;
+	padding-top: 15px;
+	padding-right: 20%;
+	color: #96691e;
+	float: right;
+	padding-bottom: 10px;
+	border: 0px solid;
+}
+
+.hadith_permalink a {
+	font-size: 10px;
+	text-decoration: none;
+	line-height: 11px;
+	text-align: left;
+	font-family: Verdana, sans-serif;
+	border-width: 0px;
+	border-style: solid;
+	color: #96691e;
+}
+
+.hadith_permalink a:hover {
+	text-decoration: underline;
+}
+
+.hadith_reference {
+	font-size: 10px;
+	text-decoration: none;
+	line-height: 15px;
+	text-align: left;
+	font-family: Verdana, sans-serif;
+	padding-left: 28px;
+	padding-top: 15px;
+	padding-right: 5px;
+	padding-bottom: 10px;
+	/* color: #96691e; */
+	float: left;
+	/* width: 50%; */
+	overflow: auto;
+	border: 0px solid;
+}
+
+.reference_value {
+	max-width: 55%;
+	float: left;
+	display: inline
+}
+.reference_type {
+	max-width: 45%;
+	min-width: 28%;
+	float: left;
+}
+
+
+.bottomItems {
+	width: 100%;
+	overflow: auto;
+}
+
+.top_link a span {
+    float: left;
+    width: 11px;
+    height: 11px;
+    margin: 1px 4px 0 0;
+    background: url(/images/to_top.png) no-repeat 0 0;
+}
+
+a.action_toTop span     { background-position: -11px 0; }
+a.action_toTop:hover span   { background-position: -11px 0; }
+
+.english_grade {
+	vertical-align: top;
+	font-size: 14px; 
+	font-family: Verdana; 
+	padding-top: 10px;
+	text-align: left;
+}
+
+.arabic_grade {
+	vertical-align: top; 
+	direction: rtl; 
+	text-align: right;
+}

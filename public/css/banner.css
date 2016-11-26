@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+@font-face {
+	font-family: "me_quran";
+	src: local("me_quran"), url("/css/fonts/me_quran.ttf"); 
+} 
+*/	
+/* format ("truetype"); */
+
+#header {
+    background-image: url(../images/bannerfinalSmall.jpg);
+    background-position: 90% 50%;
+    background-repeat: no-repeat;
+    height: 75px;
+    width: 100%;
+	margin-left: auto;
+    
+}
+
+#headerBox {
+    background-image: url(../images/bannercenter.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 165px;
+    width: 100%;
+    padding-right:47px;
+}

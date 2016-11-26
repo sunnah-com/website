@@ -1,0 +1,61 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+@font-face {
+	font-family: "me_quran";
+	src: local("me_quran"), url("/css/fonts/me_quran.ttf"); 
+} 
+*/	
+/* format ("truetype"); */
+
+#site{ 
+	margin-right:auto;
+	/*background-color:#;*/
+        width:100%;
+	overflow: auto;
+}
+
+#topStuff {
+	width: 960px;
+	margin: auto;
+}
+
+#wrapper{
+	background:url(../images/bgfinal.jpg);
+	background-position: center top;
+    background-repeat: no-repeat;
+	padding-bottom:14px;
+	padding-left:20px;
+	padding-right:20px;
+	padding-top: 16px;
+	float: left; 
+	width: 920px;
+}
+
+#sidePanelContainer {
+	width: 195px;
+	height: 100%;
+	float: left;
+}
+
+#sidePanel {
+	height: 100%;
+}
+
+#languagePanel {
+	margin-left: 20px;
+	margin-top: 20px;
+	padding: 15px;
+	padding-top: 10px;
+	border-radius:10px;
+	background-color: #DED1C3;
+	width: 130px;
+	padding-bottom: 15px;
+	/* height: 100px; */
+	/*position: fixed;*/
+	text-align: left;
+	font-size: 12px;
+	font-family: Arial, Verdana;
+	font-weight: bold;
+}
