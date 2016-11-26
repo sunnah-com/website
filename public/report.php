@@ -12,7 +12,7 @@ if (!is_numeric($eurn) || !is_numeric(substr($hid, 1))) {echo "An error occurred
 <div id="re<?php echo $hid; ?>" class=reporterrorbox>
 	<div class="hadith_narrated" style="font-size: 15px;">Report Error</div>
 	<form class="reform" action="" id="reform<?php echo $hid; ?>">
-	<div class="leftre" style="padding-right: 30px;">
+	<div class="leftre" style="padding-right: 20px;">
 
 		Type of error: 
 		<span style="color: red;"> *</span><br>
@@ -28,9 +28,9 @@ if (!is_numeric($eurn) || !is_numeric(substr($hid, 1))) {echo "An error occurred
 				<input name="othererror" type="text" style="width: 150px;" />
 			</div>
 	</div>
-	<div class="leftre" style="padding-right: 30px;">
+	<div class="leftre" style="padding-right: 20px;">
 		Additional details:<br>
-		<textarea rows="5" cols="35" name="re_additional" /></textarea><br>
+		<textarea rows="5" cols="32" name="re_additional" /></textarea><br>
 		<input name="emailme" type="checkbox" value=true /> Yes, email me when the error is corrected<br />
 		<div style="padding-left: 23px;"><input name="email" type="text" placeholder="Email address" style="padding-left: 5px; width: 200px;"/></div>
 	</div>

@@ -6,6 +6,11 @@
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 
+define('TRUE', true);
+define('FALSE', false);
+
+include("loadStageConfig.php");
+
 function _joinpath($dir1, $dir2) {
     return realpath($dir1 . '/' . $dir2);
 }
@@ -58,7 +63,7 @@ return array(
 		),
 		'cache' => array(
 			'class' => 'CMemCache',
-			'useMemcached' => false,
+			'useMemcached' => $parameters['useMemcached'],
 			'servers' => array(
 				array('host' => 'localhost', 'port' => 7630),
 			),
@@ -136,8 +141,8 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=hadithdb',
 			'schemaCachingDuration' => 300,
 			'emulatePrepare' => true,
-			'username' => parse_ini_file('config.ini')['db_username'],
-			'password' => parse_ini_file('config.ini')['db_password'],
+			'username' => $credentials['db_username'],
+			'password' => $credentials['db_password'],
 			'charset' => 'utf8',
 		),
 		'db_internal'=>array(
@@ -176,7 +181,7 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'sunnah@iman.net',
-		'cacheTTL' => 7200, // time to leave objects in cache
+		'cacheTTL' => $parameters['cacheTTL'], // time to leave objects in cache
 		'pageSize' => 100,
 	),
 );

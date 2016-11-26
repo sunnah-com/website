@@ -1,7 +1,8 @@
 <?php
 require_once 'Mail.php';
 require_once('recaptchalib.php');
-$privatekey = parse_ini_file("../application/recaptcha.key")['private_key'];
+include("../application/config/loadStageConfig.php");
+$privatekey = $credentials['recaptcha_private_key'];
 
 function getIP() {
 	if (!empty($_SERVER['HTTP_CLIENT_IP']))  //check ip from share internet
@@ -50,14 +51,12 @@ if (isset($_POST['ftype'])) {
               'Reply-To' => $email,
               'Subject' => $subject);
 
-            $sesCreds = parse_ini_file('../application/sesCreds.txt');
-
             $smtpParams = array (
               'host' => 'email-smtp.us-west-2.amazonaws.com',
               'port' => 587,
               'auth' => true,
-              'username' => $sesCreds['smtpUser'],
-              'password' => $sesCreds['smtpPassword']
+              'username' => $credentials['smtpUser'],
+              'password' => $credentials['smtpPassword']
             );
 
             $mail = Mail::factory('smtp', $smtpParams);

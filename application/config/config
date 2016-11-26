@@ -1,0 +1,11 @@
+[default]
+credentialsFile = credentials
+useMemcached = FALSE
+cacheTTL = 1
+yiiPath = ../vendor/yiisoft/yii/framework/yii.php
+
+[prod]
+credentialsFile = credentials.prod
+useMemcached = TRUE
+cacheTTL = 7200
+yiiPath = /usr/local/yii/framework/yii.php

@@ -1,5 +1,7 @@
 <?php session_start(); 
 require_once 'Mail.php';
+
+include("../application/config/loadStageConfig.php");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -136,14 +138,12 @@ if (isset($_POST['submit'])) {
 			  'Reply-To' => $email,
 			  'Subject' => "[Contact] Sunnah.com - $timestamp");
 			
-			$sesCreds = parse_ini_file('../application/sesCreds.txt');
-
 			$smtpParams = array (
 			  'host' => 'email-smtp.us-west-2.amazonaws.com',
 			  'port' => 587,
 			  'auth' => true,
-			  'username' => $sesCreds['smtpUser'],
-			  'password' => $sesCreds['smtpPassword']
+			  'username' => $credentials['smtpUser'],
+			  'password' => $credentials['smtpPassword']
 			);
 
 			$mail = Mail::factory('smtp', $smtpParams);

@@ -1,4 +1,3 @@
 /vendor
-/public/application.log
-/application/config/config.ini
-/application/sesCreds.txt
+/runtime
+/application/config/credentials.prod

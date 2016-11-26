@@ -12,7 +12,7 @@ mysql --user=root --password= -e "CREATE USER $MYSQL_USER@'localhost' IDENTIFIED
 mysql --user=root --password= -e "GRANT ALL ON hadithdb.* TO $MYSQL_USER@'localhost';"
 
 # Make the password accessible to php
-CONFIG_FILE=/app/application/config/config.ini
+CONFIG_FILE=/app/application/config/credentials.development
 echo [database] >> $CONFIG_FILE
 echo "db_password = $(echo $MYSQL_PASS | tr -d "'")" >> $CONFIG_FILE
 echo "db_username = $MYSQL_USER" >> $CONFIG_FILE
