@@ -1,8 +1,10 @@
 <?php
-use PHPUnit\Framework\TestCase;
-require_once('application/components/UserIdentity.php');
+require(__DIR__.'/../vendor/autoload.php');
+require_once(__DIR__.'/../vendor/phpunit/phpunit/src/Framework/TestCase.php');
+require_once(__DIR__.'/bootstrap.php');
+require_once(__DIR__.'/../application/components/UserIdentity.php');
 
-class UserIdentityTest extends TestCase
+class UserIdentityTest extends PHPUnit_Framework_TestCase
 {
     public function testAuthenticateSucceeds()
     {
