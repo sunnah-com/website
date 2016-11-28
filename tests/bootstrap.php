@@ -3,5 +3,5 @@
     ini_set('display_errors', '1');
     ini_set('display_startup_errors', '1');
 
-    require_once('vendor/yiisoft/yii/framework/yii.php');
+    require_once(__DIR__.'/../vendor/yiisoft/yii/framework/yii.php');
 ?>
