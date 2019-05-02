@@ -2,7 +2,7 @@
 credentialsFile = credentials.development
 useMemcached = FALSE
 cacheTTL = 1
-yiiPath = ../vendor/yiisoft/yii/framework/yii.php
+yiiPath = ../vendor/yiisoft/yii/framework
 
 [prod]
 credentialsFile = credentials.prod
