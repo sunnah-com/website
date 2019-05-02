@@ -25,7 +25,7 @@
 			grecaptcha.render(
 				container,
 				{
-					"sitekey": "6LeWQsYSAAAAAE5kS_xV6nvhhAUzslHtmYUukteH",
+					"sitekey": "6LeSfaEUAAAAAJwX1rGqAy6mN2oo3KCJGolLdOxL",
 					"theme": "light"
 				}
 			)

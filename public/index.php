@@ -3,7 +3,7 @@
 include("../application/config/loadStageConfig.php");
 
 // change the following paths if necessary
-$yii = $parameters['yiiPath'];
+$yii = $parameters['yiiPath'].'/yii.php';
 $config=dirname(__FILE__).'/../application/config/main.php';
 
 if (strcmp($stage, "prod") != 0) { 

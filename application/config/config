@@ -8,4 +8,4 @@ yiiPath = ../vendor/yiisoft/yii/framework/yii.php
 credentialsFile = credentials.prod
 useMemcached = TRUE
 cacheTTL = 7200
-yiiPath = /usr/local/yii/framework/yii.php
+yiiPath = /usr/local/yii/framework
