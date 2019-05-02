@@ -1,3 +1,4 @@
 /vendor
 /runtime
 /application/config/credentials.prod
+.DS_Store
