@@ -27,14 +27,14 @@ if (isset($_POST['ftype'])) {
 		$email = $_POST['email'];
 		if (strlen($email) <= 3) $email = "sunnah@iman.net";
 		
-		$resp = recaptcha_check_answer ($privatekey,
-			$_SERVER["REMOTE_ADDR"],
-		    $_POST["recaptcha_challenge_field"],
-			$_POST["recaptcha_response_field"]);
-		
-		if (!$resp->is_valid) {
-			echo json_encode(array('status' => 2, 'message' => "The captcha was entered	"
-				. "incorrectly. Please try again. $resp->error"));
+		$resp = recaptcha_check_answer(
+				$privatekey,
+				$_POST["g-recaptcha-response"]
+		);
+	
+		if (!$resp) {
+				echo json_encode(array('status' => 2, 'message' => "The captcha was entered	"
+					. "incorrectly. Please try again. $resp->error"));
 		}
 		else {
 			$fullString = "Error type: ".$errortype."\n";

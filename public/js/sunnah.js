@@ -4,7 +4,33 @@
 
     function reportHadith_old(urn) {
         window.open("/report.php?urn="+urn, "reportWindow", "scrollbars = yes, resizable = 1, fullscreen = 1, location = 0, toolbar = 0, width = 500, height = 700");
-    }
+	}
+	
+	var recaptchaLoaded = false;
+	var pendingCaptchas = [];
+	function onRecaptchaLoad() {
+		recaptchaLoaded = true
+		addPendingCaptchas();
+	}
+
+	function addCaptcha(container) {
+		pendingCaptchas.push(container)
+		if (recaptchaLoaded) {
+			addPendingCaptchas();
+		}
+	}
+
+	function addPendingCaptchas() {
+		while (container = pendingCaptchas.shift()) {
+			grecaptcha.render(
+				container,
+				{
+					"sitekey": "6LeWQsYSAAAAAE5kS_xV6nvhhAUzslHtmYUukteH",
+					"theme": "light"
+				}
+			)
+		}
+	}
 
 	var openre = "";
 	
@@ -31,17 +57,12 @@
 			}
 		}
 
-		insertScript('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js', 'recaptcha-script');
+		insertScript('https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit', 'recaptcha-script');
 
 		$.get("/report.php", {eurn: eurn, hid: divname}, function (data) {
 			$("#"+divname+" .bottomItems").append(data);
 			
-			Recaptcha.create("6Ld7_PwSAAAAAH0CMHBshuY5t3z4dTHeUTsu4iey", "rerec"+divname,
-				{
-					theme: "red"
-					//callback: Recaptcha.focus_response_field
-				}
-			);
+			addCaptcha("rerec" + divname);
 
 			openre = divname;
 			$("#reform"+divname).submit(function(event) {
