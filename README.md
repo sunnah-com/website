@@ -44,3 +44,7 @@ Once the docker image builds, run it by doing the following:
 `docker run -d -p 80:80 {username}/{imagename}` 
 
 If you've used the ports above, you should be able to access the webserver using port 80 on the container's host.
+
+Use [Visual Studio Code](https://code.visualstudio.com/) with [Remote Containers](https://code.visualstudio.com/docs/remote/containers) extensions to attach to running instance and try out changes rapidly.
+
+Use [php cs fixer](https://marketplace.visualstudio.com/items?itemName=makao.phpcsfixer) extension for formatting code 
