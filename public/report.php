@@ -35,6 +35,7 @@ if (!is_numeric($eurn) || !is_numeric(substr($hid, 1))) {echo "An error occurred
 		<div style="padding-left: 23px;"><input name="email" type="text" placeholder="Email address" style="padding-left: 5px; width: 200px;"/></div>
 	</div>
 	
+	<div class="clear" style="padding-top: 20px;"></div>
 	<div class="leftre" style="padding-right: 0px;">
 		<div id="rerec<?php echo $hid; ?>"> </div>
 	</div>
