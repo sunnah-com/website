@@ -22,6 +22,7 @@ class IndexController extends Controller
 
 	public function actionIndex()
 	{
+		// $this->layout = "/layouts/ramadan_home";
 		$this->layout = "/layouts/home";
         $this->_collections = $this->util->getCollectionsInfo();
         $this->_hadithCount = $this->util->getHadithCount();
