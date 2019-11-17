@@ -5,9 +5,9 @@ else {
 	$entries_keys = array_keys($entries);
     $collectionName = $this->_collectionName;
 	$totalCount=count($entries);
-	$complete = strcmp($this->_collection->status, "incomplete") == 0 && !is_null($this->_collection->totalhadith) ? false : true;
+	$complete = strcmp($this->_collection->status, "complete") == 0;
 	$topwidth = $complete ? "98" : "68.5";
-	if (!$complete && !is_null($this->_collection->totalhadith)) $fullblocks = floor(10*($this->_collection->numhadith)/($this->_collection->totalhadith));
+	if (!$complete) $fullblocks = floor(10*($this->_collection->numhadith)/($this->_collection->totalhadith));
 
 ?>
 
