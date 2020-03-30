@@ -61,10 +61,10 @@ class SearchController extends Controller
         $this->_searchQuery = $query; $this->_pageType = "search";
         $this->pathCrumbs('Search Results - '.htmlspecialchars($query).' (page '.$page.')', '');
         if (strlen($query) < 1) return NULL;
-		$con = mysql_connect("localhost", "webread") or die(mysql_error());
-        mysql_select_db("hadithdb") or die(mysql_error());
+		$con = mysqli_connect("localhost", "webread") or die(mysqli_error($con));
+        mysqli_select_db($con, "hadithdb") or die(mysqli_error($con));
 		
-        $searchObject = new Search();
+        $searchObject = new Search($con);
         $results_arr = $searchObject->searchEnglishHighlighted($query, $page);
         if (count($results_arr) == 0) {
             $this->_viewVars->errorMsg = "The search engine is currently down. The web administrators have been notified and will be working to get it back up as soon as possible, inshaAllah.";
@@ -95,7 +95,7 @@ class SearchController extends Controller
         }
 
         $searchObject->logQuery(addslashes($query), $numFound);
-        mysql_select_db("hadithdb") or die(mysql_error());
+        mysqli_select_db($con, "hadithdb") or die(mysqli_error($con));
         
         if (is_null($eurns) && is_null($aurns)) {
             // Zero search results
@@ -140,7 +140,7 @@ class SearchController extends Controller
                 }
             }
         }
-		mysql_close($con);
+		mysqli_close($con);
 		
         $this->_highlighted = $highlighted;
         $this->_eurns = $eurns;

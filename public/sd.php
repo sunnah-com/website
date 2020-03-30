@@ -21,11 +21,11 @@
 		else $IP=$_SERVER['REMOTE_ADDR'];
 
 //		$con = mysql_connect("localhost", "ansari") or die(mysql_error());
-		$con = mysql_connect("localhost", "webread") or die(mysql_error());
-		mysql_select_db("searchdb") or die(mysql_error());
+		$con = mysqli_connect("localhost", "webread") or die(mysqli_error($con));
+		mysqli_select_db("searchdb") or die(mysqli_error($con));
 		$query = "INSERT into didyoumean (query, suggestion, IP) values ('".addslashes($_GET['old'])."','".addslashes($_GET['query'])."','".$IP."')";
-		mysql_query($query) or die(mysql_error().$query);
-		mysql_close($con);
+		mysqli_query($con, $query) or die(mysqli_error($con).$query);
+		mysqli_close($con);
 	}
 	
 	header('Location: /search/'.addslashes(url_encode(trim($_GET['query']))));
