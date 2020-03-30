@@ -2,6 +2,11 @@
 <div class=content>
 <br>
 <br>
+23 December 2019: Added <a href="http://sunnah.com/adab/31">The Book of Supplication (31)</a> in <a href="http://sunnah.com/adab">Al-Adab al-Mufrad</a> (135 hadith).<br>
+<b>Al-Adab al-Mufrad is now complete, alhamdulillah.</b><br>
+<br><br>
+24 September 2019: Added <a href="http://sunnah.com/adab/29">The Book of Illness and Visiting Those who are Ill (29)</a> in <a href="http://sunnah.com/adab">Al-Adab al-Mufrad</a> (47 hadith).<br>
+<br><br>
 9 September 2014: Added <a href="http://sunnah.com/adab/52">The Book of Midday Naps (52)</a>, <a href="http://sunnah.com/adab/54">The Book of Gambling (54)</a>, and <a href="http://sunnah.com/adab/57">The Book of Anger (57)</a> in <a href="http://sunnah.com/adab">Al-Adab al-Mufrad</a> (36 hadith).<br>
 <br><br>
 16 March 2014: Added <a href="http://sunnah.com/bulugh/12">The Book of Dealing with People Cheerfully (12)</a> in <a href="http://sunnah.com/bulugh">Bulugh al-Maram</a> (18 hadith).<br>
