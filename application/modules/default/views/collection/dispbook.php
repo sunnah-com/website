@@ -74,11 +74,12 @@ else {
 		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b><?php echo $totalCount; ?></b> hadith</div> -->
 
 	<?php
-		if (strcmp($collectionHasBooks, "yes") == 0 and !is_null($this->_book->englishBookIntro) and strcmp($this->_pageType, "book") == 0) {
+		if (strcmp($collectionHasBooks, "yes") == 0 and !is_null($this->_book->arabicBookIntro) and strcmp($this->_pageType, "book") == 0) {
 					if (strcmp($collection, "muslim") == 0 and $ourBookID == -1) include("muslimintro.txt");
 					echo "<div class=bookintro>";
 					echo "<div class=ebookintro>".$this->_book->englishBookIntro."</div>";
 					echo "<div class=\"arabic abookintro\">".$this->_book->arabicBookIntro."</div>";
+					echo "<div class=clear></div>";
 					echo "</div>\n";
 		}
 	?>
