@@ -1,4 +1,8 @@
-    function openquran(surah, beginayah, endayah) {
+	jQuery.htmlPrefilter = function( html ) {
+		return html;
+	};
+
+	function openquran(surah, beginayah, endayah) {
         window.open("http://quran.com/"+(surah+1)+"/"+beginayah+"-"+endayah, "quranWindow", "resizable = 1, fullscreen = 1");
     }
 
