@@ -17,6 +17,7 @@
   <meta property="og:image" content="http://sunnah.com/images/hadith_icon2_huge.png" />
   <?php if (isset($this->_ogDesc)) echo "<meta property=\"og:description\" content=\"".htmlspecialchars($this->_ogDesc)."\" />"; ?>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/all.css" media="screen" rel="stylesheet" type="text/css" />
 
   <link rel="shortcut icon" href="/favicon.ico" >

@@ -225,7 +225,6 @@ a:hover { text-decoration: underline; }
 	width: 127px;
 }
 
-
 .mainContainer {
 	width: 70%;
 	float: left;
@@ -1085,4 +1084,324 @@ a:hover { text-decoration: underline; }
 	padding-top: 10px;
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+/* Smaller Screens */
+@media (max-width: 768px) {
+
+    body {
+        font-size: 16px;
+	}
+	
+    .text_details {
+        font-size: 16px;
+	}
+	
+    .AllHadith .arabic {
+        font-size: 25px;
+	}
+	
+    .urdu_hadith_full {
+        font-size: 21px;
+    }
+    
+    #site{
+	   min-width: auto;
+    }
+
+    /* Home Page */
+    .mainCont {
+		width: 100% !important;
+	}
+
+	.collection_title {
+		width: auto;
+		margin-bottom: 3px;
+	}
+
+	#nonheader {
+		margin: 0 !important;
+		padding: 0 1.5em;
+	}
+
+	#toolbar {
+		font-size: 15px;
+		height: 1.7em;
+		line-height: 1.7;
+	}
+
+    .bannerTop {
+        height: 40px;
+        background-position: 50%;
+        background-size: auto 50%;
+	}
+	
+    #search {
+        position: initial;
+        float: unset;
+        right: auto;
+        padding: 0 .5em .5em;
+        width: 100%;
+        box-sizing: border-box;
+	}
+	
+    .searchtipslink {
+        position: initial;
+        float: none;
+        display: inline-block;
+        width: 21%;
+        box-sizing: border-box;
+        padding-top: 0;
+        vertical-align: middle;
+	}
+	
+    #searchbar {
+        width: 77%;
+        float: none;
+        display: inline-block;
+        margin: 0;
+        vertical-align: middle;
+	}
+	
+    .searchsubmit {
+        right: .5em;
+        left: auto;
+	}
+	
+    .crumbs {
+        padding-left: .5em;
+	}
+	
+    .book_info,
+    .AllHadith {
+        padding: 10px 20px;
+        width: auto;
+        padding: 0;
+	}
+	
+    .arabic.achapintro {
+        width: 100% !important;
+        margin-right: 0 !important;
+        padding: 15px;
+        box-sizing: border-box;
+        margin-bottom: 0px;
+	}
+	
+    .englishchapter,
+    .arabicchapter {
+        max-width: calc(100% - 50px);
+        padding-left: 0;
+	}
+	
+    .englishchapter {
+        margin-bottom: 1em;
+	}
+	
+    .actualHadithContainer,
+    .chapter {
+        width: auto;
+        border-radius: 0;
+        box-shadow: 0 0 15px #00000012;
+        margin: 0px 0 10px 0;
+	}
+	
+    .sidePanelContainer,
+    .mainContainer {
+        width: 100%;
+        float: none;
+        margin: 0;
+	}
+	
+    #sidePanel {
+        float: none;
+        margin: 20px 1em 0;
+        margin: 0;
+        border-radius: 0;
+	}
+	
+    #languagePanel {
+        width: auto;
+	}
+	
+    #languagePanel > div {
+        display: inline;
+	}
+	
+    .hadith_icon {
+        margin: 4px 20px 0px 20px !important;
+	}
+	
+    .book_page_colindextitle {
+        padding: 0px 1em;
+        width: 100%;
+        float: none;
+        box-sizing: border-box;
+        margin: 1.5em 0;
+	}
+
+	.book_page_number {
+		display: inline;
+		float: none;
+	}
+
+	.book_page_english_name {
+		display: inline;
+		float: none;
+	}
+
+    .book_page_arabic_name {
+        padding: 0;
+        text-align: right;
+	}
+	
+    .englishcontainer,
+    .urdu_hadith_full,
+    .english_hadith_full,
+    .arabic_hadith_full,
+    .urdu_hadith_full {
+        width: auto;
+        padding: 0;
+        float: none;
+	}
+	
+    .actualHadithContainer {
+        padding: 15px;
+        margin: 0;
+        float: initial;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 0 65px 0;
+	}
+	
+    .hadith_icon + .actualHadithContainer {
+    	padding-top: 42px;
+	}
+	
+    .arabic_hadith_full {
+        margin-top: 1em;
+	}
+	
+    .hadith_reference {
+        padding: 1em 0 0 0;
+        width: 100%;
+	}
+	
+    .hadith_permalink {
+        float: left;
+        padding: 20px 0px 10px ;
+	}
+	
+    #site {
+        min-width: auto;
+	}
+	
+    .collection_titles {
+        width: 100%;
+	}
+	
+    #indexsearch {
+        max-width: 100%;
+	}
+	
+    .indexsearchquery {
+        width: 100%;
+	}
+	
+    .english_collection_title {
+        box-sizing: border-box;
+        width: 48%;
+        margin-right: 4%;
+        padding-right: 0;
+	}
+	
+    #banner {
+    	width: 100%;
+	}
+
+    input.indexsearchsubmit {
+        left: auto;
+        right: 10px;
+    }
+
+    /* Books */
+    .book_titles {
+        width: 100%;
+	}
+	
+    .book_title {
+        padding: 5px 20px 0 20px;
+	}
+	
+    .book_title > a {
+        display: inline-block;
+        width: 60%;
+        vertical-align: middle;
+	}
+		
+    .book_number {
+        width: 15%;
+	}
+
+    .english_book_name {
+        width: 80%;
+	}
+	
+    .arabic_book_name {
+        width: 100%;
+        padding-left: 15%;
+        box-sizing: border-box;
+	}
+	
+    .book_range {
+        width: 40%;
+        float: none;
+        display: inline-block;
+        padding: 0;
+        text-align: right;
+	}
+	
+    .book_range_from {
+        width:auto;
+        margin: auto;
+        padding: 0px 10px;
+        float: none;
+	}
+	
+    .book_range_from:first-child + div {
+        float: none !important;
+	}
+	
+    .book_range > div {
+        display: inline-block;
+    }
+
+    /* Search results */
+    .boh {
+		margin-bottom: 2em !important;
+	}
+
+    .bc_search {
+    	margin-top: 1em;
+	}
+
+	/* Ramadan Home */
+	#rightPanel {
+		min-width: auto;
+		width: 100%;
+		margin: 0 0 50px;
+	}
+}
+
+
+/* Very small screens */
+@media (max-width: 320px) {
+
+	.searchtipslink {
+		width: 26%;
+	}
+
+	#searchbar {
+		width: 72%;
+	}
+
 }

@@ -14,6 +14,7 @@
   <meta property="og:title" content="Sunnah.com - Sayings and Teachings of Prophet Muhammad (صلى الله عليه و سلم)" />
   <meta property="og:description" content="Hadith of the Prophet Muhammad (saws) in several languages" />
  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/all.css" media="screen" rel="stylesheet" type="text/css" />
 
   <link rel="shortcut icon" href="/favicon.ico" >
