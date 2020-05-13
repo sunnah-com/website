@@ -98,7 +98,11 @@ class CollectionController extends Controller
 		if (strcmp($_escaped_fragment_, "default") != 0) {
 			//if ($this->_book->indonesianBookID > 0) $this->_otherlangs['indonesian'] = $this->_book->fetchLangHadith("indonesian");
 			if ($this->_book->urduBookID > 0) $this->_otherlangs['urdu'] = $this->_book->fetchLangHadith("urdu");
-			if (count($this->_otherlangs) > 0) $this->_ajaxCrawler = true;
+			if (!is_null($this->_otherlangs)) {
+				if (count($this->_otherlangs) > 0) {
+					$this->_ajaxCrawler = true;
+				}
+			}
 		}
 
         if (!isset($this->_entries) || count($this->_entries) == 0) {
