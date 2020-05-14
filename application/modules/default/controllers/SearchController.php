@@ -1,6 +1,6 @@
 <?php
 
-class SearchController extends Controller
+class SearchController extends SController
 {
     protected $_numFound;
     protected $_collections;

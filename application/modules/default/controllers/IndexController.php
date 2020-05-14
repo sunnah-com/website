@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends Controller
+class IndexController extends SController
 {
 	protected $_collections;
 	protected $_hadithCount;
@@ -22,8 +22,8 @@ class IndexController extends Controller
 
 	public function actionIndex()
 	{
-		// $this->layout = "/layouts/ramadan_home";
-		$this->layout = "/layouts/home";
+		$this->layout = "/layouts/ramadan_home";
+		// $this->layout = "/layouts/home";
         $this->_collections = $this->util->getCollectionsInfo();
         $this->_hadithCount = $this->util->getHadithCount();
 		$this->_pageType = "home";
