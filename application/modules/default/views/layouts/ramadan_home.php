@@ -44,7 +44,7 @@
 		vertical: false,
 		visible: 1,
 		scroll: 1,
-		auto: 10,
+		auto: 5,
 		wrap: "circular",
 		buttonNextHTML: null,
 		buttonPrevHTML: null,
