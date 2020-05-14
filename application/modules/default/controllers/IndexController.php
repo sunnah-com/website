@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends SController
+class IndexController extends Controller
 {
 	protected $_collections;
 	protected $_hadithCount;

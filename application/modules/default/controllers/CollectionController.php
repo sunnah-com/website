@@ -1,6 +1,6 @@
 <?php
 
-class CollectionController extends SController
+class CollectionController extends Controller
 {
 	protected $_collection;
 	protected $_book;

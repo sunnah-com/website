@@ -15,7 +15,7 @@
   <meta property="og:description" content="Hadith of the Prophet Muhammad (saws) in several languages" />
  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="<?php echo $this->_auto_version('/css/all.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
+  <link href="<?php echo $this->auto_version('/css/all.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
 
   <link rel="shortcut icon" href="/favicon.ico" >
   <link rel="image_src" href="/images/fb_logo.png" />
