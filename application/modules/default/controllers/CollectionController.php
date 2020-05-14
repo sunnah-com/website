@@ -17,7 +17,7 @@ class CollectionController extends SController
 	public function filters() {
 		return array(
 			array(
-				'COutputCache',
+				'COutputCache - ramadandata',
 	            'duration'=>Yii::app()->params['cacheTTL'],
     	        'varyByParam'=>array('id', 'collectionName', 'ourBookID', 'urn', 'hadithNumbers', 'lang', '_escaped_fragment_'),
 			),
