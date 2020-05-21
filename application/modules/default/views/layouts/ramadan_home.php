@@ -21,7 +21,7 @@
   <link rel="image_src" href="/images/fb_logo.png" />
 
   <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   <script src="/js/jquery.cookie.js"></script>
 
@@ -54,7 +54,8 @@
 
 
   <script src="/js/sunnah.js"></script>
- 
+
+
   <title>
 	<?php echo $this->titleString() ?>
 	Sunnah.com - Sayings and Teachings of Prophet Muhammad (صلى الله عليه و سلم)
