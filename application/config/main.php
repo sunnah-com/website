@@ -34,7 +34,6 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.modules.default.models.Util',
-		'application.modules.default.controllers.SController',
 	),
 
 	'modules'=>array(
