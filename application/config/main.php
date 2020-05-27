@@ -20,7 +20,7 @@ $protectedPath = _joinpath($homePath, 'application');
 $webrootPath   = _joinpath($homePath, 'public');
 $runtimePath   = _joinpath($homePath, 'runtime');
 
-return array(
+$configArray = array(
 	'basePath'=>$protectedPath,
 	'runtimePath' => $runtimePath,
 	'name'=>'Sunnah.com',
@@ -61,15 +61,12 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-		'cache' => array(
-			'class' => 'CMemCache',
-			'useMemcached' => $parameters['useMemcached'],
-			'servers' => array(
-				array('host' => 'localhost', 'port' => 7630),
-			),
-		),
-		// uncomment the following to enable URLs in path-format
-		
+
+        'cache'=>array(
+            'class' => 'CDummyCache',
+        ),
+
+        // uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
@@ -138,20 +135,12 @@ return array(
 		// uncomment the following to use a MySQL database
 		// TODO: Migrate credentials over to a secret handler/KMS
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=hadithdb',
-			'schemaCachingDuration' => 300,
-			'emulatePrepare' => true,
-			'username' => $credentials['db_username'],
-			'password' => $credentials['db_password'],
-			'charset' => 'utf8',
-		),
-		'db_internal'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=ilmfruit_testhadithdb',
+			'connectionString' => "mysql:host={$parameters['db_host']};dbname={$parameters['db_name']}",
 			'schemaCachingDuration' => 300,
 			'class' => 'CDbConnection',
 			'emulatePrepare' => true,
-			'username' => 'ilmfruit_ansari',
-			'password' => 'NotInRepo',
+			'username' => $credentials['db_username'],
+			'password' => $credentials['db_password'],
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -185,3 +174,17 @@ return array(
 		'pageSize' => 100,
 	),
 );
+
+if (strcmp($stage, "prod") == 0) {
+    $configArray['components']['cache'] = array(
+			'class' => 'CMemCache',
+			'useMemcached' => TRUE,
+			'servers' => array(
+                array('host' => $parameters['cacheHost'], 
+                      'port' => int($parameters['cachePort'])
+                     ),
+			),
+		);
+}
+
+return $configArray;
