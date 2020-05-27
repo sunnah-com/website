@@ -181,7 +181,7 @@ if (strcmp($stage, "prod") == 0) {
 			'useMemcached' => TRUE,
 			'servers' => array(
                 array('host' => $parameters['cacheHost'], 
-                      'port' => int($parameters['cachePort'])
+                      'port' => (int) ($parameters['cachePort']),
                      ),
 			),
 		);
