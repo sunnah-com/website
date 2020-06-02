@@ -68,7 +68,7 @@
   </title>
 </head>
 
-<body>
+<body class="home">
 <div id="site">
 
 	<div id="header">
@@ -85,9 +85,9 @@
 	<div class=clear></div>
 	<div id="topspace"></div>
 
-	<div id=nonheader style="position: relative; margin: 0 10px 0 30px;">
+	<div id=nonheader>
 <!--	<div class="mainCont" style="width: 70%; float: left"><div id="main"> -->
-	<div class="mainCont" style="width: 70%; margin: auto"><div id="main">
+	<div class="mainContainer"><div id="main">
 	        <?php 
 				echo "<div class=clear></div>";
 				echo $content; 

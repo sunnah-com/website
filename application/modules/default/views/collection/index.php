@@ -15,8 +15,8 @@ else {
 
 	<div class="collection_info">
 		<div class=colindextitle style="width: <?php echo $topwidth;?>%;">
-			<div class="arabic" style="float: right; padding-right: 10px; font-size: 26px;"><?php echo $this->_collection->arabicTitle; ?></div>
-			<div style="float: left; font-size: 22px; padding-top: 5px;"><?php echo $this->_collection->englishTitle;?></div>
+			<div class="arabic"><?php echo $this->_collection->arabicTitle; ?></div>
+			<div class="english"><?php echo $this->_collection->englishTitle;?></div>
 			<div class=clear></div>
 		</div>
 		<?php if (isset($fullblocks)) { ?>
@@ -27,7 +27,7 @@ else {
 		</div>
 		<?php }
 			if (strlen($this->_collection->shortintro) > 0) { ?>
-				<div class=colindextitle style="padding-right: 20px;">
+				<div class=colindextitle>
 				<?php
 				echo $this->_collection->shortintro; 
 				echo "<br><div align=right style=\"padding-top: 7px;\"><a href=\"/$collectionName/about\">More information ...</a></div>\n\n"; ?>
@@ -43,14 +43,8 @@ else {
 				<?php
 					for ($i = 0; $i < $totalCount; $i++) {
 						$entry = $entries[$entries_keys[$i]];
-						if ($i % 2 == 0) $bgclass = "list_first";
-						else $bgclass = "list_second";
 
-						if ($i == 0) $style = "style=\"border-radius: 8px 8px 0 0;\"";
-						elseif ($i == $totalCount-1) $style = "style=\"border-radius: 0 0 8px 8px;\"";
-						else $style = "";
-
-                        echo "<div class=\"book_title ".$bgclass."\" ".$style." id=\"obi".$entry->ourBookID."\">\n";
+                        echo "<div class=\"book_title\" id=\"obi".$entry->ourBookID."\">\n";
 
 						if ($entry->ourBookID == -1) echo "<a href=\"/".$entry->collection."/introduction\">\n";
 						elseif ($entry->ourBookID == -35 and strcmp($collectionName, "nasai") == 0) echo "<a href=\"/".$entry->collection."/35b\">\n";
@@ -69,9 +63,9 @@ else {
 						echo '</a>';
 						if ($entry->firstNumber > 0) {
 							echo "<div class=book_range>";
-							echo "<div class=book_range_from>".$entry->firstNumber."</div>";
-							echo "<div style=\"float: left;\"> to </div>";
-							echo "<div class=book_range_from>".$entry->lastNumber."</div>";
+							echo "<div>".$entry->firstNumber."</div>";
+							echo "<div> to </div>";
+							echo "<div>".$entry->lastNumber."</div>";
 							echo "</div>";
 						}
 						echo "<div class=clear></div>";

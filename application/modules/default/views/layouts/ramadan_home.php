@@ -62,7 +62,7 @@
   </title>
 </head>
 
-<body>
+<body class="home ramadan">
 <div id="site">
 
 	<div id="header">
@@ -79,8 +79,8 @@
 	<div class=clear></div>
 	<div id="topspace"></div>
 
-	<div id=nonheader style="position: relative; margin: 0 10px 0 30px;">
-	<div class="mainCont" style="width: 70%; float: left"><div id="main">
+	<div id="nonheader">
+	<div class="mainContainer" style="float: left"><div id="main">
 	        <?php 
 				echo "<div class=clear></div>";
 				echo $content; 
