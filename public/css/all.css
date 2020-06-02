@@ -23,6 +23,44 @@
 	src: local("Akzidenz"), url("/css/fonts/akzidenz-grotesk-bold.ttf"); 
 }
 
+@font-face {
+  font-family: 'Noto Nastaliq Urdu';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/css/fonts/NotoNastaliqUrdu-Regular.eot');
+  src: local("Noto Nastaliq Urdu"),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.eot?#iefix') format('embedded-opentype'),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.woff2') format('woff2'),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.woff') format('woff'),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+    font-family: 'KFGQPC Uthman Taha Naskh';
+    src: url('/css/fonts/KFGQPCUthmanTahaNaskh.eot');
+    src: local('KFGQPC Uthman Taha Naskh'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.eot?#iefix') format('embedded-opentype'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.woff2') format('woff2'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.woff') format('woff'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'KFGQPC Uthman Taha Naskh';
+    src: url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.eot');
+    src: local('KFGQPC Uthman Taha Naskh Bold'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.eot?#iefix') format('embedded-opentype'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.woff2') format('woff2'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.woff') format('woff'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
 
 .clear{ clear:both; }
 
@@ -55,9 +93,11 @@ a:hover { text-decoration: underline; }
 
 .urdu {
 	direction:rtl;
-    font-family: Fajer Noori Nastalique, Jameel Noori Nastaleeq, Nafees Web Naskh, Urdu Naskh Asiatype;
-    font-size: 20px;
+	font-family: 'Noto Nastaliq Urdu', Fajer Noori Nastalique, Jameel Noori Nastaleeq, Nafees Web Naskh, Urdu Naskh Asiatype, serif;
+	font-size: 20px;
 	text-align: justify;
+	line-height: 2.35;
+	font-size: 13px;
 }
 
 .saws {
@@ -1170,8 +1210,8 @@ a:hover { text-decoration: underline; }
         font-size: 25px;
 	}
 	
-    .urdu_hadith_full {
-        font-size: 21px;
+    .urdu {
+        font-size: 17px;
     }
     
     #site{
