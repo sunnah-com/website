@@ -146,8 +146,21 @@
 	function share(permalink) {		
 		$.get("/share.php", {"link": permalink}, function(data) {
 			if (!$(".share_mb").length) $("body").append('<div class="share_mb"></div>');
-			$(".share_mb").html(data); 
+			$(".share_mb").html(data); // <div class="share_close"></div>
 			
+			if (!sharescriptsInserted) {
+				insertScript("http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0&appId=714222162002098", 'facebook-jssdk');
+				insertScript("http://platform.twitter.com/widgets.js", 'twitter-script');
+				insertScript("https://apis.google.com/js/platform.js", 'gplus-script');
+				sharescriptsInserted = true;
+				justloaded = true;
+				
+				//(function checkready() {
+				//	if (window.FB && window.twttr && gp) return; 
+				//	else {console.log("timing out"); setTimeout(checkready, 100);}
+				//})();
+			}
+
 			$(".share_mb").css("left", ($(window).width() - $(".share_mb").width())/2+"px");
 			$(".share_mb").css("top", ($(window).height() - $(".share_mb").height())/2.8+"px");
 		
@@ -155,7 +168,20 @@
 			$('.share_mb').animate({'opacity':'1.00'}, 200, 'linear');
 			$('#sharefuzz, .share_mb').css('display', 'block');
 
-			$(".permalink_box").select();			
+			if (!justloaded) { // these only need to be called if buttons are rendered 
+							   // after the script loads and inits, not before.
+				gapi.plusone.render("plusone-div", {"annotation": "none", "url": "http://sunnah.com"+permalink});
+				twttr.widgets.load();
+				FB.XFBML.parse()
+			}
+			else justloaded = false;
+			
+			$(".permalink_box").select();
+			
+			//$('.share_close').click(function(){
+			//	console.log("close ...");
+			//	close_box();
+			//});
 		});
 	}
 	
@@ -187,6 +213,8 @@
 	});
 
 	$("body").append('<div id="sharefuzz"></div>');
+	//$("#sharefuzz").css({"height": $(document).height()});
+ 
 	$('#sharefuzz').click(function(){ close_box(); });
 	
 	if ("searchQuery" in window) {
@@ -283,7 +311,27 @@
 		setLanguageDisplay(langDisplay, true);
 	}
 
+/*	if ($("#sidePanel").position()) {
+		var top_pos = $("#sidePanel").position().top;
+	    $(window).scroll(function() {
+    	    if(top_pos >= $(window).scrollTop()) {
+        	    if($("#sidePanel").css('position') == 'fixed') {
+            	    $("#sidePanel").css('position', 'relative');
+	            }
+    	    } else { 
+        	    if($("#sidePanel").css('position') != 'fixed') {
+            	    $("#sidePanel").css({'position': 'fixed', 'top': 0});
+	            }
+    	    }
+    	});
+	}
+*/
+	//$("#sidePanelContainer").css('margin-left', parseInt($("#toolbar").position().left)-parseInt($("#sidePanelContainer").css('width').replace("px", "")));
   });
+
+	//$(window).bind("resize", function(){
+		//$("#sidePanelContainer").css('margin-left', parseInt($("#toolbar").position().left)-parseInt($("#sidePanelContainer").css('width').replace("px", "")));
+	//});
 
     var langLoaded = new Object();
 
