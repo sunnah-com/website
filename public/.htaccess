@@ -3,6 +3,8 @@ AddType font/otf .otf
 
 RewriteEngine on
 
+RewriteRule ^(.*)\.[\d]{10}\.(css|js)$ $1.$2 [L]
+
 RewriteRule ^view/(.*)$ /$1 [R,L]
 RewriteRule ^muslim/muslim(.*)$ /muslim$1 [R,L]
 RewriteRule ^contact/*$ /contact.php [L]

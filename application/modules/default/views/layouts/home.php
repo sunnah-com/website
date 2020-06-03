@@ -14,13 +14,14 @@
   <meta property="og:title" content="Sunnah.com - Sayings and Teachings of Prophet Muhammad (صلى الله عليه و سلم)" />
   <meta property="og:description" content="Hadith of the Prophet Muhammad (saws) in several languages" />
  
-  <link href="/css/all.css" media="screen" rel="stylesheet" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="<?php echo $this->auto_version('/css/all.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
 
   <link rel="shortcut icon" href="/favicon.ico" >
   <link rel="image_src" href="/images/fb_logo.png" />
 
   <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   <script src="/js/jquery.cookie.js"></script>
 
@@ -67,7 +68,7 @@
   </title>
 </head>
 
-<body>
+<body class="home">
 <div id="site">
 
 	<div id="header">
@@ -84,9 +85,9 @@
 	<div class=clear></div>
 	<div id="topspace"></div>
 
-	<div id=nonheader style="position: relative; margin: 0 10px 0 30px;">
+	<div id=nonheader>
 <!--	<div class="mainCont" style="width: 70%; float: left"><div id="main"> -->
-	<div class="mainCont" style="width: 70%; margin: auto"><div id="main">
+	<div class="mainContainer"><div id="main">
 	        <?php 
 				echo "<div class=clear></div>";
 				echo $content; 

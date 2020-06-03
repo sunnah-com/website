@@ -7,7 +7,7 @@ class Util extends CModel {
 	public function attributeNames() {}
 
 	public function getRamadanURNs() {
-		$aURNs = array(1121150, /* 118110, */118130, 118150, 118350, 118710, 327590, 327600, 327580, 327620, 327650, 327660, 328170, 1339810);
+		$aURNs = array(119320, 1121150, /* 118110, */118130, 118150, 118350, 118710, 327600, 327580, 327620, 327650, 327660, 1339810, 706990);
 		return $aURNs;
 	}
 

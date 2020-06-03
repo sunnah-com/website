@@ -1,11 +1,14 @@
 [development]
+db_host = localhost
+db_name = hadithdb
 credentialsFile = credentials.development
-useMemcached = FALSE
-cacheTTL = 1
 yiiPath = ../vendor/yiisoft/yii/framework
 
 [prod]
+db_host = localhost
+db_name = hadithdb
 credentialsFile = credentials.prod
-useMemcached = TRUE
+cacheHost = localhost
+cachePort = 7630
 cacheTTL = 7200
 yiiPath = /usr/local/yii/framework

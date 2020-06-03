@@ -1,4 +1,8 @@
-    function openquran(surah, beginayah, endayah) {
+	jQuery.htmlPrefilter = function( html ) {
+		return html;
+	};
+
+	function openquran(surah, beginayah, endayah) {
         window.open("http://quran.com/"+(surah+1)+"/"+beginayah+"-"+endayah, "quranWindow", "resizable = 1, fullscreen = 1");
     }
 
@@ -286,7 +290,7 @@
     function loadLang(lang, collection, bookID) {
         $.getJSON("/ajax/"+lang+"/"+collection+"/"+bookID, function(data) { 
             $.each(data, function(idx, elt) {
-				text = "<div class=\""+lang+"_hadith_full\">";
+				text = "<div class=\""+lang+"_hadith_full "+lang+"\">";
 				if (elt["hadithSanad"]) text = text + "<span class=\""+lang+"_sanad\">"+elt["hadithSanad"]+"</span> ";
 				text = text + elt["hadithText"]+"</div>"
 				$("#t"+elt["matchingArabicURN"]).append(text);

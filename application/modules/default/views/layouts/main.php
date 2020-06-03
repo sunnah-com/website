@@ -17,7 +17,8 @@
   <meta property="og:image" content="http://sunnah.com/images/hadith_icon2_huge.png" />
   <?php if (isset($this->_ogDesc)) echo "<meta property=\"og:description\" content=\"".htmlspecialchars($this->_ogDesc)."\" />"; ?>
 
-  <link href="/css/all.css" media="screen" rel="stylesheet" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="<?php echo $this->auto_version('/css/all.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
 
   <link rel="shortcut icon" href="/favicon.ico" >
   <link rel="image_src" href="/images/hadith_icon2.png" />
@@ -86,7 +87,7 @@
 	<div class=clear></div>
 	<div id="topspace"></div>
 
-	<div id=nonheader" style="position: relative;">
+	<div id="nonheader">
 	<div class="sidePanelContainer">
 		<div style="height: 1px;"></div>
 		<div id="sidePanel">
