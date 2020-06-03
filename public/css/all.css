@@ -586,12 +586,13 @@ a:hover { text-decoration: underline; }
 .crumbs a:visited { color: #eee; }
 
 .collection_info {
-	width: 93%;
+	width: 95%;
 	background-color: rgba(255, 255, 255, 0.5);
 	border-radius: 5px;
 	color: #666;
 	margin-top: 7px;
 	padding: 10px;
+	box-sizing: border-box;
 }
 
 .colindextitle {
@@ -1445,7 +1446,8 @@ a:hover { text-decoration: underline; }
         min-width: auto;
 	}
 	
-    .collection_titles {
+	.collection_titles,
+    .collection_info {
         width: 100%;
 	}
 	
