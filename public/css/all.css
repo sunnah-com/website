@@ -592,6 +592,7 @@ a:hover { text-decoration: underline; }
 	color: #666;
 	margin-top: 7px;
 	padding: 10px;
+	box-sizing: border-box;
 }
 
 .colindextitle {
@@ -1445,7 +1446,8 @@ a:hover { text-decoration: underline; }
         min-width: auto;
 	}
 	
-    .collection_titles {
+	.collection_titles,
+    .collection_info {
         width: 100%;
 	}
 	
