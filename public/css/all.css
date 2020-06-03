@@ -602,6 +602,15 @@ a:hover { text-decoration: underline; }
 	padding-right: 20px;
 }
 
+.colindextitle.incomplete {
+    width: 64%;
+}
+
+.progress_text {
+    padding-top: 3px 4px 0 7px;
+    float: left;
+}
+
 .colindextitle .arabic {
     float: right;
     padding-right: 10px;
@@ -614,7 +623,7 @@ a:hover { text-decoration: underline; }
     padding-top: 5px;
 }
 .col_progress {
-	width: 29%;
+	width: 32%;
 	float: right;
 	font-size: 18px;
 	padding-top: 15px;
@@ -1341,6 +1350,16 @@ a:hover { text-decoration: underline; }
         margin-left: 8px;
 	}
 	
+	.colindextitle.incomplete,
+	.col_progress {
+		width: 99%;
+	}
+
+	.col_progress {
+		width: 99%;
+		margin-bottom: 15px;
+	}
+
     .book_page_colindextitle {
         padding: 0px 1em;
         width: 100%;

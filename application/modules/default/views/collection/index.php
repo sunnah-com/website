@@ -6,7 +6,6 @@ else {
     $collectionName = $this->_collectionName;
 	$totalCount=count($entries);
 	$complete = strcmp($this->_collection->status, "complete") == 0;
-	$topwidth = $complete ? "98" : "68.5";
 	if (!$complete) $fullblocks = floor(10*($this->_collection->numhadith)/($this->_collection->totalhadith));
 
 ?>
@@ -14,7 +13,7 @@ else {
 	
 
 	<div class="collection_info">
-		<div class=colindextitle style="width: <?php echo $topwidth;?>%;">
+		<div class="colindextitle <?php echo $complete ? "complete" : "incomplete";?>">
 			<div class="arabic"><?php echo $this->_collection->arabicTitle; ?></div>
 			<div class="english"><?php echo $this->_collection->englishTitle;?></div>
 			<div class=clear></div>
@@ -23,7 +22,7 @@ else {
 		<div class="col_progress">
 			<div class="progress_full" style="width: <?php echo ceil($fullblocks*13); ?>px;"></div>
 			<div class="progress_half" style="width: <?php echo ceil((10-$fullblocks)*9); ?>px;"></div>
-			<div style="padding-top: 3px; padding-left: 7px; padding-right: 4px; float: left;"><?php echo floor(100*($this->_collection->numhadith)/($this->_collection->totalhadith)); ?>% complete</div>
+			<div class="progress_text"><?php echo floor(100*($this->_collection->numhadith)/($this->_collection->totalhadith)); ?>% complete</div>
 		</div>
 		<?php }
 			if (strlen($this->_collection->shortintro) > 0) { ?>
