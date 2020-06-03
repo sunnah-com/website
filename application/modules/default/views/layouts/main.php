@@ -87,7 +87,7 @@
 	<div class=clear></div>
 	<div id="topspace"></div>
 
-	<div id=nonheader" style="position: relative;">
+	<div id="nonheader">
 	<div class="sidePanelContainer">
 		<div style="height: 1px;"></div>
 		<div id="sidePanel">

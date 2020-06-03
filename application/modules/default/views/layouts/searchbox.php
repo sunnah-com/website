@@ -11,7 +11,7 @@
     <div id="searchbar" class="sblur">
         <form name="searchform" action="/search/" method=get id="searchform">
             <input type="text" class="searchquery" name=q value="<?php echo $stextval; ?>" />
-            <input type="submit" style="background-image: url('/images/search_small.png'); border: solid 0px #000000;" class="searchsubmit" value="" />
+            <input type="submit" class="searchsubmit" value="" />
         </form>
     </div>
 

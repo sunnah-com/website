@@ -23,6 +23,44 @@
 	src: local("Akzidenz"), url("/css/fonts/akzidenz-grotesk-bold.ttf"); 
 }
 
+@font-face {
+  font-family: 'Noto Nastaliq Urdu';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/css/fonts/NotoNastaliqUrdu-Regular.eot');
+  src: local("Noto Nastaliq Urdu"),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.eot?#iefix') format('embedded-opentype'),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.woff2') format('woff2'),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.woff') format('woff'),
+       url('/css/fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+    font-family: 'KFGQPC Uthman Taha Naskh';
+    src: url('/css/fonts/KFGQPCUthmanTahaNaskh.eot');
+    src: local('KFGQPC Uthman Taha Naskh'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.eot?#iefix') format('embedded-opentype'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.woff2') format('woff2'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.woff') format('woff'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'KFGQPC Uthman Taha Naskh';
+    src: url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.eot');
+    src: local('KFGQPC Uthman Taha Naskh Bold'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.eot?#iefix') format('embedded-opentype'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.woff2') format('woff2'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.woff') format('woff'),
+         url('/css/fonts/KFGQPCUthmanTahaNaskh-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
 
 .clear{ clear:both; }
 
@@ -55,9 +93,11 @@ a:hover { text-decoration: underline; }
 
 .urdu {
 	direction:rtl;
-    font-family: Fajer Noori Nastalique, Jameel Noori Nastaleeq, Nafees Web Naskh, Urdu Naskh Asiatype;
-    font-size: 20px;
+	font-family: 'Noto Nastaliq Urdu', Fajer Noori Nastalique, Jameel Noori Nastaleeq, Nafees Web Naskh, Urdu Naskh Asiatype, serif;
+	font-size: 20px;
 	text-align: justify;
+	line-height: 2.35;
+	font-size: 13px;
 }
 
 .saws {
@@ -218,16 +258,34 @@ a:hover { text-decoration: underline; }
     /* height: 100px; */
     /*position: fixed;*/
     text-align: left;
-	background-color: rgba(251, 250, 248, 0.2);
+    background-color: rgba(251, 250, 248, 0.2);
     font-size: 12px;
     font-family: Arial, Verdana;
     font-weight: bold;
-	width: 127px;
+    width: 127px;
 }
 
-.mainContainer {
+#languagePanel input {
+	vertical-align: sub;
+}
+
+.home .mainContainer {
+	float: none;
+	margin: auto;
+}
+
+.mainContainer,
+.home.ramadan .mainContainer {
 	width: 70%;
 	float: left;
+}
+
+#nonheader {
+	position: relative;
+}
+
+.home #nonheader {
+    margin: 0 10px 0 30px;
 }
 
 #main {
@@ -281,6 +339,11 @@ a:hover { text-decoration: underline; }
 	font-variant: small-caps;
 	font-weight: bold;
 	color: #75A1A1;
+}
+
+.indexsearchcontainer {
+    width: 380px;
+	margin: auto;
 }
 
 #indexsearch {
@@ -363,7 +426,9 @@ a:hover { text-decoration: underline; }
 	top:7px;
 	left:345px;
 	height:25px;
-        width:25px;
+	width:25px;
+	background-image: url(/images/search_small.png);
+	border: solid 0px #000000;
 }
 
 .searchsubmit {
@@ -376,6 +441,8 @@ a:hover { text-decoration: underline; }
 	left:253px;
 	height:17px;
 	width:17px;
+	background-image: url(/images/search_small.png);
+	border: solid 0px #000000;
 }
 
 .indexsearchtipslink {
@@ -432,6 +499,8 @@ a:hover { text-decoration: underline; }
     display: none;
     font-size: 12px;
     padding: 5px;
+    width: 98%;
+    height: 315px;
 }
 
 #searchtips p {
@@ -530,10 +599,31 @@ a:hover { text-decoration: underline; }
 	padding: 5px 10px 5px 10px;
 	text-align: justify;
 	width: 98%;
+	padding-right: 20px;
 }
 
+.colindextitle.incomplete {
+    width: 64%;
+}
+
+.progress_text {
+    padding-top: 3px 4px 0 7px;
+    float: left;
+}
+
+.colindextitle .arabic {
+    float: right;
+    padding-right: 10px;
+    font-size: 26px;
+}
+
+.colindextitle .english {
+    float: left;
+    font-size: 22px;
+    padding-top: 5px;
+}
 .col_progress {
-	width: 29%;
+	width: 32%;
 	float: right;
 	font-size: 18px;
 	padding-top: 15px;
@@ -562,11 +652,19 @@ a:hover { text-decoration: underline; }
 	width: 95%;
 }
 
-.list_first {
+.book_title:first-child {
+	border-radius: 8px 8px 0 0;
+}
+
+.book_title:last-child {
+	border-radius: 0 0 8px 8px;
+}
+
+.book_title:nth-child(odd) {
 	background-color: rgba(255, 255, 255, 0.6);
 }
 
-.list_second {
+.book_title:nth-child(even) {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -603,19 +701,21 @@ a:hover { text-decoration: underline; }
 .book_range {
 	float: left;
 	color: #666;
-	padding: 6px 0 0 30px;
+	padding: 6px 0 0 55px;
 	vertical-align: middle;
 	margin: auto;
+	margin-right: 25px;
 }
 
-.book_range_from {
-	padding-left: 25px;
+.book_range > div {
 	width: 40px;
 	float: left;
-	margin-right: 20px;
 	text-align: center;
 }
-
+.book_range > div:first-child + div {
+	padding: 0 20px;
+	width: auto;
+}
 .book_page_colindextitle {
 	float: left;
 	padding: 5px 20px 5px 5px;
@@ -649,12 +749,15 @@ a:hover { text-decoration: underline; }
 .chapter {
     background-color: rgba(255, 255, 255, 0.5);
     color: #666;
-    width: 96%;
-    padding: 0 15px 10px 15px;
-	border-radius: 10px;
-	margin-top: 10px;
+    width: 100%;
+    padding: 5px 15px 10px 15px;
+    border-radius: 10px;
+    margin-top: 24px;
+    box-sizing: border-box;
 }
-
+.chapter:first-child {
+	margin-top: 20px;
+}
 .englishchapter {
     float: left;
     max-width: 43%;
@@ -687,12 +790,15 @@ a:hover { text-decoration: underline; }
 
 .achapintro {
 	padding: 15px 45px 10px 20px;
-    font-size: 20px;
-    text-align: justify;
+	font-size: 20px;
+	text-align: justify;
 	width: 42%;
 	float: right;
 }
-
+.achapintro.aconly {
+    width: 80%;
+    margin-right: 4%;
+}
 .echapintro {
 	padding: 15px 0 10px 45px;
     text-align: justify;
@@ -718,16 +824,15 @@ a:hover { text-decoration: underline; }
     padding-left:10px;
     padding-top: 20px;
     margin:0;
-	width: 95%;
+    width: 94%;
 }
-
 
 .actualHadithContainer {
 	background-color: rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
 	float: left;
-	margin: 0 3px 10px 3px;
-	width: 99%; /* for <1line hadith */
+	margin: 10px 3px 10px 3px;
+	width: 100%; /* for <1line hadith */
 }
 
 .hadith_narrated {
@@ -744,14 +849,6 @@ a:hover { text-decoration: underline; }
     text-decoration:none;
     text-align: justify;
     padding-bottom: 10px;
-}
-
-.hadith_icon {
-    background-image:url(../images/hadith_icon2.png);
-    background-repeat:no-repeat;
-    background-position: 0px 8px;
-	width: 21px;
-	height: 28px;
 }
 
 .englishcontainer {
@@ -777,12 +874,33 @@ a:hover { text-decoration: underline; }
 	float: right;
 }
 
+.englishcontainer,
+.arabic_hadith_full {
+    position: relative;
+}
+
+.english_hadith_full:before,
+.arabic_hadith_full:before,
+.urdu_hadith_full:before {
+    content: " ";
+    background-image: url(../images/hadith_icon2_huge.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -31px;
+    top: 8px;
+}
+
+.arabic_hadith_full:before {
+    left: auto;
+    right: -31px;
+}
+
 .urdu_hadith_full {
     padding-left:15px;
-	padding-top: 10px;
-    direction:rtl;
-    font-family: Fajer Noori Nastalique, Jameel Noori Nastaleeq, Nafees Web Naskh, Urdu Naskh Asiatype;
-    font-size: 20px;
+    padding-top: 9px;
     text-decoration:none;
     padding-bottom: 10px;
     color:#08081a;
@@ -1101,17 +1219,16 @@ a:hover { text-decoration: underline; }
         font-size: 25px;
 	}
 	
-    .urdu_hadith_full {
-        font-size: 21px;
+    .urdu {
+        font-size: 17px;
     }
     
     #site{
 	   min-width: auto;
     }
 
-    /* Home Page */
-    .mainCont {
-		width: 100% !important;
+	.arabic_collection_title {
+		text-align: right;
 	}
 
 	.collection_title {
@@ -1119,8 +1236,8 @@ a:hover { text-decoration: underline; }
 		margin-bottom: 3px;
 	}
 
-	#nonheader {
-		margin: 0 !important;
+	.home #nonheader {
+		margin: 0;
 		padding: 0 1.5em;
 	}
 
@@ -1153,6 +1270,11 @@ a:hover { text-decoration: underline; }
         box-sizing: border-box;
         padding-top: 0;
         vertical-align: middle;
+	}
+
+	#indexsearchtips {
+		font-size: 16px;
+		height: 555px;
 	}
 	
     #searchbar {
@@ -1199,14 +1321,14 @@ a:hover { text-decoration: underline; }
 	
     .actualHadithContainer,
     .chapter {
-        width: auto;
         border-radius: 0;
         box-shadow: 0 0 15px #00000012;
         margin: 0px 0 10px 0;
 	}
 	
     .sidePanelContainer,
-    .mainContainer {
+    .mainContainer,
+    .home.ramadan .mainContainer {
         width: 100%;
         float: none;
         margin: 0;
@@ -1225,12 +1347,19 @@ a:hover { text-decoration: underline; }
 	
     #languagePanel > div {
         display: inline;
+        margin-left: 8px;
 	}
 	
-    .hadith_icon {
-        margin: 4px 20px 0px 20px !important;
+	.colindextitle.incomplete,
+	.col_progress {
+		width: 99%;
 	}
-	
+
+	.col_progress {
+		width: 99%;
+		margin-bottom: 15px;
+	}
+
     .book_page_colindextitle {
         padding: 0px 1em;
         width: 100%;
@@ -1265,7 +1394,7 @@ a:hover { text-decoration: underline; }
 	}
 	
     .actualHadithContainer {
-        padding: 15px;
+        padding: 20px;
         margin: 0;
         float: initial;
         width: 100%;
@@ -1273,8 +1402,29 @@ a:hover { text-decoration: underline; }
         margin: 0 0 65px 0;
 	}
 	
-    .hadith_icon + .actualHadithContainer {
-    	padding-top: 42px;
+	.english_hadith_full:before,
+	.arabic_hadith_full:before,
+	.urdu_hadith_full:before {
+		position: absolute;
+		height: 24px;
+		width: 14px;
+		right: auto;
+		top: auto;
+		left: -20px;
+		background-position: right;
+		top: 0;
+	}
+
+	.arabic_hadith_full:before,
+	.urdu_hadith_full:before {
+		left: auto;
+		right: -20px;
+		background-position: left;
+		top: 4px;
+	}
+
+	.urdu_hadith_full:before {
+		top: 9px;
 	}
 	
     .arabic_hadith_full {
@@ -1358,20 +1508,16 @@ a:hover { text-decoration: underline; }
         display: inline-block;
         padding: 0;
         text-align: right;
-	}
-	
-    .book_range_from {
-        width:auto;
-        margin: auto;
-        padding: 0px 10px;
-        float: none;
-	}
-	
-    .book_range_from:first-child + div {
-        float: none !important;
+        margin: 0;
 	}
 	
     .book_range > div {
+        width:auto;
+        margin: auto;
+        float: none;
+	}
+	
+	.book_range > div {
         display: inline-block;
     }
 
@@ -1382,6 +1528,10 @@ a:hover { text-decoration: underline; }
 
     .bc_search {
     	margin-top: 1em;
+	}
+
+	.indexsearchcontainer {
+		width: 98%
 	}
 
 	/* Ramadan Home */

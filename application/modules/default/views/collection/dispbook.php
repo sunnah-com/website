@@ -9,9 +9,7 @@ function displayBab($chapter) {
 	$englishIntro = preg_replace("/\n+/", "<br>\n", $chapter->englishIntro);
 	$arabicIntro = preg_replace("/\n+/", "<br>\n", $chapter->arabicIntro);
 
-	echo "<div style=\"height: 10px;\"></div>\n";
     echo "<div class=chapter>\n";
-    echo "<div class=clear></div><div style=\"height: 5px;\"></div>\n";
 	if (!is_null($englishBabName)) {
 		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0) $eprefix = "Chapter: ";
 		else $eprefix = "";
@@ -26,12 +24,11 @@ function displayBab($chapter) {
 	echo "<div class=clear></div>\n";
 	echo "</div>\n";
 
-	$acstyle = "";
+	$acOnlyClass = "";
 	if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"echapintro\">$englishIntro</div>\n";
-	else $acstyle = "style = \"width: 80%; margin-right: 5%;\"";
-	if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic achapintro\" $acstyle >$arabicIntro</div>\n";
+	else $acOnlyClass = " aconly";
+	if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic achapintro$acOnlyClass\">$arabicIntro</div>\n";
 	echo "<div class=clear></div>\n";
-	echo "\n<div style=\"height: 10px;\"></div>\n";
 }
 
 if (isset($this->_errorMsg)) echo $this->_errorMsg;
@@ -160,8 +157,6 @@ else {
 							}
 						}
 						else $otherlangshadith = NULL;
-						if ($englishExists) echo "<div class=hadith_icon style=\"float: left; margin-left: -23px;\"></div>";
-			            if ($arabicExists) echo "<div class=hadith_icon style=\"float: right; margin-right: -23px;\"></div>";
 						echo "<div class=actualHadithContainer id=h".$arabicEntry->arabicURN.">\n";
 						echo $this->renderPartial('/collection/printhadith', array(
 							'arabicEntry' => $arabicEntry,
@@ -210,22 +205,17 @@ else {
  
 						if (isset($newBabID) and $newBabID != $oldChapNo) { // Chapter ended and new chapter follows
 							if (isset($chapters[$oldChapNo]->arabicEnding) and strcmp($this->_pageType, "book") == 0) {
-								echo "<div class=hline style=\"height: 2px;\"></div>"; // hadith boundary
 								echo "<div class=\"echapintro\">".$chapters[$oldChapNo]->englishEnding."</div>";
 								echo "<div class=\"arabic_basic achapintro\">".$chapters[$oldChapNo]->arabicEnding."</div>";
 							}
-							echo "<div class=hline style=\"height: 4px;\"></div>";
 						}
 						elseif (isset($newBabID) && $status == 4) { // Chapter did NOT end
-							echo "<div class=hline style=\"height: 2px;\"></div>";
 						}
 						else { // no more hadith in the book
 							if (isset($chapters[$oldChapNo]->arabicEnding) and strcmp($this->_pageType, "book") == 0) {
-								echo "<div class=hline style=\"height: 2px;\"></div>"; // hadith boundary
 								echo "<div class=\"echapintro\">".$chapters[$oldChapNo]->englishEnding."</div>";
 								echo "<div class=\"arabic_basic achapintro\">".$chapters[$oldChapNo]->arabicEnding."</div>";
 							}
-							echo "<div class=hline style=\"height: 4px;\"></div>"; //chapter boundary
 						}
 					}
 					// Below code for zero-hadith chapters at the end of the book
@@ -234,7 +224,6 @@ else {
 						if ($oldChapIdx < count($babIDs)-1) {
 							for ($j = 0; $j < count($babIDs)-$oldChapIdx-1; $j++) {
 								displayBab($chapters[$babIDs[$oldChapIdx+$j+1]]);
-								echo "<div class=hline style=\"height: 4px;\"></div>";
 							}
 						}
 					}

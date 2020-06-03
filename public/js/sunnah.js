@@ -338,7 +338,7 @@
     function loadLang(lang, collection, bookID) {
         $.getJSON("/ajax/"+lang+"/"+collection+"/"+bookID, function(data) { 
             $.each(data, function(idx, elt) {
-				text = "<div class=\""+lang+"_hadith_full\">";
+				text = "<div class=\""+lang+"_hadith_full "+lang+"\">";
 				if (elt["hadithSanad"]) text = text + "<span class=\""+lang+"_sanad\">"+elt["hadithSanad"]+"</span> ";
 				text = text + elt["hadithText"]+"</div>"
 				$("#t"+elt["matchingArabicURN"]).append(text);

@@ -8,9 +8,7 @@ function displayBab($chapter, $showChapterNumbers = true) {
     $englishIntro = preg_replace("/\n+/", "<br>\n", $chapter->englishIntro);
     $arabicIntro = preg_replace("/\n+/", "<br>\n", $chapter->arabicIntro);
 
-    echo "<div style=\"height: 10px;\"></div>\n";
     echo "<div class=chapter>\n";
-    echo "<div class=clear></div><div style=\"height: 5px;\"></div>\n";
     if (!is_null($englishBabName)) {
         if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0) $eprefix = "Chapter: ";
         else $eprefix = "";
@@ -27,7 +25,6 @@ function displayBab($chapter, $showChapterNumbers = true) {
     if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"echapintro\">$englishIntro</div>\n";
     if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic achapintro\">$arabicIntro</div>\n";
     echo "<div class=clear></div>\n";
-    echo "\n<div style=\"height: 10px;\"></div>\n";
 }
 
 if (isset($this->_errorMsg)) echo $this->_errorMsg;
@@ -89,8 +86,6 @@ else {
 							$oldBabID = $chapters[$arabicEntry->arabicURN]->arabicBabNumber;
 						}
 
-						echo '<div class="hadith_icon" style="float: left; margin-left: -23px;"></div>';
-						echo '<div class="hadith_icon" style="float: right; margin-right: -23px;"></div>';
 						echo "<div class=actualHadithContainer id=h".$arabicEntry->arabicURN.">\n";				
 						echo $this->renderPartial('/collection/printhadith', array(
 							'arabicEntry' => $arabicEntry,
@@ -111,7 +106,6 @@ else {
                             ));	
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
                         echo "<div class=clear></div>";
-						echo "<div class=hline style=\"height: 4px;\"></div>";
 						}
 	echo "</div>";
 } // ending the no error if
