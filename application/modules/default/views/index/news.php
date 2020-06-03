@@ -2,6 +2,12 @@
 <div class=content>
 <br>
 <p align=center style="font-size: 16px;"><b>View our more detailed <a href="/changelog">changelog</a>.</b></p>
+28 May 2020: Beginning a new collection: <a href="/ahmad">Musnad Ahmad</a>.<br>
+<br>
+23 January 2020: <a href="/bulugh">Bulugh al-Maram</a> is now complete.<br>
+<br>
+23 December 2019: <a href="/adab">Al-Adab al-Mufrad</a> is now complete.<br>
+<br>
 2 June 2013: <a href="/ibnmajah">Sunan ibn Majah</a> is now complete. The Six Books of Hadith are now complete on sunnah.com, alhamdulillah!<br>
 <br>
 5 December 2012: We are beginning to add <b>Urdu</b> translations of Sahih al-Bukhari! Click on 
