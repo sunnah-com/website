@@ -599,8 +599,8 @@ a:hover { text-decoration: underline; }
 	float: left;
 	padding: 5px 10px 5px 10px;
 	text-align: justify;
-	width: 98%;
-	padding-right: 20px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .colindextitle.incomplete {
@@ -614,7 +614,6 @@ a:hover { text-decoration: underline; }
 
 .colindextitle .arabic {
     float: right;
-    padding-right: 10px;
     font-size: 26px;
 }
 
@@ -722,7 +721,7 @@ a:hover { text-decoration: underline; }
 	padding: 5px 20px 5px 5px;
 	margin-left: 0px;
 	text-align: justify;
-	width: 96%;
+	width: 94%;
 }
 
 .book_page_number {
