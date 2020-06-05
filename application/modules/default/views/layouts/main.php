@@ -51,7 +51,7 @@
 	<script>
 	<?php if (strcmp($this->_pageType, "search") == 0) echo "var searchQuery = '".htmlentities(stripslashes($this->_searchQuery))."';";  ?>
 	</script>
-  <script src="/js/sunnah.js"></script>
+  <script src="<?php echo $this->auto_version('/js/sunnah.js'); ?>"></script>
   <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
  
   <title>

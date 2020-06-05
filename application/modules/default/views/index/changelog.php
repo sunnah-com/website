@@ -1,7 +1,12 @@
 <div class="about">
 <div class=content>
-<br>
-<br>
+<br><br>
+28 May 2020: Added <a href="http://sunnah.com/ahmad/1">Musnad Abu Bakr as-Siddiq (ra) (1)</a> in <a href="http://sunnah.com/ahmad">Musnad Ahmad</a> (81 hadith).<br>
+<b>Beginning a new collection: Musnad Ahmad.</b><br>
+<br><br>
+23 January 2020: Added the books of <a href="http://sunnah.com/bulugh/2">Prayer (2)</a>, <a href="http://sunnah.com/bulugh/7">Business transactions (7)</a> and <a href="http://sunnah.com/bulugh/8">Marriage (8)</a> in <a href="http://sunnah.com/bulugh">Bulugh al-Maram</a> (916 hadith).<br>
+<b>Bulugh al-Maram is now complete, alhamdulillah.</b><br>
+<br><br>
 23 December 2019: Added <a href="http://sunnah.com/adab/31">The Book of Supplication (31)</a> in <a href="http://sunnah.com/adab">Al-Adab al-Mufrad</a> (135 hadith).<br>
 <b>Al-Adab al-Mufrad is now complete, alhamdulillah.</b><br>
 <br><br>

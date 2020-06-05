@@ -60,7 +60,7 @@
   </script>
 
 
-  <script src="/js/sunnah.js"></script>
+  <script src="<?php echo $this->auto_version('/js/sunnah.js'); ?>"></script>
  
   <title>
 	<?php echo $this->titleString() ?>
