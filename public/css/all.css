@@ -13,11 +13,6 @@
 }
 
 @font-face {
-	font-family: "C&L";
-	src: local("C&L"), url("/css/fonts/cl.ttf"); 
-}
-
-@font-face {
 	font-family: "Akzidenz";
 	font-weight: bold;
 	src: local("Akzidenz"), url("/css/fonts/akzidenz-grotesk-bold.ttf"); 
@@ -320,9 +315,8 @@ a:hover { text-decoration: underline; }
     margin: auto;
     margin-top: 10px;
     border: 0px solid;
-    font-size: 20px;
+    font-size: 16px;
     padding-top: 4px;
-	font-family: "C&L", Helvetica, Verdana, Arial;
 	color: #fff;
 	position: absolute;
 	bottom: 0;
