@@ -9,7 +9,13 @@
 
 @font-face {
 	font-family: "Akzidenz Roman";
-	src: local("Akzidenz Roman"), url("/css/fonts/akzidenz-grotesk-roman.ttf"); 
+	src: url("/css/fonts/akzidenz-grotesk-roman.eot"); 
+	src: local("Akzidenz Roman"),
+		 url("/css/fonts/akzidenz-grotesk-roman.eot?#iefix") format('embedded-opentype'),
+		 url("/css/fonts/akzidenz-grotesk-roman.woff2") format('woff2'),
+		 url("/css/fonts/akzidenz-grotesk-roman.woff") format('woff'),
+		 url("/css/fonts/akzidenz-grotesk-roman.ttf") format('truetype');
+		 font-display: swap;
 }
 
 @font-face {
