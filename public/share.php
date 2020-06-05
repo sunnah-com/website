@@ -1,7 +1,7 @@
 <?php
 ?>
 
-<div style="font-family: 'Open Sans', sans-serif; font-size: 16px; padding-top: 0px; padding-bottom: 16px; text-align: center;"> SHARE THIS HADITH</div>
+<div style="font-size: 16px; padding-top: 0px; padding-bottom: 16px; text-align: center;"> SHARE THIS HADITH</div>
 
 <input class=permalink_box type="text" value="http://sunnah.com<?php echo $_GET['link']; ?>" size=36 /><br>
 
