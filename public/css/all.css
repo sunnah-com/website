@@ -1230,10 +1230,6 @@ a:hover { text-decoration: underline; }
 	   min-width: auto;
     }
 
-	.arabic_collection_title {
-		text-align: right;
-	}
-
 	.collection_title {
 		width: auto;
 		margin-bottom: 3px;
@@ -1483,37 +1479,32 @@ a:hover { text-decoration: underline; }
 	}
 	
     .book_title {
-        padding: 5px 20px 0 20px;
+        padding: 5px 20px 20px 20px;
 	}
 	
-    .book_title > a {
-        display: inline-block;
-        width: 60%;
-        vertical-align: middle;
-	}
-		
     .book_number {
-        width: 15%;
+        width: 2.1em;
+        padding-right: 0;
 	}
 
     .english_book_name {
-        width: 80%;
+        min-width: 40%;
+        width: calc(55% - 2.1em);
 	}
 	
     .arabic_book_name {
-        width: 100%;
-        padding-left: 15%;
+        width: 45%;
+        padding-left: 3%;
         box-sizing: border-box;
+        float: right;
 	}
 	
     .book_range {
-        width: 40%;
-        float: none;
-        display: inline-block;
+        width: 100%;
         padding: 0;
-        text-align: right;
-        margin: 0;
-	}
+        margin-top: .5em;
+        padding-left: 2.1em;
+    }
 	
     .book_range > div {
         width:auto;
