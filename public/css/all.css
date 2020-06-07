@@ -135,7 +135,7 @@ a:hover { text-decoration: underline; }
 #header {
 	width: 100%;
 	background-image: url(../images/banner_small.png);
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	position: relative;
 	z-index: 20;
 }
@@ -245,7 +245,7 @@ a:hover { text-decoration: underline; }
     margin-left: 20px;
     margin-right: 20px;
 	background-image: url(../images/banner_small.png);
-	background-repeat: repeat-x;
+	background-repeat: repeat;
     margin-top: 20px;
     border-radius:10px;
 }
