@@ -20,10 +20,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="<?php echo $this->auto_version('/css/all.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
 
-  <link rel="shortcut icon" href="/favicon.ico" >
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="/favicon-128x128.png">
   <link rel="image_src" href="/images/hadith_icon2.png" />
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
-  <link rel="icon" href="/images/apple-touch-icon.png" />
 
   <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
   <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
