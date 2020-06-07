@@ -9,12 +9,13 @@
 
 @font-face {
 	font-family: "Akzidenz Roman";
-	src: local("Akzidenz Roman"), url("/css/fonts/akzidenz-grotesk-roman.ttf"); 
-}
-
-@font-face {
-	font-family: "C&L";
-	src: local("C&L"), url("/css/fonts/cl.ttf"); 
+	src: url("/css/fonts/akzidenz-grotesk-roman.eot"); 
+	src: local("Akzidenz Roman"),
+		 url("/css/fonts/akzidenz-grotesk-roman.eot?#iefix") format('embedded-opentype'),
+		 url("/css/fonts/akzidenz-grotesk-roman.woff2") format('woff2'),
+		 url("/css/fonts/akzidenz-grotesk-roman.woff") format('woff'),
+		 url("/css/fonts/akzidenz-grotesk-roman.ttf") format('truetype');
+		 font-display: swap;
 }
 
 @font-face {
@@ -134,7 +135,7 @@ a:hover { text-decoration: underline; }
 #header {
 	width: 100%;
 	background-image: url(../images/banner_small.png);
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	position: relative;
 	z-index: 20;
 }
@@ -174,7 +175,7 @@ a:hover { text-decoration: underline; }
 
 .bannerTop {
 	height: 70px;
-	background-image: url(../images/equal-logo_small.png);
+	background-image: url(../images/logo-small.png);
 	background-repeat: no-repeat;
 	background-position: 64%;
 	background-size: auto 70%;
@@ -244,7 +245,7 @@ a:hover { text-decoration: underline; }
     margin-left: 20px;
     margin-right: 20px;
 	background-image: url(../images/banner_small.png);
-	background-repeat: repeat-x;
+	background-repeat: repeat;
     margin-top: 20px;
     border-radius:10px;
 }
@@ -320,9 +321,8 @@ a:hover { text-decoration: underline; }
     margin: auto;
     margin-top: 10px;
     border: 0px solid;
-    font-size: 20px;
+    font-size: 16px;
     padding-top: 4px;
-	font-family: "C&L", Helvetica, Verdana, Arial;
 	color: #fff;
 	position: absolute;
 	bottom: 0;
@@ -586,20 +586,21 @@ a:hover { text-decoration: underline; }
 .crumbs a:visited { color: #eee; }
 
 .collection_info {
-	width: 93%;
+	width: 95%;
 	background-color: rgba(255, 255, 255, 0.5);
 	border-radius: 5px;
 	color: #666;
 	margin-top: 7px;
 	padding: 10px;
+	box-sizing: border-box;
 }
 
 .colindextitle {
 	float: left;
 	padding: 5px 10px 5px 10px;
 	text-align: justify;
-	width: 98%;
-	padding-right: 20px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .colindextitle.incomplete {
@@ -613,7 +614,6 @@ a:hover { text-decoration: underline; }
 
 .colindextitle .arabic {
     float: right;
-    padding-right: 10px;
     font-size: 26px;
 }
 
@@ -721,7 +721,7 @@ a:hover { text-decoration: underline; }
 	padding: 5px 20px 5px 5px;
 	margin-left: 0px;
 	text-align: justify;
-	width: 96%;
+	width: 94%;
 }
 
 .book_page_number {
@@ -1184,7 +1184,6 @@ a:hover { text-decoration: underline; }
 	font-size: 14px;
 	border-radius: 4px;
 	text-align: center;
-	font-family: 'Open Sans', sans-serif;
 }
 
 .permalink_box:focus {
@@ -1230,10 +1229,6 @@ a:hover { text-decoration: underline; }
     #site{
 	   min-width: auto;
     }
-
-	.arabic_collection_title {
-		text-align: right;
-	}
 
 	.collection_title {
 		width: auto;
@@ -1449,7 +1444,8 @@ a:hover { text-decoration: underline; }
         min-width: auto;
 	}
 	
-    .collection_titles {
+	.collection_titles,
+    .collection_info {
         width: 100%;
 	}
 	
@@ -1483,37 +1479,32 @@ a:hover { text-decoration: underline; }
 	}
 	
     .book_title {
-        padding: 5px 20px 0 20px;
+        padding: 5px 20px 20px 20px;
 	}
 	
-    .book_title > a {
-        display: inline-block;
-        width: 60%;
-        vertical-align: middle;
-	}
-		
     .book_number {
-        width: 15%;
+        width: 2.1em;
+        padding-right: 0;
 	}
 
     .english_book_name {
-        width: 80%;
+        min-width: 40%;
+        width: calc(55% - 2.1em);
 	}
 	
     .arabic_book_name {
-        width: 100%;
-        padding-left: 15%;
+        width: 45%;
+        padding-left: 3%;
         box-sizing: border-box;
+        float: right;
 	}
 	
     .book_range {
-        width: 40%;
-        float: none;
-        display: inline-block;
+        width: 100%;
         padding: 0;
-        text-align: right;
-        margin: 0;
-	}
+        margin-top: .5em;
+        padding-left: 2.1em;
+    }
 	
     .book_range > div {
         width:auto;
@@ -1546,6 +1537,22 @@ a:hover { text-decoration: underline; }
 	}
 }
 
+/* Medium screen, retina, stuff to override above media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 700px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 700px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 700px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 700px),
+only screen and (                min-resolution: 192dpi) and (min-width: 700px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 700px) {
+	.bannerTop {
+		height: 70px;
+		background-image: url(../images/equal-logo_small.png);
+		background-repeat: no-repeat;
+		background-position: 64%;
+		background-size: auto 70%;
+	}
+}
 
 /* Very small screens */
 @media (max-width: 320px) {
