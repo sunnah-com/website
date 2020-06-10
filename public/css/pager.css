@@ -50,7 +50,7 @@ ul.yiiPager .next a{
 	background-color: rgba(255, 255, 255, 0);
 }
 
-ul.yiiPager .hidden a
+ul.yiiPager .hidden span
 {
 	border:solid 1px #DEDEDE;
 	color:#888888;

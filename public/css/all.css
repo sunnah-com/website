@@ -11,11 +11,11 @@
 	font-family: "Akzidenz Roman";
 	src: url("/css/fonts/akzidenz-grotesk-roman.eot"); 
 	src: local("Akzidenz Roman"),
-		 url("/css/fonts/akzidenz-grotesk-roman.eot?#iefix") format('embedded-opentype'),
-		 url("/css/fonts/akzidenz-grotesk-roman.woff2") format('woff2'),
-		 url("/css/fonts/akzidenz-grotesk-roman.woff") format('woff'),
-		 url("/css/fonts/akzidenz-grotesk-roman.ttf") format('truetype');
-		 font-display: swap;
+			 url("/css/fonts/akzidenz-grotesk-roman.eot?#iefix") format('embedded-opentype'),
+			 url("/css/fonts/akzidenz-grotesk-roman.woff2") format('woff2'),
+			 url("/css/fonts/akzidenz-grotesk-roman.woff") format('woff'),
+			 url("/css/fonts/akzidenz-grotesk-roman.ttf") format('truetype');
+			 font-display: swap;
 }
 
 @font-face {
@@ -245,7 +245,7 @@ a:hover { text-decoration: underline; }
     margin-left: 20px;
     margin-right: 20px;
 	background-image: url(../images/banner_small.png);
-	background-repeat: repeat;
+	background-repeat: repeat
     margin-top: 20px;
     border-radius:10px;
 }
@@ -1444,8 +1444,8 @@ a:hover { text-decoration: underline; }
         min-width: auto;
 	}
 	
-	.collection_titles,
-    .collection_info {
+    .collection_titles,
+	.collection_info {
         width: 100%;
 	}
 	
@@ -1484,27 +1484,27 @@ a:hover { text-decoration: underline; }
 	
     .book_number {
         width: 2.1em;
-        padding-right: 0;
+		padding-right: 0;
 	}
 
     .english_book_name {
         min-width: 40%;
-        width: calc(55% - 2.1em);
+		width: calc(55% - 2.1em);
 	}
 	
     .arabic_book_name {
         width: 45%;
         padding-left: 3%;
         box-sizing: border-box;
-        float: right;
+		float: right;
 	}
 	
     .book_range {
-        width: 100%;
+		width: 100%;
         padding: 0;
-        margin-top: .5em;
-        padding-left: 2.1em;
-    }
+		margin-top: .5em;
+		padding-left: 2.1em;
+	}
 	
     .book_range > div {
         width:auto;
@@ -1545,14 +1545,14 @@ only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 700px),
 only screen and (        min-device-pixel-ratio: 2)      and (min-width: 700px),
 only screen and (                min-resolution: 192dpi) and (min-width: 700px),
 only screen and (                min-resolution: 2dppx)  and (min-width: 700px) {
-	.bannerTop {
-		height: 70px;
-		background-image: url(../images/equal-logo_small.png);
-		background-repeat: no-repeat;
-		background-position: 64%;
-		background-size: auto 70%;
-	}
-}
+	  .bannerTop {
+			  height: 70px;
+			  background-image: url(../images/equal-logo_small.png);
+			  background-repeat: no-repeat;
+			  background-position: 64%;
+			  background-size: auto 70%;
+  	}
+  }
 
 /* Very small screens */
 @media (max-width: 320px) {

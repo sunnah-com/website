@@ -1,7 +1,7 @@
 <?php
 require_once 'Mail.php';
 require_once('recaptchalib.php');
-include("../application/config/loadStageConfig.php");
+include("../config/loadStageConfig.php");
 $privatekey = $credentials['recaptcha_private_key'];
 
 function getIP() {

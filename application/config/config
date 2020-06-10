@@ -11,4 +11,4 @@ credentialsFile = credentials.prod
 cacheHost = localhost
 cachePort = 7630
 cacheTTL = 7200
-yiiPath = /usr/local/yii/framework
+yiiPath = /usr/local/yii2
