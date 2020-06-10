@@ -1,5 +1,8 @@
 <?php 
 
+use app\modules\front\models\EnglishHadith;
+use app\modules\front\models\ArabicHadith;
+
 function displayBab($chapter) {
 	if ($chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
 	$arabicBabNumber = $chapter->arabicBabNumber;
@@ -89,7 +92,7 @@ else {
 						$arabicExists = true;
 
 						if ($englishEntry == NULL) {
-							$englishEntry = new EnglishHadith;
+							$englishEntry = new EnglishHadith();
 							$urn = $arabicEntry->arabicURN;
 							$englishExists = false;
 							$ourHadithNumber = $arabicEntry->ourHadithNumber;
@@ -100,7 +103,7 @@ else {
 						}
 
 						if ($arabicEntry == NULL) {
-							$arabicEntry = new ArabicHadith;
+							$arabicEntry = new ArabicHadith();
 							$arabicExists = false;
 						}
 						else {

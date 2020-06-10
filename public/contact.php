@@ -19,9 +19,9 @@ include("../application/config/loadStageConfig.php");
 
   <link rel="shortcut icon" href="/favicon.ico" >
 
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
   <script src="/js/jquery.cookie.js"></script>
 
   	<script>
@@ -231,30 +231,16 @@ else {
 </div>
 
 <script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://sunnah.com/piwik/" : "http://sunnah.com/piwik/");
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
-piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
-} catch( err ) {}
-</script><noscript><p><img src="http://sunnah.com/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
-
-<script type="text/javascript">
-var sc_project=7148282; 
-var sc_invisible=1; 
-var sc_security="63a57073"; 
+var sc_project=7148282;
+var sc_invisible=1;
+var sc_security="63a57073";
 </script>
-
-<script type="text/javascript"
-src="http://www.statcounter.com/counter/counter.js"></script><noscript><div
-class="statcounter"><a title="drupal statistics"
-href="http://statcounter.com/drupal/" target="_blank"><img
-class="statcounter"
-src="http://c.statcounter.com/7148282/0/63a57073/1/"
-alt="drupal statistics" ></a></div></noscript>
-	<div class="clear"></div>
+<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+<noscript>
+<div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank">
+<img class="statcounter" src="https://c.statcounter.com/7148282/0/63a57073/1/" alt="Web Analytics"></a>
+</div>
+</noscript>
 
 </div><!-- site div close -->
 </body>
