@@ -6,10 +6,10 @@ include("../application/config/loadStageConfig.php");
 $yii = $parameters['yiiPath'].'/yii.php';
 
 // comment out the following two lines when deployed to production
-//if (strcmp($stage, "prod") != 0) {
+if (strcmp($stage, "prod") != 0) {
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     defined('YII_ENV') or define('YII_ENV', 'dev');
-//}
+}
 
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 

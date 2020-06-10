@@ -103,8 +103,11 @@ class SearchController extends SController
             $this->_numFound = 0;
             $this->_spellcheck = $spellcheck;
             $this->_viewVars->pageType = "search";
-        	$this->render('index');
-            return;
+			$this->view->params['_pageType'] = "search";
+        	return $this->render('index', [
+									 'numFound' => 0,
+									 'spellcheck' => $spellcheck,
+			]);
         }
 
         for ($i = 0; $i < count($eurns); $i++) $eurns[$i] = intval($eurns[$i]);

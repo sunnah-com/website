@@ -12,7 +12,7 @@ else {
 	if (true) {
 
 	// "Did you mean" section
-	if (!is_null($spellcheck)) {
+	if (isset($spellcheck) and !is_null($spellcheck)) {
 		$suggestions = $spellcheck['suggestions'];
 		//echo $suggestions;
 		//print_r($suggestions);
@@ -26,6 +26,7 @@ else {
 		} 
 	} 
 
+	if (!isset($language)) $language = "english";
 	$prefix = strcmp($language, "english")==0 ? "" : "arabic";
 	if ($numFound == 0) {
 		echo "<p align=center>Sorry, there were no results found.";

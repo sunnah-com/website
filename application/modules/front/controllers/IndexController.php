@@ -24,6 +24,7 @@ class IndexController extends SController
     }
 
 	public function actionError() {
+		$this->view->params['_pageType'] = "error";
 		return $this->render('error');
 	}
 
