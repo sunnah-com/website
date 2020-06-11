@@ -52,7 +52,7 @@ class SearchController extends SController
 			if (isset($_GET['page'])) $page = $_GET['page'];
 			return $this->processSearch($query, $page);
 		}
-		else return $this->render('/index/index');
+		else return Yii::$app->runAction('front/index/index');
 
 	}
 
