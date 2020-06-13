@@ -245,7 +245,7 @@ a:hover { text-decoration: underline; }
     margin-left: 20px;
     margin-right: 20px;
 	background-image: url(../images/banner_small.png);
-	background-repeat: repeat
+	background-repeat: repeat;
     margin-top: 20px;
     border-radius:10px;
 }
@@ -1207,6 +1207,10 @@ a:hover { text-decoration: underline; }
 	display: inline;
 }
 
+.hadith_reference_sticky {
+    display: none;
+}
+
 /* Smaller Screens */
 @media (max-width: 768px) {
 
@@ -1290,8 +1294,12 @@ a:hover { text-decoration: underline; }
 	}
 	
     .crumbs {
-        padding-left: .5em;
-	}
+        padding: 3px .5em 5px;
+        white-space: nowrap;
+        position: relative;
+        overflow-x: scroll;
+        overflow-y: hidden;
+ }
 	
     .book_info,
     .AllHadith {
@@ -1442,7 +1450,27 @@ a:hover { text-decoration: underline; }
 	
     #site {
         min-width: auto;
+		position: relative;
+		overflow: initial;
 	}
+
+	.hadith_reference_sticky {
+		display: block;
+		background-color: #90b8b9;
+		color: white;
+		text-align: right;
+		padding: 5px 20px 7px;
+		position: sticky;
+		left: 0;
+		top: 100px;
+		box-sizing: border-box;
+		width: calc(100% + 40px);
+		z-index: 1;
+		border-top: 2px solid #75a7a8;
+		margin: 0 0 1em -20px;
+	}
+
+
 	
     .collection_titles,
 	.collection_info {

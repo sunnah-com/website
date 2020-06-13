@@ -158,7 +158,11 @@ else {
 							'arabicEntry' => $arabicEntry,
 							'englishText' => $englishEntry->hadithText,
 							'arabicText' => $arabicEntry->hadithText,
-							'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith));
+							'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
+							'hadithNumber' => $arabicEntry->hadithNumber,
+							'bookEngTitle' => $collection->englishTitle,
+							'bookStatus'	=> $status,
+							));
 
 						echo $this->render('/collection/hadith_reference', array(
 							'englishEntry' => $englishExists,
