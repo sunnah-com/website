@@ -18,6 +18,9 @@
 	echo "<!-- Begin hadith -->\n\n";
 	echo "<a name=$linknum></a>\n";
 	
+			if ( $bookStatus == 4 ) {
+				echo "<div class=\"hadith_reference_sticky\">$bookEngTitle $hadithNumber</div>";
+			}
 			echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
 			echo "<div class=\"english_hadith_full\">";
             if (strpos($englishText, ":") === FALSE) {
