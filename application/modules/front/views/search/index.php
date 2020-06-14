@@ -153,7 +153,12 @@ else {
 				echo "<a class=nounderline href=\"/".$a_hadith['collection']."\">".$collections[$a_hadith['collection']]['englishTitle']."</a> » ";
 				echo "<a class=nounderline href=\"/".$a_hadith['collection']."/".$ourBookID."\">".$e_hadith['bookName']." - ".$a_hadith['bookName']."</a>";
 				if ($a_hadith['ourHadithNumber'] > 0) {
-					if (strcmp($hasbooks, "yes") == 0) $permalink = "/".$a_hadith['collection']."/".$ourBookID."/".$a_hadith['ourHadithNumber'];
+					if (strcmp($hasbooks, "yes") == 0) {
+						$booklink = $ourBookID;
+						if ($ourBookID == -1) $booklink = "introduction";
+						elseif ((strcmp($hadith->collection, "nasai") == 0) and ($ourBookID == -35)) $booklink = "35b";
+						$permalink = "/".$a_hadith['collection']."/".$booklink."/".$a_hadith['ourHadithNumber'];
+					}
 					else $permalink = "/".$a_hadith['collection']."/".$a_hadith['ourHadithNumber'];
 				}
 				else $permalink = "/urn/$aurn";

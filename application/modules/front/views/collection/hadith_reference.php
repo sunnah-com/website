@@ -81,7 +81,10 @@
 							echo "Hadith ".$ourHadithNumber;
 							echo "</td>";
 						}
-						if (strcmp($collectionHasBooks, "yes") == 0) $permalink = "/$collection/$ourBookID/$ourHadithNumber";
+						if (strcmp($collectionHasBooks, "yes") == 0) {
+							$permalink = "/$collection/$ourBookID/$ourHadithNumber";
+							if ($ourBookID == -1) $permalink = "/$collection/introduction/$ourHadithNumber";
+						}
 						else $permalink = "/$collection/$ourHadithNumber"; // This collection has no books.
 					}
 					echo "<tr><td>Arabic/English book reference</td>";
