@@ -109,7 +109,7 @@ function getIP() {
 }
 
 if (isset($_POST['submit'])) {
-    $contacttext = $_POST['contacttext'];
+    $contacttext = $_POST['contacttext_ns'];
     $email = $_POST['email'];
     $name = $_POST['name1'];
 
@@ -177,7 +177,7 @@ else {
                 <td border=0 colspan=2>
                 We would love to hear any comments, suggestions, or feedback.<br>
                 Please enter your message in the box below: <br><br>
-                <textarea name=contacttext style="width: 400px; height: 200px; background-color: #eee;"></textarea></td>
+                <textarea name="contacttext_ns" style="width: 400px; height: 200px; background-color: #eee;"></textarea></td>
             </tr>
             <tr style="height:10px;"></tr>
             <tr>
