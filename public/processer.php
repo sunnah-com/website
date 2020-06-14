@@ -1,7 +1,7 @@
 <?php
 require_once 'Mail.php';
 require_once('recaptchalib.php');
-include("../config/loadStageConfig.php");
+include("../application/config/loadStageConfig.php");
 $privatekey = $credentials['recaptcha_private_key'];
 
 function getIP() {
@@ -22,7 +22,7 @@ if (isset($_POST['ftype'])) {
 			return;
 		}
 
-		$errortype = $_POST['type'].$_POST['otherrror'];
+		$errortype = $_POST['type']." ".$_POST['othererror'];
 		$errortext = $_POST['re_additional'];
 		$email = $_POST['email'];
 		if (strlen($email) <= 3) $email = "sunnah@iman.net";
