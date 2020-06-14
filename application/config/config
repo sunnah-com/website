@@ -2,7 +2,7 @@
 db_host = localhost
 db_name = hadithdb
 credentialsFile = credentials.development
-yiiPath = ../vendor/yiisoft/yii/framework
+yiiPath = ../
 
 [prod]
 db_host = localhost
