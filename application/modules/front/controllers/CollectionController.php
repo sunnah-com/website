@@ -89,7 +89,13 @@ class CollectionController extends SController
         if (!(is_null($hadithNumbers))) $hadithRange = addslashes($hadithNumbers);
         else $hadithRange = NULL;
 		$this->_collection = $this->util->getCollection($collectionName);
-        $this->view->params['collection'] = $this->_collection;
+        if (is_null($this->_collection)) {
+            $this->view->params['_pageType'] = "book";
+			$errorMsg = "There is no such collection on our website. Please use the menu above to navigate the website.";
+        	return $this->render('dispbook', ['errorMsg' => $errorMsg]);
+        }
+        
+		$this->view->params['collection'] = $this->_collection;
         $this->_book = $this->util->getBook($collectionName, $ourBookID);
         $this->view->params['book'] = $this->_book;
         if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
@@ -328,7 +334,7 @@ class CollectionController extends SController
             else $arabicHadith = $this->util->getHadith($englishHadith->matchingArabicURN, "arabic");
 
 			if (is_null($englishHadith) && is_null($arabicHadith)) {
-				throw new HttpException(404, 'The URL you have entered appears to be invalid.');
+				return Yii::$app->runAction('front/index/index');
 			}
 
             if (strcmp($lang, "english") == 0) {
