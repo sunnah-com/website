@@ -100,6 +100,7 @@ $config = [
                 'changelog' => 'front/index/change-log',
                 'support' => 'front/index/support',
                 'searchtips' => 'front/index/search-tips',
+                'survey' => 'front/index/survey',
                 'tce' => 'front/collection/tce',
                 '<selection:ramadan>' => 'front/collection/selection',
                 '<selection:dhulhijjah>' => 'front/collection/selection',
