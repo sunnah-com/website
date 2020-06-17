@@ -74,6 +74,14 @@ class IndexController extends SController
 		return $this->render('support');
 	}
 
+
+    public function actionSurvey() {
+        $this->pathCrumbs('Survey', "/survey");
+        $this->view->params['_pageType'] = "survey";
+		return $this->render('survey');
+	}
+
+	
 	public function actionFlushCache($key = NULL) {
 		if (is_null($key)) $success = Yii::$app->cache->flush();
 		else {

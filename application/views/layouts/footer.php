@@ -20,3 +20,7 @@ var sc_security="63a57073";
 </div>
 </noscript>
 
+<?php
+// Comment out when survey is over
+echo $this->render('/index/popup-survey');
+?>

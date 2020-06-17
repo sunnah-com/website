@@ -90,6 +90,7 @@ $config = [
                 'changelog' => 'front/index/change-log',
                 'support' => 'front/index/support',
                 'searchtips' => 'front/index/search-tips',
+                'survey' => 'front/index/survey',
                 'tce' => 'front/collection/tce',
                 'ramadan' => 'front/collection/ramadan',
                 'socialmedia' => 'front/collection/socialmedia',
