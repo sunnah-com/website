@@ -1212,10 +1212,10 @@ a:hover { text-decoration: underline; }
 }
 
 .footer a.survey {
-	cursor: pointer;
-    border: 1px solid;
-    padding: 2px 12px;
-    margin-left: .1em;
+    cursor: pointer;
+    border-bottom: 1px solid;
+	padding-bottom: 1px;
+	text-shadow: 0 0 5px black, 0 0 10px white;
 }
 .button {
     padding: 8px 20px;
