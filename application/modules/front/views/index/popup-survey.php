@@ -7,7 +7,7 @@ $ip = getenv('HTTP_CLIENT_IP')?:
 	getenv('REMOTE_ADDR');
 
 // Test 123.455.212.232 for 0
-$trigger_popup = (substr( hash("crc32", $ip ), -1) === "0") ? "true" : "false";
+$trigger_popup = in_array(substr( hash("crc32", $ip ), -1), ["0", "1", "2", "3"], true) ? "true" : "false";
 
 ?>
 <div id="popup_survey" class="popup_wrapper" style="display: none;">
@@ -15,7 +15,7 @@ $trigger_popup = (substr( hash("crc32", $ip ), -1) === "0") ? "true" : "false";
 		<p>Will you help us by answering a few questions on how you use <b>sunnah.com?</b><br>
 		Your thoughtful answers will shape the direction of our efforts.</p>
 		<p>
-		<a class="button button_sec" id="popup_close">No thanks</a>
+		<a class="button button_sec" id="popup_close">No, thanks</a>
 		<a class="button button_pri" id="popup_success" href="/survey" target="_blank">I'd love to!</a>
 		</p>
 	</div>
