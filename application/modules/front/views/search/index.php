@@ -19,7 +19,7 @@ else {
 		if (!empty($suggestions)) {
 			$collation = $suggestions['collation'];
 			$suggest_string = htmlentities(stripslashes(substr(strstr($collation, ":"), 1)));
-			$atag = "<a href=\"javascript:void(0);\" onclick=\"location.href='/?q=".rawurlencode($suggest_string)."&didyoumean=true";
+			$atag = "<a href=\"javascript:void(0);\" onclick=\"location.href='/search?q=".rawurlencode($suggest_string)."&didyoumean=true";
 			$atag = $atag."&old=".rawurlencode($this->params['_searchQuery'])."';\">";
 			echo "<span class=breadcrumbs_search>Did you mean to search for ".$atag.$suggest_string."</a></span> ?
 			<br><span class=breadcrumbs_search>We are still working on this feature. Please bear with us if the suggestion doesn't sound right.</span><br>";
