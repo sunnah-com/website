@@ -97,8 +97,12 @@ class CollectionController extends SController
         
 		$this->view->params['collection'] = $this->_collection;
         $this->_book = $this->util->getBook($collectionName, $ourBookID);
+        $hadithCount = $this->_book->getHadithCount();
         $this->view->params['book'] = $this->_book;
         if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
+        $pairs = $this->_entries[2];
+        if (($this->_book->status == 4) and ($hadithCount != count($pairs))) 
+            Yii::warning("hadith count should be ".$hadithCount." and pairs length is ".count($pairs));
 		$this->view->params['lastUpdated'] = $this->_entries[3];
 
         if (is_null($hadithRange)) {
@@ -118,7 +122,6 @@ class CollectionController extends SController
             'book' => $this->_book,
         ];
         
-        $pairs = $this->_entries[2];
 		if (isset($this->_entries[0][$pairs[0][0]])) $this->view->params['_ogDesc'] = substr(strip_tags($this->_entries[0][$pairs[0][0]]->hadithText), 0, 300);
 
 		if (strcmp($_escaped_fragment_, "default") != 0) {
