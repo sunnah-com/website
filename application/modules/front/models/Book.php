@@ -71,14 +71,6 @@ class Book extends ActiveRecord
 		return $retval;
 	}
 
-    public function getHadithCount() {
-        $query = ArabicHadith::find()
-                        ->where('collection = :collection', [':collection' => $this->collection])
-                        ->andWhere('bookID = :bookID', [':bookID' => $this->arabicBookID]);
-        $hadithCount = $query->count();
-        return $hadithCount;
-    }
-
 	public function fetchHadith($hadithRange = NULL) {
 		$beginIndex = NULL; $endIndex = NULL;
 		if (!is_null($hadithRange)) {

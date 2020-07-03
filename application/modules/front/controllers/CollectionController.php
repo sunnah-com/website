@@ -97,11 +97,11 @@ class CollectionController extends SController
         
 		$this->view->params['collection'] = $this->_collection;
         $this->_book = $this->util->getBook($collectionName, $ourBookID);
-        $hadithCount = $this->_book->getHadithCount();
+        if (!is_null($this->_book)) $hadithCount = $this->_book->totalNumber;
         $this->view->params['book'] = $this->_book;
         if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
         $pairs = $this->_entries[2];
-        if (($this->_book->status == 4) and ($hadithCount != count($pairs))) 
+        if (($this->_book) and ($this->_book->status == 4) and is_array($pairs) and ($hadithCount != count($pairs)) and is_null($hadithRange)) 
             Yii::warning("hadith count should be ".$hadithCount." and pairs length is ".count($pairs));
 		$this->view->params['lastUpdated'] = $this->_entries[3];
 
