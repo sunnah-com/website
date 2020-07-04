@@ -232,6 +232,28 @@ else {
 					echo "<!-- <div align=right><i>Content on this page was last updated on ".$this->params['lastUpdated']."</i></div> -->";
 					echo "</div>";
 
+	// Send a post request to add a log entry if the count of shown hadith doesn't match the expected count
+	?>	
+	<script>
+		(function () {
+
+			var hCount = $(".actualHadithContainer").length;
+			var hExpectedCount = <?php echo $expectedHadithCount ?>;
+			
+			if ( hCount != hExpectedCount ) {
+				var message = "\n" + location.pathname.substring(1) + "\tshown: " + hCount + "\texpected: " + hExpectedCount;
+
+				$.ajax({
+					type : "POST",
+					url : "/ajax/log/hadithcount",
+					data: {msg: message, _csrf:'<?=\Yii::$app->request->csrfToken?>'},
+				});
+			}
+		})();
+	</script>
+
+	<?php
+
 } // ending the no error if
 
 ?>
