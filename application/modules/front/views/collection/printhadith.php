@@ -23,7 +23,7 @@
 			}
 			echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
 			echo "<div class=\"english_hadith_full\">";
-            if (strpos($englishText, ":") === FALSE) {
+            if ((strpos($englishText, ":") === FALSE) or (isset($collection) and strcmp($collection, "hisn") == 0)) {
             	echo "<div class=text_details>\n
                      ".$englishText."</div><br />\n";
             }

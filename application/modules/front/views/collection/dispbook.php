@@ -14,15 +14,15 @@ function displayBab($chapter) {
 
     echo "<div class=chapter>\n";
 	if (!is_null($englishBabName)) {
-		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0) $eprefix = "Chapter: ";
+		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0 and (strlen($englishBabNumber) > 0)) $eprefix = "Chapter: ";
 		else $eprefix = "";
 		if (strlen($englishBabNumber) > 0 && intval($englishBabNumber) != 0) $babNum = $englishBabNumber;
 		else $babNum = $arabicBabNumber;
 		if (ctype_upper(substr(trim($englishBabName), 0, 2))) $englishBabName = ucwords(strtolower($englishBabName));
-		echo "<div class=echapno>($babNum)</div>";
+		echo "<div class=echapno>"; if (strlen($babNum) > 0) echo "($babNum)"; echo "</div>";
 		echo "<div class=englishchapter>".$eprefix.$englishBabName."</div>\n";
 	}
-	echo "<div class=achapno>($arabicBabNumber)</div>\n";
+	echo "<div class=achapno>"; if (strlen($arabicBabNumber) > 0) echo "($arabicBabNumber)"; echo "</div>\n";
 	echo "<div class=\"arabicchapter arabic\">$arabicBabName</div>";
 	echo "<div class=clear></div>\n";
 	echo "</div>\n";
@@ -67,7 +67,7 @@ else {
 		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b><?php echo $totalCount; ?></b> hadith</div> -->
 
 	<?php
-		if (strcmp($collectionHasBooks, "yes") == 0 and !is_null($book->arabicBookIntro) and strcmp($this->params['_pageType'], "book") == 0) {
+		if (!is_null($book->arabicBookIntro) and strcmp($this->params['_pageType'], "book") == 0) {
 					if (strcmp($collection->name, "muslim") == 0 and $ourBookID == -1) include("muslimintro.txt");
 					echo "<div class=bookintro>";
 					echo "<div class=ebookintro>".$book->englishBookIntro."</div>";
@@ -162,6 +162,7 @@ else {
 							'hadithNumber' => $arabicEntry->hadithNumber,
 							'bookEngTitle' => $collection->englishTitle,
 							'bookStatus'	=> $status,
+							'collection'	=> $collection->name,
 							));
 
 						echo $this->render('/collection/hadith_reference', array(
