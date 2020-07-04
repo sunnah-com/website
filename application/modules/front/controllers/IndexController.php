@@ -15,7 +15,7 @@ class IndexController extends SController
         return [
             [
                    'class' => 'yii\filters\PageCache',
-                   'except' => ['flushcache'],
+                   'except' => ['flushcache', 'ajaxhadithcount'],
                    'duration' => Yii::$app->params['cacheTTL'],
                    'variations' => [ Yii::$app->request->get('id') ],
         
@@ -26,6 +26,11 @@ class IndexController extends SController
 	public function actionError() {
 		$this->view->params['_pageType'] = "error";
 		return $this->render('error');
+	}
+
+	public function actionAjaxhadithcount() {
+		$postMessage = Yii::$app->request->post('msg');
+		Yii::info($postMessage, 'hadithcount');
 	}
 
 	public function actionIndex()
