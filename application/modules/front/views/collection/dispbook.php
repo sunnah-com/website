@@ -53,13 +53,13 @@ else {
 	<div class="book_info">
     	<div class=book_page_colindextitle>
     		<div class="book_page_arabic_name arabic"><?php echo $book->arabicBookName; ?></div>
-    		<div class="book_page_number">
 			<?php if (strcmp($collectionHasBooks, "yes") == 0) {
+    				echo "<div class=\"book_page_number\">";
 					if (intval($ourBookID) > 0) echo "$ourBookID";
 				  	elseif ($ourBookID == -35) echo "35b&nbsp;&nbsp; "; 
+					echo "</div>";
 				  }
 			?>
-			</div>
     		<div class="book_page_english_name">
 				<?php echo $book->englishBookName; ?>
 			</div>
