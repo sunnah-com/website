@@ -12,6 +12,7 @@ function displayBab($chapter) {
 	$englishIntro = preg_replace("/\n+/", "<br>\n", $chapter->englishIntro);
 	$arabicIntro = preg_replace("/\n+/", "<br>\n", $chapter->arabicIntro);
 
+	echo "<a name=C$chapter->babID></a>\n";
     echo "<div class=chapter>\n";
 	if (!is_null($englishBabName)) {
 		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0 and (strlen($englishBabNumber) > 0)) $eprefix = "Chapter: ";
@@ -153,7 +154,7 @@ else {
 							}
 						}
 						else $otherlangshadith = NULL;
-						echo "<div class=actualHadithContainer id=h".$arabicEntry->arabicURN.">\n";
+						echo "<div class=\"actualHadithContainer $collection->name\" id=h".$arabicEntry->arabicURN.">\n";
 						echo $this->render('/collection/printhadith', array(
 							'arabicEntry' => $arabicEntry,
 							'englishText' => $englishEntry->hadithText,
@@ -233,6 +234,9 @@ else {
 					echo "</div>";
 
 	// Send a post request to add a log entry if the count of shown hadith doesn't match the expected count
+
+	if ($book->status == 4 and $totalCount > 1) {
+	
 	?>	
 	<script>
 		(function () {
@@ -253,7 +257,7 @@ else {
 	</script>
 
 	<?php
-
+	}
 } // ending the no error if
 
 ?>

@@ -75,6 +75,7 @@ $config = [
                     'levels' => ['info'],
 					'categories' => ['hadithcount'],
 					'logFile' => '@runtime/logs/hadithcount.log',
+					'logVars' => [],
                 ],
             ],
         ],
