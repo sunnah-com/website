@@ -81,6 +81,25 @@ else {
 	<div class=clear></div>
 	</div>
 
+    <?php if (strcmp($collection->name, "hisn") == 0) { ?>
+    <div class=ChapterIndexContainer><div class=ChapterIndex>
+    <?php
+        $chapterCount = count($babIDs);
+        foreach ($chapters as $chapter) {
+            echo "<div class=ChapterLink id=cl$chapter->babID>\n";
+            echo "<a href=\"#C$chapter->babID\">\n";
+            echo "<div class=ChapterNumber>$chapter->englishBabNumber</div>\n";
+            echo "<div class=\"EnglishChapterName english\">$chapter->englishBabName</div>\n";
+            echo "<div class=\"ArabicChapterName arabic\">$chapter->arabicBabName</div>\n";
+            echo "</a>";
+            echo "<div class=clear></div>";
+            echo "</div> <!-- end ChapterLink div-->\n";
+        }
+    ?>
+    </div></div>
+    <div class=clear></div>
+    <?php } ?>
+
     <a name="0"></a>
 	<div class=AllHadith>
 	<?php

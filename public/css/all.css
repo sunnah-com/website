@@ -746,6 +746,44 @@ a:hover { text-decoration: underline; }
 	width: 40%;
 }
 
+.ChapterIndexContainer {
+    width: 94%;
+    float: left;
+}
+
+.ChapterIndex {
+    border-radius: 8px;
+	font-size: 15px;
+	width: 80%;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0 auto;
+}
+
+.ChapterLink {
+    padding: 0 0 0 20px;
+}
+
+.ChapterNumber {
+    float: left;
+	min-width: 20px;
+	padding-top: 2px;
+	padding-right: 5px;
+}
+
+.EnglishChapterName {
+    width: 45%;
+	float: left;
+	padding-top: 2px;
+}
+
+.ArabicChapterName {
+    width: 48%;
+	float: left;
+	font-size: 20px;
+	text-align: right;
+    padding-right: 10px;
+}
+
 .chapter {
     background-color: rgba(255, 255, 255, 0.5);
     color: #666;
