@@ -3,7 +3,7 @@
 use app\modules\front\models\EnglishHadith;
 use app\modules\front\models\ArabicHadith;
 
-function displayBab($chapter) {
+function displayBab($chapter, $collection, $ourBookID) {
 	if ($chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
 	$arabicBabNumber = $chapter->arabicBabNumber;
 	$arabicBabName = $chapter->arabicBabName;
@@ -13,14 +13,24 @@ function displayBab($chapter) {
 	$arabicIntro = preg_replace("/\n+/", "<br>\n", $chapter->arabicIntro);
 
 	echo "<a name=C$chapter->babID></a>\n";
-    echo "<div class=chapter>\n";
+	if ((strcmp($collection->name, "bukhari") == 0) and ($ourBookID == 65) and (strcmp(substr($chapter->babID, -2), "00") == 0)) $chapterClassName = "surah";
+	else $chapterClassName = "chapter";
+    echo "<div class=$chapterClassName>\n";
 	if (!is_null($englishBabName)) {
 		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0 and (strlen($englishBabNumber) > 0)) $eprefix = "Chapter: ";
 		else $eprefix = "";
 		if (strlen($englishBabNumber) > 0 && intval($englishBabNumber) != 0) $babNum = $englishBabNumber;
 		else $babNum = $arabicBabNumber;
 		if (ctype_upper(substr(trim($englishBabName), 0, 2))) $englishBabName = ucwords(strtolower($englishBabName));
-		echo "<div class=echapno>"; if (strlen($babNum) > 0) echo "($babNum)"; echo "</div>";
+		
+		/* Special handling for Sahih al-Bukhari Kitab at-Tafsir */
+		if ((strcmp($collection->name, "bukhari") == 0) and $ourBookID == 65) {
+			$eprefix = "";
+		}
+
+		echo "<div class=echapno>";
+		if (strlen($babNum) > 0) echo "($babNum)"; 
+		echo "</div>";
 		echo "<div class=englishchapter>".$eprefix.$englishBabName."</div>\n";
 	}
 	echo "<div class=achapno>"; if (strlen($arabicBabNumber) > 0) echo "($arabicBabNumber)"; echo "</div>\n";
@@ -153,11 +163,11 @@ else {
 								else $oldChapIdx = -1;
 								$newChapIdx = array_search($babID, $babIDs);
 								for ($j = 0; $j < $newChapIdx - $oldChapIdx - 1; $j++)
-									displayBab($chapters[$babIDs[$oldChapIdx+$j+1]]);
+									displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID);
 							}
 
 							// Now display the current chapter
-							displayBab($chapters[$babID]);
+							displayBab($chapters[$babID], $collection, $ourBookID);
 							$oldChapNo = $babID;
 						}
 
@@ -245,7 +255,7 @@ else {
 						$oldChapIdx = array_search($oldChapNo, $babIDs);
 						if ($oldChapIdx < count($babIDs)-1) {
 							for ($j = 0; $j < count($babIDs)-$oldChapIdx-1; $j++) {
-								displayBab($chapters[$babIDs[$oldChapIdx+$j+1]]);
+								displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID);
 							}
 						}
 					}
@@ -254,7 +264,7 @@ else {
 
 	// Send a post request to add a log entry if the count of shown hadith doesn't match the expected count
 
-	if ($book->status == 4 and $totalCount > 1) {
+	if (($book->status == 4) and (strcmp($this->params['_pageType'], "book") == 0)) {
 	
 	?>	
 	<script>
