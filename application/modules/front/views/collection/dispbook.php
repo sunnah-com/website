@@ -92,18 +92,18 @@ else {
 	</div>
 
     <?php if (strcmp($collection->name, "hisn") == 0) { ?>
-    <div class=ChapterIndexContainer><div class=ChapterIndex>
+    <div class=chapter_index_container><div class="chapter_index titles">
     <?php
         $chapterCount = count($babIDs);
         foreach ($chapters as $chapter) {
-            echo "<div class=ChapterLink id=cl$chapter->babID>\n";
+            echo "<div class=\"chapter_link title\" id=cl$chapter->babID>\n";
             echo "<a href=\"#C$chapter->babID\">\n";
-            echo "<div class=ChapterNumber>$chapter->englishBabNumber</div>\n";
-            echo "<div class=\"EnglishChapterName english\">$chapter->englishBabName</div>\n";
-            echo "<div class=\"ArabicChapterName arabic\">$chapter->arabicBabName</div>\n";
+            echo "<div class=\"chapter_number title_number\">$chapter->englishBabNumber</div>\n";
+            echo "<div class=\"english_chapter_name english\">$chapter->englishBabName</div>\n";
+            echo "<div class=\"arabic_chapter_name arabic\">$chapter->arabicBabName</div>\n";
             echo "</a>";
             echo "<div class=clear></div>";
-            echo "</div> <!-- end ChapterLink div-->\n";
+            echo "</div> <!-- end chapter_link div-->\n";
         }
     ?>
     </div></div>
@@ -183,7 +183,7 @@ else {
 							}
 						}
 						else $otherlangshadith = NULL;
-						echo "<div class=\"actualHadithContainer $collection->name\" id=h".$arabicEntry->arabicURN.">\n";
+						echo "<div class=\"actualHadithContainer hadith_container_{$collection->name}\" id=h".$arabicEntry->arabicURN.">\n";
 						echo $this->render('/collection/printhadith', array(
 							'arabicEntry' => $arabicEntry,
 							'englishText' => $englishEntry->hadithText,
