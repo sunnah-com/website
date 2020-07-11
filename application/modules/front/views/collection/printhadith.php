@@ -25,7 +25,7 @@
 			echo "<div class=\"english_hadith_full\">";
             if ((strpos($englishText, ":") === FALSE) or (isset($collection) and strcmp($collection, "hisn") == 0)) {
             	echo "<div class=text_details>\n
-                     ".$englishText."</div><br />\n";
+                     ".$englishText."</div>\n";
             }
             else {
                 echo "<div class=hadith_narrated>".strstr($englishText, ":", true).":</div>";

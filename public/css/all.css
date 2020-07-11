@@ -645,38 +645,41 @@ a:hover { text-decoration: underline; }
 	float: left;
 }
 
-.book_titles {
+.titles {
 	margin-top: 25px;
 	border-radius: 8px;
 	font-size: 17px;
+}
+.book_titles {
 	width: 95%;
 }
 
-.book_title:first-child {
+
+.title:first-child {
 	border-radius: 8px 8px 0 0;
 }
 
-.book_title:last-child {
+.title:last-child {
 	border-radius: 0 0 8px 8px;
 }
 
-.book_title:nth-child(odd) {
+.title:nth-child(odd) {
 	background-color: rgba(255, 255, 255, 0.6);
 }
 
-.book_title:nth-child(even) {
+.title:nth-child(even) {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
-.book_title {
+.title {
 	padding: 5px 0 0 20px;
 }
 
-.book_title a:hover {
+.title a:hover {
 	color:#84B8B8;
 }
 
-.book_number {
+.title_number {
 	float: left;
 	min-width: 27px;
 	height: 30px;
@@ -684,18 +687,24 @@ a:hover { text-decoration: underline; }
 	padding-right: 8px;
 }
 
-.english_book_name {
+.title .english {
 	width: 30%;
 	float: left;
 	min-height: 30px;
 	padding-top: 6px;
 }
-
-.arabic_book_name {
+.title .arabic {
 	width: 37%;
 	float: left;
 	font-size: 24px;
 	text-align: right;
+}
+.title .english_chapter_name {
+	width: 48%;	
+}
+.title .arabic_chapter_name {
+	width: 47%;
+	font-size: 20px;
 }
 
 .book_range {
@@ -745,45 +754,41 @@ a:hover { text-decoration: underline; }
 	padding-right: 10px;
 	width: 40%;
 }
-
-.ChapterIndexContainer {
-    width: 94%;
-    float: left;
-}
-
-.ChapterIndex {
-    border-radius: 8px;
-	font-size: 15px;
-	width: 80%;
-    background-color: rgba(255, 255, 255, 0.5);
+/* Hisn al-Muslim */
+.chapter_index_container {
+    width: 80%;
     margin: 0 auto;
 }
-
-.ChapterLink {
+.chapter_index {
+    font-size: 15px;
+}
+.chapter_link {
     padding: 0 0 0 20px;
 }
-
-.ChapterNumber {
-    float: left;
-	min-width: 20px;
-	padding-top: 2px;
-	padding-right: 5px;
+.transliteration {
+    white-space: pre-line;
+    display: block;
+    font-size: 17.5px;
+    font-family: Akzidenz;
+    margin-bottom: 1em;
+    line-height: 2.55;
 }
-
-.EnglishChapterName {
-    width: 45%;
-	float: left;
-	padding-top: 2px;
+.hadith_container_hisn  .arabic_text_details {
+    font-size: 27px;
 }
-
-.ArabicChapterName {
-    width: 48%;
-	float: left;
-	font-size: 20px;
-	text-align: right;
-    padding-right: 10px;
+.reference_label {
+    display: block;
+    margin-top: 1em;
 }
-
+.hisn_english_reference,
+.reference_label {
+    font-size: 13px
+}
+.AllHadith > a:not([href]) {
+	scroll-margin-top: 60px;
+	scroll-snap-margin-top: 60px;
+}
+/* / Hisn al-Muslim */
 .surah {
     background-color: rgba(95, 153, 153, 0.3);
     color: #666;
@@ -1363,7 +1368,7 @@ a:hover { text-decoration: underline; }
         position: relative;
         overflow-x: scroll;
         overflow-y: hidden;
- }
+	}
 	
     .book_info,
     .AllHadith {
@@ -1372,9 +1377,11 @@ a:hover { text-decoration: underline; }
         padding: 0;
 	}
 	
-    .arabic.achapintro {
-        width: 100% !important;
-        margin-right: 0 !important;
+/*     .arabic, */
+    .achapintro,
+    .echapintro {
+        width: 100%;
+        margin-right: 0;
         padding: 15px;
         box-sizing: border-box;
         margin-bottom: 0px;
@@ -1570,21 +1577,21 @@ a:hover { text-decoration: underline; }
         width: 100%;
 	}
 	
-    .book_title {
+    .title {
         padding: 5px 20px 20px 20px;
 	}
 	
-    .book_number {
+    .title_number {
         width: 2.1em;
 		padding-right: 0;
 	}
 
-    .english_book_name {
+    .title .english {
         min-width: 40%;
 		width: calc(55% - 2.1em);
 	}
 	
-    .arabic_book_name {
+    .title .arabic {
         width: 45%;
         padding-left: 3%;
         box-sizing: border-box;
@@ -1607,6 +1614,14 @@ a:hover { text-decoration: underline; }
 	.book_range > div {
         display: inline-block;
     }
+    /* Book: Hisn */
+    .chapter_index_container {
+		width: 100%;
+    }
+    .AllHadith > a:not([href]) {
+		scroll-margin-top: 100px;
+		scroll-snap-margin-top: 100px;
+	}
 
     /* Search results */
     .boh {
