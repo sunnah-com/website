@@ -1268,6 +1268,19 @@ a:hover { text-decoration: underline; }
     body {
         font-size: 16px;
 	}
+	#back-to-top {
+		top: 102px;
+		right: auto;
+		left: 5px;
+		z-index: 1;
+		opacity: .8;
+		width: 27px;
+		height: 27px;
+		border-radius: 6px;
+	}
+	.bttenabled {
+		background-color: #f9f7f2;
+	}
 	
     .text_details {
         font-size: 16px;
