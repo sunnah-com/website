@@ -102,7 +102,7 @@ class CollectionController extends SController
         if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
         $pairs = $this->_entries[2];
         if (($this->_book) and ($this->_book->status == 4) and is_array($pairs) and ($expectedHadithCount != count($pairs)) and is_null($hadithRange)) 
-            Yii::warning("hadith count should be ".$hadithCount." and pairs length is ".count($pairs));
+            Yii::warning("hadith count should be ".$expectedHadithCount." and pairs length is ".count($pairs));
 		$this->view->params['lastUpdated'] = $this->_entries[3];
 
         if (is_null($hadithRange)) {
@@ -140,8 +140,11 @@ class CollectionController extends SController
 		}
 
         if (!isset($this->_entries) || count($this->_entries) == 0) {
-            $errorMsg = "You have entered an incorrect URL. Please use the menu above to navigate the website.";
-        	return $this->render('dispbook', ['errorMsg' => $errorMsg]);
+			// Special case for 0-hadith Hisn al-Muslim introduction book which is valid
+			if (strcmp($collectionName, "hisn") != 0) {
+            	$errorMsg = "You have entered an incorrect URL. Please use the menu above to navigate the website.";
+        		return $this->render('dispbook', ['errorMsg' => $errorMsg]);
+			}
         }
 
 		if ($this->_book->status > 3) {
@@ -151,7 +154,7 @@ class CollectionController extends SController
             $viewVars['chapters'] = $this->_chapters;
 		}
 
-        if (strlen($this->_book->englishBookName) > 0) {
+        if ((strlen($this->_book->englishBookName) > 0) and (strcmp($this->_collection->hasbooks, "yes") == 0)) {
 			if (intval($ourBookID) == -1) $lastlink = "introduction";
 			elseif (intval($ourBookID) == -35) $lastlink = "35b";
 			else $lastlink = $ourBookID;
@@ -160,6 +163,11 @@ class CollectionController extends SController
 				$bookTitlePrefix = "Book of ";
             $this->pathCrumbs($bookTitlePrefix.$this->_book->englishBookName, "/".$collectionName."/".$lastlink);
         }
+		elseif ($ourBookID == -1) {
+			// The case where the collection doesn't technically have books but there is an introduction pseudobook
+			$lastlink = "introduction";
+			$this->pathCrumbs($this->_book->englishBookName, "/".$collectionName."/".$lastlink);
+		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
         return $this->render('dispbook', $viewVars);  
 	}

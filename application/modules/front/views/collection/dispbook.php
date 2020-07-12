@@ -47,7 +47,7 @@ function displayBab($chapter, $collection, $ourBookID) {
 
 if (isset($errorMsg)) echo $errorMsg;
 else {
-	$totalCount = count($pairs);
+	$totalCount = is_null($pairs) ? 0 : count($pairs);
 	$collectionType = $collection->type;
 	$collectionHasBooks = $collection->hasbooks;
 	$collectionHasVolumes = $collection->hasvolumes;
@@ -91,7 +91,9 @@ else {
 	<div class=clear></div>
 	</div>
 
-    <?php if (strcmp($collection->name, "hisn") == 0) { ?>
+    <?php if ((strcmp($collection->name, "hisn") == 0) 
+			  and (strcmp($this->params['_pageType'], "book") == 0)
+			  and $ourBookID == 1) { ?>
     <div class=chapter_index_container><div class="chapter_index titles">
     <?php
         $chapterCount = count($babIDs);
@@ -113,6 +115,15 @@ else {
     <a name="0"></a>
 	<div class=AllHadith>
 	<?php
+
+                    // Special case for the rare 0-hadith book with chapters 
+					// (only Hisn al-Muslim as of now)
+                    if ($totalCount == 0 and $status == 4 and strcmp($collectionHasChapters, "yes") == 0) {
+                        foreach ($chapters as $chapter)
+                            displayBab($chapter, $collection, $ourBookID);
+                    }
+
+
 					$oldChapNo = 0;
 					for ($i = 0; $i < $totalCount; $i++) {
 						$englishEntry = $englishEntries[$pairs[$i][0]];
