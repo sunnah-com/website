@@ -99,6 +99,7 @@ $config = [
                 'searchtips' => 'front/index/search-tips',
                 'tce' => 'front/collection/tce',
                 'ramadan' => 'front/collection/ramadan',
+                'ramadandata' => 'front/collection/ramadandata',
                 'socialmedia' => 'front/collection/socialmedia',
                 'urn/<urn:\d+>' => 'front/collection/urn',
 
