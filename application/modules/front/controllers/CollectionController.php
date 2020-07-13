@@ -238,7 +238,7 @@ class CollectionController extends SController
 		$aURNs = $this->util->getRamadanURNs();
 		$this->view->params['pageTitle'] = "Ramadan Selection";
         $this->pathCrumbs($this->view->params['pageTitle'], "");
-		$this->customSelect($aURNs, false, false);
+		return $this->customSelect($aURNs, false, false);
 	}
 
 	public function actionRamadandata() {
@@ -323,12 +323,19 @@ class CollectionController extends SController
 		$this->_chapters = $retval[2];
 		$this->_entries = $retval[3];
 
-		$this->_viewVars->showBookNames = $showBookNames;
-		$this->_viewVars->showChapterNumbers = $showChapterNumbers;
+        $viewVars = [
+            'collections' => $this->_collections,
+            'englishEntries' => $this->_entries[0],
+            'arabicEntries' => $this->_entries[1],
+            'pairs' => $this->_entries[2],
+            'chapters' => $this->_chapters,
+            'showBookNames' => $showBookNames,
+            'showChapterNumbers' => $showChapterNumbers,
+        ];
 
         $this->view->params['_pageType'] = "book";
 
-        $this->render('tce');
+        return $this->render('tce', $viewVars);
 	}
 	
 	public function actionUrn($urn) {

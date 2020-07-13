@@ -19,20 +19,20 @@ class Util extends Model {
 	public function customSelect($aURNs) {
         $eURNs = array();
         $collections = $this->getCollectionsInfo("indexed");
-        $crit = new CDbCriteria;
-        $crit->select = '*';
-        $crit->addInCondition('arabicURN', $aURNs);
-        $arabicSet = ArabicHadith::model()->findAll($crit);
+        $query = ArabicHadith::find()
+            ->select("*")
+            ->where(['arabicURN' => $aURNs]);
+        $arabicSet = $query->all();
         foreach ($arabicSet as $arabicHadith) $arabicHadith->process_text();
         foreach ($arabicSet as $row) $arabicEntries[$row->arabicURN] = $row;
 
         for ($i = 0; $i < count($aURNs); $i++) {
             $eURNs[$i] = $arabicEntries[$aURNs[$i]]->matchingEnglishURN;
         }
-        $crit = new CDbCriteria;
-        $crit->select = '*';
-        $crit->addInCondition('englishURN', $eURNs);
-        $englishSet = EnglishHadith::model()->findAll($crit);
+        $query = EnglishHadith::find()
+            ->select('*')
+            ->where(['englishURN' => $eURNs]);
+        $englishSet = $query->all();
         foreach ($englishSet as $englishHadith) $englishHadith->process_text();
         foreach ($englishSet as $row) $englishEntries[$row->englishURN] = $row;
 
@@ -140,7 +140,12 @@ class Util extends Model {
     public function getChapter($collectionName, $bookID, $babID) {
         $chapter = Yii::$app->cache->get("chapter:".$collectionName."_".$bookID."_".$babID);
         if ($chapter === false) {
-            $chapter = Chapter::model()->findAll(array("condition" => "collection = :collection AND arabicBookID = :bookID AND babID = :babID", "params" => array(":collection" => $collectionName, ":bookID" => intval($bookID), ":babID" => $babID), "order" => "babID ASC"));
+            $chapter = Chapter::find()
+                ->where("collection = :collection", [':collection' => $collectionName])    
+                ->andWhere("arabicBookID = :id", [':id' => intval($bookID)])
+                ->andWhere("babID = :bid", [':bid' => $babID])
+                ->orderBy(["babID" => SORT_ASC])
+                ->all();
             Yii::$app->cache->set("chapter:".$collectionName."_".$bookID."_".$babID, $chapter, Yii::$app->params['cacheTTL']);
         }
         return $chapter[0];
