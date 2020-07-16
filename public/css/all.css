@@ -776,6 +776,11 @@ a:hover { text-decoration: underline; }
 .hadith_container_hisn  .arabic_text_details {
     font-size: 27px;
 }
+
+.hadith_container_hisn .translation {
+    	white-space: pre-line;
+}
+
 .reference_label {
     display: block;
     margin-top: 1em;
