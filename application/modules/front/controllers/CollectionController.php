@@ -242,6 +242,7 @@ class CollectionController extends SController
 	}
 
 	public function actionRamadandata() {
+		$this->layout = false;
         $aURNs = $this->util->getRamadanURNs();
 		shuffle($aURNs);
         $retval = $this->util->customSelect($aURNs);
@@ -313,7 +314,7 @@ class CollectionController extends SController
 			$s .= "\n</div></li>\n";
 		}
 
-		echo $s;
+		return $s;
 	}
 
     public function customSelect($aURNs, $showBookNames, $showChapterNumbers) {
