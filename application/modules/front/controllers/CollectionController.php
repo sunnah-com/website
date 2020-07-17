@@ -256,7 +256,7 @@ class CollectionController extends SController
 
 		$s = "";
 		foreach ($pairs as $pair) {
-			$s .= "\n<li><div class=carouselitem>\n";
+			$s .= "\n<li><div class=carousel_item>\n";
 			$englishEntry = $englishEntries[$pair[0]];
 			$arabicEntry = $arabicEntries[$pair[1]];
 
@@ -264,9 +264,9 @@ class CollectionController extends SController
 			$englishText = $englishEntry->hadithText;
 			$truncation = false;
 
-			if (strlen($arabicText) <= 600) $arabicSnippet = $arabicText;
+			if (strlen($arabicText) <= 530) $arabicSnippet = $arabicText;
             else {
-            	$pos = strpos($arabicText, ' ', 600);
+            	$pos = strpos($arabicText, ' ', 530);
                 if ($pos === FALSE) $arabicSnippet = $arabicText;
                 else {
 					$arabicSnippet = substr($arabicText, 0, $pos)." &hellip;";
