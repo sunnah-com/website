@@ -276,7 +276,7 @@ a:hover { text-decoration: underline; }
 }
 
 .mainContainer,
-.home.ramadan .mainContainer {
+.home.has_right_panel .mainContainer {
 	width: 70%;
 	float: left;
 }
@@ -308,10 +308,50 @@ a:hover { text-decoration: underline; }
 	min-width: 328px;
 }
 
-.carouselitem {
-	width: 90%;
+#hcarousel > li {
+    opacity: 0;
+    list-style: none;
+    pointer-events: none;
+    position: absolute;
+    transition: 1.5s all;
+    top: 0;
+    left: 0;
+}
+#hcarousel > .show {
+    opacity: 1;
+    pointer-events: all;
+}
+.carousel_item {
+    padding: 30px 30px;
+    box-sizing: border-box;
 	margin: 0px auto;
 }
+.carousel_item .english_hadith_full:before,
+.carousel_item .arabic_hadith_full:before,
+.carousel_item .urdu_hadith_full:before {
+    display: none;
+}
+.hcarousel_container {
+    background-color: rgba(250, 248, 244, 0.39);
+    border-radius: 5px;
+    height: 90%;
+    margin-top: 5px;
+    overflow: hidden;
+    position: relative;
+}
+/* Aniamted BG */
+.hcarousel_container:before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -200px;
+    border-bottom: 470px solid #ffffff96;
+    border-left: 470px solid transparent;
+    border-right: 170px solid transparent;
+    animation: 60s spin linear infinite;
+    filter: blur(30px)
+}
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .footer {
     text-align: center;
@@ -1411,7 +1451,7 @@ a:hover { text-decoration: underline; }
 	
     .sidePanelContainer,
     .mainContainer,
-    .home.ramadan .mainContainer {
+    .home.has_right_panel .mainContainer {
         width: 100%;
         float: none;
         margin: 0;

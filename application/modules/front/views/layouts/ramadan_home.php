@@ -26,30 +26,35 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   <script src="/js/jquery.cookie.js"></script>
 
-  <!-- Uncomment if we need the carousel for something -->
-  <script src="/js/jquery.jcarousel.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/jcskin.css" />
-
   <script type="text/javascript">
 
 	jQuery(document).ready(function() {
 
 	$.ajax({
-		url: '/default/collection/ramadandata',
+		url: '/ramadandata',
 		async: false,
-		success: function (data) { $("#ramadancarousel").append(data); },
-	}); 
+		success: function (data) {
+			// Append carousel items
+			$("#hcarousel").append(data);
+		
+			// Start carousel
+			$caroIt = $("#hcarousel > li").first();
+			$caroIt.addClass("show");
+			setInterval(function() {
+				$caroIt.removeClass("show");
 
-    jQuery('#ramadancarousel').jcarousel({
-        size: 13,
-		vertical: false,
-		visible: 1,
-		scroll: 1,
-		auto: 5,
-		wrap: "circular",
-		buttonNextHTML: null,
-		buttonPrevHTML: null,
-    });
+				if ( $caroIt.is(":last-child") ) {
+					$caroIt = $caroIt.siblings().first();
+				} else {
+					$caroIt = $caroIt.next("li");
+				}
+
+				$caroIt.addClass("show");
+			}, 8000);
+		},
+
+		
+	}); 
   });
   </script>
 
@@ -63,7 +68,7 @@
   <?php $this->head() ?>
 </head>
 
-<body class="home ramadan">
+<body class="home has_right_panel ramadan">
 <?php $this->beginBody() ?>
 <div id="site">
 	<div id="header">
