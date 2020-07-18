@@ -67,6 +67,7 @@ else {
     				echo "<div class=\"book_page_number\">";
 					if (intval($ourBookID) > 0) echo "$ourBookID";
 				  	elseif ($ourBookID == -35) echo "35b&nbsp;&nbsp; "; 
+				  	elseif ($ourBookID == -8) echo "8b&nbsp;&nbsp; "; 
 					echo "</div>";
 				  }
 			?>

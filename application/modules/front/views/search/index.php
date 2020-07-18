@@ -83,6 +83,7 @@ else {
 						$booklink = $ourBookID;
 						if ($ourBookID == -1) $booklink = "introduction";
 						elseif ($ourBookID == -35) $booklink = "35b";
+						elseif ($ourBookID == -8) $booklink = "8b";
 						$permalink = "/".$e_hadith['collection']."/".$booklink."/".$e_hadith['ourHadithNumber'];
 					}
 					else $permalink = "/".$e_hadith['collection']."/".$e_hadith['ourHadithNumber'];
@@ -157,6 +158,7 @@ else {
 						$booklink = $ourBookID;
 						if ($ourBookID == -1) $booklink = "introduction";
 						elseif ((strcmp($hadith->collection, "nasai") == 0) and ($ourBookID == -35)) $booklink = "35b";
+						elseif ((strcmp($hadith->collection, "shamail") == 0) and ($ourBookID == -8)) $booklink = "8b";
 						$permalink = "/".$a_hadith['collection']."/".$booklink."/".$a_hadith['ourHadithNumber'];
 					}
 					else $permalink = "/".$a_hadith['collection']."/".$a_hadith['ourHadithNumber'];

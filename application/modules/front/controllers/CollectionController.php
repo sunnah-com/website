@@ -157,6 +157,7 @@ class CollectionController extends SController
         if ((strlen($this->_book->englishBookName) > 0) and (strcmp($this->_collection->hasbooks, "yes") == 0)) {
 			if (intval($ourBookID) == -1) $lastlink = "introduction";
 			elseif (intval($ourBookID) == -35) $lastlink = "35b";
+			elseif (intval($ourBookID) == -8) $lastlink = "8b";
 			else $lastlink = $ourBookID;
 			$bookTitlePrefix = "";
 			if (strcmp(substr($this->_book->englishBookName, 0, 4), "Book") != 0 && strcmp(substr($this->_book->englishBookName, 0, 7), "Chapter") != 0 && strcmp(substr($this->_book->englishBookName, 0, 4), "The ") != 0)

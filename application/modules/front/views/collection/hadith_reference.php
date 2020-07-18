@@ -43,6 +43,7 @@
 					echo "<td>&nbsp;:&nbsp;";
 					if ($ourBookID > 0) echo "Book $ourBookID, ";
 					elseif ($ourBookID == -35) echo "Book 35b, ";
+					elseif ($ourBookID == -8) echo "Book 8b, ";
 					else echo "Introduction, ";
 					if (strcmp($collection, "muslim") == 0 and ($ourBookID == -1)) echo "Narration ";
 					else echo "Hadith ";
