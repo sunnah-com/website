@@ -79,6 +79,6 @@ class SController extends Controller
             return $filename;
 
         $mtime = filemtime($_SERVER['DOCUMENT_ROOT'] . $filename);
-        return preg_replace('{\\.([^./]+)$}', ".$mtime.\$1", $filename);
+        return $filename . "?ver=" . $mtime ;
     }
 }
