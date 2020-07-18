@@ -12,7 +12,12 @@ class Util extends Model {
 	public function attributeNames() {}
 
 	public function getRamadanURNs() {
-		$aURNs = array(119320, 1121150, /* 118110, */118130, 118150, 118350, 118710, 327600, 327580, 327620, 327650, 327660, 1339810, 706990);
+		$aURNs = array(119320, 1121150, /* 118110, */118130, 118150, 118350, 118710, 327600, 327580, 327620, 327650, 327660, 1339810, 706990, 923480);
+		return $aURNs;
+	}
+
+	public function getDhulhijjahURNs() {
+        $aURNs = array(108550, 1123810, 928160, /* 1712400, */333770, 1522370, 352710, 320930, 332480, 147510, 327660, 327600);
 		return $aURNs;
 	}
 
@@ -164,6 +169,81 @@ class Util extends Model {
 			}
 		}
 		return $hadith;
+    }
+
+    public function getCarouselHTML($arabicURNs) {
+        $aURNs = $arabicURNs;
+		shuffle($aURNs);
+        $retval = $this->customSelect($aURNs);
+        $collections = $retval[0];
+        $books = $retval[1];
+        $chapters = $retval[2];
+        $entries = $retval[3];
+	    $englishEntries = $entries[0];
+	    $arabicEntries = $entries[1];
+    	$pairs = $entries[2];
+
+		$s = "";
+		foreach ($pairs as $pair) {
+			$s .= "\n<li><div class=carousel_item>\n";
+			$englishEntry = $englishEntries[$pair[0]];
+			$arabicEntry = $arabicEntries[$pair[1]];
+
+			$arabicText = $arabicEntry->hadithText;
+			$englishText = $englishEntry->hadithText;
+			$truncation = false;
+
+			if (strlen($arabicText) <= 530) $arabicSnippet = $arabicText;
+            else {
+            	$pos = strpos($arabicText, ' ', 530);
+                if ($pos === FALSE) $arabicSnippet = $arabicText;
+                else {
+					$arabicSnippet = substr($arabicText, 0, $pos)." &hellip;";
+					$truncation = true;
+				}
+            }
+
+			if (strlen($englishText) <= 300) $englishSnippet = $englishText;
+            else {
+            	$pos = strpos($englishText, ' ', 300);
+                if ($pos === FALSE) $englishSnippet = $englishText;
+                else {
+					$englishSnippet = substr($englishText, 0, $pos)." &hellip;";
+					$truncation = true;
+				}
+            }
+
+			$s .= "<div class=arabic>".$arabicSnippet."</div>";
+
+			$englishText = $englishSnippet;
+			$s .= "<div class=\"english_hadith_full\" style=\"padding-left: 0;\">";
+            if (strpos($englishText, ":") === FALSE) {
+                $s .= "<div class=text_details>\n
+                     ".$englishText."</div><br />\n";
+            }
+            else {
+                $s .= "<div class=hadith_narrated>".strstr($englishText, ":", true).":</div>";
+                $s .= "<div class=text_details>
+                     ".substr(strstr($englishText, ":", false), 1)."</div>\n";
+            }
+            $s .= "<div class=clear></div></div>";
+
+			//$s .= "<div class=text_details style=\"margin-top: 10px;\">".$englishSnippet."</div>";
+
+			if ($truncation) {
+				$permalink = "/".$arabicEntry->collection."/".$books[$arabicEntry->arabicURN]->ourBookID."/".$arabicEntry->ourHadithNumber;
+				$s .= "<div style=\"text-align: right; width: 100%;\"><a href=\"$permalink\">Full hadith &hellip;</a></div>";
+			}
+
+			$s .= "<div class=hadith_reference style=\"padding: 5px 0 0 0; font-size: 12px;\">";
+			$s .= $collections[$arabicEntry->collection]['englishTitle'];
+			$s .= " ".$arabicEntry->hadithNumber;
+			$s .= "</div>";
+
+			$s .= "\n</div></li>\n";
+		}
+
+		return $s;
 	}
 }
 

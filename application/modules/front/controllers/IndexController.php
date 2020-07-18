@@ -35,8 +35,8 @@ class IndexController extends SController
 
 	public function actionIndex()
 	{
-		// $this->layout = "/layouts/ramadan_home";  // Layout during Ramadan
-		$this->layout = "home";
+		$this->layout = "ramadan_home";  // Layout during Ramadan
+		// $this->layout = "home";
         $this->_collections = $this->util->getCollectionsInfo();
         $this->_hadithCount = $this->util->getHadithCount();
 		$this->view->params['_pageType'] = "home";

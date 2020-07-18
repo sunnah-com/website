@@ -100,6 +100,8 @@ $config = [
                 'tce' => 'front/collection/tce',
                 'ramadan' => 'front/collection/ramadan',
                 'ramadandata' => 'front/collection/ramadandata',
+                'dhulhijjah' => 'front/collection/dhulhijjah',
+                'dhulhijjahdata' => 'front/collection/dhulhijjahdata',
                 'socialmedia' => 'front/collection/socialmedia',
                 'urn/<urn:\d+>' => 'front/collection/urn',
 

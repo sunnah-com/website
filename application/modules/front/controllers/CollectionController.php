@@ -23,7 +23,7 @@ class CollectionController extends SController
         return [
             [
                    'class' => 'yii\filters\PageCache',
-                   'except' => ['ramadandata'],
+                   'except' => ['ramadandata', 'dhulhijjahdata'],
                    'duration' => Yii::$app->params['cacheTTL'],
                    'variations' => [ 
                        Yii::$app->request->get('id'), 
@@ -242,81 +242,24 @@ class CollectionController extends SController
 		return $this->customSelect($aURNs, false, false);
 	}
 
-	public function actionRamadandata() {
-		$this->layout = false;
-        $aURNs = $this->util->getRamadanURNs();
-		shuffle($aURNs);
-        $retval = $this->util->customSelect($aURNs);
-        $collections = $retval[0];
-        $books = $retval[1];
-        $chapters = $retval[2];
-        $entries = $retval[3];
-	    $englishEntries = $entries[0];
-	    $arabicEntries = $entries[1];
-    	$pairs = $entries[2];
-
-		$s = "";
-		foreach ($pairs as $pair) {
-			$s .= "\n<li><div class=carousel_item>\n";
-			$englishEntry = $englishEntries[$pair[0]];
-			$arabicEntry = $arabicEntries[$pair[1]];
-
-			$arabicText = $arabicEntry->hadithText;
-			$englishText = $englishEntry->hadithText;
-			$truncation = false;
-
-			if (strlen($arabicText) <= 530) $arabicSnippet = $arabicText;
-            else {
-            	$pos = strpos($arabicText, ' ', 530);
-                if ($pos === FALSE) $arabicSnippet = $arabicText;
-                else {
-					$arabicSnippet = substr($arabicText, 0, $pos)." &hellip;";
-					$truncation = true;
-				}
-            }
-
-			if (strlen($englishText) <= 300) $englishSnippet = $englishText;
-            else {
-            	$pos = strpos($englishText, ' ', 300);
-                if ($pos === FALSE) $englishSnippet = $englishText;
-                else {
-					$englishSnippet = substr($englishText, 0, $pos)." &hellip;";
-					$truncation = true;
-				}
-            }
-
-			$s .= "<div class=arabic>".$arabicSnippet."</div>";
-
-			$englishText = $englishSnippet;
-			$s .= "<div class=\"english_hadith_full\" style=\"padding-left: 0;\">";
-            if (strpos($englishText, ":") === FALSE) {
-                $s .= "<div class=text_details>\n
-                     ".$englishText."</div><br />\n";
-            }
-            else {
-                $s .= "<div class=hadith_narrated>".strstr($englishText, ":", true).":</div>";
-                $s .= "<div class=text_details>
-                     ".substr(strstr($englishText, ":", false), 1)."</div>\n";
-            }
-            $s .= "<div class=clear></div></div>";
-
-			//$s .= "<div class=text_details style=\"margin-top: 10px;\">".$englishSnippet."</div>";
-
-			if ($truncation) {
-				$permalink = "/".$arabicEntry->collection."/".$books[$arabicEntry->arabicURN]->ourBookID."/".$arabicEntry->ourHadithNumber;
-				$s .= "<div style=\"text-align: right; width: 100%;\"><a href=\"$permalink\">Full hadith &hellip;</a></div>";
-			}
-
-			$s .= "<div class=hadith_reference style=\"padding: 5px 0 0 0; font-size: 12px;\">";
-			$s .= $collections[$arabicEntry->collection]['englishTitle'];
-			$s .= " ".$arabicEntry->hadithNumber;
-			$s .= "</div>";
-
-			$s .= "\n</div></li>\n";
-		}
-
-		return $s;
+	public function actionDhulhijjah() {
+		$aURNs = $this->util->getDhulhijjahURNs();
+		$this->view->params['pageTitle'] = "Dhul Hijjah Selection";
+        $this->pathCrumbs($this->view->params['pageTitle'], "");
+		return $this->customSelect($aURNs, false, false);
 	}
+
+    public function actionRamadandata() {
+        $this->layout = false;
+        $arabicURNs = $this->util->getRamadanURNs();
+        return $this->util->getCarouselHTML($arabicURNs);
+    }
+
+    public function actionDhulhijjahdata() {
+        $this->layout = false;
+        $arabicURNs = $this->util->getDhulhijjahURNs();
+        return $this->util->getCarouselHTML($arabicURNs);
+    }
 
     public function customSelect($aURNs, $showBookNames, $showChapterNumbers) {
 		$retval = $this->util->customSelect($aURNs);

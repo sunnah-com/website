@@ -21,7 +21,7 @@
     	    if (strlen($arabicGrade1) > 0 && !is_null($arabicGrade1)) {
 				Yii::trace("our hadith number is ".$ourHadithNumber);
 				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$arabicGrade1."</b>";
-				echo "&nbsp;&nbsp; (".$_collection->arabicgrade1.") </td>";
+				echo "&nbsp;&nbsp; (".$_collection['arabicgrade1'].") </td>";
 				echo "<td class=\"arabic_grade arabic\" width=\"57px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>";
 			}
 			else echo "<td height=100% width=60% class=arabic_grade></td>";
