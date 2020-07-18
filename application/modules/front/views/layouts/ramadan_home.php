@@ -25,36 +25,20 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   <script src="/js/jquery.cookie.js"></script>
+  <script src="<?php echo $this->context->auto_version('/js/carousel.js'); ?>"></script>
 
   <script type="text/javascript">
-
 	jQuery(document).ready(function() {
 
 	$.ajax({
 		url: '/ramadandata',
 		async: false,
 		success: function (data) {
-			// Append carousel items
 			$("#hcarousel").append(data);
-		
-			// Start carousel
-			$caroIt = $("#hcarousel > li").first();
-			$caroIt.addClass("show");
-			setInterval(function() {
-				$caroIt.removeClass("show");
-
-				if ( $caroIt.is(":last-child") ) {
-					$caroIt = $caroIt.siblings().first();
-				} else {
-					$caroIt = $caroIt.next("li");
-				}
-
-				$caroIt.addClass("show");
-			}, 8000);
+			carouselStart();
 		},
+	});
 
-		
-	}); 
   });
   </script>
 
