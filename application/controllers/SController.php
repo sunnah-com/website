@@ -75,7 +75,7 @@ class SController extends Controller
     }
 
     public function auto_version($filename) {
-        if (strpos($filename, '/') !== 0 || !file_exists($_SERVER['DOCUMENT_ROOT'] . $filename))
+        if (YII_DEBUG || strpos($filename, '/') !== 0 || !file_exists($_SERVER['DOCUMENT_ROOT'] . $filename))
             return $filename;
 
         $mtime = filemtime($_SERVER['DOCUMENT_ROOT'] . $filename);
