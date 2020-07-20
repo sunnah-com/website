@@ -351,15 +351,14 @@ a:hover { text-decoration: underline; }
     position: absolute;
     cursor: pointer;
     bottom: 13px;
-    font-size: 13px;
+    font-size: 12px;
     left: 4px;
     color: #ffffff;
-    font-weight: bold;
     opacity: 0;
     height: 20px;
     width: 20px;
     background: #bbdada;
-    line-height: 18px;
+    line-height: 20px;
     border-radius: 15px;
     text-align: center;
     transition: .2s all ease;
