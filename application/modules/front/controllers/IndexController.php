@@ -35,11 +35,25 @@ class IndexController extends SController
 
 	public function actionIndex()
 	{
-		// $this->layout = "ramadan_home";  // Layout during Ramadan
 		$this->layout = "home";
         $this->_collections = $this->util->getCollectionsInfo();
         $this->_hadithCount = $this->util->getHadithCount();
-		$this->view->params['_pageType'] = "home";
+        $this->view->params['_pageType'] = "home";
+
+        if (array_key_exists("showCarousel", Yii::$app->params)) {
+            $carousel = Yii::$app->params['showCarousel'];
+            if (strcmp($carousel, "ramadan") == 0) {
+                $carouselParams = ['title' => 'ramadan hadith selection',
+                                   'link' => '/ramadan'];
+            }
+            if (strcmp($carousel, "dhulhijjah") == 0) {
+                $carouselParams = ['title' => 'dhul hijjah hadith selection',
+                                   'link' => '/dhulhijjah'];
+            }
+
+            $this->view->params['carouselParams'] = $carouselParams;
+        }
+
 		return $this->render('index', ['collections' => $this->_collections]);
 	}
 

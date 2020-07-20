@@ -1,5 +1,5 @@
 <div align=center style="font-size: 20px; font-variant: small-caps; font-weight: bold;">
-	<a href="/ramadan">ramadan hadith selection</a>
+<a href="<?php echo $link; ?>"><?php echo $title; ?></a>
 </div>
 
 <div class="hcarousel_container">
@@ -10,5 +10,5 @@
 </div>
 
 <div align=center style="font-size: 14px; margin-top: 5px;">
-	<a href="/ramadan">More &hellip;</a>
+	<a href="<?php echo $link; ?>">More &hellip;</a>
 </div>

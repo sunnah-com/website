@@ -11,7 +11,10 @@ $db = require __DIR__ . '/db.php';
 define('TRUE', true);
 define('FALSE', false);
 
-$parameters = parse_ini_file("../../.env.local", true);
+$parameters = parse_ini_file(__DIR__ ."/../../.env.local");
+//if (array_key_exists("show_carousel", $parameters)) {
+    $params['showCarousel'] = $parameters['show_carousel'];
+//}
 
 function _joinpath($dir1, $dir2) {
     return realpath($dir1 . '/' . $dir2);
@@ -98,10 +101,9 @@ $config = [
                 'support' => 'front/index/support',
                 'searchtips' => 'front/index/search-tips',
                 'tce' => 'front/collection/tce',
-                'ramadan' => 'front/collection/ramadan',
-                'ramadandata' => 'front/collection/ramadandata',
-                'dhulhijjah' => 'front/collection/dhulhijjah',
-                'dhulhijjahdata' => 'front/collection/dhulhijjahdata',
+                '<selection:ramadan>' => 'front/collection/selection',
+                '<selection:dhulhijjah>' => 'front/collection/selection',
+                'selectiondata/<selection:\w+>' => 'front/collection/selection-data', 
                 'socialmedia' => 'front/collection/socialmedia',
                 'urn/<urn:\d+>' => 'front/collection/urn',
 

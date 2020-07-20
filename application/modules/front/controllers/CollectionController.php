@@ -235,29 +235,20 @@ class CollectionController extends SController
 		$this->customSelect($aURNs, false, false);
 	}
 
-	public function actionRamadan() {
+	public function actionSelection($selection = "ramadan") {
 		$aURNs = $this->util->getRamadanURNs();
-		$this->view->params['pageTitle'] = "Ramadan Selection";
+		if (strcmp($selection, "ramadan") == 0) $this->view->params['pageTitle'] = "Ramadan Selection";
+        elseif (strcmp($selection, "dhulhijjah") == 0) $this->view->params['pageTitle'] = "Dhul Hijjah Selection";
+        else $this->view->params['pageTitle'] = "Unspecified Selection";
         $this->pathCrumbs($this->view->params['pageTitle'], "");
 		return $this->customSelect($aURNs, false, false);
 	}
 
-	public function actionDhulhijjah() {
-		$aURNs = $this->util->getDhulhijjahURNs();
-		$this->view->params['pageTitle'] = "Dhul Hijjah Selection";
-        $this->pathCrumbs($this->view->params['pageTitle'], "");
-		return $this->customSelect($aURNs, false, false);
-	}
-
-    public function actionRamadandata() {
+    public function actionSelectionData($selection = "ramadan") {
         $this->layout = false;
-        $arabicURNs = $this->util->getRamadanURNs();
-        return $this->util->getCarouselHTML($arabicURNs);
-    }
-
-    public function actionDhulhijjahdata() {
-        $this->layout = false;
-        $arabicURNs = $this->util->getDhulhijjahURNs();
+        if (strcmp($selection, "ramadan") == 0) $arabicURNs = $this->util->getRamadanURNs();
+        elseif (strcmp($selection, "dhulhijjah") == 0) $arabicURNs = $this->util->getDhulhijjahURNs();
+        else return "";
         return $this->util->getCarouselHTML($arabicURNs);
     }
 
