@@ -11,7 +11,7 @@ $db = require __DIR__ . '/db.php';
 define('TRUE', true);
 define('FALSE', false);
 
-include("loadStageConfig.php");
+$parameters = parse_ini_file("../../.env.local", true);
 
 function _joinpath($dir1, $dir2) {
     return realpath($dir1 . '/' . $dir2);

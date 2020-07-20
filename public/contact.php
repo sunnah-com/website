@@ -1,7 +1,7 @@
 <?php session_start(); 
 require_once 'Mail.php';
 
-include("../application/config/loadStageConfig.php");
+$parameters = parse_ini_file(__DIR__ ."/../.env.local");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -142,8 +142,8 @@ if (isset($_POST['submit'])) {
 			  'host' => 'email-smtp.us-west-2.amazonaws.com',
 			  'port' => 587,
 			  'auth' => true,
-			  'username' => $credentials['smtpUser'],
-			  'password' => $credentials['smtpPassword']
+			  'username' => $parameters['smtpUser'],
+			  'password' => $parameters['smtpPassword']
 			);
 
 			$mail = Mail::factory('smtp', $smtpParams);

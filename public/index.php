@@ -1,6 +1,7 @@
 <?php
 
-include("../application/config/loadStageConfig.php");
+$parameters = parse_ini_file(__DIR__ ."/../.env.local");
+$stage = $parameters['stage'];
 
 // change the following paths if necessary
 $yii = $parameters['yiiPath'].'/yii.php';
@@ -19,3 +20,4 @@ require $parameters['yiiPath'] . '/vendor/yiisoft/yii2/Yii.php';
 $config = require __DIR__ . '/../application/config/main.php';
 
 (new yii\web\Application($config))->run();
+

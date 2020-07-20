@@ -2,3 +2,4 @@
 /runtime
 /application/config/credentials.prod
 .DS_Store
+.env.local
