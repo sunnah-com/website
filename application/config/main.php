@@ -12,9 +12,9 @@ define('TRUE', true);
 define('FALSE', false);
 
 $parameters = parse_ini_file(__DIR__ ."/../../.env.local");
-//if (array_key_exists("show_carousel", $parameters)) {
+if (array_key_exists("show_carousel", $parameters)) {
     $params['showCarousel'] = $parameters['show_carousel'];
-//}
+}
 
 function _joinpath($dir1, $dir2) {
     return realpath($dir1 . '/' . $dir2);
