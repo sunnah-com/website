@@ -236,9 +236,14 @@ class CollectionController extends SController
 	}
 
 	public function actionSelection($selection = "ramadan") {
-		$aURNs = $this->util->getRamadanURNs();
-		if (strcmp($selection, "ramadan") == 0) $this->view->params['pageTitle'] = "Ramadan Selection";
-        elseif (strcmp($selection, "dhulhijjah") == 0) $this->view->params['pageTitle'] = "Dhul Hijjah Selection";
+		if (strcmp($selection, "ramadan") == 0) {
+			$this->view->params['pageTitle'] = "Ramadan Selection";
+			$aURNs = $this->util->getRamadanURNs();
+		}
+        elseif (strcmp($selection, "dhulhijjah") == 0) {
+			$this->view->params['pageTitle'] = "Dhul Hijjah Selection";
+			$aURNs = $this->util->getDhulhijjahURNs();
+		}
         else $this->view->params['pageTitle'] = "Unspecified Selection";
         $this->pathCrumbs($this->view->params['pageTitle'], "");
 		return $this->customSelect($aURNs, false, false);
