@@ -336,6 +336,9 @@ a:hover { text-decoration: underline; }
 .carousel_item .urdu_hadith_full:before {
     display: none;
 }
+.carousel_item .english_hadith_full {
+	font-size: inherit;
+}
 .hcarousel_container {
     background-color: rgba(250, 248, 244, 0.39);
     border-radius: 5px;
@@ -352,7 +355,7 @@ a:hover { text-decoration: underline; }
     cursor: pointer;
     bottom: 13px;
     font-size: 12px;
-    left: 4px;
+    right: 4px;
     color: #ffffff;
     opacity: 0;
     height: 20px;
@@ -363,9 +366,16 @@ a:hover { text-decoration: underline; }
     text-align: center;
     transition: .2s all ease;
 }
-.carousel_nav.next {
-    left: auto;
-    right: 4px;
+.carousel_nav {
+    background: #bbdada url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23FFF'><polygon points='0,100 0,0 50,50'/></svg>") 7px 6px/14px 8px no-repeat;
+}
+.carousel_nav.back {
+    transform: rotate(180deg);
+	left: 4px;
+    right: auto;
+}
+.carousel_nav:hover {
+    background-color: #96c0c0
 }
 /* Aniamted BG */
 .hcarousel_container:before {
