@@ -24,13 +24,11 @@
 			echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
 			echo "<div class=\"english_hadith_full\">";
             if ((strpos($englishText, ":") === FALSE) or (isset($collection) and strcmp($collection, "hisn") == 0)) {
-            	echo "<div class=text_details>\n
-                     ".$englishText."</div>\n";
+            	echo "<div class=text_details>".$englishText."</div>\n";
             }
             else {
                 echo "<div class=hadith_narrated>".strstr($englishText, ":", true).":</div>";
-                echo "<div class=text_details>
-                     ".substr(strstr($englishText, ":", false), 1)."</div>\n";
+                echo "<div class=text_details>".substr(strstr($englishText, ":", false), 1)."</div>\n";
             }
             echo "<div class=clear></div></div></div>";
             $arabicSanad1 = "";
