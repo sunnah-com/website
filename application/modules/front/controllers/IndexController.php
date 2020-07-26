@@ -93,6 +93,12 @@ class IndexController extends SController
 		return $this->render('support');
 	}
 
+    public function actionDevelopers() {
+        $this->pathCrumbs('Developers', "/developers");
+        $this->view->params['_pageType'] = "about";
+		return $this->render('developers');
+	}
+
 	public function actionFlushCache($key = NULL) {
 		if (is_null($key)) $success = Yii::$app->cache->flush();
 		else {

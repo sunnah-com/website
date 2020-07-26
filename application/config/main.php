@@ -99,6 +99,7 @@ $config = [
                 'news' => 'front/index/news',
                 'changelog' => 'front/index/change-log',
                 'support' => 'front/index/support',
+                'developers' => 'front/index/developers',
                 'searchtips' => 'front/index/search-tips',
                 'tce' => 'front/collection/tce',
                 '<selection:ramadan>' => 'front/collection/selection',
