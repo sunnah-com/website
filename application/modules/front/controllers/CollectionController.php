@@ -32,6 +32,7 @@ class CollectionController extends SController
                        Yii::$app->request->get('urn'),
                        Yii::$app->request->get('hadithNumbers'),
                        Yii::$app->request->get('lang'),
+                       Yii::$app->request->get('selection'),
                        Yii::$app->request->get('_escaped_fragment_'),
                    ],
 
