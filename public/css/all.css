@@ -1215,11 +1215,12 @@ a:hover { text-decoration: underline; }
     padding-left: 10%;
     text-align: justify;
     padding-top: 10px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .about a {
-    color: #5d8080;
+    color: #178f92;
+    font-weight: bold;
 }
 
 .abouttitle {
