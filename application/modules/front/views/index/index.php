@@ -55,7 +55,8 @@
         <div class="collection_titles" style="float: right;">
 			<?php 
 				for ($i = $splitSize; $i < $num_collections; $i++) {
-					$collection = $collections[$i]; ?>
+					$collection = $collections[$i]; 
+					if (strcmp($collection['name'], "hisn") == 0) continue; ?>
 					<div class=collection_title>			
 						<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
 							<div class=english_collection_title><?php echo $collection['englishTitle']; ?></div>
