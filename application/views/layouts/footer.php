@@ -3,7 +3,8 @@
 	<a href="/about">About</a> |
 	<a href="/news">News</a> |
 	<a href="/contact">Contact</a> |
-	<a href="/support">Support</a>
+	<a href="/support">Support</a> |
+	<a href="/developers">Developers</a>
 <div class=clear></div>
 </div>
 
