@@ -41,11 +41,33 @@ $("#popup_close, #popup_success").on("click", function(e) {
 	$("#popup_survey").fadeOut();
 });
 
-if ( $.cookie("popup_success") === null ) {
-	$(".footer a:last").after(" | <a class=\"survey\" onclick=\"$(\'#popup_survey\').fadeIn();\">Take our survey</a>");
-}
+// if ( $.cookie("popup_success") === null ) {
+// 	$(".footer a:last").after(" | <a class=\"survey\" onclick=\"$(\'#popup_survey\').fadeIn();\">Take our survey</a>");
+// }
 
-if ( <?php echo $trigger_popup; ?> && $.cookie("popup_close") === null) {
-	$("#popup_survey").fadeIn();
-}
+// 
+// if ( <?php echo $trigger_popup; ?> && $.cookie("popup_close") === null) {
+// 	$("#popup_survey").fadeIn();
+// }
+
+$(function() {
+	var delayPopup = 120; // 2 Minutes
+	
+	var recvis = $.cookie("recvis");
+	var timeVis = new Date(recvis);
+	var timeNow = new Date();
+	
+	var timeDiff = Math.floor( (timeNow.getTime() - timeVis.getTime()) / 1000);
+	
+	// Allow padding for 1 second
+	if ( timeDiff < (delayPopup + 1) ) {
+		setTimeout(() => {
+
+			if ( $.cookie("popup_close") === null) {
+				$("#popup_survey").fadeIn();
+			}
+
+		}, (delayPopup - timeDiff)*1000 );
+	}
+});
 </script>
