@@ -90,14 +90,15 @@ class Search extends Model
 	}	
 
 	public function logQuery($query, $numResults) {
-		
-		$IP = $this->getIP();
-		$sql_query = "INSERT INTO search_queries (query, IP, numResults) values ('".$query."', '".$IP."', ".$numResults.")";
-		$con = mysqli_connect("localhost", "webread") or die(mysqli_error($con));
-		mysqli_select_db($con, "searchdb") or die(mysqli_error($con));
-		mysqli_query($con, $sql_query) or die(mysqli_error($con).$query);
-		mysqli_close($con);
-
+		$searchdb = Yii::$app->searchdb;
+		$searchdb->createCommand(
+			'INSERT INTO `search_queries` (query, IP, numResults) VALUES (:query, :IP, :numResults)',
+			[
+				':query' => $query,
+				':IP' => $this->getIP(),
+				':numResults' => $numResults
+			]
+		)->execute();
 	}
 
     public function getMatchedEnglishURNs($aURNs) {
