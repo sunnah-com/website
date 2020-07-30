@@ -5,15 +5,15 @@
 <div class=section>Developers</div><br>
 
 <div class=content>
-At <a href="/">sunnah.com</a> we are <a href="/about">committed to providing an
-open platform for hadith data that includes data and tools</a>. To this end, we
+At <a href="/">sunnah.com</a> we are committed to providing an
+<a href="/about">open platform for hadith data</a> that includes data and tools. To this end, we
 have an API for consumption and <a href="https://github.com/sunnah-com">several open-source projects</a>
 on which we invite contributions.
 </div><br>
 
 <div class=section>API</div>
 <div class=content>
-Our API offers access to the verified portions of the data we have comprising the sunnah of the Prophet Muhammad (&#xFDFA;).
+Our API offers access to a portion of our data comprising the sunnah of the Prophet Muhammad (&#xFDFA;). We will add to the data available as we complete manual checks of the data.
 For API documentation, visit <a href="https://sunnah.api-docs.io">sunnah.api-docs.io</a>.
 You will need an API key to access this data, which you may request by
 <a href="https://github.com/sunnah-com/api/issues/new?template=request-for-api-access.md&title=Request+for+API+access%3A+%5BYour+Name%5D">creating an issue</a>
@@ -27,7 +27,7 @@ We are excited that you are interested in contributing to the <a href="/">sunnah
 Our code repositories are hosted on <a href="https://github.com/sunnah-com">GitHub</a>.
 These are:
 <ul>
-<li><a href="https://github.com/sunnah-com/website">The Sunnah.com website</a> - PHP using the Yii 2 framework</li>
+<li><a href="https://github.com/sunnah-com/website">The Sunnah.com website</a> - PHP</li>
 <li><a href="https://github.com/sunnah-com/api">Sunnah.com API</a> - Python (Flask)</li>
 <li><a href="https://github.com/sunnah-com/corrections">Corrections</a> - Python and JavaScript</li>
 </ul>
