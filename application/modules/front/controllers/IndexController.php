@@ -15,7 +15,7 @@ class IndexController extends SController
         return [
             [
                    'class' => 'yii\filters\PageCache',
-                   'except' => ['flushcache', 'survey'],
+                   'except' => ['flushcache', 'ajaxhadithcount', 'survey'],
                    'duration' => Yii::$app->params['cacheTTL'],
                    'variations' => [ Yii::$app->request->get('id') ],
         
@@ -28,13 +28,32 @@ class IndexController extends SController
 		return $this->render('error');
 	}
 
+	public function actionAjaxhadithcount() {
+		$postMessage = Yii::$app->request->post('msg');
+		Yii::info($postMessage, 'hadithcount');
+	}
+
 	public function actionIndex()
 	{
-		// $this->layout = "/layouts/ramadan_home";  // Layout during Ramadan
 		$this->layout = "home";
         $this->_collections = $this->util->getCollectionsInfo();
         $this->_hadithCount = $this->util->getHadithCount();
-		$this->view->params['_pageType'] = "home";
+        $this->view->params['_pageType'] = "home";
+
+        if (array_key_exists("showCarousel", Yii::$app->params)) {
+            $carousel = Yii::$app->params['showCarousel'];
+            if (strcmp($carousel, "ramadan") == 0) {
+                $carouselParams = ['title' => 'ramadan hadith selection',
+                                   'link' => '/ramadan'];
+            }
+            if (strcmp($carousel, "dhulhijjah") == 0) {
+                $carouselParams = ['title' => 'dhul hijjah hadith selection',
+                                   'link' => '/dhulhijjah'];
+            }
+
+            $this->view->params['carouselParams'] = $carouselParams;
+        }
+
 		return $this->render('index', ['collections' => $this->_collections]);
 	}
 

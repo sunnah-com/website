@@ -11,7 +11,10 @@ $db = require __DIR__ . '/db.php';
 define('TRUE', true);
 define('FALSE', false);
 
-include("loadStageConfig.php");
+$parameters = parse_ini_file(__DIR__ ."/../../.env.local");
+if (array_key_exists("show_carousel", $parameters)) {
+    $params['showCarousel'] = $parameters['show_carousel'];
+}
 
 function _joinpath($dir1, $dir2) {
     return realpath($dir1 . '/' . $dir2);
@@ -70,6 +73,13 @@ $config = [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+					'categories' => ['hadithcount'],
+					'logFile' => '@runtime/logs/hadithcount.log',
+					'logVars' => [],
+                ],
             ],
         ],
         'db' => $db,
@@ -92,9 +102,13 @@ $config = [
                 'searchtips' => 'front/index/search-tips',
                 'survey' => 'front/index/survey',
                 'tce' => 'front/collection/tce',
-                'ramadan' => 'front/collection/ramadan',
+                '<selection:ramadan>' => 'front/collection/selection',
+                '<selection:dhulhijjah>' => 'front/collection/selection',
+                'selectiondata/<selection:\w+>' => 'front/collection/selection-data', 
                 'socialmedia' => 'front/collection/socialmedia',
                 'urn/<urn:\d+>' => 'front/collection/urn',
+
+				'ajax/log/hadithcount' => 'front/index/ajaxhadithcount',
 
                 [ 'pattern' => 'ajax/<lang:\w+>/<collectionName>/<ourBookID>',
                   'route' => 'front/collection/ajax-hadith',
@@ -115,6 +129,14 @@ $config = [
                   'route' => 'front/collection/dispbook', 
                   'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
                 ],
+                [ 'pattern' => '<collectionName:hisn>/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:hisn>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
 
                 'search/<query>/<page:\d+>' => 'front/search/oldsearch',
                 'search/<query>' => 'front/search/oldsearch',
@@ -126,6 +148,10 @@ $config = [
                 [ 'pattern' => '<collectionName:nasai>/35b/<hadithNumbers>',
                   'route' => 'front/collection/dispbook', 
                   'defaults' => array('ourBookID' => -35, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:shamail>/8b/<hadithNumbers>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => -8, '_escaped_fragment_' => 'default'),
                 ],
                 [ 'pattern' => '<collectionName:\w+>/introduction/<hadithNumbers>',
                   'route' => 'front/collection/dispbook',
@@ -147,6 +173,10 @@ $config = [
                 [ 'pattern' => '<collectionName:nasai>/35b',
                   'route' => 'front/collection/dispbook', 
                   'defaults' => array('ourBookID' => -35, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:shamail>/8b',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => -8, '_escaped_fragment_' => 'default'),
                 ],
                 [ 'pattern' => '<collectionName:\w+>/<ourBookID:\d+>',
                   'route' => 'front/collection/dispbook', 

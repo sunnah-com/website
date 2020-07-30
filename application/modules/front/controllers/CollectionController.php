@@ -23,7 +23,7 @@ class CollectionController extends SController
         return [
             [
                    'class' => 'yii\filters\PageCache',
-                   'except' => ['ramadandata'],
+                   'except' => ['ramadandata', 'dhulhijjahdata'],
                    'duration' => Yii::$app->params['cacheTTL'],
                    'variations' => [ 
                        Yii::$app->request->get('id'), 
@@ -97,8 +97,12 @@ class CollectionController extends SController
         
 		$this->view->params['collection'] = $this->_collection;
         $this->_book = $this->util->getBook($collectionName, $ourBookID);
+        if (!is_null($this->_book)) $expectedHadithCount = $this->_book->totalNumber;
         $this->view->params['book'] = $this->_book;
         if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
+        $pairs = $this->_entries[2];
+        if (($this->_book) and ($this->_book->status == 4) and is_array($pairs) and ($expectedHadithCount != count($pairs)) and is_null($hadithRange)) 
+            Yii::warning("hadith count should be ".$expectedHadithCount." and pairs length is ".count($pairs));
 		$this->view->params['lastUpdated'] = $this->_entries[3];
 
         if (is_null($hadithRange)) {
@@ -116,9 +120,9 @@ class CollectionController extends SController
             'ourBookID' => $ourBookID,
             'collection' => $this->_collection,
             'book' => $this->_book,
+			'expectedHadithCount' => $expectedHadithCount,
         ];
         
-        $pairs = $this->_entries[2];
 		if (isset($this->_entries[0][$pairs[0][0]])) $this->view->params['_ogDesc'] = substr(strip_tags($this->_entries[0][$pairs[0][0]]->hadithText), 0, 300);
 
 		if (strcmp($_escaped_fragment_, "default") != 0) {
@@ -136,8 +140,11 @@ class CollectionController extends SController
 		}
 
         if (!isset($this->_entries) || count($this->_entries) == 0) {
-            $errorMsg = "You have entered an incorrect URL. Please use the menu above to navigate the website.";
-        	return $this->render('dispbook', ['errorMsg' => $errorMsg]);
+			// Special case for 0-hadith Hisn al-Muslim introduction book which is valid
+			if (strcmp($collectionName, "hisn") != 0) {
+            	$errorMsg = "You have entered an incorrect URL. Please use the menu above to navigate the website.";
+        		return $this->render('dispbook', ['errorMsg' => $errorMsg]);
+			}
         }
 
 		if ($this->_book->status > 3) {
@@ -147,17 +154,23 @@ class CollectionController extends SController
             $viewVars['chapters'] = $this->_chapters;
 		}
 
-        if (strlen($this->_book->englishBookName) > 0) {
+        if ((strlen($this->_book->englishBookName) > 0) and (strcmp($this->_collection->hasbooks, "yes") == 0)) {
 			if (intval($ourBookID) == -1) $lastlink = "introduction";
 			elseif (intval($ourBookID) == -35) $lastlink = "35b";
+			elseif (intval($ourBookID) == -8) $lastlink = "8b";
 			else $lastlink = $ourBookID;
 			$bookTitlePrefix = "";
 			if (strcmp(substr($this->_book->englishBookName, 0, 4), "Book") != 0 && strcmp(substr($this->_book->englishBookName, 0, 7), "Chapter") != 0 && strcmp(substr($this->_book->englishBookName, 0, 4), "The ") != 0)
 				$bookTitlePrefix = "Book of ";
             $this->pathCrumbs($bookTitlePrefix.$this->_book->englishBookName, "/".$collectionName."/".$lastlink);
         }
+		elseif ($ourBookID == -1) {
+			// The case where the collection doesn't technically have books but there is an introduction pseudobook
+			$lastlink = "introduction";
+			$this->pathCrumbs($this->_book->englishBookName, "/".$collectionName."/".$lastlink);
+		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
-        return $this->render('dispbook', $viewVars);        
+        return $this->render('dispbook', $viewVars);  
 	}
 
 	public function actionTce() {
@@ -222,87 +235,27 @@ class CollectionController extends SController
 		$this->customSelect($aURNs, false, false);
 	}
 
-	public function actionRamadan() {
-		$aURNs = $this->util->getRamadanURNs();
-		$this->view->params['pageTitle'] = "Ramadan Selection";
-        $this->pathCrumbs($this->view->params['pageTitle'], "");
-		$this->customSelect($aURNs, false, false);
-	}
-
-	public function actionRamadandata() {
-        $aURNs = $this->util->getRamadanURNs();
-		shuffle($aURNs);
-        $retval = $this->util->customSelect($aURNs);
-        $collections = $retval[0];
-        $books = $retval[1];
-        $chapters = $retval[2];
-        $entries = $retval[3];
-	    $englishEntries = $entries[0];
-	    $arabicEntries = $entries[1];
-    	$pairs = $entries[2];
-
-		$s = "";
-		foreach ($pairs as $pair) {
-			$s .= "\n<li><div class=carouselitem>\n";
-			$englishEntry = $englishEntries[$pair[0]];
-			$arabicEntry = $arabicEntries[$pair[1]];
-
-			$arabicText = $arabicEntry->hadithText;
-			$englishText = $englishEntry->hadithText;
-			$truncation = false;
-
-			if (strlen($arabicText) <= 600) $arabicSnippet = $arabicText;
-            else {
-            	$pos = strpos($arabicText, ' ', 600);
-                if ($pos === FALSE) $arabicSnippet = $arabicText;
-                else {
-					$arabicSnippet = substr($arabicText, 0, $pos)." &hellip;";
-					$truncation = true;
-				}
-            }
-
-			if (strlen($englishText) <= 300) $englishSnippet = $englishText;
-            else {
-            	$pos = strpos($englishText, ' ', 300);
-                if ($pos === FALSE) $englishSnippet = $englishText;
-                else {
-					$englishSnippet = substr($englishText, 0, $pos)." &hellip;";
-					$truncation = true;
-				}
-            }
-
-			$s .= "<div class=arabic>".$arabicSnippet."</div>";
-
-			$englishText = $englishSnippet;
-			$s .= "<div class=\"english_hadith_full\" style=\"padding-left: 0;\">";
-            if (strpos($englishText, ":") === FALSE) {
-                $s .= "<div class=text_details>\n
-                     ".$englishText."</div><br />\n";
-            }
-            else {
-                $s .= "<div class=hadith_narrated>".strstr($englishText, ":", true).":</div>";
-                $s .= "<div class=text_details>
-                     ".substr(strstr($englishText, ":", false), 1)."</div>\n";
-            }
-            $s .= "<div class=clear></div></div>";
-
-			//$s .= "<div class=text_details style=\"margin-top: 10px;\">".$englishSnippet."</div>";
-
-			if ($truncation) {
-				$permalink = "/".$arabicEntry->collection."/".$books[$arabicEntry->arabicURN]->ourBookID."/".$arabicEntry->ourHadithNumber;
-				$s .= "<div style=\"text-align: right; width: 100%;\"><a href=\"$permalink\">Full hadith &hellip;</a></div>";
-			}
-
-			$s .= "<div class=hadith_reference style=\"padding: 5px 0 0 0; font-size: 12px;\">";
-			$s .= $collections[$arabicEntry->collection]['englishTitle'];
-			$s .= " ".$arabicEntry->hadithNumber;
-			$s .= "</div>";
-
-			$s .= "\n</div></li>\n";
+	public function actionSelection($selection = "ramadan") {
+		if (strcmp($selection, "ramadan") == 0) {
+			$this->view->params['pageTitle'] = "Ramadan Selection";
+			$aURNs = $this->util->getRamadanURNs();
 		}
-
-		echo $s;
+        elseif (strcmp($selection, "dhulhijjah") == 0) {
+			$this->view->params['pageTitle'] = "Dhul Hijjah Selection";
+			$aURNs = $this->util->getDhulhijjahURNs();
+		}
+        else $this->view->params['pageTitle'] = "Unspecified Selection";
+        $this->pathCrumbs($this->view->params['pageTitle'], "");
+		return $this->customSelect($aURNs, false, false);
 	}
+
+    public function actionSelectionData($selection = "ramadan") {
+        $this->layout = false;
+        if (strcmp($selection, "ramadan") == 0) $arabicURNs = $this->util->getRamadanURNs();
+        elseif (strcmp($selection, "dhulhijjah") == 0) $arabicURNs = $this->util->getDhulhijjahURNs();
+        else return "";
+        return $this->util->getCarouselHTML($arabicURNs);
+    }
 
     public function customSelect($aURNs, $showBookNames, $showChapterNumbers) {
 		$retval = $this->util->customSelect($aURNs);
@@ -311,12 +264,19 @@ class CollectionController extends SController
 		$this->_chapters = $retval[2];
 		$this->_entries = $retval[3];
 
-		$this->_viewVars->showBookNames = $showBookNames;
-		$this->_viewVars->showChapterNumbers = $showChapterNumbers;
+        $viewVars = [
+            'collections' => $this->_collections,
+            'englishEntries' => $this->_entries[0],
+            'arabicEntries' => $this->_entries[1],
+            'pairs' => $this->_entries[2],
+            'chapters' => $this->_chapters,
+            'showBookNames' => $showBookNames,
+            'showChapterNumbers' => $showChapterNumbers,
+        ];
 
         $this->view->params['_pageType'] = "book";
 
-        $this->render('tce');
+        return $this->render('tce', $viewVars);
 	}
 	
 	public function actionUrn($urn) {

@@ -4,7 +4,7 @@
 <br>
 <div class=section>About Us</div><br>
 <div class=content>
-1. <a href="#SiteObjective">Site Objective</a><br>
+1. <a href="#Mission">Sunnah.com Mission</a><br>
 2. <a href="#AboutHadith">About Hadith</a><br>
 3. <a href="#AboutTheWebsite">About The Website</a><br>
 4. <a href="#Fonts">Fonts</a><br>
@@ -15,11 +15,17 @@
 </div>
 
 <br><hr><br>
-<a name="SiteObjective"><div class=section>1. Site Objective</div></a>
+<a name="Mission"><div class=section>1. Sunnah.com Mission</div></a>
 <div class=content>
-The goal of this website is to provide the first <em>online</em>, <em>authentic</em>, <em>searchable</em>,
-and <em>multilingual</em> (English/Arabic at the individual hadith level) database of 
-collections of hadith from our beloved Prophet Muhammad, peace and blessings be upon him.
+Our goal is to make authentic, comprehensive, and beneficial information pertaining to the sunnah of the Prophet Muhammad (saws) accessible to as many people around the world as possible in order to facilitate research and promote its mainstream and broadly accepted understanding.
+<p>
+Our work is guided by the following core values:
+<ul>
+<li><b>Authenticity:</b> We strive to stay true to the text by checking and verifying our data and numbering with well-known printed editions. 
+<li><b>Comprehensiveness:</b> We aim to provide complete collections of hadith, their scholarly translations in as many languages as possible, explanations of hadith, information about hadith collectors and narrators, and resources on the sciences of hadith.
+<li><b>Usability and accessibility:</b> We are committed to providing a simple and uncluttered user interface to view and search our data on a variety of devices. We will develop and provide tools and organizational aids to facilitate research and analysis of hadith, narrators, and chains of narration by specialists and students of knowledge. It is important to us to reduce connectivity barriers to accessing knowledge.
+<li><b>Open:</b> We provide an open platform &ndash; including data and software &ndash; so that others can build on top of hadith data.
+</ul>
 </div>
 <br>
 

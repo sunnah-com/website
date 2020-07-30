@@ -29,17 +29,11 @@ function displayBab($chapter, $showChapterNumbers = true) {
 
 if (isset($this->_errorMsg)) echo $this->_errorMsg;
 else {
-	$englishEntries = $this->_entries[0];
-	$arabicEntries = $this->_entries[1];
-	$pairs = $this->_entries[2];
 	$totalCount = count($pairs);
-	$chapters = $this->_chapters;
-	$showChapters = true;
-	if (isset($this->_viewVars->showBookNames)) $showBookNames = $this->_viewVars->showBookNames;
-	if (isset($this->_viewVars->showChapterNumbers)) $showChapterNumbers = $this->_viewVars->showChapterNumbers;
-	if (isset($this->_viewVars->showChapters)) $showChapters = $this->_viewVars->showChapters;
+
+    $showChapters = true;    
 	
-	echo "<div class=bookheading><div align=center style=\"font-size: 30px;\">".$this->_viewVars->pageTitle."</div></div>";
+	echo "<div class=bookheading><div align=center style=\"font-size: 30px;\">".$this->params['pageTitle']."</div></div>";
 	echo "<div class=bookintro></div>";
 
     echo "<a name=\"0\"></a>";
@@ -87,22 +81,34 @@ else {
 						}
 
 						echo "<div class=actualHadithContainer id=h".$arabicEntry->arabicURN.">\n";				
-						echo $this->renderPartial('/collection/printhadith', array(
+						echo $this->render('/collection/printhadith', array(
 							'arabicEntry' => $arabicEntry,
 							'englishText' => $englishEntry->hadithText,
 							'arabicText' => $arabicEntry->hadithText,
-							'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => NULL));
+                            'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => NULL,
+                        ));
 
-						echo $this->renderPartial('/collection/hadith_reference', array(
+						echo $this->render('/collection/hadith_reference', array(
 							'englishEntry' => $englishExists,
-							'arabicEntry' => $arabicExists,
+                            'arabicEntry' => $arabicExists,
+                            '_collection' => $collections[$arabicEntry->collection],
 							'values' => array($urn, 
 											$englishEntry->volumeNumber, 
 											$englishEntry->bookNumber,
 											NULL,
 											$arabicEntry->bookNumber,
 											$arabicEntry->hadithNumber,
-											$ourHadithNumber, $arabicEntry->collection, intval($arabicEntry->bookID), "yes", true, 4, $this->_collections[$arabicEntry->collection]['englishTitle'], $englishEntry->grade1, $arabicEntry->grade1, true, "h".$arabicEntry->arabicURN)
+                                            $ourHadithNumber, 
+                                            $arabicEntry->collection, 
+                                            intval($arabicEntry->bookID), 
+                                            "yes", 
+                                            true, 
+                                            4, 
+                                            $collections[$arabicEntry->collection]['englishTitle'], 
+                                            $englishEntry->grade1, 
+                                            $arabicEntry->grade1, 
+                                            true, 
+                                            "h".$arabicEntry->arabicURN)
                             ));	
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
                         echo "<div class=clear></div>";

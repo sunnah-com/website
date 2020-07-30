@@ -29,6 +29,29 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
   <script src="/js/jquery.cookie.js"></script>
 
+  <?php
+    $bodyClass = "home";
+    if (array_key_exists("showCarousel", Yii::$app->params)) { 
+        $bodyClass .= " has_right_panel ".Yii::$app->params['showCarousel'];
+  ?>
+  <script src="<?php echo $this->context->auto_version('/js/carousel.js'); ?>"></script>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+    $.ajax({
+    url: '/selectiondata/<?php echo Yii::$app->params['showCarousel']; ?>',
+        async: false,
+        success: function (data) {
+            $("#hcarousel").append(data);
+            carouselStart();
+        },
+    });
+
+  });
+  </script>
+
+  <?php } ?>
+
   <script src="<?php echo $this->context->auto_version('/js/sunnah.js'); ?>"></script>
  
   <title>
@@ -38,7 +61,7 @@
   <?php $this->head() ?>
 </head>
 
-<body class="home">
+<body class="<?php echo $bodyClass; ?>">
 <?php $this->beginBody() ?>
 <div id="site">
 	<div id="header">
@@ -66,11 +89,11 @@
     </div><!-- main close -->
 	</div> <!-- mainContainer close -->
 
-<!--
+    <?php if (array_key_exists("showCarousel", Yii::$app->params)) { ?>
 	<div id=rightPanel>
-		<?php echo $this->render('/index/ramadancarousel') ?>
+		<?php echo $this->render('/index/carousel', $this->params['carouselParams']) ?>
 	</div>
--->
+    <?php } ?>
 
 	<div class="clear"></div>
 	</div> <!-- nonheader close -->

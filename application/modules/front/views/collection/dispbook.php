@@ -3,7 +3,7 @@
 use app\modules\front\models\EnglishHadith;
 use app\modules\front\models\ArabicHadith;
 
-function displayBab($chapter) {
+function displayBab($chapter, $collection, $ourBookID) {
 	if ($chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
 	$arabicBabNumber = $chapter->arabicBabNumber;
 	$arabicBabName = $chapter->arabicBabName;
@@ -12,17 +12,28 @@ function displayBab($chapter) {
 	$englishIntro = preg_replace("/\n+/", "<br>\n", $chapter->englishIntro);
 	$arabicIntro = preg_replace("/\n+/", "<br>\n", $chapter->arabicIntro);
 
-    echo "<div class=chapter>\n";
+	echo "<a name=C$chapter->babID></a>\n";
+	if ((strcmp($collection->name, "bukhari") == 0) and ($ourBookID == 65) and (strcmp(substr($chapter->babID, -2), "00") == 0)) $chapterClassName = "surah";
+	else $chapterClassName = "chapter";
+    echo "<div class=$chapterClassName>\n";
 	if (!is_null($englishBabName)) {
-		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0) $eprefix = "Chapter: ";
+		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0 and (strlen($englishBabNumber) > 0)) $eprefix = "Chapter: ";
 		else $eprefix = "";
 		if (strlen($englishBabNumber) > 0 && intval($englishBabNumber) != 0) $babNum = $englishBabNumber;
 		else $babNum = $arabicBabNumber;
 		if (ctype_upper(substr(trim($englishBabName), 0, 2))) $englishBabName = ucwords(strtolower($englishBabName));
-		echo "<div class=echapno>($babNum)</div>";
+		
+		/* Special handling for Sahih al-Bukhari Kitab at-Tafsir */
+		if ((strcmp($collection->name, "bukhari") == 0) and $ourBookID == 65) {
+			$eprefix = "";
+		}
+
+		echo "<div class=echapno>";
+		if (strlen($babNum) > 0) echo "($babNum)"; 
+		echo "</div>";
 		echo "<div class=englishchapter>".$eprefix.$englishBabName."</div>\n";
 	}
-	echo "<div class=achapno>($arabicBabNumber)</div>\n";
+	echo "<div class=achapno>"; if (strlen($arabicBabNumber) > 0) echo "($arabicBabNumber)"; echo "</div>\n";
 	echo "<div class=\"arabicchapter arabic\">$arabicBabName</div>";
 	echo "<div class=clear></div>\n";
 	echo "</div>\n";
@@ -36,7 +47,7 @@ function displayBab($chapter) {
 
 if (isset($errorMsg)) echo $errorMsg;
 else {
-	$totalCount = count($pairs);
+	$totalCount = is_null($pairs) ? 0 : count($pairs);
 	$collectionType = $collection->type;
 	$collectionHasBooks = $collection->hasbooks;
 	$collectionHasVolumes = $collection->hasvolumes;
@@ -52,13 +63,14 @@ else {
 	<div class="book_info">
     	<div class=book_page_colindextitle>
     		<div class="book_page_arabic_name arabic"><?php echo $book->arabicBookName; ?></div>
-    		<div class="book_page_number">
 			<?php if (strcmp($collectionHasBooks, "yes") == 0) {
+    				echo "<div class=\"book_page_number\">";
 					if (intval($ourBookID) > 0) echo "$ourBookID";
 				  	elseif ($ourBookID == -35) echo "35b&nbsp;&nbsp; "; 
+				  	elseif ($ourBookID == -8) echo "8b&nbsp;&nbsp; "; 
+					echo "</div>";
 				  }
 			?>
-			</div>
     		<div class="book_page_english_name">
 				<?php echo $book->englishBookName; ?>
 			</div>
@@ -67,7 +79,7 @@ else {
 		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b><?php echo $totalCount; ?></b> hadith</div> -->
 
 	<?php
-		if (strcmp($collectionHasBooks, "yes") == 0 and !is_null($book->arabicBookIntro) and strcmp($this->params['_pageType'], "book") == 0) {
+		if (!is_null($book->arabicBookIntro) and strcmp($this->params['_pageType'], "book") == 0) {
 					if (strcmp($collection->name, "muslim") == 0 and $ourBookID == -1) include("muslimintro.txt");
 					echo "<div class=bookintro>";
 					echo "<div class=ebookintro>".$book->englishBookIntro."</div>";
@@ -80,9 +92,39 @@ else {
 	<div class=clear></div>
 	</div>
 
+    <?php if ((strcmp($collection->name, "hisn") == 0) 
+			  and (strcmp($this->params['_pageType'], "book") == 0)
+			  and $ourBookID == 1) { ?>
+    <div class=chapter_index_container><div class="chapter_index titles">
+    <?php
+        $chapterCount = count($babIDs);
+        foreach ($chapters as $chapter) {
+            echo "<div class=\"chapter_link title\" id=cl$chapter->babID>\n";
+            echo "<a href=\"#C$chapter->babID\">\n";
+            echo "<div class=\"chapter_number title_number\">$chapter->englishBabNumber</div>\n";
+            echo "<div class=\"english_chapter_name english\">$chapter->englishBabName</div>\n";
+            echo "<div class=\"arabic_chapter_name arabic\">$chapter->arabicBabName</div>\n";
+            echo "</a>";
+            echo "<div class=clear></div>";
+            echo "</div> <!-- end chapter_link div-->\n";
+        }
+    ?>
+    </div></div>
+    <div class=clear></div>
+    <?php } ?>
+
     <a name="0"></a>
 	<div class=AllHadith>
 	<?php
+
+                    // Special case for the rare 0-hadith book with chapters 
+					// (only Hisn al-Muslim as of now)
+                    if ($totalCount == 0 and $status == 4 and strcmp($collectionHasChapters, "yes") == 0) {
+                        foreach ($chapters as $chapter)
+                            displayBab($chapter, $collection, $ourBookID);
+                    }
+
+
 					$oldChapNo = 0;
 					for ($i = 0; $i < $totalCount; $i++) {
 						$englishEntry = $englishEntries[$pairs[$i][0]];
@@ -133,11 +175,11 @@ else {
 								else $oldChapIdx = -1;
 								$newChapIdx = array_search($babID, $babIDs);
 								for ($j = 0; $j < $newChapIdx - $oldChapIdx - 1; $j++)
-									displayBab($chapters[$babIDs[$oldChapIdx+$j+1]]);
+									displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID);
 							}
 
 							// Now display the current chapter
-							displayBab($chapters[$babID]);
+							displayBab($chapters[$babID], $collection, $ourBookID);
 							$oldChapNo = $babID;
 						}
 
@@ -153,7 +195,7 @@ else {
 							}
 						}
 						else $otherlangshadith = NULL;
-						echo "<div class=actualHadithContainer id=h".$arabicEntry->arabicURN.">\n";
+						echo "<div class=\"actualHadithContainer hadith_container_{$collection->name}\" id=h".$arabicEntry->arabicURN.">\n";
 						echo $this->render('/collection/printhadith', array(
 							'arabicEntry' => $arabicEntry,
 							'englishText' => $englishEntry->hadithText,
@@ -162,6 +204,7 @@ else {
 							'hadithNumber' => $arabicEntry->hadithNumber,
 							'bookEngTitle' => $collection->englishTitle,
 							'bookStatus'	=> $status,
+							'collection'	=> $collection->name,
 							));
 
 						echo $this->render('/collection/hadith_reference', array(
@@ -224,13 +267,38 @@ else {
 						$oldChapIdx = array_search($oldChapNo, $babIDs);
 						if ($oldChapIdx < count($babIDs)-1) {
 							for ($j = 0; $j < count($babIDs)-$oldChapIdx-1; $j++) {
-								displayBab($chapters[$babIDs[$oldChapIdx+$j+1]]);
+								displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID);
 							}
 						}
 					}
 					echo "<!-- <div align=right><i>Content on this page was last updated on ".$this->params['lastUpdated']."</i></div> -->";
 					echo "</div>";
 
+	// Send a post request to add a log entry if the count of shown hadith doesn't match the expected count
+
+	if (($book->status == 4) and (strcmp($this->params['_pageType'], "book") == 0)) {
+	
+	?>	
+	<script>
+		(function () {
+
+			var hCount = $(".actualHadithContainer").length;
+			var hExpectedCount = <?php echo $expectedHadithCount ?>;
+			
+			if ( hCount != hExpectedCount ) {
+				var message = "\n" + location.pathname.substring(1) + "\tshown: " + hCount + "\texpected: " + hExpectedCount;
+
+				$.ajax({
+					type : "POST",
+					url : "/ajax/log/hadithcount",
+					data: {msg: message, _csrf:'<?=\Yii::$app->request->csrfToken?>'},
+				});
+			}
+		})();
+	</script>
+
+	<?php
+	}
 } // ending the no error if
 
 ?>

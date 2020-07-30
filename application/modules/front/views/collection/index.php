@@ -36,24 +36,26 @@ else {
 	</div>
 
 
-		<div class="book_titles">
+		<div class="book_titles titles">
 				<?php
 					for ($i = 0; $i < $totalCount; $i++) {
 						$entry = $entries[$entries_keys[$i]];
 
-                        echo "<div class=\"book_title\" id=\"obi".$entry->ourBookID."\">\n";
+                        echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
 
 						if ($entry->ourBookID == -1) echo "<a href=\"/".$entry->collection."/introduction\">\n";
 						elseif ($entry->ourBookID == -35 and strcmp($collectionName, "nasai") == 0) echo "<a href=\"/".$entry->collection."/35b\">\n";
+						elseif ($entry->ourBookID == -8 and strcmp($collectionName, "shamail") == 0) echo "<a href=\"/".$entry->collection."/8b\">\n";
 						else echo "<a href=\"/".$entry->collection."/".$entry->ourBookID."\">\n";
 
-						echo "<div class=book_number>";
+						echo "<div class=\"book_number title_number\">";
 						if ($entry->ourBookID == -1) echo "&nbsp;";
 						elseif ($entry->ourBookID == -35 and strcmp($collectionName, "nasai") == 0) echo "35b";
+						elseif ($entry->ourBookID == -8 and strcmp($collectionName, "shamail") == 0) echo "8b";
 						else echo $entry->ourBookID;
 						echo "</div>";
 
-						echo "<div class=english_book_name>";
+						echo "<div class=\"english english_book_name\">";
 						echo $entry->englishBookName."</div>";
 
 						echo "<div class=\"arabic arabic_book_name\">".$entry->arabicBookName."</div>";

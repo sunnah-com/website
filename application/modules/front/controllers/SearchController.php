@@ -135,6 +135,12 @@ class SearchController extends SController
         if (!$english && !is_null($eurns)) {
             $missing_keys = array_keys($eurns, 0);
             foreach ($missing_keys as $missing_key) {
+				// If for some reason the Arabic hadith doesn't exist (e.g. if the search index is stale)
+				if (!array_key_exists($missing_key, $arabic_hadith)) {
+                    $english_hadith[$missing_key]['bookID'] = NULL;
+                    $english_hadith[$missing_key]['bookName'] = "";
+					continue;
+				}
                 $collection = $arabic_hadith[$missing_key]['collection'];
                 $arabicBookID = $arabic_hadith[$missing_key]['bookID'];
                 $ebook = $this->util->getBookByLanguageID($collection, $arabicBookID, "arabic");

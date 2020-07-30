@@ -16,12 +16,12 @@
     	    echo "<div class=hadith_annotation>";
 			echo "<table class=gradetable cellspacing=0 cellpadding=0 border=0>";
 	        echo "<tr>";
-			if (strlen($englishGrade1) > 0) echo "<td class=english_grade width=\"107px\"><b>Grade</b></td><td class=english_grade width=\"36%\">:&nbsp;<b>".ucfirst(trim($englishGrade1))."</b> (".$_collection->englishgrade1.")</td>";
+			if (strlen($englishGrade1) > 0) echo "<td class=english_grade width=\"107px\"><b>Grade</b></td><td class=english_grade width=\"36%\">:&nbsp;<b>".ucfirst(trim($englishGrade1))."</b> (".$_collection['englishgrade1'].")</td>";
 			else echo "<td height=100% width=40% class=english_grade></td>";
     	    if (strlen($arabicGrade1) > 0 && !is_null($arabicGrade1)) {
 				Yii::trace("our hadith number is ".$ourHadithNumber);
 				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$arabicGrade1."</b>";
-				echo "&nbsp;&nbsp; (".$_collection->arabicgrade1.") </td>";
+				echo "&nbsp;&nbsp; (".$_collection['arabicgrade1'].") </td>";
 				echo "<td class=\"arabic_grade arabic\" width=\"57px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>";
 			}
 			else echo "<td height=100% width=60% class=arabic_grade></td>";
@@ -43,6 +43,7 @@
 					echo "<td>&nbsp;:&nbsp;";
 					if ($ourBookID > 0) echo "Book $ourBookID, ";
 					elseif ($ourBookID == -35) echo "Book 35b, ";
+					elseif ($ourBookID == -8) echo "Book 8b, ";
 					else echo "Introduction, ";
 					if (strcmp($collection, "muslim") == 0 and ($ourBookID == -1)) echo "Narration ";
 					else echo "Hadith ";
@@ -50,7 +51,9 @@
 					echo "</td></tr>";
 				}
 
-				if ($englishEntry and /* $values[5] != $values[3] and */ intval($values[3]) != 0) {
+				if ($englishEntry 
+				    and /* $values[5] != $values[3] and */ intval($values[3]) != 0
+					and strcmp($_collection->showEnglishTranslationNumber, "yes") == 0) {
                         echo "<tr><td>";
 						if (strcmp($collection, "bukhari")==0 or strcmp($collection, "muslim")==0 or strcmp($collection, "malik")==0) echo "USC-MSA web (English) reference</td><td>&nbsp;: ";
                        	else echo "English translation</td><td>&nbsp;:&nbsp;";

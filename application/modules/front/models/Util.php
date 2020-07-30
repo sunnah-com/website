@@ -12,27 +12,32 @@ class Util extends Model {
 	public function attributeNames() {}
 
 	public function getRamadanURNs() {
-		$aURNs = array(119320, 1121150, /* 118110, */118130, 118150, 118350, 118710, 327600, 327580, 327620, 327650, 327660, 1339810, 706990);
+		$aURNs = array(119320, 1121150, /* 118110, */118130, 118150, 118350, 118710, 327600, 327580, 327620, 327650, 327660, 1339810, 706990, 923480);
+		return $aURNs;
+	}
+
+	public function getDhulhijjahURNs() {
+        $aURNs = array(108550, 1123810, 928160, 1712400, 333770, 1522370, 352710, 320930, 332480, 147510, 327660, 327600);
 		return $aURNs;
 	}
 
 	public function customSelect($aURNs) {
         $eURNs = array();
         $collections = $this->getCollectionsInfo("indexed");
-        $crit = new CDbCriteria;
-        $crit->select = '*';
-        $crit->addInCondition('arabicURN', $aURNs);
-        $arabicSet = ArabicHadith::model()->findAll($crit);
+        $query = ArabicHadith::find()
+            ->select("*")
+            ->where(['arabicURN' => $aURNs]);
+        $arabicSet = $query->all();
         foreach ($arabicSet as $arabicHadith) $arabicHadith->process_text();
         foreach ($arabicSet as $row) $arabicEntries[$row->arabicURN] = $row;
 
         for ($i = 0; $i < count($aURNs); $i++) {
             $eURNs[$i] = $arabicEntries[$aURNs[$i]]->matchingEnglishURN;
         }
-        $crit = new CDbCriteria;
-        $crit->select = '*';
-        $crit->addInCondition('englishURN', $eURNs);
-        $englishSet = EnglishHadith::model()->findAll($crit);
+        $query = EnglishHadith::find()
+            ->select('*')
+            ->where(['englishURN' => $eURNs]);
+        $englishSet = $query->all();
         foreach ($englishSet as $englishHadith) $englishHadith->process_text();
         foreach ($englishSet as $row) $englishEntries[$row->englishURN] = $row;
 
@@ -98,7 +103,7 @@ class Util extends Model {
         $arabic_books = Yii::$app->cache->get($collectionName."books_arabic");
         $english_books = Yii::$app->cache->get($collectionName."books_english");
         if ($books === false or $arabic_books === false or $english_books === false) {
-			if (strcmp($collectionName, "nasai") == 0) $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['abs(ourBookID)' => SORT_ASC])->all();
+			if (strcmp($collectionName, "nasai") == 0 or strcmp($collectionName, "shamail") == 0) $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['abs(ourBookID)' => SORT_ASC, 'englishBookID' => SORT_ASC])->all();
             else $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['ourBookID' => SORT_ASC])->all();
             foreach ($books_rs as $book) $books[$book->ourBookID] = $book;
             foreach ($books_rs as $book) $arabic_books[$book->arabicBookID] = $book;
@@ -140,7 +145,12 @@ class Util extends Model {
     public function getChapter($collectionName, $bookID, $babID) {
         $chapter = Yii::$app->cache->get("chapter:".$collectionName."_".$bookID."_".$babID);
         if ($chapter === false) {
-            $chapter = Chapter::model()->findAll(array("condition" => "collection = :collection AND arabicBookID = :bookID AND babID = :babID", "params" => array(":collection" => $collectionName, ":bookID" => intval($bookID), ":babID" => $babID), "order" => "babID ASC"));
+            $chapter = Chapter::find()
+                ->where("collection = :collection", [':collection' => $collectionName])    
+                ->andWhere("arabicBookID = :id", [':id' => intval($bookID)])
+                ->andWhere("babID = :bid", [':bid' => $babID])
+                ->orderBy(["babID" => SORT_ASC])
+                ->all();
             Yii::$app->cache->set("chapter:".$collectionName."_".$bookID."_".$babID, $chapter, Yii::$app->params['cacheTTL']);
         }
         return $chapter[0];
@@ -159,6 +169,81 @@ class Util extends Model {
 			}
 		}
 		return $hadith;
+    }
+
+    public function getCarouselHTML($arabicURNs) {
+        $aURNs = $arabicURNs;
+		shuffle($aURNs);
+        $retval = $this->customSelect($aURNs);
+        $collections = $retval[0];
+        $books = $retval[1];
+        $chapters = $retval[2];
+        $entries = $retval[3];
+	    $englishEntries = $entries[0];
+	    $arabicEntries = $entries[1];
+    	$pairs = $entries[2];
+
+		$s = "";
+		foreach ($pairs as $pair) {
+			$s .= "\n<li><div class=carousel_item>\n";
+			$englishEntry = $englishEntries[$pair[0]];
+			$arabicEntry = $arabicEntries[$pair[1]];
+
+			$arabicText = $arabicEntry->hadithText;
+			$englishText = $englishEntry->hadithText;
+			$truncation = false;
+
+			if (strlen($arabicText) <= 530) $arabicSnippet = $arabicText;
+            else {
+            	$pos = strpos($arabicText, ' ', 530);
+                if ($pos === FALSE) $arabicSnippet = $arabicText;
+                else {
+					$arabicSnippet = substr($arabicText, 0, $pos)." &hellip;";
+					$truncation = true;
+				}
+            }
+
+			if (strlen($englishText) <= 300) $englishSnippet = $englishText;
+            else {
+            	$pos = strpos($englishText, ' ', 300);
+                if ($pos === FALSE) $englishSnippet = $englishText;
+                else {
+					$englishSnippet = substr($englishText, 0, $pos)." &hellip;";
+					$truncation = true;
+				}
+            }
+
+			$s .= "<div class=arabic>".$arabicSnippet."</div>";
+
+			$englishText = $englishSnippet;
+			$s .= "<div class=\"english_hadith_full\" style=\"padding-left: 0;\">";
+            if (strpos($englishText, ":") === FALSE) {
+                $s .= "<div class=text_details>\n
+                     ".$englishText."</div><br />\n";
+            }
+            else {
+                $s .= "<div class=hadith_narrated>".strstr($englishText, ":", true).":</div>";
+                $s .= "<div class=text_details>
+                     ".substr(strstr($englishText, ":", false), 1)."</div>\n";
+            }
+            $s .= "<div class=clear></div></div>";
+
+			//$s .= "<div class=text_details style=\"margin-top: 10px;\">".$englishSnippet."</div>";
+
+			if ($truncation) {
+				$permalink = "/".$arabicEntry->collection."/".$books[$arabicEntry->arabicURN]->ourBookID."/".$arabicEntry->ourHadithNumber;
+				$s .= "<div style=\"text-align: right; width: 100%;\"><a href=\"$permalink\">Full hadith &hellip;</a></div>";
+			}
+
+			$s .= "<div class=hadith_reference style=\"padding: 5px 0 0 0; font-size: 12px;\">";
+			$s .= $collections[$arabicEntry->collection]['englishTitle'];
+			$s .= " ".$arabicEntry->hadithNumber;
+			$s .= "</div>";
+
+			$s .= "\n</div></li>\n";
+		}
+
+		return $s;
 	}
 }
 

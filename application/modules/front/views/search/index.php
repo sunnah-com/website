@@ -19,7 +19,7 @@ else {
 		if (!empty($suggestions)) {
 			$collation = $suggestions['collation'];
 			$suggest_string = htmlentities(stripslashes(substr(strstr($collation, ":"), 1)));
-			$atag = "<a href=\"javascript:void(0);\" onclick=\"location.href='/?q=".rawurlencode($suggest_string)."&didyoumean=true";
+			$atag = "<a href=\"javascript:void(0);\" onclick=\"location.href='/search?q=".rawurlencode($suggest_string)."&didyoumean=true";
 			$atag = $atag."&old=".rawurlencode($this->params['_searchQuery'])."';\">";
 			echo "<span class=breadcrumbs_search>Did you mean to search for ".$atag.$suggest_string."</a></span> ?
 			<br><span class=breadcrumbs_search>We are still working on this feature. Please bear with us if the suggestion doesn't sound right.</span><br>";
@@ -83,6 +83,7 @@ else {
 						$booklink = $ourBookID;
 						if ($ourBookID == -1) $booklink = "introduction";
 						elseif ($ourBookID == -35) $booklink = "35b";
+						elseif ($ourBookID == -8) $booklink = "8b";
 						$permalink = "/".$e_hadith['collection']."/".$booklink."/".$e_hadith['ourHadithNumber'];
 					}
 					else $permalink = "/".$e_hadith['collection']."/".$e_hadith['ourHadithNumber'];
@@ -157,6 +158,7 @@ else {
 						$booklink = $ourBookID;
 						if ($ourBookID == -1) $booklink = "introduction";
 						elseif ((strcmp($hadith->collection, "nasai") == 0) and ($ourBookID == -35)) $booklink = "35b";
+						elseif ((strcmp($hadith->collection, "shamail") == 0) and ($ourBookID == -8)) $booklink = "8b";
 						$permalink = "/".$a_hadith['collection']."/".$booklink."/".$a_hadith['ourHadithNumber'];
 					}
 					else $permalink = "/".$a_hadith['collection']."/".$a_hadith['ourHadithNumber'];

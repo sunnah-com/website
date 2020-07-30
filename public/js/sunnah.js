@@ -336,3 +336,6 @@
 		else langDisplay = cookieLang;
 	}
 
+	if ($.cookie('recvis') == null) {
+		$.cookie('recvis', new Date().toString(), { expires: 30, path: '/' } )
+	}
