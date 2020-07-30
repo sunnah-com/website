@@ -70,4 +70,5 @@ $(function() {
 		}, (delayPopup - timeDiff)*1000 );
 	}
 });
+
 </script>
