@@ -48,16 +48,13 @@ class SearchController extends SController
 
     public function actionSearch()
     {
-        $page = 1;
-        if (isset($_GET['q'])) {
-            $query = $_GET['q'];
-            if (isset($_GET['page'])) {
-                $page = $_GET['page'];
-            }
-            return $this->processSearch($query, $page);
-        } else {
+        $query = Yii::$app->request->get('q');
+        if ($query === null) {
             return Yii::$app->runAction('front/index/index');
         }
+
+        $page = Yii::$app->request->get('page', 1);
+        return $this->processSearch($query, $page);
     }
 
     public function processSearch($query, $page)
