@@ -27,42 +27,49 @@ class SearchController extends SController
     protected $_message;
     protected $_pages;
 
-/*	Commenting out the caching while Karim makes advanced search */
-/*
-    public function filters() {
-        return array(
-            array(
-                'COutputCache',
-                'duration'=>Yii::$app->params['cacheTTL'],
-                'varyByParam'=>array('id', 'query', 'page'),
-            ),
-        );
-    }
-*/
+    /*	Commenting out the caching while Karim makes advanced search */
+    /*
+        public function filters() {
+            return array(
+                array(
+                    'COutputCache',
+                    'duration'=>Yii::$app->params['cacheTTL'],
+                    'varyByParam'=>array('id', 'query', 'page'),
+                ),
+            );
+        }
+    */
 
-    public function actionOldsearch($query, $page = 1) {
+    public function actionOldsearch($query, $page = 1)
+    {
         $query = stripslashes($this->url_decode($query));
         $this->processSearch($query, $page);
     }
 
-	public function actionSearch() {
-		$page = 1;
-		if (isset($_GET['q'])) {
-			$query = $_GET['q'];
-			if (isset($_GET['page'])) $page = $_GET['page'];
-			return $this->processSearch($query, $page);
-		}
-		else return Yii::$app->runAction('front/index/index');
+    public function actionSearch()
+    {
+        $page = 1;
+        if (isset($_GET['q'])) {
+            $query = $_GET['q'];
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+            }
+            return $this->processSearch($query, $page);
+        } else {
+            return Yii::$app->runAction('front/index/index');
+        }
+    }
 
-	}
-
-	public function processSearch($query, $page) {
-		$this->_viewVars = new \StdClass();
-        $this->view->params['_searchQuery'] = $query; 
+    public function processSearch($query, $page)
+    {
+        $this->_viewVars = new \StdClass();
+        $this->view->params['_searchQuery'] = $query;
         $this->view->params['_pageType'] = "search";
         $this->pathCrumbs('Search Results - '.htmlspecialchars($query).' (page '.$page.')', '');
-        if (strlen($query) < 1) return NULL;
-		
+        if (strlen($query) < 1) {
+            return null;
+        }
+
         $searchObject = new Search();
         $results_arr = $searchObject->searchEnglishHighlighted($query, $page);
         if (count($results_arr) == 0) {
@@ -77,9 +84,9 @@ class SearchController extends SController
         $language = "english";
         $english = true;
 
-		//Yii::log("query: $query, numFound: $numFound, aurns: ".print_r($aurns), 'info', 'system.web.CController');
+        //Yii::log("query: $query, numFound: $numFound, aurns: ".print_r($aurns), 'info', 'system.web.CController');
 
-		if ($eurns == NULL) {
+        if ($eurns == null) {
             $results_arr = $searchObject->searchArabicHighlighted($query, $page);
             if (count($results_arr) == 0) {
                 $errorMsg = "The search engine is currently down. The web administrators have been notified and will be working to get it back up as soon as possible, inshaAllah.";
@@ -100,44 +107,50 @@ class SearchController extends SController
             $this->_numFound = 0;
             $this->_spellcheck = $spellcheck;
             $this->_viewVars->pageType = "search";
-			$this->view->params['_pageType'] = "search";
-        	return $this->render('index', [
-									 'numFound' => 0,
-									 'spellcheck' => $spellcheck,
-			]);
+            $this->view->params['_pageType'] = "search";
+            return $this->render('index', [
+                                     'numFound' => 0,
+                                     'spellcheck' => $spellcheck,
+            ]);
         }
 
-        for ($i = 0; $i < count($eurns); $i++) $eurns[$i] = intval($eurns[$i]);
+        for ($i = 0; $i < count($eurns); $i++) {
+            $eurns[$i] = intval($eurns[$i]);
+        }
         $query = new Query();
         $query = $query->select('*')
-        			   ->from('EnglishHadithTable')
-        		       ->where(array('in', 'englishURN', $eurns));
-		$englishSet = $query->all();
-		$english_hadith = array();
-        foreach ($englishSet as $row) 
-        	$english_hadith[array_search($row['englishURN'], $eurns)] = $row;
-		
-        for ($i = 0; $i < count($aurns); $i++) $aurns[$i] = intval($aurns[$i]);
+                       ->from('EnglishHadithTable')
+                       ->where(array('in', 'englishURN', $eurns));
+        $englishSet = $query->all();
+        $english_hadith = array();
+        foreach ($englishSet as $row) {
+            $english_hadith[array_search($row['englishURN'], $eurns)] = $row;
+        }
+
+        for ($i = 0; $i < count($aurns); $i++) {
+            $aurns[$i] = intval($aurns[$i]);
+        }
         $query = new Query();
         $query = $query->select('*')
-        		->from('ArabicHadithTable')
-        		->where(array('in', 'arabicURN', $aurns));
-		$arabicSet = $query->all();
-		$arabic_hadith = array();
-        foreach ($arabicSet as $row) 
-        	$arabic_hadith[array_search($row['arabicURN'], $aurns)] = $row;
-        	
+                ->from('ArabicHadithTable')
+                ->where(array('in', 'arabicURN', $aurns));
+        $arabicSet = $query->all();
+        $arabic_hadith = array();
+        foreach ($arabicSet as $row) {
+            $arabic_hadith[array_search($row['arabicURN'], $aurns)] = $row;
+        }
+
         // For the Arabic ahadith that have no English match, we need to populate
         // the englishBookName and englishBookID field for display purposes
         if (!$english && !is_null($eurns)) {
             $missing_keys = array_keys($eurns, 0);
             foreach ($missing_keys as $missing_key) {
-				// If for some reason the Arabic hadith doesn't exist (e.g. if the search index is stale)
-				if (!array_key_exists($missing_key, $arabic_hadith)) {
-                    $english_hadith[$missing_key]['bookID'] = NULL;
+                // If for some reason the Arabic hadith doesn't exist (e.g. if the search index is stale)
+                if (!array_key_exists($missing_key, $arabic_hadith)) {
+                    $english_hadith[$missing_key]['bookID'] = null;
                     $english_hadith[$missing_key]['bookName'] = "";
-					continue;
-				}
+                    continue;
+                }
                 $collection = $arabic_hadith[$missing_key]['collection'];
                 $arabicBookID = $arabic_hadith[$missing_key]['bookID'];
                 $ebook = $this->util->getBookByLanguageID($collection, $arabicBookID, "arabic");
@@ -147,8 +160,8 @@ class SearchController extends SController
                 }
             }
         }
-		
-		$viewVars = array();
+
+        $viewVars = array();
         $viewVars['highlighted'] = $highlighted;
         $viewVars['eurns'] = $eurns;
         $viewVars['aurns'] = $aurns;
@@ -161,19 +174,20 @@ class SearchController extends SController
         $viewVars['pageNumber'] = $page;
         $viewVars['resultsPerPage'] = Yii::$app->params['pageSize'];
         $viewVars['collections'] = $this->util->getCollectionsInfo("indexed");
-		$this->_pages = new Pagination([
-							   'totalCount' => $numFound,
-							   'pageSize' => Yii::$app->params['pageSize'],
-							   'defaultPageSize' => Yii::$app->params['pageSize'],
-							]);
-		$this->_pages->pageSize = Yii::$app->params['pageSize'];
-		$viewVars['pages'] = $this->_pages;
+        $this->_pages = new Pagination([
+                               'totalCount' => $numFound,
+                               'pageSize' => Yii::$app->params['pageSize'],
+                               'defaultPageSize' => Yii::$app->params['pageSize'],
+                            ]);
+        $this->_pages->pageSize = Yii::$app->params['pageSize'];
+        $viewVars['pages'] = $this->_pages;
 
         return $this->render('index', $viewVars);
-	}
+    }
 
-	public function url_decode($link) {
-        /* This function decodes values found in URLs and replaces them with their 
+    public function url_decode($link)
+    {
+        /* This function decodes values found in URLs and replaces them with their
         original character sequences */
         $retval = rawurldecode($link);
         $retval = preg_replace("/-dq-/", "\"", $retval);
@@ -187,6 +201,4 @@ class SearchController extends SController
         $retval = preg_replace("/([^-\ ])-([^-])/", "$1 $2", $retval); // repeating to handle overlapping matches
         return $retval;
     }
-	
-	
 }
