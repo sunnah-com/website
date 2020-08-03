@@ -92,19 +92,6 @@ class Search extends Model
         return array($eurns, $aurns, $highlighting, $numFound, null);
     }
 
-    private function getIP()
-    {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {  //check ip from share internet
-            $IP=$_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  //to check ip is pass from proxy
-            $IP=$_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $IP=$_SERVER['REMOTE_ADDR'];
-        }
-
-        return $IP;
-    }
-
     public function logQuery($query, $numResults)
     {
         $searchdb = Yii::$app->searchdb;
@@ -112,7 +99,7 @@ class Search extends Model
             'INSERT INTO `search_queries` (query, IP, numResults) VALUES (:query, :IP, :numResults)',
             [
                 ':query' => $query,
-                ':IP' => $this->getIP(),
+                ':IP' => Yii::$app->getRequest()->getUserIP(),
                 ':numResults' => $numResults
             ]
         )->execute();
