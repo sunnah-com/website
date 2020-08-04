@@ -50,7 +50,6 @@ class Search extends Model
             $spellcheck = null;
         }
         $eurns = null;
-        $pairs = null;
         $aurns = null;
         foreach ($results as $result) {
             $eurns[] = $result['URN'];
@@ -151,12 +150,6 @@ class Search extends Model
         }
 
         return $aURNs;
-    }
-
-
-    public function php_zip($enumbers, $anumbers)
-    {
-        return array_map(null, $enumbers, $anumbers);
     }
 
     private function replace_special_chars($str)
