@@ -83,7 +83,15 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+        // Write DB
+        'searchdb' => [
+          'class' => 'yii\db\Connection',
+          'dsn' => "mysql:host={$parameters['searchdb_host']};dbname={$parameters['searchdb_name']}",
+          'username' => $parameters['searchdb_username'],
+          'password' => $parameters['searchdb_password'],
+          'charset' => 'utf8',
+        ],
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,

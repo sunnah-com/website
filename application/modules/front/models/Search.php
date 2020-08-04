@@ -4,10 +4,10 @@ namespace app\modules\front\models;
 
 use yii\base\Model;
 use Yii;
+use yii\db\Query;
 
 class Search extends Model
 {
-	private $_con;
 	protected $_query;
 	protected $_context;
 	protected $_username = "ansari";
@@ -16,8 +16,7 @@ class Search extends Model
 
 	public function attributeNames() {}
 	
-	function __construct($db_connection) {
-		$this->_con = $db_connection;
+	function __construct() {
 		$this->_resultsPerPage = Yii::$app->params['pageSize'];
 		$this->_context = stream_context_create(array('http' => array(
 			     'header'  => "Authorization: Basic " . base64_encode($this->_username.":".$this->_password)
@@ -91,23 +90,27 @@ class Search extends Model
 	}	
 
 	public function logQuery($query, $numResults) {
-		
-		$IP = $this->getIP();
-		$sql_query = "INSERT INTO search_queries (query, IP, numResults) values ('".$query."', '".$IP."', ".$numResults.")";
-        mysqli_select_db($this->_con, "searchdb") or die(mysqli_error($this->_con));
-		mysqli_query($this->_con, $sql_query) or die(mysqli_error($this->_con).$query);
+		$searchdb = Yii::$app->searchdb;
+		$searchdb->createCommand(
+			'INSERT INTO `search_queries` (query, IP, numResults) VALUES (:query, :IP, :numResults)',
+			[
+				':query' => $query,
+				':IP' => $this->getIP(),
+				':numResults' => $numResults
+			]
+		)->execute();
 	}
 
-	public function getMatchedEnglishURNs($aURNs) {
+    public function getMatchedEnglishURNs($aURNs) {
         if (count($aURNs) == 0) return array();
         $eURNs = array_fill(0, count($aURNs), 0);
 
-        $aurns_string = '(';
-        foreach ($aURNs as $aURN) $aurns_string = $aurns_string.$aURN.',';
-        $aurns_string = substr($aurns_string, 0, -1).')';
-        $query = "SELECT * FROM matchtable WHERE arabicURN in ".$aurns_string;
-        $urn_query = mysqli_query($this->_con, $query) or die(mysqli_error($this->_con).$query);
-        while ($row = mysqli_fetch_array($urn_query)) {
+        $query = new Query();
+        $query = $query->select('*')
+            ->from('matchtable')
+            ->where(array('in', 'arabicURN', $aURNs));
+        $results = $query->all();
+        foreach ($results as $row) {
             $eurn = $row['englishURN'];
             $aurn = $row['arabicURN'];
             $pos = array_search($aurn, $aURNs);
@@ -116,17 +119,17 @@ class Search extends Model
 
         return $eURNs;
     }
-	
+
     public function getMatchedArabicURNs($eURNs) {
         if (count($eURNs) == 0) return array();
         $aURNs = array_fill(0, count($eURNs), 0);
 
-        $eurns_string = '(';
-        foreach ($eURNs as $eURN) $eurns_string = $eurns_string.$eURN.',';
-        $eurns_string = substr($eurns_string, 0, -1).')';
-        $query = "SELECT * FROM matchtable WHERE englishURN in ".$eurns_string;
-        $urn_query = mysqli_query($this->_con, $query) or die(mysqli_error($this->_con).$query);
-        while ($row = mysqli_fetch_array($urn_query)) {
+        $query = new Query();
+        $query = $query->select('*')
+            ->from('matchtable')
+            ->where(array('in', 'englishURN', $eURNs));
+        $results = $query->all();
+        foreach ($results as $row) {
             $eurn = $row['englishURN'];
             $aurn = $row['arabicURN'];
             $pos = array_search($eurn, $eURNs);

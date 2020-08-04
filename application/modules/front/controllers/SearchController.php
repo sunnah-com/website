@@ -62,10 +62,8 @@ class SearchController extends SController
         $this->view->params['_pageType'] = "search";
         $this->pathCrumbs('Search Results - '.htmlspecialchars($query).' (page '.$page.')', '');
         if (strlen($query) < 1) return NULL;
-		$con = mysqli_connect("localhost", "webread") or die(mysqli_error($con));
-        mysqli_select_db($con, "hadithdb") or die(mysqli_error($con));
 		
-        $searchObject = new Search($con);
+        $searchObject = new Search();
         $results_arr = $searchObject->searchEnglishHighlighted($query, $page);
         if (count($results_arr) == 0) {
             $errorMsg = "The search engine is currently down. The web administrators have been notified and will be working to get it back up as soon as possible, inshaAllah.";
@@ -96,8 +94,7 @@ class SearchController extends SController
         }
 
         $searchObject->logQuery(addslashes($query), $numFound);
-        mysqli_select_db($con, "hadithdb") or die(mysqli_error($con));
-        
+
         if (is_null($eurns) && is_null($aurns)) {
             // Zero search results
             $this->_numFound = 0;
@@ -150,7 +147,6 @@ class SearchController extends SController
                 }
             }
         }
-		mysqli_close($con);
 		
 		$viewVars = array();
         $viewVars['highlighted'] = $highlighted;
