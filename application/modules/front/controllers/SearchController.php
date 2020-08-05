@@ -3,6 +3,9 @@
 namespace app\modules\front\controllers;
 
 use app\controllers\SController;
+use app\modules\front\models\ArabicHadith;
+use app\modules\front\models\Book;
+use app\modules\front\models\EnglishHadith;
 use app\modules\front\models\Search;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -12,18 +15,6 @@ use Yii;
 
 class SearchController extends SController
 {
-    protected $_collections;
-    protected $_searchQuery;
-    protected $_highlighted;
-    protected $_eurns;
-    protected $_aurns;
-    protected $_pairs;
-    protected $_english_hadith;
-    protected $_arabic_hadith;
-    protected $_language;
-    protected $_pageNumber;
-    protected $_resultsPerPage;
-    protected $_message;
     protected $_pages;
 
     /*	Commenting out the caching while Karim makes advanced search */
@@ -91,7 +82,7 @@ class SearchController extends SController
             // Zero search results
             return $this->render(
                 'index',
-                ['numFound' => 0, 'spellcheck' => $spellcheck]
+                array('numFound' => 0, 'spellcheck' => $spellcheck)
             );
         }
 
@@ -102,9 +93,9 @@ class SearchController extends SController
             ->from('EnglishHadithTable')
             ->where(array('in', 'englishURN', $eurns));
         $englishSet = $query->all();
-        $english_hadith = array();
+        $englishHadiths = array();
         foreach ($englishSet as $row) {
-            $english_hadith[array_search($row['englishURN'], $eurns)] = $row;
+            $englishHadiths[$row['englishURN']] = $row;
         }
 
         $aurns = array_map('intval', $aurns);
@@ -114,45 +105,56 @@ class SearchController extends SController
             ->from('ArabicHadithTable')
             ->where(array('in', 'arabicURN', $aurns));
         $arabicSet = $query->all();
-        $arabic_hadith = array();
+        $arabicHadiths = array();
         foreach ($arabicSet as $row) {
-            $arabic_hadith[array_search($row['arabicURN'], $aurns)] = $row;
+            $arabicHadiths[$row['arabicURN']] = $row;
         }
 
-        // For the Arabic ahadith that have no English match, we need to populate
-        // the englishBookName and englishBookID field for display purposes
-        if ($language === 'arabic' && !is_null($eurns)) {
-            $missing_keys = array_keys($eurns, 0);
-            foreach ($missing_keys as $missing_key) {
-                // If for some reason the Arabic hadith doesn't exist (e.g. if the search index is stale)
-                if (!array_key_exists($missing_key, $arabic_hadith)) {
-                    $english_hadith[$missing_key]['bookID'] = null;
-                    $english_hadith[$missing_key]['bookName'] = "";
+        $pairs = array_map(null, $eurns, $aurns);
+        $searchResults = array();
+        foreach ($pairs as $index => $pair) {
+            [$eurn, $aurn] = $pair;
+            $enDetails = $englishHadiths[$eurn] ?? null;
+            $arDetails = $arabicHadiths[$aurn] ?? null;
+            if ($language === 'english') {
+                if ($enDetails === null) {
                     continue;
                 }
-                $collection = $arabic_hadith[$missing_key]['collection'];
-                $arabicBookID = $arabic_hadith[$missing_key]['bookID'];
-                $ebook = $this->util->getBookByLanguageID($collection, $arabicBookID, "arabic");
-                if (!(is_null($ebook))) {
-                    $english_hadith[$missing_key]['bookID'] = $ebook->englishBookID;
-                    $english_hadith[$missing_key]['bookName'] = $ebook->englishBookName;
+                $book = Book::find()->where(
+                    'englishBookID = :ebid AND collection = :collection',
+                    array(':ebid' => $enDetails['bookID'], ':collection' => $enDetails['collection'])
+                )->one();
+
+                $enDetails['highlighted'] = $highlighted[$eurn]['hadithText'][0];
+
+            } elseif ($language === 'arabic') {
+                if ($arDetails === null) {
+                    continue;
                 }
+                $book = Book::find()->where(
+                    'arabicBookID = :abid AND collection = :collection',
+                    array(':abid' => $arDetails['bookID'], ':collection' => $arDetails['collection'])
+                )->one();
+
+                $arDetails['highlighted'] = $highlighted[$aurn]['arabichadithText'][0];
             }
+
+            $searchResults[] = array(
+                'en' => $enDetails,
+                'ar' => $arDetails,
+                'book' => $book
+            );
         }
 
         $viewVars = array();
-        $viewVars['highlighted'] = $highlighted;
-        $viewVars['eurns'] = $eurns;
-        $viewVars['aurns'] = $aurns;
-        $viewVars['pairs'] = array_map(null, $eurns, $aurns);
-        $viewVars['english_hadith'] = $english_hadith;
-        $viewVars['arabic_hadith'] = $arabic_hadith;
+        $viewVars['searchResults'] = $searchResults;
         $viewVars['numFound'] = $numFound;
         $viewVars['spellcheck'] = $spellcheck;
         $viewVars['language'] = $language;
         $viewVars['pageNumber'] = $page;
         $viewVars['resultsPerPage'] = Yii::$app->params['pageSize'];
-        $viewVars['collections'] = $this->util->getCollectionsInfo("indexed");
+        $viewVars['collectionsInfo'] = $this->util->getCollectionsInfo('indexed');
+
         $this->_pages = new Pagination([
             'totalCount' => $numFound,
             'pageSize' => Yii::$app->params['pageSize'],
