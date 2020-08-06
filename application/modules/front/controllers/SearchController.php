@@ -3,177 +3,177 @@
 namespace app\modules\front\controllers;
 
 use app\controllers\SController;
+use app\modules\front\models\ArabicHadith;
+use app\modules\front\models\Book;
+use app\modules\front\models\EnglishHadith;
 use app\modules\front\models\Search;
 use yii\db\Query;
 use yii\data\Pagination;
+use yii\helpers;
 use yii\widgets\LinkPager;
 use Yii;
 
 class SearchController extends SController
 {
-    protected $_numFound;
-    protected $_collections;
-    protected $_spellcheck;
-    protected $_searchQuery;
-    protected $_highlighted;
-    protected $_eurns;
-    protected $_aurns;
-    protected $_pairs;
-    protected $_english_hadith;
-    protected $_arabic_hadith;
-    protected $_language;
-    protected $_pageNumber;
-    protected $_resultsPerPage;
-    protected $_message;
     protected $_pages;
 
-/*	Commenting out the caching while Karim makes advanced search */
-/*
-    public function filters() {
-        return array(
-            array(
-                'COutputCache',
-                'duration'=>Yii::$app->params['cacheTTL'],
-                'varyByParam'=>array('id', 'query', 'page'),
-            ),
-        );
-    }
-*/
+    /*	Commenting out the caching while Karim makes advanced search */
+    /*
+        public function filters() {
+            return array(
+                array(
+                    'COutputCache',
+                    'duration'=>Yii::$app->params['cacheTTL'],
+                    'varyByParam'=>array('id', 'query', 'page'),
+                ),
+            );
+        }
+    */
 
-    public function actionOldsearch($query, $page = 1) {
+    public function actionOldsearch($query, $page = 1)
+    {
         $query = stripslashes($this->url_decode($query));
         $this->processSearch($query, $page);
     }
 
-	public function actionSearch() {
-		$page = 1;
-		if (isset($_GET['q'])) {
-			$query = $_GET['q'];
-			if (isset($_GET['page'])) $page = $_GET['page'];
-			return $this->processSearch($query, $page);
-		}
-		else return Yii::$app->runAction('front/index/index');
+    public function actionSearch()
+    {
+        $query = Yii::$app->request->get('q');
+        $query = trim($query);
+        if ($query === '') {
+            return Yii::$app->runAction('front/index/index');
+        }
 
-	}
+        $this->view->params['_searchQuery'] = $query;
+        $this->view->params['_pageType'] = 'search';
 
-	public function processSearch($query, $page) {
-		$this->_viewVars = new \StdClass();
-        $this->view->params['_searchQuery'] = $query; 
-        $this->view->params['_pageType'] = "search";
-        $this->pathCrumbs('Search Results - '.htmlspecialchars($query).' (page '.$page.')', '');
-        if (strlen($query) < 1) return NULL;
-		
+        $page = Yii::$app->request->get('page', 1);
+        $page = intval($page);
+        return $this->processSearch($query, $page);
+    }
+
+    public function processSearch($query, $page)
+    {
+        $this->pathCrumbs('Search Results - '.helpers\Html::encode($query).' (page '.$page.')', '');
+
         $searchObject = new Search();
         $results_arr = $searchObject->searchEnglishHighlighted($query, $page);
         if (count($results_arr) == 0) {
-            $errorMsg = "The search engine is currently down. The web administrators have been notified and will be working to get it back up as soon as possible, inshaAllah.";
-            return $this->render('index', ['errorMsg' => $errorMsg]);
+            return $this->searchEngineDown();
         }
-        $eurns = $results_arr[0];
-        $aurns = $results_arr[1];
-        $highlighted = $results_arr[2];
-        $numFound = $results_arr[3];
-        $spellcheck = $results_arr[4];
-        $language = "english";
-        $english = true;
 
-		//Yii::log("query: $query, numFound: $numFound, aurns: ".print_r($aurns), 'info', 'system.web.CController');
+        $language = 'english';
+        [$eurns, $aurns, $highlighted, $numFound, $spellcheck] = $results_arr;
 
-		if ($eurns == NULL) {
+        if ($eurns === null) {
+            // If no English results were found, do Arabic search
             $results_arr = $searchObject->searchArabicHighlighted($query, $page);
             if (count($results_arr) == 0) {
-                $errorMsg = "The search engine is currently down. The web administrators have been notified and will be working to get it back up as soon as possible, inshaAllah.";
-                return $this->render('index', ['errorMsg' => $errorMsg]);
+                return $this->searchEngineDown();
             }
-            $eurns = $results_arr[0];
-            $aurns = $results_arr[1];
-            $highlighted = $results_arr[2];
-            $numFound = $results_arr[3];
-            $language = "arabic";
-            $english = false;
+
+            $language = 'arabic';
+            [$eurns, $aurns, $highlighted, $numFound, $spellcheck] = $results_arr;
         }
 
         $searchObject->logQuery(addslashes($query), $numFound);
 
         if (is_null($eurns) && is_null($aurns)) {
             // Zero search results
-            $this->_numFound = 0;
-            $this->_spellcheck = $spellcheck;
-            $this->_viewVars->pageType = "search";
-			$this->view->params['_pageType'] = "search";
-        	return $this->render('index', [
-									 'numFound' => 0,
-									 'spellcheck' => $spellcheck,
-			]);
+            return $this->render(
+                'index',
+                array('numFound' => 0, 'spellcheck' => $spellcheck)
+            );
         }
 
-        for ($i = 0; $i < count($eurns); $i++) $eurns[$i] = intval($eurns[$i]);
+        $eurns = array_map('intval', $eurns);
         $query = new Query();
-        $query = $query->select('*')
-        			   ->from('EnglishHadithTable')
-        		       ->where(array('in', 'englishURN', $eurns));
-		$englishSet = $query->all();
-		$english_hadith = array();
-        foreach ($englishSet as $row) 
-        	$english_hadith[array_search($row['englishURN'], $eurns)] = $row;
-		
-        for ($i = 0; $i < count($aurns); $i++) $aurns[$i] = intval($aurns[$i]);
-        $query = new Query();
-        $query = $query->select('*')
-        		->from('ArabicHadithTable')
-        		->where(array('in', 'arabicURN', $aurns));
-		$arabicSet = $query->all();
-		$arabic_hadith = array();
-        foreach ($arabicSet as $row) 
-        	$arabic_hadith[array_search($row['arabicURN'], $aurns)] = $row;
-        	
-        // For the Arabic ahadith that have no English match, we need to populate
-        // the englishBookName and englishBookID field for display purposes
-        if (!$english && !is_null($eurns)) {
-            $missing_keys = array_keys($eurns, 0);
-            foreach ($missing_keys as $missing_key) {
-				// If for some reason the Arabic hadith doesn't exist (e.g. if the search index is stale)
-				if (!array_key_exists($missing_key, $arabic_hadith)) {
-                    $english_hadith[$missing_key]['bookID'] = NULL;
-                    $english_hadith[$missing_key]['bookName'] = "";
-					continue;
-				}
-                $collection = $arabic_hadith[$missing_key]['collection'];
-                $arabicBookID = $arabic_hadith[$missing_key]['bookID'];
-                $ebook = $this->util->getBookByLanguageID($collection, $arabicBookID, "arabic");
-                if (!(is_null($ebook))) {
-                    $english_hadith[$missing_key]['bookID'] = $ebook->englishBookID;
-                    $english_hadith[$missing_key]['bookName'] = $ebook->englishBookName;
-                }
-            }
+        $query = $query
+            ->select('*')
+            ->from('EnglishHadithTable')
+            ->where(array('in', 'englishURN', $eurns));
+        $englishSet = $query->all();
+        $englishHadiths = array();
+        foreach ($englishSet as $row) {
+            $englishHadiths[$row['englishURN']] = $row;
         }
-		
-		$viewVars = array();
-        $viewVars['highlighted'] = $highlighted;
-        $viewVars['eurns'] = $eurns;
-        $viewVars['aurns'] = $aurns;
-        $viewVars['pairs'] = $searchObject->php_zip($eurns, $aurns);
-        $viewVars['english_hadith'] = $english_hadith;
-        $viewVars['arabic_hadith'] = $arabic_hadith;
+
+        $aurns = array_map('intval', $aurns);
+        $query = new Query();
+        $query = $query
+            ->select('*')
+            ->from('ArabicHadithTable')
+            ->where(array('in', 'arabicURN', $aurns));
+        $arabicSet = $query->all();
+        $arabicHadiths = array();
+        foreach ($arabicSet as $row) {
+            $arabicHadiths[$row['arabicURN']] = $row;
+        }
+
+        $pairs = array_map(null, $eurns, $aurns);
+        $searchResults = array();
+        foreach ($pairs as $index => $pair) {
+            [$eurn, $aurn] = $pair;
+            $enDetails = $englishHadiths[$eurn] ?? null;
+            $arDetails = $arabicHadiths[$aurn] ?? null;
+            if ($language === 'english') {
+                if ($enDetails === null) {
+                    continue;
+                }
+                $book = Book::find()->where(
+                    'englishBookID = :ebid AND collection = :collection',
+                    array(':ebid' => $enDetails['bookID'], ':collection' => $enDetails['collection'])
+                )->one();
+
+                $enDetails['highlighted'] = $highlighted[$eurn]['hadithText'][0];
+
+            } elseif ($language === 'arabic') {
+                if ($arDetails === null) {
+                    continue;
+                }
+                $book = Book::find()->where(
+                    'arabicBookID = :abid AND collection = :collection',
+                    array(':abid' => $arDetails['bookID'], ':collection' => $arDetails['collection'])
+                )->one();
+
+                $arDetails['highlighted'] = $highlighted[$aurn]['arabichadithText'][0];
+            }
+
+            $searchResults[] = array(
+                'en' => $enDetails,
+                'ar' => $arDetails,
+                'book' => $book
+            );
+        }
+
+        $viewVars = array();
+        $viewVars['searchResults'] = $searchResults;
         $viewVars['numFound'] = $numFound;
         $viewVars['spellcheck'] = $spellcheck;
         $viewVars['language'] = $language;
         $viewVars['pageNumber'] = $page;
         $viewVars['resultsPerPage'] = Yii::$app->params['pageSize'];
-        $viewVars['collections'] = $this->util->getCollectionsInfo("indexed");
-		$this->_pages = new Pagination([
-							   'totalCount' => $numFound,
-							   'pageSize' => Yii::$app->params['pageSize'],
-							   'defaultPageSize' => Yii::$app->params['pageSize'],
-							]);
-		$this->_pages->pageSize = Yii::$app->params['pageSize'];
-		$viewVars['pages'] = $this->_pages;
+        $viewVars['collectionsInfo'] = $this->util->getCollectionsInfo('indexed');
+
+        $this->_pages = new Pagination([
+            'totalCount' => $numFound,
+            'pageSize' => Yii::$app->params['pageSize'],
+            'defaultPageSize' => Yii::$app->params['pageSize'],
+        ]);
+        $viewVars['pages'] = $this->_pages;
 
         return $this->render('index', $viewVars);
-	}
+    }
 
-	public function url_decode($link) {
-        /* This function decodes values found in URLs and replaces them with their 
+    protected function searchEngineDown()
+    {
+        $errorMsg = 'The search engine is currently down. The web administrators have been notified and will be working to get it back up as soon as possible, inshaAllah.';
+        return $this->render('index', ['errorMsg' => $errorMsg]);
+    }
+
+    public function url_decode($link)
+    {
+        /* This function decodes values found in URLs and replaces them with their
         original character sequences */
         $retval = rawurldecode($link);
         $retval = preg_replace("/-dq-/", "\"", $retval);
@@ -187,6 +187,4 @@ class SearchController extends SController
         $retval = preg_replace("/([^-\ ])-([^-])/", "$1 $2", $retval); // repeating to handle overlapping matches
         return $retval;
     }
-	
-	
 }
