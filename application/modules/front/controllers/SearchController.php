@@ -33,7 +33,12 @@ class SearchController extends SController
     public function actionOldsearch($query, $page = 1)
     {
         $query = stripslashes($this->url_decode($query));
-        $this->processSearch($query, $page);
+		return $this->redirect(['/search', 'q' => $query], 301);
+		//Yii::$app->response->redirect('/about', 301)->send();
+    	//Yii::$app->end();
+        //$this->view->params['_searchQuery'] = $query;
+        //$this->view->params['_pageType'] = 'search';
+        //return $this->processSearch($query, $page);
     }
 
     public function actionSearch()
@@ -125,7 +130,10 @@ class SearchController extends SController
                     array(':ebid' => $enDetails['bookID'], ':collection' => $enDetails['collection'])
                 )->one();
 
-                $enDetails['highlighted'] = $highlighted[$eurn]['hadithText'][0];
+                $enDetails['highlighted'] = null;
+				if (isset($highlighted[$eurn]['hadithText'])) {
+					$enDetails['highlighted'] = $highlighted[$eurn]['hadithText'][0];
+				}
 
             } elseif ($language === 'arabic') {
                 if ($arDetails === null) {
@@ -136,7 +144,10 @@ class SearchController extends SController
                     array(':abid' => $arDetails['bookID'], ':collection' => $arDetails['collection'])
                 )->one();
 
-                $arDetails['highlighted'] = $highlighted[$aurn]['arabichadithText'][0];
+                $arDetails['highlighted'] = null;
+				if (isset($highlighted[$aurn]['arabichadithText'])) {
+					$arDetails['highlighted'] = $highlighted[$aurn]['arabichadithText'][0];
+				}
             }
 
             $searchResults[] = array(
