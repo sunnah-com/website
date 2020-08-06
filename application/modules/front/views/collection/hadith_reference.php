@@ -43,11 +43,12 @@
                 if (array_key_exists($i, $english_grades)) {
                     $grade = $english_grades[$i]['grade'];
                     $muhaddith = $english_grades[$i]['muhaddith'];
-                    echo "<td class=english_grade width=\"107px\"><b>Grade</b></td>";
+                    echo "<td class=english_grade width=\"50px\"><b>Grade</b></td>";
                     echo "<td class=english_grade width=\"36%\">:&nbsp;<b>".$grade."</b>";
                     echo " (".$muhaddith.")</td>";
                 } else {
-                    echo "<td height=100% width=40% class=english_grade></td>";
+                    echo "<td height=100% class=english_grade></td>";
+                    echo "<td height=100% class=english_grade></td>";
                 }
 
                 if (array_key_exists($i, $arabic_grades)) {
@@ -55,8 +56,9 @@
                     $muhaddith = $arabic_grades[$i]['muhaddith'];
     				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$grade."</b>";
 	    			echo "&nbsp;&nbsp; (".$muhaddith.") </td>";
-		    		echo "<td class=\"arabic_grade arabic\" width=\"57px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>";
+		    		echo "<td class=\"arabic_grade arabic\" width=\"50px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;:</td>";
                 } else {
+                    echo "<td height=100% width=60% class=arabic_grade></td>";
                     echo "<td height=100% width=60% class=arabic_grade></td>";
                 }
 
