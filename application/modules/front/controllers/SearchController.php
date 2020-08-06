@@ -125,8 +125,10 @@ class SearchController extends SController
                     array(':ebid' => $enDetails['bookID'], ':collection' => $enDetails['collection'])
                 )->one();
 
-                $enDetails['highlighted'] = $highlighted[$eurn]['hadithText'][0];
-
+                $enDetails['highlighted'] = null;
+                if (isset($highlighted[$eurn]['hadithText'])) {
+                    $enDetails['highlighted'] = $highlighted[$eurn]['hadithText'][0];
+                }
             } elseif ($language === 'arabic') {
                 if ($arDetails === null) {
                     continue;
@@ -136,7 +138,10 @@ class SearchController extends SController
                     array(':abid' => $arDetails['bookID'], ':collection' => $arDetails['collection'])
                 )->one();
 
-                $arDetails['highlighted'] = $highlighted[$aurn]['arabichadithText'][0];
+                $arDetails['highlighted'] = null;
+                if (isset($highlighted[$aurn]['arabichadithText'])) {
+                    $arDetails['highlighted'] = $highlighted[$aurn]['arabichadithText'][0];
+                }
             }
 
             $searchResults[] = array(
