@@ -34,11 +34,6 @@ class SearchController extends SController
     {
         $query = stripslashes($this->url_decode($query));
 		return $this->redirect(['/search', 'q' => $query], 301);
-		//Yii::$app->response->redirect('/about', 301)->send();
-    	//Yii::$app->end();
-        //$this->view->params['_searchQuery'] = $query;
-        //$this->view->params['_pageType'] = 'search';
-        //return $this->processSearch($query, $page);
     }
 
     public function actionSearch()
