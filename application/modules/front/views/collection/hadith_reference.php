@@ -14,18 +14,55 @@
 			echo "<div class=bottomItems>\n";
 	    if (strlen($englishGrade1) > 0 or strlen($arabicGrade1) > 0) {
     	    echo "<div class=hadith_annotation>";
-			echo "<table class=gradetable cellspacing=0 cellpadding=0 border=0>";
-	        echo "<tr>";
-			if (strlen($englishGrade1) > 0) echo "<td class=english_grade width=\"107px\"><b>Grade</b></td><td class=english_grade width=\"36%\">:&nbsp;<b>".ucfirst(trim($englishGrade1))."</b> (".$_collection['englishgrade1'].")</td>";
-			else echo "<td height=100% width=40% class=english_grade></td>";
-    	    if (strlen($arabicGrade1) > 0 && !is_null($arabicGrade1)) {
-				Yii::trace("our hadith number is ".$ourHadithNumber);
-				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$arabicGrade1."</b>";
-				echo "&nbsp;&nbsp; (".$_collection['arabicgrade1'].") </td>";
-				echo "<td class=\"arabic_grade arabic\" width=\"57px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>";
-			}
-			else echo "<td height=100% width=60% class=arabic_grade></td>";
-			echo "</tr></table>";
+            echo "<table class=gradetable cellspacing=0 cellpadding=0 border=0>";
+
+            // This should really happen in the controllers/models
+            // Figure out how many grades there are and populate a structure
+            $english_grades = json_decode($englishGrade1, true);
+            if (is_null($english_grades)) {
+                $english_grades = array();
+                if (strlen($englishGrade1) > 0) {
+                    $english_grades[0] = array();
+                    $english_grades[0]['grade'] = ucfirst(trim($englishGrade1));
+                    $english_grades[0]['muhaddith'] = $_collection['englishgrade1'];
+                }
+            }
+            $arabic_grades = json_decode($arabicGrade1, true);
+            if (is_null($arabic_grades)) {
+                $arabic_grades = array();
+                if (strlen($arabicGrade1) > 0) {
+                    $arabic_grades[0] = array();
+                    $arabic_grades[0]['grade'] = $arabicGrade1;
+                    $arabic_grades[0]['muhaddith'] = $_collection['arabicgrade1'];
+                }
+            }
+
+            $num_grades = max(count($english_grades), count($arabic_grades));
+            for ($i = 0; $i < $num_grades; $i++) {
+                echo "<tr>";
+                if (array_key_exists($i, $english_grades)) {
+                    $grade = $english_grades[$i]['grade'];
+                    $muhaddith = $english_grades[$i]['muhaddith'];
+                    echo "<td class=english_grade width=\"107px\"><b>Grade</b></td>";
+                    echo "<td class=english_grade width=\"36%\">:&nbsp;<b>".$grade."</b>";
+                    echo " (".$muhaddith.")</td>";
+                } else {
+                    echo "<td height=100% width=40% class=english_grade></td>";
+                }
+
+                if (array_key_exists($i, $arabic_grades)) {
+                    $grade = $arabic_grades[$i]['grade'];
+                    $muhaddith = $arabic_grades[$i]['muhaddith'];
+    				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$grade."</b>";
+	    			echo "&nbsp;&nbsp; (".$muhaddith.") </td>";
+		    		echo "<td class=\"arabic_grade arabic\" width=\"57px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>";
+                } else {
+                    echo "<td height=100% width=60% class=arabic_grade></td>";
+                }
+
+                echo "</tr>";
+            }
+            echo "</table>";
 	        echo "</div>";
     	}
 
