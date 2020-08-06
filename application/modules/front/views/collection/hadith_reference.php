@@ -24,7 +24,7 @@
                 if (strlen($englishGrade1) > 0) {
                     $english_grades[0] = array();
                     $english_grades[0]['grade'] = ucfirst(trim($englishGrade1));
-                    $english_grades[0]['muhaddith'] = $_collection['englishgrade1'];
+                    $english_grades[0]['graded_by'] = $_collection['englishgrade1'];
                 }
             }
             $arabic_grades = json_decode($arabicGrade1, true);
@@ -33,7 +33,7 @@
                 if (strlen($arabicGrade1) > 0) {
                     $arabic_grades[0] = array();
                     $arabic_grades[0]['grade'] = $arabicGrade1;
-                    $arabic_grades[0]['muhaddith'] = $_collection['arabicgrade1'];
+                    $arabic_grades[0]['graded_by'] = $_collection['arabicgrade1'];
                 }
             }
 
@@ -42,10 +42,10 @@
                 echo "<tr>";
                 if (array_key_exists($i, $english_grades)) {
                     $grade = $english_grades[$i]['grade'];
-                    $muhaddith = $english_grades[$i]['muhaddith'];
+                    $graded_by = $english_grades[$i]['graded_by'];
                     echo "<td class=english_grade width=\"50px\"><b>Grade</b></td>";
                     echo "<td class=english_grade width=\"36%\">:&nbsp;<b>".$grade."</b>";
-                    echo " (".$muhaddith.")</td>";
+                    echo " (".$graded_by.")</td>";
                 } else {
                     echo "<td height=100% class=english_grade></td>";
                     echo "<td height=100% class=english_grade></td>";
@@ -53,9 +53,9 @@
 
                 if (array_key_exists($i, $arabic_grades)) {
                     $grade = $arabic_grades[$i]['grade'];
-                    $muhaddith = $arabic_grades[$i]['muhaddith'];
+                    $graded_by = $arabic_grades[$i]['graded_by'];
     				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$grade."</b>";
-	    			echo "&nbsp;&nbsp; (".$muhaddith.") </td>";
+	    			echo "&nbsp;&nbsp; (".$graded_by.") </td>";
 		    		echo "<td class=\"arabic_grade arabic\" width=\"50px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;:</td>";
                 } else {
                     echo "<td height=100% width=60% class=arabic_grade></td>";
