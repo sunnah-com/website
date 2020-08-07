@@ -19,7 +19,7 @@
             // This should really happen in the controllers/models
             // Figure out how many grades there are and populate a structure
             $english_grades = json_decode($englishGrade1, true);
-            if (is_null($english_grades)) {
+            if (is_null($english_grades) or !is_array($english_grades)) {
                 $english_grades = array();
                 if (strlen($englishGrade1) > 0) {
                     $english_grades[0] = array();
@@ -28,7 +28,7 @@
                 }
             }
             $arabic_grades = json_decode($arabicGrade1, true);
-            if (is_null($arabic_grades)) {
+            if (is_null($arabic_grades) or !is_array($arabic_grades)) {
                 $arabic_grades = array();
                 if (strlen($arabicGrade1) > 0) {
                     $arabic_grades[0] = array();
