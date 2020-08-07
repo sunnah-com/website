@@ -87,7 +87,22 @@ class CollectionController extends SController
     }
 
     public function actionDispbook($collectionName, $ourBookID, $hadithNumbers = NULL, $_escaped_fragment_ = "default") {
-        if (!(is_null($hadithNumbers))) $hadithRange = addslashes($hadithNumbers);
+		// Handle unambiguous redirects for collections that have had their book numberings changed
+		if ($collectionName === 'riyadussaliheen') {
+			if ($ourBookID == 20) {
+				if (!is_null($hadithNumbers)) return $this->redirect("/riyadussaliheen/19/$hadithNumbers", 301);
+				else return $this->redirect("/riyadussaliheen/19", 301);
+			}
+			elseif ($ourBookID == 1) {
+				if (!is_null($hadithNumbers)) {
+					$parts = explode("-", $hadithNumbers, 2);
+					$first_part = $parts[0];
+					if (intval($first_part) > 47) return $this->redirect("/riyadussaliheen/introduction/$hadithNumbers", 301);
+				}
+			}
+		}
+		
+		if (!(is_null($hadithNumbers))) $hadithRange = addslashes($hadithNumbers);
         else $hadithRange = NULL;
 		$this->_collection = $this->util->getCollection($collectionName);
         if (is_null($this->_collection)) {
