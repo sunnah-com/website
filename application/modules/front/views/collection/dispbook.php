@@ -17,7 +17,7 @@ function displayBab($chapter, $collection, $ourBookID) {
 	else $chapterClassName = "chapter";
     echo "<div class=$chapterClassName>\n";
 	if (!is_null($englishBabName)) {
-		if (strcmp(substr($englishBabName, 0, 7), "chapter") != 0 and (strlen($englishBabNumber) > 0)) $eprefix = "Chapter: ";
+		if (strcmp(strtolower(substr($englishBabName, 0, 7)), "chapter") != 0 and (strlen($englishBabNumber) > 0)) $eprefix = "Chapter: ";
 		else $eprefix = "";
 		if (strlen($englishBabNumber) > 0 && intval($englishBabNumber) != 0) $babNum = $englishBabNumber;
 		else $babNum = $arabicBabNumber;
