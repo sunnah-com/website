@@ -57,7 +57,7 @@ class CollectionController extends SController
         }
         if (is_null($this->_collection) || count($this->_entries) == 0) {
             $errorMsg = "There is no such collection on our website. Click <a href=\"/\">here</a> to go to the home page.";
-        	return $this->render('index', ['entries' => $this->_entries, 'errorMsg' => $errorMsg]);
+        	throw new \yii\web\NotFoundHttpException($errorMsg);
         }
 
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
@@ -106,14 +106,14 @@ class CollectionController extends SController
         else $hadithRange = NULL;
 		$this->_collection = $this->util->getCollection($collectionName);
         if (is_null($this->_collection)) {
-            $this->view->params['_pageType'] = "book";
-			$errorMsg = "There is no such collection on our website. Please use the menu above to navigate the website.";
-        	return $this->render('dispbook', ['errorMsg' => $errorMsg]);
+			$errorMsg = "There is no such collection on our website. Click <a href=\"/\">here</a> to go to the home page.";
+        	throw new \yii\web\NotFoundHttpException($errorMsg);
         }
         
 		$this->view->params['collection'] = $this->_collection;
         $this->_book = $this->util->getBook($collectionName, $ourBookID);
         if (!is_null($this->_book)) $expectedHadithCount = $this->_book->totalNumber;
+        else throw new \yii\web\NotFoundHttpException("Book $ourBookID is unavailable or does not exist.");
         $this->view->params['book'] = $this->_book;
         if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
         $pairs = $this->_entries[2];

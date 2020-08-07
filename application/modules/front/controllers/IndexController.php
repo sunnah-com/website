@@ -23,9 +23,19 @@ class IndexController extends SController
         ];
     }
 
-	public function actionError() {
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
+
+    public function actionError() {
+        $exception = Yii::$app->errorHandler->exception;
 		$this->view->params['_pageType'] = "error";
-		return $this->render('error');
+		return $this->render('error', ['exception' => $exception]);
 	}
 
 	public function actionAjaxhadithcount() {
