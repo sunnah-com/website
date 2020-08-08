@@ -245,6 +245,32 @@ class Util extends Model {
 
 		return $s;
 	}
+
+	/**
+	 * Given a language and an array of URNs, get the
+	 * corresponding matching URNs in other language.
+	 * @param string $lang 'en' or 'ar'
+	 * @param int $urns
+	 * @return array inputURN => matchingURN
+	 */
+	public function getMatchingUrns($lang, $urns) {
+		$fullLabels = array(
+			'en' => 'englishURN',
+			'ar' => 'arabicURN',
+		);
+		$mainField = $lang === 'en' ? $fullLabels['en'] : $fullLabels['ar'];
+		$correspondingField = $lang === 'en' ? $fullLabels['ar'] : $fullLabels['en'];
+
+		$query = Match::find()
+			->select('*')
+			->where([$mainField => $urns]);
+		$results = $query->all();
+		$ret = array();
+		foreach ($results as $row) {
+			$ret[$row[$mainField]] = $row[$correspondingField];
+		}
+		return $ret;
+	}
 }
 
 ?>
