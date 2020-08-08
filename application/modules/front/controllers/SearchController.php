@@ -2,38 +2,19 @@
 
 namespace app\modules\front\controllers;
 
+use app\components\search\SearchResultset;
+use app\components\search\engines\KeywordSearchEngine;
 use app\controllers\SController;
-use app\modules\front\models\ArabicHadith;
-use app\modules\front\models\Book;
-use app\modules\front\models\EnglishHadith;
-use app\modules\front\models\Search;
-use yii\db\Query;
 use yii\data\Pagination;
 use yii\helpers;
-use yii\widgets\LinkPager;
 use Yii;
 
 class SearchController extends SController
 {
-    protected $_pages;
-
-    /*	Commenting out the caching while Karim makes advanced search */
-    /*
-        public function filters() {
-            return array(
-                array(
-                    'COutputCache',
-                    'duration'=>Yii::$app->params['cacheTTL'],
-                    'varyByParam'=>array('id', 'query', 'page'),
-                ),
-            );
-        }
-    */
-
     public function actionOldsearch($query, $page = 1)
     {
         $query = stripslashes($this->url_decode($query));
-		return $this->redirect(['/search', 'q' => $query], 301);
+        return $this->redirect(['/search', 'q' => $query], 301);
     }
 
     public function actionSearch()
@@ -41,7 +22,7 @@ class SearchController extends SController
         $query = Yii::$app->request->get('q');
         $query = trim($query);
         if ($query === '') {
-            return Yii::$app->runAction('front/index/index');
+            return $this->goHome();
         }
 
         $this->view->params['_searchQuery'] = $query;
@@ -56,117 +37,40 @@ class SearchController extends SController
     {
         $this->pathCrumbs('Search Results - '.helpers\Html::encode($query).' (page '.$page.')', '');
 
-        $searchObject = new Search();
-        $results_arr = $searchObject->searchEnglishHighlighted($query, $page);
-        if (count($results_arr) == 0) {
+        $limit = Yii::$app->params['pageSize'];
+
+        $searchEngine = new KeywordSearchEngine();
+        $searchEngine->setLimitPage($limit, $page);
+        $resultset = $searchEngine->doSearch($query);
+
+        if ($resultset === null) {
             return $this->searchEngineDown();
         }
 
-        $language = 'english';
-        [$eurns, $aurns, $highlighted, $numFound, $spellcheck] = $results_arr;
+        $suggestions = $resultset->getSuggestions();
 
-        if ($eurns === null) {
-            // If no English results were found, do Arabic search
-            $results_arr = $searchObject->searchArabicHighlighted($query, $page);
-            if (count($results_arr) == 0) {
-                return $this->searchEngineDown();
-            }
-
-            $language = 'arabic';
-            [$eurns, $aurns, $highlighted, $numFound, $spellcheck] = $results_arr;
-        }
-
-        $searchObject->logQuery(addslashes($query), $numFound);
-
-        if (is_null($eurns) && is_null($aurns)) {
-            // Zero search results
+        if ($resultset->getCount() === 0) {
+            // No results found
             return $this->render(
                 'index',
-                array('numFound' => 0, 'spellcheck' => $spellcheck)
+                array('numFound' => 0, 'spellcheck' => $suggestions)
             );
         }
 
-        $eurns = array_map('intval', $eurns);
-        $query = new Query();
-        $query = $query
-            ->select('*')
-            ->from('EnglishHadithTable')
-            ->where(array('in', 'englishURN', $eurns));
-        $englishSet = $query->all();
-        $englishHadiths = array();
-        foreach ($englishSet as $row) {
-            $englishHadiths[$row['englishURN']] = $row;
-        }
-
-        $aurns = array_map('intval', $aurns);
-        $query = new Query();
-        $query = $query
-            ->select('*')
-            ->from('ArabicHadithTable')
-            ->where(array('in', 'arabicURN', $aurns));
-        $arabicSet = $query->all();
-        $arabicHadiths = array();
-        foreach ($arabicSet as $row) {
-            $arabicHadiths[$row['arabicURN']] = $row;
-        }
-
-        $pairs = array_map(null, $eurns, $aurns);
-        $searchResults = array();
-        foreach ($pairs as $index => $pair) {
-            [$eurn, $aurn] = $pair;
-            $enDetails = $englishHadiths[$eurn] ?? null;
-            $arDetails = $arabicHadiths[$aurn] ?? null;
-            if ($language === 'english') {
-                if ($enDetails === null) {
-                    continue;
-                }
-                $book = Book::find()->where(
-                    'englishBookID = :ebid AND collection = :collection',
-                    array(':ebid' => $enDetails['bookID'], ':collection' => $enDetails['collection'])
-                )->one();
-
-                $enDetails['highlighted'] = null;
-				if (isset($highlighted[$eurn]['hadithText'])) {
-					$enDetails['highlighted'] = $highlighted[$eurn]['hadithText'][0];
-				}
-
-            } elseif ($language === 'arabic') {
-                if ($arDetails === null) {
-                    continue;
-                }
-                $book = Book::find()->where(
-                    'arabicBookID = :abid AND collection = :collection',
-                    array(':abid' => $arDetails['bookID'], ':collection' => $arDetails['collection'])
-                )->one();
-
-                $arDetails['highlighted'] = null;
-				if (isset($highlighted[$aurn]['arabichadithText'])) {
-					$arDetails['highlighted'] = $highlighted[$aurn]['arabichadithText'][0];
-				}
-            }
-
-            $searchResults[] = array(
-                'en' => $enDetails,
-                'ar' => $arDetails,
-                'book' => $book
-            );
-        }
-
-        $viewVars = array();
-        $viewVars['searchResults'] = $searchResults;
-        $viewVars['numFound'] = $numFound;
-        $viewVars['spellcheck'] = $spellcheck;
-        $viewVars['language'] = $language;
-        $viewVars['pageNumber'] = $page;
-        $viewVars['resultsPerPage'] = Yii::$app->params['pageSize'];
-        $viewVars['collectionsInfo'] = $this->util->getCollectionsInfo('indexed');
-
-        $this->_pages = new Pagination([
-            'totalCount' => $numFound,
-            'pageSize' => Yii::$app->params['pageSize'],
-            'defaultPageSize' => Yii::$app->params['pageSize'],
+        $pagination = new Pagination([
+            'totalCount' => $resultset->getCount(),
+            'pageSize' => $limit,
+            'defaultPageSize' => $limit,
         ]);
-        $viewVars['pages'] = $this->_pages;
+
+        $viewVars = array(
+            'resultset' => $resultset,
+            'spellcheck' => $suggestions,
+            'searchQuery' => $query,
+            'pageNumber' => $page,
+            'resultsPerPage' => $limit,
+            'pagination' => $pagination,
+        );
 
         return $this->render('index', $viewVars);
     }
