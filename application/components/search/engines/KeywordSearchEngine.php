@@ -63,8 +63,8 @@ class KeywordSearchEngine extends SearchEngine
         $resultset = new SearchResultset($response['numFound']);
 
         if ($engine->hasSuggestionsSupport()) {
-            $suggestions = $resultsarray['spellcheck']['suggestions'];
-            if (isset($suggestions['collation'])) {
+            $suggestions = $resultsarray['spellcheck']['suggestions'] ?? null;
+            if ($suggestions && isset($suggestions['collation'])) {
                 $spellcheck = substr(strstr($suggestions['collation'], ':'), 1);
                 $resultset->setSuggestions($spellcheck);
             }
