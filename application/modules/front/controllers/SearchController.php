@@ -53,7 +53,7 @@ class SearchController extends SController
             // No results found
             return $this->render(
                 'index',
-                array('numFound' => 0, 'spellcheck' => $suggestions)
+                array('resultset' => $resultset, 'spellcheck' => $suggestions, 'searchQuery' => $query)
             );
         }
 

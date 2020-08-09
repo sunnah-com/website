@@ -38,6 +38,7 @@
                 }
             }
 
+            Yii::warning($arabic_grades);
             $num_grades = max(count($english_grades), count($arabic_grades));
             for ($i = 0; $i < $num_grades; $i++) {
                 echo "<tr>";
