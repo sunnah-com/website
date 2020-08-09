@@ -28,7 +28,7 @@ class KeywordSearchEngine extends SearchEngine
     {
         $engine = new EnglishKeywordSearchEngine();
         $engine->setLimitPage($this->limit, $this->page);
-        $resultset = $this->doLangEngineQuery($engine);
+        $resultset = $this->doLangEngineQuery($this->query);
 
         if ($resultset === null) {
             return null;
@@ -39,7 +39,7 @@ class KeywordSearchEngine extends SearchEngine
             // If no English results were found, do Arabic search
             $engine = new ArabicKeywordSearchEngine();
             $engine->setLimitPage($this->limit, $this->page);
-            $resultset = $this->doLangEngineQuery($engine);
+            $resultset = $this->doLangEngineQuery($this->query);
         }
 
         // Only English engine supports suggestions
