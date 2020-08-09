@@ -8,8 +8,9 @@
 			$collectionEnglishTitle = $values[12];
 			$permalink = "/urn/".$values[0];
 			$englishGrade1 = $values[13]; $arabicGrade1 = $values[14];
-			$divname = $values[16];
 			$hideReportError = $values[15];
+			$divname = $values[16];
+			$hideShare = $values[17] ?? false;
 
 			echo "<div class=bottomItems>\n";
 	    if (strlen($englishGrade1) > 0 or strlen($arabicGrade1) > 0) {
@@ -92,7 +93,7 @@
 
 				if ($englishEntry 
 				    and /* $values[5] != $values[3] and */ intval($values[3]) != 0
-					and strcmp($_collection->showEnglishTranslationNumber, "yes") == 0) {
+					and strcmp($_collection['showEnglishTranslationNumber'], "yes") == 0) {
                         echo "<tr><td>";
 						if (strcmp($collection, "bukhari")==0 or strcmp($collection, "muslim")==0 or strcmp($collection, "malik")==0) echo "USC-MSA web (English) reference</td><td>&nbsp;: ";
                        	else echo "English translation</td><td>&nbsp;:&nbsp;";
@@ -176,7 +177,7 @@
 			//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
 			//echo "<a href=\"$permalink\">Permalink</a>";
 			if (!isset($hideReportError) or !$hideReportError) echo "<a href=\"javascript: void(0);\" onclick=\"reportHadith(".$values[0].", '".$divname."')\">Report Error</a> | ";
-			echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span>";
+			if (!$hideShare) echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span>";
 			echo "</div>";
 
 			echo "\n</div>";
