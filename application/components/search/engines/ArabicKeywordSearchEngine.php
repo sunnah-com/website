@@ -8,6 +8,11 @@ class ArabicKeywordSearchEngine extends KeywordSearchEngine
     protected $lang = 'ar';
     protected $fieldName = 'arabichadithText';
 
+    protected function doSearchInternal()
+    {
+        return $this->doLangEngineQuery();
+    }
+
     protected function doQuery()
     {
         $fullquery = rawurlencode(self::replace_special_chars(stripslashes(trim($this->query))));

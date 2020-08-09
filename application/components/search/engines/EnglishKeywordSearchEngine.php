@@ -6,6 +6,11 @@ class EnglishKeywordSearchEngine extends KeywordSearchEngine
 {
     protected $id = 'SolrEnglish';
 
+    protected function doSearchInternal()
+    {
+        return $this->doLangEngineQuery();
+    }
+
     protected function doQuery()
     {
         //$fullquery = "hadithText:".rawurlencode(self::replace_special_chars(stripslashes($query)));
