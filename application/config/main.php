@@ -93,7 +93,8 @@ $config = [
         ],
         'solr' => [
           'class' => 'app\components\search\engines\SolrConnection',
-          'server' => $parameters['searchdb_username'],
+          'host' => $parameters['solr_host'],
+          'port' => $parameters['solr_port'],
           'username' => $parameters['solr_username'],
           'password' => $parameters['solr_password'],
         ],

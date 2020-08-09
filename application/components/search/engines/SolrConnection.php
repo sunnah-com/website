@@ -6,7 +6,8 @@ use yii\base\BaseObject;
 
 class SolrConnection extends BaseObject
 {
-    public $server;
+    public $host;
+    public $port;
     public $username;
     public $password;
     private $context;
@@ -23,6 +24,6 @@ class SolrConnection extends BaseObject
 
     public function sendRequest($url)
     {
-        return file_get_contents("{$this->server}{$url}", false, $this->context);
+        return file_get_contents("{$this->host}:{$this->port}{$url}", false, $this->context);
     }
 }
