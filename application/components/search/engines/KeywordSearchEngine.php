@@ -28,7 +28,7 @@ class KeywordSearchEngine extends SearchEngine
     {
         $engine = new EnglishKeywordSearchEngine();
         $engine->setLimitPage($this->limit, $this->page);
-        $resultset = $this->doLangEngineQuery($this->query);
+        $resultset = $engine->doSearch($this->query);
 
         if ($resultset === null) {
             return null;
@@ -39,16 +39,20 @@ class KeywordSearchEngine extends SearchEngine
             // If no English results were found, do Arabic search
             $engine = new ArabicKeywordSearchEngine();
             $engine->setLimitPage($this->limit, $this->page);
-            $resultset = $this->doLangEngineQuery($this->query);
+            $resultset = $engine->doSearch($this->query);
         }
 
-        // Only English engine supports suggestions
-        $resultset->setSuggestions($enSuggestions);
+        if ($resultset !== null) {
+            // Only English engine supports suggestions
+            $resultset->setSuggestions($enSuggestions);
+        }
+
         return $resultset;
     }
 
-    private function doLangEngineQuery($engine) {
-        $resultscode = $engine->doQuery();
+    protected function doLangEngineQuery()
+    {
+        $resultscode = $this->doQuery();
         if ($resultscode === null) {
             return null;
         }
@@ -62,7 +66,7 @@ class KeywordSearchEngine extends SearchEngine
 
         $resultset = new SearchResultset($response['numFound']);
 
-        if ($engine->hasSuggestionsSupport()) {
+        if ($this->hasSuggestionsSupport()) {
             $suggestions = $resultsarray['spellcheck']['suggestions'] ?? null;
             if ($suggestions && isset($suggestions['collation'])) {
                 $spellcheck = substr(strstr($suggestions['collation'], ':'), 1);
@@ -73,16 +77,17 @@ class KeywordSearchEngine extends SearchEngine
         foreach ($docs as $doc) {
             $urn = $doc['URN'];
             $highlightedText = null;
-            if (isset($highlightings[$urn][$engine->fieldName])) {
-                $highlightedText = $highlightings[$urn][$engine->fieldName][0];
+            if (isset($highlightings[$urn][$this->fieldName])) {
+                $highlightedText = $highlightings[$urn][$this->fieldName][0];
             }
-            $resultset->addResult($engine->lang, intval($urn), $highlightedText);
+            $resultset->addResult($this->lang, intval($urn), $highlightedText);
         }
 
         return $resultset;
     }
 
-    protected function doQuery() {
+    protected function doQuery()
+    {
         return false;
     }
 
