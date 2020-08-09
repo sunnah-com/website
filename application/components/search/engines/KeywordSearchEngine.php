@@ -27,6 +27,7 @@ class KeywordSearchEngine extends SearchEngine
     protected function doSearchInternal()
     {
         $engine = new EnglishKeywordSearchEngine();
+        $engine->setLimitPage($this->limit, $this->page);
         $resultset = $this->doLangEngineQuery($engine);
 
         if ($resultset === null) {
@@ -37,6 +38,7 @@ class KeywordSearchEngine extends SearchEngine
         if ($resultset->getCount() === 0) {
             // If no English results were found, do Arabic search
             $engine = new ArabicKeywordSearchEngine();
+            $engine->setLimitPage($this->limit, $this->page);
             $resultset = $this->doLangEngineQuery($engine);
         }
 
