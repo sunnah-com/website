@@ -136,6 +136,20 @@ if (isset($errorMsg)) {
                     'otherlangs' => null
                 )
             );
+
+            echo $this->render('/collection/hadith_reference', array(
+                'englishEntry' => !!$data['en'],
+                'arabicEntry' => !!$data['ar'],
+                '_collection' => $collection,
+                'values' => array($result['urn'],
+                    $data['en']['volumeNumber'],
+                    $data['en']['bookNumber'],
+                    $data['en']['hadithNumber'],
+                    $data['ar']['bookNumber'],
+                    $data['ar']['hadithNumber'],
+                    $hadith['ourHadithNumber'], $collection['name'], $ourBookID, $collection['hasbooks'], $collection['hasvolumes'], $book['status'], $collection['englishTitle'], $data['en']['grade1'], $data['ar']['grade1'], true, "h".$data['ar']['arabicURN'], true)
+            ));
+
             echo "</div>"; // end actualHadithContainer
 
             if ($truncation) {
