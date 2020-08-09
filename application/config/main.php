@@ -91,7 +91,13 @@ $config = [
           'password' => $parameters['searchdb_password'],
           'charset' => 'utf8',
         ],
-
+        'solr' => [
+          'class' => 'app\components\search\engines\SolrConnection',
+          'host' => $parameters['solr_host'],
+          'port' => $parameters['solr_port'],
+          'username' => $parameters['solr_username'],
+          'password' => $parameters['solr_password'],
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
