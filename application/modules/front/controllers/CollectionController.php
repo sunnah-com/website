@@ -158,8 +158,8 @@ class CollectionController extends SController
         if (!isset($this->_entries) || count($this->_entries) == 0) {
 			// Special case for 0-hadith Hisn al-Muslim introduction book which is valid
 			if (strcmp($collectionName, "hisn") != 0) {
-            	$errorMsg = "You have entered an incorrect URL. Please use the menu above to navigate the website.";
-        		return $this->render('dispbook', ['errorMsg' => $errorMsg]);
+			    $errorMsg = "Book $ourBookID is unavailable or does not exist. Click <a href=\"/\">here</a> to go to the home page.";
+        	    throw new \yii\web\NotFoundHttpException($errorMsg);
 			}
         }
 
