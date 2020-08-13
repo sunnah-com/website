@@ -10,7 +10,7 @@
     <a class="searchtipslink">Search Tips</a>
     <div id="searchbar" class="sblur">
         <form name="searchform" action="/search/" method=get id="searchform">
-            <input type="text" class="searchquery" name=q value="<?php echo $stextval; ?>" />
+            <input type="text" class="searchquery" name=q value="<?php echo htmlspecialchars(strip_tags($stextval)); ?>" />
             <input type="submit" class="searchsubmit" value="" />
         </form>
     </div>
