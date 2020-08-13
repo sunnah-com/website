@@ -868,6 +868,10 @@ a:hover { text-decoration: underline; }
 	white-space: pre-line;
 }
 
+.hadith_container_ahmad .text_details {
+	white-space: pre-line;
+}
+
 .reference_label {
     display: block;
     margin-top: 1em;
