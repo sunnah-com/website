@@ -23,7 +23,7 @@ class CollectionController extends SController
         return [
             [
                    'class' => 'yii\filters\PageCache',
-                   'except' => ['ramadandata', 'dhulhijjahdata'],
+                   'except' => ['selection-data'],
                    'duration' => Yii::$app->params['cacheTTL'],
                    'variations' => [ 
                        Yii::$app->request->get('id'), 
