@@ -985,6 +985,7 @@ a:hover { text-decoration: underline; }
 	float: left;
 	margin: 10px 3px 10px 3px;
 	width: 100%; /* for <1line hadith */
+	box-shadow: 0 21px 28px -21px #00000017, 0 22px 29px #00000005;
 }
 
 .hadith_narrated {
@@ -1364,6 +1365,61 @@ a:hover { text-decoration: underline; }
     display: none;
 }
 
+/* Hadith Navigation */
+.button {
+    display: inline-block;
+    padding: 7px 20px;
+    background: #f9f7f2;
+    color: #75a7a8;
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+    box-shadow: 0 1px 24px -7px #00000026, 0 15px 24px #00000029;
+    transition: .3s all ease;
+    line-height: 1.3;
+}
+
+.button:hover {
+	box-shadow: 0 11px 8px -11px #00000026, 0 22px 19px #00000029;
+}
+
+.button[disabled] {
+    background-color: #d6d6d6;
+    color: #afafaf;
+    box-shadow: none;
+}
+
+.hadith_nav_wrapper {
+	margin: 20px 3px;
+	float: left;
+	width: 100%;
+}
+
+.hadith_nav_wrapper .button.next {
+	float: right;
+}
+
+.hadith_nav.button:after,
+.hadith_nav.button.prev:before {
+    content:  " ";
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2375a7a8'><polygon points='0,100 0,0 50,50'/></svg>") 5px 3px/16px 11px no-repeat;
+    height: 14px;
+    width: 13px;
+    display: inline-block;
+}
+
+.hadith_nav.button.prev[disabled]:before,
+.hadith_nav.button[disabled]:after {
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23afafaf'><polygon points='0,100 0,0 50,50'/></svg>") 5px 3px/16px 11px no-repeat;
+}
+
+.hadith_nav.button.prev:after {
+    display: none;
+}
+
+.hadith_nav.button.prev:before {
+    transform: scaleX(-1);
+}
+
 /* Smaller Screens */
 @media (max-width: 768px) {
 
@@ -1570,11 +1626,14 @@ a:hover { text-decoration: underline; }
 	
     .actualHadithContainer {
         padding: 20px;
-        margin: 0;
         float: initial;
         width: 100%;
         box-sizing: border-box;
         margin: 0 0 65px 0;
+	}
+		
+    .single_hadith .actualHadithContainer {
+        margin-bottom: 10px;
 	}
 	
 	.english_hadith_full:before,
@@ -1638,8 +1697,6 @@ a:hover { text-decoration: underline; }
 		margin: 0 0 1em -20px;
 	}
 
-
-	
     .collection_titles,
 	.collection_info {
         width: 100%;
@@ -1733,6 +1790,12 @@ a:hover { text-decoration: underline; }
 		width: 98%
 	}
 
+	.hadith_nav_wrapper {
+		margin: 20px 10px;
+		float: none;
+		width: auto;
+	}
+	
 	/* Ramadan Home */
 	#rightPanel {
 		min-width: auto;
