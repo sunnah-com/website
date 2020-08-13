@@ -171,6 +171,80 @@ class Util extends Model {
 		return $hadith;
     }
 
+    public function getVerifiedHadithNumber($urn, $language = "english") {
+        $hadith = $this->getHadith($urn, $language);
+        $arabicURN = $hadith->matchingArabicURN;
+        $arabic_hadith = $this->getHadith($arabicURN, "arabic");
+        return $arabic_hadith->hadithNumber;
+    }
+
+    // The following two functions should really be written for arabicURNs
+    // but can't until we move to arabicURN ordering in ALL books
+    public function getNextURNInCollection($urn) {
+        $hadith = $this->getHadith($urn, "english");
+        $nextURN = EnglishHadith::find()
+                                ->where("collection = :collection", [':collection' => $hadith->collection])
+                                ->andWhere("bookID = :bookID", [':bookID' => $hadith->bookID])
+                                ->andWhere("englishURN > :urn", [':urn' => $urn])
+                                ->min('englishURN');
+        if (is_null($nextURN)) {
+            // We're at the end of a book. See if there is a next book.
+            $ourBookID = $this->getBook($hadith->collection, $hadith->bookID, "english")->ourBookID;
+            $nextOurBookID = Book::find()
+                                 ->where("collection = :collection", [':collection' => $hadith->collection])
+                                 ->andWhere("ourBookID > :bookID", [':bookID' => $ourBookID])
+                                 ->min('ourBookID');
+            if (!is_null($nextOurBookID)) {
+                $nextURN = $this->getBook($hadith->collection, $nextOurBookID)->firstURN;
+            }
+        }
+        return $nextURN;
+    }
+
+    public function getPreviousURNInCollection($urn) {
+        $hadith = $this->getHadith($urn, "english");
+        $previousURN = EnglishHadith::find()
+                                ->where("collection = :collection", [':collection' => $hadith->collection])
+                                ->andWhere("bookID = :bookID", [':bookID' => $hadith->bookID])
+                                ->andWhere("englishURN < :urn", [':urn' => $urn])
+                                ->max('englishURN');
+        if (is_null($previousURN)) {
+            // We're at the beginning of a book. See if there is a previous book.
+            $ourBookID = $this->getBook($hadith->collection, $hadith->bookID, "english")->ourBookID;
+            $previousOurBookID = Book::find()
+                                 ->where("collection = :collection", [':collection' => $hadith->collection])
+                                 ->andWhere("ourBookID < :bookID", [':bookID' => $ourBookID])
+                                 ->max('ourBookID');
+            if (!is_null($previousOurBookID)) {
+                $previousURN = $this->getBook($hadith->collection, $previousOurBookID)->lastURN;
+            }
+        }
+        return $previousURN;
+    }
+
+    public function get_permalink($urn, $language = "english") {
+        // As of now, this method only works for hadith in verified books. 
+        // TODO: Extend to other books
+        $hadith = $this->getHadith($urn, $language);
+        
+        $collectionName = $hadith->collection;
+        $collection = $this->getCollection($collectionName);
+        
+        $book = $this->getBook($hadith->collection, $hadith->bookID, "english");
+        if ($book->status < 4) return null;
+        
+        $ourBookID = $book->ourBookID;
+        $bookPart = strval($ourBookID);
+        if ($ourBookID < -1) $bookPart = strval(abs($ourBookID))."b";
+        elseif ($ourBookID == -1) $bookPart = "introduction";
+
+        $ourHadithNumber = $hadith->ourHadithNumber;
+        
+        if ($collection->hasbooks === 'yes') $permalink = "/$collectionName/$bookPart/$ourHadithNumber";
+        else $permalink = "/$collectionName/$ourHadithNumber";
+        return $permalink;
+    }
+
     public function getCarouselHTML($arabicURNs) {
         $aURNs = $arabicURNs;
 		shuffle($aURNs);

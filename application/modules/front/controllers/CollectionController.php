@@ -121,14 +121,6 @@ class CollectionController extends SController
             Yii::warning("hadith count should be ".$expectedHadithCount." and pairs length is ".count($pairs));
 		$this->view->params['lastUpdated'] = $this->_entries[3];
 
-        if (is_null($hadithRange)) {
-			$this->view->params['_pageType'] = "book";
-		}
-        else {
-            $this->view->params['_pageType'] = "hadith";
-            $this->pathCrumbs('Hadith', "");
-        }
-
         $viewVars = [
             'englishEntries' => $this->_entries[0],
             'arabicEntries' => $this->_entries[1],
@@ -138,7 +130,28 @@ class CollectionController extends SController
             'book' => $this->_book,
 			'expectedHadithCount' => $expectedHadithCount,
         ];
-        
+
+        if (is_null($hadithRange)) {
+			$this->view->params['_pageType'] = "book";
+		}
+        else {
+            $this->view->params['_pageType'] = "hadith";
+            $this->pathCrumbs('Hadith', "");
+            if ($this->_book->status > 3 and count($pairs) == 1) { // If it's a single-hadith view page
+                $urn = $this->_entries[0][$pairs[0][0]]->englishURN;
+                $nextURN = $this->util->getNextURNInCollection($urn);
+                $previousURN = $this->util->getPreviousURNInCollection($urn);
+                if (!is_null($nextURN)) {
+                    $viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
+                    $viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
+                }
+                if (!is_null($previousURN)) {
+                    $viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
+                    $viewVars['previousHadithNumber'] = $this->util->getVerifiedHadithNumber($previousURN, $language = "english");
+                }
+            }
+        }
+
 		if (isset($this->_entries[0][$pairs[0][0]])) $this->view->params['_ogDesc'] = substr(strip_tags($this->_entries[0][$pairs[0][0]]->hadithText), 0, 300);
 
 		if (strcmp($_escaped_fragment_, "default") != 0) {
