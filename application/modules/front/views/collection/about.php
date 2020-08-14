@@ -1,7 +1,7 @@
 <?php
 
-	if (isset($this->params['_viewVars']->splpage)) {
-		$aboutpath = "about/".$this->params['_viewVars']->splpage.".php";
+	if (!is_null($splpage)) {
+		$aboutpath = "about/".$splpage.".php";
 	}
 	else $aboutpath = "about/".$collectionName.".php";
  
