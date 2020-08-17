@@ -106,11 +106,12 @@ class Book extends ActiveRecord
 			Yii::$app->cache->set($cacheID, $englishSet, Yii::$app->params['cacheTTL']);
 		}
 
+		/* Commenting this out since we're not doing anything with it at the moment
 		// get last modified time for english hadith set
 		$query->select("max(last_updated) as lastup");
        	$englishLastupSet = $query->all();
 		if (count($englishLastupSet) > 0) $englishLastup = $englishLastupSet[0]->lastup;
-
+		*/
 
         $query = ArabicHadith::find()
                         ->select('*')
@@ -132,6 +133,7 @@ class Book extends ActiveRecord
         }
 		else Yii::trace("$cacheID was hit in cache");
 
+		/* Commenting this out since we're not doing anything with it at the moment
 		// get last modified time for arabic hadith set
 		$query->select("max(last_updated) as lastup");
        	$arabicLastupSet = $query->all();
@@ -139,6 +141,8 @@ class Book extends ActiveRecord
 
 		$lastup = $englishLastup;
 		if ($arabicLastup > $englishLastup) $lastup = $arabicLastup;
+		*/
+		$lastup = null;
 		
         if (count($englishSet) == 0 && count($arabicSet) == 0) return NULL;
 
