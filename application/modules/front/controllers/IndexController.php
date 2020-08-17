@@ -15,7 +15,7 @@ class IndexController extends SController
         return [
             [
                    'class' => 'yii\filters\PageCache',
-                   'except' => ['flushcache', 'ajaxhadithcount'],
+                   'except' => ['flush-cache', 'ajaxhadithcount'],
                    'duration' => Yii::$app->params['cacheTTL'],
                    'variations' => [ Yii::$app->request->get('id') ],
         
