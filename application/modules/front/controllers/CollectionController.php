@@ -31,6 +31,7 @@ class CollectionController extends SController
                        Yii::$app->request->get('hadithNumbers'),
                        Yii::$app->request->get('lang'),
                        Yii::$app->request->get('selection'),
+                       Yii::$app->request->get('hadithNumber'),
                        Yii::$app->request->get('_escaped_fragment_'),
                    ],
 
@@ -82,19 +83,19 @@ class CollectionController extends SController
 
     public function actionDispbook($collectionName, $ourBookID, $hadithNumbers = NULL, $_escaped_fragment_ = "default") {
 		// Handle unambiguous redirects for collections that have had their book numberings changed
-		if ($collectionName === 'riyadussaliheen') {
+		if ($collectionName === 'riyadussalihin') {
 			if ($ourBookID === 20) {
 				if (!is_null($hadithNumbers)) {
-                    return $this->redirect("/riyadussaliheen/19/$hadithNumbers", 301);
+                    return $this->redirect("/riyadussalihin/19/$hadithNumbers", 301);
                 }
-                return $this->redirect("/riyadussaliheen/19", 301);
+                return $this->redirect("/riyadussalihin/19", 301);
             }
-			if ($ourBookID === 1) {
+			if ((int)$ourBookID === 1) {
 				if (!is_null($hadithNumbers)) {
 					$parts = explode("-", $hadithNumbers, 2);
 					$first_part = $parts[0];
 					if ((int)$first_part > 47) {
-                        return $this->redirect("/riyadussaliheen/introduction/$hadithNumbers", 301);
+                        return $this->redirect("/riyadussalihin/introduction/$hadithNumbers", 301);
                     }
 				}
 			}
@@ -115,6 +116,9 @@ class CollectionController extends SController
         $this->view->params['book'] = $this->_book;
         if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
         $pairs = $this->_entries[2];
+		if (is_null($pairs)) {
+			throw new NotFoundHttpException("The data is unavailable or does not exist. Please <a href=\"/contact\">send us a message</a> if you think this is an error.");
+		}
         if (($this->_book) and ($this->_book->status === 4) and is_array($pairs) and ($expectedHadithCount != count($pairs)) and is_null($hadithRange))
             Yii::warning("hadith count should be ".$expectedHadithCount." and pairs length is ".count($pairs));
 		$this->view->params['lastUpdated'] = $this->_entries[3];
@@ -306,6 +310,12 @@ class CollectionController extends SController
         return $this->render('tce', $viewVars);
 	}
 	
+	public function actionHadithByNumber($collectionName, $hadithNumber) {
+		$arabicURN = $this->util->getURNByNumber($collectionName, $hadithNumber);
+		Yii::warning("returned arabicURN is ".$arabicURN);
+		return Yii::$app->runAction('front/collection/urn', ['urn' => $arabicURN]);
+	}
+
 	public function actionUrn($urn) {
         $englishHadith = NULL; $arabicHadith = NULL;
         $viewVars = array();

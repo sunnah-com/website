@@ -55,6 +55,14 @@ class Util extends Model {
 		return $retval;
 	}
 
+	public function getURNByNumber($collectionName, $hadithNumber) {
+		$query = ArabicHadith::find()
+			->select('arabicURN')
+			->where("collection = :collection", [':collection' => $collectionName])
+			->andWhere(['like', 'hadithNumber', $hadithNumber, false]);
+		return $query->one()['arabicURN'];
+	}
+
 	public function getHadithCount() {
 		$count = Yii::$app->cache->get("hadithCount");
 		if ($count === false) {

@@ -26,7 +26,8 @@ $runtimePath   = _joinpath($homePath, 'runtime');
 $vendorPath = _joinpath($parameters['yiiPath'], 'vendor');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'sunnah-front',
+	'name' => "Sunnah.com website",
     'basePath' => dirname(__DIR__),
 	'runtimePath' => $runtimePath,
 	'vendorPath' => $vendorPath,
@@ -121,6 +122,8 @@ $config = [
                 'selectiondata/<selection:\w+>' => 'front/collection/selection-data', 
                 'socialmedia' => 'front/collection/socialmedia',
                 'urn/<urn:\d+>' => 'front/collection/urn',
+
+				'<collectionName:\w+>:<hadithNumber\w+>' => 'front/collection/hadith-by-number',
 
 				'ajax/log/hadithcount' => 'front/index/ajaxhadithcount',
 
