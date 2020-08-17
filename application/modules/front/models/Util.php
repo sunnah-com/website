@@ -55,12 +55,43 @@ class Util extends Model {
 		return $retval;
 	}
 
-	public function getURNByNumber($collectionName, $hadithNumber) {
-		$query = ArabicHadith::find()
-			->select('arabicURN')
-			->where("collection = :collection", [':collection' => $collectionName])
-			->andWhere(['like', 'hadithNumber', $hadithNumber, false]);
-		return $query->one()['arabicURN'];
+    public function searchByNumber($collectionName, $hadithNumber) {
+        $result = ArabicHadith::find()
+            ->select('*')
+            ->where("collection = :collection", [':collection' => $collectionName])
+            ->andWhere(['like', 'hadithNumber', $hadithNumber, false])
+            ->all();
+        if (count($result) === 1) {
+            $book = $this->getBook($collectionName, $result[0]['bookNumber']);
+            if ($book->status >= 4) return $result[0]['arabicURN'];
+            return null;
+        }
+        return null; // Return null in all cases of non-exact match
+    }
+
+    public function getURNByNumber($collectionName, $hadithNumber) {
+        /* This function finds a hadith by its canonical number and returns the URN.
+           We want it to work only for verified ahadith.
+           Some special handling needs to be done for Sahih Muslim (spaces in hadith number)
+           and for multiply numbered ahadith
+         */
+
+        $num = $hadithNumber;
+
+        // First, try a direct match
+        $direct = $this->searchByNumber($collectionName, $num);
+        if (!is_null($direct)) return $direct;
+
+        // If the hadith is not found and the collection is Muslim, 
+        // rewrite the hadith number to search for
+        if ($collectionName === 'muslim') {
+            preg_match('/(\d+)(\w+)/', $hadithNumber, $matches);
+            if (count($matches) === 3) {
+                $num = $matches[1]." ".$matches[2];
+                $direct = $this->searchByNumber($collectionName, $num);
+                if (!is_null($direct)) return $direct;
+            }
+        }
 	}
 
 	public function getHadithCount() {

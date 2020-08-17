@@ -312,7 +312,6 @@ class CollectionController extends SController
 	
 	public function actionHadithByNumber($collectionName, $hadithNumber) {
 		$arabicURN = $this->util->getURNByNumber($collectionName, $hadithNumber);
-		Yii::warning("returned arabicURN is ".$arabicURN);
 		return Yii::$app->runAction('front/collection/urn', ['urn' => $arabicURN]);
 	}
 
@@ -320,42 +319,45 @@ class CollectionController extends SController
         $englishHadith = NULL; $arabicHadith = NULL;
         $viewVars = array();
 
-        if (is_numeric($urn)) {
-            $lang = "english";
-            $englishHadith = $this->util->getHadith($urn, "english");
-            if (is_null($englishHadith) || $englishHadith === false) {
-                $lang = "arabic";
-                $arabicHadith = $this->util->getHadith($urn, $lang);
-                if ($arabicHadith) $englishHadith = $this->util->getHadith($arabicHadith->matchingEnglishURN, "english");
-            }
-            else $arabicHadith = $this->util->getHadith($englishHadith->matchingArabicURN, "arabic");
-
-			if (is_null($englishHadith) && is_null($arabicHadith)) {
-				return Yii::$app->runAction('front/index/index');
-			}
-
-            if (strcmp($lang, "english") === 0) {
-            	$this->_collectionName = $englishHadith->collection;
-            	$this->_book = $this->util->getBookByLanguageID($this->_collectionName, $englishHadith->bookID, "english");
-                $this->view->params['book'] = $this->_book;
-                $viewVars['collectionName'] = $this->_collectionName;
-                $viewVars['book'] = $this->_book;
-            }
-            else if (!(is_null($arabicHadith))) {
-            	$this->_collectionName = $arabicHadith->collection;
-        		$this->_book = $this->util->getBookByLanguageID($this->_collectionName, $arabicHadith->bookID, "arabic");
-                $this->view->params['book'] = $this->_book;
-                $viewVars['collectionName'] = $this->_collectionName;
-                $viewVars['book'] = $this->_book;
-        	}
-            
-        	$this->_collection = $this->util->getCollection($this->_collectionName);
-            $this->view->params['collection'] = $this->_collection;
-            $viewVars['collection'] = $this->_collection;
+        if (is_null($urn) || !is_numeric($urn)) {
+            $errorMsg = "The resource you are looking for is invalid. Click <a href=\"/\">here</a> to go to the home page.";
+            throw new NotFoundHttpException($errorMsg);
         }
+        
+        $lang = "english";
+        $englishHadith = $this->util->getHadith($urn, "english");
+        if (is_null($englishHadith) || $englishHadith === false) {
+            $lang = "arabic";
+            $arabicHadith = $this->util->getHadith($urn, $lang);
+            if ($arabicHadith) $englishHadith = $this->util->getHadith($arabicHadith->matchingEnglishURN, "english");
+        }
+        else $arabicHadith = $this->util->getHadith($englishHadith->matchingArabicURN, "arabic");
 
-		//$this->_viewVars = new StdClass();
-        $viewVars['englishEntry'] = $englishHadith;
+	    if (is_null($englishHadith) && is_null($arabicHadith)) {
+            $errorMsg = "The hadith you are looking for is unavailable or not found. Click <a href=\"/\">here</a> to go to the home page.";
+            throw new NotFoundHttpException($errorMsg);
+		}
+
+        if (strcmp($lang, "english") === 0) {
+            $this->_collectionName = $englishHadith->collection;
+            $this->_book = $this->util->getBookByLanguageID($this->_collectionName, $englishHadith->bookID, "english");
+            $this->view->params['book'] = $this->_book;
+            $viewVars['collectionName'] = $this->_collectionName;
+            $viewVars['book'] = $this->_book;
+        }
+        else if (!(is_null($arabicHadith))) {
+            $this->_collectionName = $arabicHadith->collection;
+        	$this->_book = $this->util->getBookByLanguageID($this->_collectionName, $arabicHadith->bookID, "arabic");
+            $this->view->params['book'] = $this->_book;
+            $viewVars['collectionName'] = $this->_collectionName;
+            $viewVars['book'] = $this->_book;
+        }
+            
+        $this->_collection = $this->util->getCollection($this->_collectionName);
+        $this->view->params['collection'] = $this->_collection;
+        $viewVars['collection'] = $this->_collection;
+        
+		$viewVars['englishEntry'] = $englishHadith;
         $viewVars['arabicEntry'] = $arabicHadith;
         $this->view->params['_pageType'] = "hadith";
         $this->pathCrumbs('Hadith', "");
