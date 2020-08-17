@@ -99,6 +99,15 @@ class CollectionController extends SController
                     }
 				}
 			}
+			if ((int)$ourBookID === 9) {
+				if (!is_null($hadithNumbers)) {
+					$parts = explode("-", $hadithNumbers, 2);
+					$first_part = $parts[0];
+					if ((int)$first_part > 3) {
+                        return $this->redirect("/riyadussalihin/8/$hadithNumbers", 301);
+                    }
+				}
+			}
 		}
 		
 		if (!(is_null($hadithNumbers))) $hadithRange = addslashes($hadithNumbers);
@@ -311,6 +320,10 @@ class CollectionController extends SController
 	}
 	
 	public function actionHadithByNumber($collectionName, $hadithNumber) {
+		$num = ltrim($hadithNumber, "0");
+		if ($num !== $hadithNumber) {
+			return $this->redirect("/$collectionName:$num", 301);
+		}
 		$arabicURN = $this->util->getURNByNumber($collectionName, $hadithNumber);
 		return Yii::$app->runAction('front/collection/urn', ['urn' => $arabicURN]);
 	}
