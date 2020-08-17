@@ -55,18 +55,21 @@ class Util extends Model {
 		return $retval;
 	}
 
-    public function searchByNumber($collectionName, $hadithNumber) {
-        $result = ArabicHadith::find()
+    public function searchByNumber($collectionName, $hadithNumber, $partialSearch = false) {
+        $query = ArabicHadith::find()
             ->select('*')
-            ->where("collection = :collection", [':collection' => $collectionName])
-            ->andWhere(['like', 'hadithNumber', $hadithNumber, false])
-            ->all();
-        if (count($result) === 1) {
-            $book = $this->getBook($collectionName, $result[0]['bookNumber']);
-            if ($book->status >= 4) return $result[0]['arabicURN'];
-            return null;
+            ->where("collection = :collection", [':collection' => $collectionName]);
+
+        if (!$partialSearch) {
+            $query = $query->andWhere(['like', 'hadithNumber', $hadithNumber, $partialSearch]);
         }
-        return null; // Return null in all cases of non-exact match
+        else {
+            $query = $query->andWhere(['like', 'hadithNumber', $hadithNumber]);
+        }
+
+        $result = $query->all();
+        if (count($result) === 0) return null;
+        return $result;
     }
 
     public function getURNByNumber($collectionName, $hadithNumber) {
@@ -80,7 +83,11 @@ class Util extends Model {
 
         // First, try a direct match
         $direct = $this->searchByNumber($collectionName, $num);
-        if (!is_null($direct)) return $direct;
+        if (!is_null($direct) && count($direct) === 1) {
+            $book = $this->getBook($collectionName, $direct[0]['bookNumber']);    
+            if ($book->status >= 4) return $direct[0]['arabicURN'];
+            return null;
+        }
 
         // If the hadith is not found and the collection is Muslim, 
         // rewrite the hadith number to search for
@@ -89,7 +96,20 @@ class Util extends Model {
             if (count($matches) === 3) {
                 $num = $matches[1]." ".$matches[2];
                 $direct = $this->searchByNumber($collectionName, $num);
-                if (!is_null($direct)) return $direct;
+                if (!is_null($direct) && count($direct) === 1) {
+                    $book = $this->getBook($collectionName, $direct[0]['bookNumber']);
+                    if ($book->status >= 4) return $direct[0]['arabicURN'];
+                    return null;
+                }
+            }
+        }
+
+        // The last case to check for is multiply numbered hadith
+        $results = $this->searchByNumber($collectionName, $num, true);
+        foreach ($results as $result) {
+            $resultHadithNumbersArray = explode(",", $result['hadithNumber']);
+            foreach ($resultHadithNumbersArray as $resultHadithNumber) {
+                if (trim($resultHadithNumber) == $num) return $result['arabicURN'];
             }
         }
 	}
