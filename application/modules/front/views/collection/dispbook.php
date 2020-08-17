@@ -276,24 +276,13 @@ else {
 					 * Add Hadith Navigation on Single Hadith page
 					 * */
 					if ( $totalCount === 1 && ( isset($nextPermalink) || isset($previousPermalink) )) {
-
-						echo "<div class=\"hadith_nav_wrapper\">";
-
-						if ( isset($previousPermalink) ) {
-							echo "<a class=\"hadith_nav button prev\" title=\"$collection->englishTitle $previousHadithNumber\" href=\"$previousPermalink\">$previousHadithNumber</a>";
-						} else {
-							// Is first in the collection
-							echo "<a class=\"hadith_nav button prev\" disabled=disabled></a>";
-						}
-
-						if ( isset ($nextPermalink) ) {
-							echo "<a class=\"hadith_nav button next\" title=\"$collection->englishTitle $nextHadithNumber\" href=\"$nextPermalink\">$nextHadithNumber</a>";
-						} else {
-							// Is last in the collection
-							echo "<a class=\"hadith_nav button next\" disabled=disabled></a>";
-						}
-						
-						echo "</div>";
+						echo $this->render('/collection/hadith_navigation', array(
+								'previousPermalink' => isset($previousPermalink) ? $previousPermalink : null,
+								'previousHadithNumber' => isset($previousPermalink) ? $previousHadithNumber : null,
+								'nextPermalink' => isset($nextPermalink) ? $nextPermalink : null,
+								'nextHadithNumber' => isset($nextPermalink) ? $nextHadithNumber : null,
+								'collection' => $collection,
+							 ));
 					}
 
 					echo "<!-- <div align=right><i>Content on this page was last updated on ".$this->params['lastUpdated']."</i></div> -->";

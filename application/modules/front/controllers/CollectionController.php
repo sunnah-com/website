@@ -320,7 +320,7 @@ class CollectionController extends SController
         $viewVars = array();
 
         if (is_null($urn) || !is_numeric($urn)) {
-            $errorMsg = "The resource you are looking for is invalid. Click <a href=\"/\">here</a> to go to the home page.";
+            $errorMsg = "The resource you are looking for is not available yet or invalid. Click <a href=\"/\">here</a> to go to the home page.";
             throw new NotFoundHttpException($errorMsg);
         }
         
@@ -359,6 +359,21 @@ class CollectionController extends SController
         
 		$viewVars['englishEntry'] = $englishHadith;
         $viewVars['arabicEntry'] = $arabicHadith;
+
+
+		if (array_key_exists('book', $viewVars) && !is_null($viewVars['book']) && $this->_book->status > 3) {
+	        $nextURN = $this->util->getNextURNInCollection($englishHadith->englishURN);
+    	    $previousURN = $this->util->getPreviousURNInCollection($englishHadith->englishURN);
+        	if (!is_null($nextURN)) {
+        		$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
+	            $viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
+    	    }
+        	if (!is_null($previousURN)) {
+            	$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
+	            $viewVars['previousHadithNumber'] = $this->util->getVerifiedHadithNumber($previousURN, $language = "english");
+    	    }
+		}
+
         $this->view->params['_pageType'] = "hadith";
         $this->pathCrumbs('Hadith', "");
         if (strlen($this->_book->englishBookName) > 0) {

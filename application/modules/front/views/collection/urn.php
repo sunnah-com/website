@@ -55,7 +55,20 @@
 						
 		echo "<div class=hline></div>";
 		echo "<div style=\"clear: both;\"></div>";
-		echo "</div></div>";
+		echo "</div><!-- end actual hadith container -->";
+		
+		if (isset($nextPermalink) || isset($previousPermalink)) {
+        	echo $this->render('/collection/hadith_navigation', array(
+                                'previousPermalink' => isset($previousPermalink) ? $previousPermalink : null,
+                                'previousHadithNumber' => isset($previousPermalink) ? $previousHadithNumber : null,
+                                'nextPermalink' => isset($nextPermalink) ? $nextPermalink : null,
+                                'nextHadithNumber' => isset($nextPermalink) ? $nextHadithNumber : null,
+                                'collection' => $collection,
+            ));
+        }
+
+
+		echo "</div>";
     }
 
 
