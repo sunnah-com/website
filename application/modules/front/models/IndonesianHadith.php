@@ -37,7 +37,7 @@ class IndonesianHadith extends Hadith
         if (strcmp($this->collection, "qudsi") == 0) {
             $processed_text = preg_replace("/\n/", "<br><p>\n", $processed_text);
         }
-        if (strcmp($this->collection, "riyadussaliheen") == 0) {
+        if (strcmp($this->collection, "riyadussalihin") == 0) {
             $processed_text = preg_replace("/\n/", "<br><p>\n", $processed_text);
         }
         $this->hadithText = $processed_text;

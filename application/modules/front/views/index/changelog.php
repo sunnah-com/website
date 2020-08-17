@@ -263,18 +263,18 @@ although we will replace it with a better translation soon inshaAllah.<br>
 <br>
 3 December 2011: Added first 25 hadith of Hadith Qudsi<br>
 <br>
-28 November 2011: Added book 18 for Riyad as-Saliheen. <a href="/riyadussaliheen">Riyad as-Saliheen</a> is now <b>complete</b> alhamdulillah.<br>
+28 November 2011: Added book 18 for Riyad as-Salihin. <a href="/riyadussalihin">Riyad as-Salihin</a> is now <b>complete</b> alhamdulillah.<br>
 <br>
-25 November 2011: Added book 9 for Riyad as-Saliheen<br>
+25 November 2011: Added book 9 for Riyad as-Salihin<br>
 25 November 2011: Added books 26 and 30 for Sunan at-Tirmidhi<br>
 <br>
-24 November 2011: Added books 3, 4, 5, 6, 7, 8, and 12 for Riyad as-Saliheen<br>
+24 November 2011: Added books 3, 4, 5, 6, 7, 8, and 12 for Riyad as-Salihin<br>
 24 November 2011: Added books 4, 6, and 7 for Sunan at-Tirmidhi<br>
 <br>
-21 November 2011: Added books 1, 2, 16, and 20 for Riyad as-Saliheen<br>
+21 November 2011: Added books 1, 2, 16, and 20 for Riyad as-Salihin<br>
 <br>
-20 November 2011: Added books 10, 11, 13, 14, 15, 17 and 19 for Riyad as-Saliheen<br>
-20 November 2011: Added new collection Riyad as-Saliheen<br>
+20 November 2011: Added books 10, 11, 13, 14, 15, 17 and 19 for Riyad as-Salihin<br>
+20 November 2011: Added new collection Riyad as-Salihin<br>
 <br>
 14 November 2011: Moved to <a href="http://sunnah.com/">sunnah.com</a>!<br>
 </div>

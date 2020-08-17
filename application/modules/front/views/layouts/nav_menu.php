@@ -16,7 +16,7 @@
         <li><a href="/ibnmajah" target="_self">Sunan Ibn Majah*</a></li>
         <li><a href="/malik" target="_self">Muwatta Imam Malik</a></li>
         <li><a href="/nawawi40" target="_self">Imam Nawawi's 40 Hadith</a></li>
-        <li><a href="/riyadussaliheen" target="_self">Riyad as-Salihin</a></li>
+        <li><a href="/riyadussalihin" target="_self">Riyad as-Salihin</a></li>
         <li><a href="/adab" target="_self">Al-Adab Al-Mufrad*</a></li>
         <li><a href="/qudsi40" target="_self">40 Hadith Qudsi</a></li>
         <li><a href="/shamail" target="_self">Shama'il Muhammadiyah</a></li>

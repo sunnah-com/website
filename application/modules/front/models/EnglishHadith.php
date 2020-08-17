@@ -57,7 +57,7 @@ class EnglishHadith extends Hadith
         elseif (strcmp($this->collection, "qudsi") == 0) {
             $processed_text = preg_replace("/\n/", "<br><p>\n", $processed_text);
         }
-        elseif (strcmp($this->collection, "riyadussaliheen") == 0) {
+        elseif (strcmp($this->collection, "riyadussalihin") == 0) {
             $processed_text = preg_replace("/\n/", "<br><p>\n", $processed_text);
         }
         elseif (strcmp($this->collection, "bulugh") == 0) {
