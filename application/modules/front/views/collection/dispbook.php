@@ -250,7 +250,8 @@ else {
 						if (isset($newBabID) and $newBabID != $oldChapNo) { // Chapter ended and new chapter follows
 							if (isset($chapters[$oldChapNo]->arabicEnding) and strcmp($this->params['_pageType'], "book") == 0) {
 								echo "<div class=\"echapintro\">".$chapters[$oldChapNo]->englishEnding."</div>";
-								echo "<div class=\"arabic_basic achapintro\">".$chapters[$oldChapNo]->arabicEnding."</div>";
+                                echo "<div class=\"arabic achapintro\">".$chapters[$oldChapNo]->arabicEnding."</div>";
+                                echo "<div class=\"clear\"></div>";
 							}
 						}
 						elseif (isset($newBabID) && $status == 4) { // Chapter did NOT end
