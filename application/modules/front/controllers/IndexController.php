@@ -60,6 +60,10 @@ class IndexController extends SController
                 $carouselParams = ['title' => 'dhul hijjah hadith selection',
                                    'link' => '/dhulhijjah'];
             }
+            if (strcmp($carousel, "ashura") == 0) {
+                $carouselParams = ['title' => 'muharram/`ashura hadith selection',
+                                   'link' => '/ashura'];
+            }
 
             $this->view->params['carouselParams'] = $carouselParams;
         }

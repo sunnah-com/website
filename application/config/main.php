@@ -12,8 +12,8 @@ define('TRUE', true);
 define('FALSE', false);
 
 $parameters = parse_ini_file(__DIR__ ."/../../.env.local");
-if (array_key_exists("show_carousel", $parameters)) {
-    $params['showCarousel'] = $parameters['show_carousel'];
+if (array_key_exists("showCarousel", $parameters)) {
+    $params['showCarousel'] = $parameters['showCarousel'];
 }
 
 function _joinpath($dir1, $dir2) {
@@ -119,6 +119,7 @@ $config = [
                 'tce' => 'front/collection/tce',
                 '<selection:ramadan>' => 'front/collection/selection',
                 '<selection:dhulhijjah>' => 'front/collection/selection',
+                '<selection:ashura>' => 'front/collection/selection',
                 'selectiondata/<selection:\w+>' => 'front/collection/selection-data', 
                 'socialmedia' => 'front/collection/socialmedia',
                 'urn/<urn:\d+>' => 'front/collection/urn',

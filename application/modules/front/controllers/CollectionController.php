@@ -284,6 +284,10 @@ class CollectionController extends SController
 			$this->view->params['pageTitle'] = "Dhul Hijjah Selection";
 			$aURNs = $this->util->getDhulhijjahURNs();
 		}
+        elseif (strcmp($selection, "ashura") == 0) {
+			$this->view->params['pageTitle'] = "Muharram/`Ashura Selection";
+			$aURNs = $this->util->getMuharramURNs();
+		}
         else $this->view->params['pageTitle'] = "Unspecified Selection";
         $this->pathCrumbs($this->view->params['pageTitle'], "");
 		return $this->customSelect($aURNs, false, false);
@@ -293,6 +297,7 @@ class CollectionController extends SController
         $this->layout = false;
         if (strcmp($selection, "ramadan") == 0) $arabicURNs = $this->util->getRamadanURNs();
         elseif (strcmp($selection, "dhulhijjah") == 0) $arabicURNs = $this->util->getDhulhijjahURNs();
+        elseif (strcmp($selection, "ashura") == 0) $arabicURNs = $this->util->getMuharramURNs();
         else return "";
         return $this->util->getCarouselHTML($arabicURNs);
     }

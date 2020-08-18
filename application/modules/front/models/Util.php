@@ -21,6 +21,11 @@ class Util extends Model {
 		return $aURNs;
 	}
 
+	public function getMuharramURNs() {
+        $aURNs = array(1712420, 119210, 327220, 328100, 327140);
+		return $aURNs;
+	}
+
 	public function customSelect($aURNs) {
         $eURNs = array();
         $collections = $this->getCollectionsInfo("indexed");
