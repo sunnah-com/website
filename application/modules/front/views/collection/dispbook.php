@@ -256,10 +256,11 @@ else {
 						}
 						elseif (isset($newBabID) && $status == 4) { // Chapter did NOT end
 						}
-						else { // no more hadith in the book
+						else { // no more hadith in the book OR next chapter has no hadith
 							if (isset($chapters[$oldChapNo]->arabicEnding) and strcmp($this->params['_pageType'], "book") == 0) {
 								echo "<div class=\"echapintro\">".$chapters[$oldChapNo]->englishEnding."</div>";
-								echo "<div class=\"arabic_basic achapintro\">".$chapters[$oldChapNo]->arabicEnding."</div>";
+								echo "<div class=\"arabic achapintro\">".$chapters[$oldChapNo]->arabicEnding."</div>";
+                                echo "<div class=\"clear\"></div>";
 							}
 						}
 					}
