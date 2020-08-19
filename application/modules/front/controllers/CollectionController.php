@@ -81,33 +81,47 @@ class CollectionController extends SController
         return $this->render('about', $viewVars);
     }
 
+	public function handleOldRiyadussalihinLinks($ourBookID, $hadithNumbers) {
+		$link = null;
+		
+		if ($ourBookID === 20) {
+			if (!is_null($hadithNumbers)) {
+				$link = "/riyadussalihin/19/$hadithNumbers";
+            }
+			else $link = "/riyadussalihin/19";
+        }
+
+		$replacements = array( 1 => array(47, "introduction"), // new book number => (last hadith in new book, old book)
+		                       3 => array(35, 2),
+		                       4 => array(31, 3),
+		                       7 => array(35, 6),
+		                       9 => array(3, 8),
+		                       12 => array(17, 11),
+		                       13 => array(4, 12),
+		                       16 => array(46, 15),
+		                       18 => array(61, 17),
+		                       19 => array(28, 18),
+						);
+		foreach ($replacements as $bookID => $repl_array) {
+			if ((int)$ourBookID === $bookID) {
+				if (!is_null($hadithNumbers)) {
+					$parts = explode("-", $hadithNumbers, 2);
+					$first_part = $parts[0];
+					if ((int)$first_part > $repl_array[0]) {
+                        $link = "/riyadussalihin/".$repl_array[1]."/$hadithNumbers";
+                    }
+				}
+			}
+		}
+
+		return $link;
+	}
+
     public function actionDispbook($collectionName, $ourBookID, $hadithNumbers = NULL, $_escaped_fragment_ = "default") {
 		// Handle unambiguous redirects for collections that have had their book numberings changed
 		if ($collectionName === 'riyadussalihin') {
-			if ($ourBookID === 20) {
-				if (!is_null($hadithNumbers)) {
-                    return $this->redirect("/riyadussalihin/19/$hadithNumbers", 301);
-                }
-                return $this->redirect("/riyadussalihin/19", 301);
-            }
-			if ((int)$ourBookID === 1) {
-				if (!is_null($hadithNumbers)) {
-					$parts = explode("-", $hadithNumbers, 2);
-					$first_part = $parts[0];
-					if ((int)$first_part > 47) {
-                        return $this->redirect("/riyadussalihin/introduction/$hadithNumbers", 301);
-                    }
-				}
-			}
-			if ((int)$ourBookID === 9) {
-				if (!is_null($hadithNumbers)) {
-					$parts = explode("-", $hadithNumbers, 2);
-					$first_part = $parts[0];
-					if ((int)$first_part > 3) {
-                        return $this->redirect("/riyadussalihin/8/$hadithNumbers", 301);
-                    }
-				}
-			}
+			$redirectLink = $this->handleOldRiyadussalihinLinks($ourBookID, $hadithNumbers);
+			if (!is_null($redirectLink)) return $this->redirect($redirectLink, 301);
 		}
 		
 		if (!(is_null($hadithNumbers))) $hadithRange = addslashes($hadithNumbers);
