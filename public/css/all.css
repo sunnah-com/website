@@ -1420,14 +1420,16 @@ a:hover { text-decoration: underline; }
 }
 
 .footer .sm_links {
-    display: inline;
-    margin-left: 1em;
+    display: inline-block;
     font-size: .75em;
-    line-height: 2;
 }
-
 .sm_links a {
-    margin: 0 .4em;
+    margin: 0 .1em;
+    vertical-align: text-bottom;
+}
+.sm_links:before {
+    content: " | ";
+    font-size: 16px;
 }
 
 /* Smaller Screens */
@@ -1814,6 +1816,12 @@ a:hover { text-decoration: underline; }
 		font-size: .8em;
 		margin: 1em auto 1em;
 		line-height: initial;
+	}
+	.sm_links a {
+		margin: auto .5em
+	}
+	.sm_links:before {
+		display: none;
 	}
 	
 	/* Ramadan Home */
