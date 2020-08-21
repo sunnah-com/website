@@ -97,6 +97,7 @@ class Util extends Model {
         // If the hadith is not found and the collection is Muslim, 
         // rewrite the hadith number to search for
         if ($collectionName === 'muslim') {
+			// Did the user supply a letter?
             preg_match('/(\d+)(\w+)/', $hadithNumber, $matches);
             if (count($matches) === 3) {
                 $num = $matches[1]." ".$matches[2];
@@ -107,16 +108,29 @@ class Util extends Model {
                     return null;
                 }
             }
+
+			// If no letter was supplied, try adding 'a' to the hadith number
+			$this_num = $hadithNumber." a";
+			$direct = $this->searchByNumber($collectionName, $this_num);
+			if (!is_null($direct) && count($direct) === 1) {
+                $book = $this->getBook($collectionName, $direct[0]['bookNumber']);
+                if ($book->status >= 4) return $direct[0]['arabicURN'];
+                return null;
+            }
         }
 
         // The last case to check for is multiply numbered hadith
         $results = $this->searchByNumber($collectionName, $num, true);
-        foreach ($results as $result) {
-            $resultHadithNumbersArray = explode(",", $result['hadithNumber']);
-            foreach ($resultHadithNumbersArray as $resultHadithNumber) {
-                if (trim($resultHadithNumber) == $num) return $result['arabicURN'];
-            }
-        }
+		if (!is_null($results)) {
+	        foreach ($results as $result) {
+    	        $resultHadithNumbersArray = explode(",", $result['hadithNumber']);
+        	    foreach ($resultHadithNumbersArray as $resultHadithNumber) {
+            	    if (trim($resultHadithNumber) == $num) return $result['arabicURN'];
+	            }
+    	    }
+		}
+
+		return null;
 	}
 
 	public function getHadithCount() {
