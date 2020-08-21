@@ -394,7 +394,7 @@ a:hover { text-decoration: underline; }
 .footer {
     text-align: center;
 	background-image: url(../images/banner_small.png);
-	background-repeat: repeat-x;
+    background-repeat: repeat;
     width: 100%;
     margin: auto;
     margin-top: 10px;
@@ -1419,6 +1419,17 @@ a:hover { text-decoration: underline; }
     transform: scaleX(-1);
 }
 
+.footer .sm_links {
+    display: inline;
+    margin-left: 1em;
+    font-size: .75em;
+    line-height: 2;
+}
+
+.sm_links a {
+    margin: 0 .4em;
+}
+
 /* Smaller Screens */
 @media (max-width: 768px) {
 
@@ -1793,6 +1804,16 @@ a:hover { text-decoration: underline; }
 		margin: 20px 10px;
 		float: none;
 		width: auto;
+	}
+
+    .footer {
+	    height: 70px;
+	   }
+	.footer .sm_links {
+		display: block;
+		font-size: .8em;
+		margin: 1em auto 1em;
+		line-height: initial;
 	}
 	
 	/* Ramadan Home */
