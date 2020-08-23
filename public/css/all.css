@@ -297,7 +297,6 @@ a:hover { text-decoration: underline; }
 	padding-top: 10px;
 	border: 0px solid;
 	float: center;
-	padding-bottom: 50px;
 }
 
 #rightPanel {
@@ -1420,8 +1419,9 @@ a:hover { text-decoration: underline; }
 }
 
 .footer .sm_links {
-    display: inline-block;
+	display: inline;
     font-size: .75em;
+    line-height: 16px;
 }
 .sm_links a {
     margin: 0 .1em;
@@ -1691,6 +1691,7 @@ a:hover { text-decoration: underline; }
         min-width: auto;
 		position: relative;
 		overflow: initial;
+		padding-bottom: 5em;
 	}
 
 	.hadith_reference_sticky {
@@ -1828,7 +1829,7 @@ a:hover { text-decoration: underline; }
 	#rightPanel {
 		min-width: auto;
 		width: 100%;
-		margin: 0 0 50px;
+		margin: 0 0 70px;
 	}
 }
 
