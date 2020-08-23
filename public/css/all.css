@@ -359,25 +359,27 @@ a:hover { text-decoration: underline; }
     position: absolute;
     cursor: pointer;
     bottom: 13px;
-    font-size: 12px;
-    right: 4px;
+    font-size: 10px;
+    right: 5px;
     color: #ffffff;
     opacity: 0;
     height: 20px;
     width: 20px;
     background: #bbdada;
-    line-height: 20px;
+    line-height: 21px;
     border-radius: 15px;
     text-align: center;
     transition: .2s all ease;
+    box-sizing: border-box;
 }
-.carousel_nav {
-    background: #bbdada url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23FFF'><polygon points='0,100 0,0 50,50'/></svg>") 7px 6px/14px 8px no-repeat;
+.carousel_nav.back:before{
+	letter-spacing: 2px;
+}
+.carousel_nav.next:before{
+	letter-spacing: -1px;
 }
 .carousel_nav.back {
-    transform: rotate(180deg);
-	left: 4px;
-    right: auto;
+	left: 5px;
 }
 .carousel_nav:hover {
     background-color: #96c0c0
