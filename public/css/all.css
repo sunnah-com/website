@@ -500,32 +500,27 @@ a:hover { text-decoration: underline; }
 .indexsearchquery:focus { outline: none; }
 .searchquery:focus { outline: none; }
 
-.indexsearchsubmit {
-	border:0px;
-	background-color:transparent;
-	background-size: 25px 25px;
-	cursor: pointer;
-	position:absolute;
-	top:7px;
-	left:345px;
-	height:25px;
-	width:25px;
-	background-image: url(/images/search_small.png);
-	border: solid 0px #000000;
-}
-
+.indexsearchsubmit,
 .searchsubmit {
 	border:0px;
-	background-color:transparent;
-	background-size: 17px 17px;
 	cursor: pointer;
 	position:absolute;
-	top:5px;
-	left:253px;
-	height:17px;
+	top: 3px;
+	right: 7px;
+	height: 19px;
 	width:17px;
-	background-image: url(/images/search_small.png);
-	border: solid 0px #000000;
+	font-family: "icn-font";
+	font-size: 19px;
+	color: #5F9999;
+	padding: 0;
+	background: 0;
+}
+.indexsearchsubmit {
+	top:7px;
+	height:25px;
+	right: 10px;
+	width: 24px;
+	font-size: 24px;
 }
 
 .indexsearchtipslink {
@@ -547,8 +542,6 @@ a:hover { text-decoration: underline; }
 	padding-top: 8px;
 	cursor: pointer
 }
-
-.searchtipslink:hover {}
 
 #search a { color: #fff; }
 #searchtips a { color: #5d8080; }
@@ -1527,7 +1520,7 @@ a:hover { text-decoration: underline; }
 	}
 	
     #searchbar {
-        width: 77%;
+        width: 74%;
         float: none;
         display: inline-block;
         margin: 0;
@@ -1745,12 +1738,7 @@ a:hover { text-decoration: underline; }
     #banner {
     	width: 100%;
 	}
-
-    input.indexsearchsubmit {
-        left: auto;
-        right: 10px;
-    }
-
+	
     /* Books */
     .book_titles {
         width: 100%;
