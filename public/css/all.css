@@ -1397,27 +1397,11 @@ a:hover { text-decoration: underline; }
 .hadith_nav_wrapper .button.next {
 	float: right;
 }
-
-.hadith_nav.button:after,
-.hadith_nav.button.prev:before {
-    content:  " ";
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2375a7a8'><polygon points='0,100 0,0 50,50'/></svg>") 5px 3px/16px 11px no-repeat;
-    height: 14px;
-    width: 13px;
-    display: inline-block;
+.hadith_nav i {
+	font-size: .95em;
 }
-
-.hadith_nav.button.prev[disabled]:before,
-.hadith_nav.button[disabled]:after {
-	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23afafaf'><polygon points='0,100 0,0 50,50'/></svg>") 5px 3px/16px 11px no-repeat;
-}
-
-.hadith_nav.button.prev:after {
-    display: none;
-}
-
-.hadith_nav.button.prev:before {
-    transform: scaleX(-1);
+.hadith_nav i:before {
+	margin: 0;
 }
 
 .footer .sm_links {
