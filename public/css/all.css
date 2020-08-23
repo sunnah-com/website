@@ -209,22 +209,27 @@ a:hover { text-decoration: underline; }
 	position: fixed;
 	right: 10px;
 	top: 65px;
+	opacity: .5;
 }
 
 .bttenabled {
-	background-color: rgba(255, 255, 255, 0);
-	background-image: url('/images/sprite.png');
-	background-size: 100% 100%;
-	opacity: 0.5;
-	filter: alpha(opacity=50);
+	background-color: rgb(124 172 173);
+	mix-blend-mode: darken;
 }
-
+.bttenabled:before {
+   content: "u";
+   font-family: "icn-font";
+   color: #ffffff;
+   font-size: 26px;
+   line-height: 34px;
+   text-align: center;
+   display: block;
+}
 .bttenabled:hover {
-	background-color: #fff;
+	background-color: #3b8789;
 	opacity: 1;
 	filter: alpha(opacity=1);
 }
-
 #topspace {
 	height: 117px; /* This needs to be height of whole header + height of short header - visible height of tall header on length change + crumbs height*/
 	width: 100px;
@@ -1451,7 +1456,12 @@ a:hover { text-decoration: underline; }
 		border-radius: 6px;
 	}
 	.bttenabled {
-		background-color: #f9f7f2;
+		background-color: #79aaab;
+		mix-blend-mode: unset;
+	}
+	.bttenabled:before {
+		font-size: 23px;
+		line-height: 27px;
 	}
 	
     .text_details {
