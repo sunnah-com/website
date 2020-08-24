@@ -7,11 +7,11 @@
 
 <div class=share_buttons>
 	<div class="share_button" style="float: right; padding-top: 13px;">
-		<a href="https://www.facebook.com/sharer.php?u=http://sunnah.com<?php echo $_GET['link']; ?>" target="blank" rel="noopener noreferrer"><img src="/images/facebook_btn.png" alt="Share Hadith on Facebook" /></a>
+		<a href="https://www.facebook.com/sharer.php?u=http://sunnah.com<?php echo $_GET['link']; ?>" target="blank" rel="noopener noreferrer" title="Share Hadith on Facebook" class="icn-fb"></a>
 	</div>
 
 	<div class="share_button" style="float: right; padding-top: 13px;">
-		<a href="https://twitter.com/intent/tweet?url=http://sunnah.com<?php echo $_GET['link']; ?>&text=Hadith via @SunnahCom&hashtags=SunnahCom,hadith" target="blank" rel="noopener noreferrer"><img src="/images/twitter_btn.png" alt="Share Hadith on Twitter" /></a>
+		<a href="https://twitter.com/intent/tweet?url=http://sunnah.com<?php echo $_GET['link']; ?>&text=Hadith via @SunnahCom&hashtags=SunnahCom,hadith" target="blank" rel="noopener noreferrer" title="Share Hadith on Twitter" class="icn-twitter"></a>
 	</div>
 	<div class=clear></div>
 </div>

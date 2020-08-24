@@ -1,6 +1,15 @@
 Font license info
 
 
+## Font Awesome
+
+   Copyright (C) 2016 by Dave Gandy
+
+   Author:    Dave Gandy
+   License:   SIL ()
+   Homepage:  http://fortawesome.github.com/Font-Awesome/
+
+
 ## Zocial
 
    Copyright (C) 2012 by Sam Collins
@@ -8,6 +17,24 @@ Font license info
    Author:    Sam Collins
    License:   MIT (http://opensource.org/licenses/mit-license.php)
    Homepage:  http://zocial.smcllns.com/
+
+
+## Brandico
+
+   (C) 2012 by Vitaly Puzrin
+
+   Author:    Crowdsourced, for Fontello project
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  
+
+
+## Entypo
+
+   Copyright (C) 2012 by Daniel Bruce
+
+   Author:    Daniel Bruce
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://www.entypo.com
 
 
 ## MFG Labs
@@ -19,12 +46,12 @@ Font license info
    Homepage:  http://www.mfglabs.com/
 
 
-## Font Awesome
+## Modern Pictograms
 
-   Copyright (C) 2016 by Dave Gandy
+   Copyright (c) 2012 by John Caserta. All rights reserved.
 
-   Author:    Dave Gandy
-   License:   SIL ()
-   Homepage:  http://fortawesome.github.com/Font-Awesome/
+   Author:    John Caserta
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://thedesignoffice.org/project/modern-pictograms/
 
 

@@ -129,6 +129,7 @@ a:hover { text-decoration: underline; }
 	overflow: auto;
 	min-height: 100%;
 	position: relative;
+	padding-bottom: 70px;
 }
 
 
@@ -208,22 +209,27 @@ a:hover { text-decoration: underline; }
 	position: fixed;
 	right: 10px;
 	top: 65px;
+	opacity: .5;
 }
 
 .bttenabled {
-	background-color: rgba(255, 255, 255, 0);
-	background-image: url('/images/sprite.png');
-	background-size: 100% 100%;
-	opacity: 0.5;
-	filter: alpha(opacity=50);
+	background-color: rgb(124 172 173);
+	mix-blend-mode: darken;
 }
-
+.bttenabled:before {
+   content: "u";
+   font-family: "icn-font";
+   color: #ffffff;
+   font-size: 26px;
+   line-height: 34px;
+   text-align: center;
+   display: block;
+}
 .bttenabled:hover {
-	background-color: #fff;
+	background-color: #3b8789;
 	opacity: 1;
 	filter: alpha(opacity=1);
 }
-
 #topspace {
 	height: 117px; /* This needs to be height of whole header + height of short header - visible height of tall header on length change + crumbs height*/
 	width: 100px;
@@ -297,7 +303,6 @@ a:hover { text-decoration: underline; }
 	padding-top: 10px;
 	border: 0px solid;
 	float: center;
-	padding-bottom: 50px;
 }
 
 #rightPanel {
@@ -354,25 +359,27 @@ a:hover { text-decoration: underline; }
     position: absolute;
     cursor: pointer;
     bottom: 13px;
-    font-size: 12px;
-    right: 4px;
+    font-size: 10px;
+    right: 5px;
     color: #ffffff;
     opacity: 0;
     height: 20px;
     width: 20px;
     background: #bbdada;
-    line-height: 20px;
+    line-height: 21px;
     border-radius: 15px;
     text-align: center;
     transition: .2s all ease;
+    box-sizing: border-box;
 }
-.carousel_nav {
-    background: #bbdada url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23FFF'><polygon points='0,100 0,0 50,50'/></svg>") 7px 6px/14px 8px no-repeat;
+.carousel_nav.back:before{
+	letter-spacing: 2px;
+}
+.carousel_nav.next:before{
+	letter-spacing: -1px;
 }
 .carousel_nav.back {
-    transform: rotate(180deg);
-	left: 4px;
-    right: auto;
+	left: 5px;
 }
 .carousel_nav:hover {
     background-color: #96c0c0
@@ -495,32 +502,27 @@ a:hover { text-decoration: underline; }
 .indexsearchquery:focus { outline: none; }
 .searchquery:focus { outline: none; }
 
-.indexsearchsubmit {
-	border:0px;
-	background-color:transparent;
-	background-size: 25px 25px;
-	cursor: pointer;
-	position:absolute;
-	top:7px;
-	left:345px;
-	height:25px;
-	width:25px;
-	background-image: url(/images/search_small.png);
-	border: solid 0px #000000;
-}
-
+.indexsearchsubmit,
 .searchsubmit {
 	border:0px;
-	background-color:transparent;
-	background-size: 17px 17px;
 	cursor: pointer;
 	position:absolute;
-	top:5px;
-	left:253px;
-	height:17px;
+	top: 3px;
+	right: 7px;
+	height: 19px;
 	width:17px;
-	background-image: url(/images/search_small.png);
-	border: solid 0px #000000;
+	font-family: "icn-font";
+	font-size: 19px;
+	color: #5F9999;
+	padding: 0;
+	background: 0;
+}
+.indexsearchsubmit {
+	top:7px;
+	height:25px;
+	right: 10px;
+	width: 24px;
+	font-size: 24px;
 }
 
 .indexsearchtipslink {
@@ -542,8 +544,6 @@ a:hover { text-decoration: underline; }
 	padding-top: 8px;
 	cursor: pointer
 }
-
-.searchtipslink:hover {}
 
 #search a { color: #fff; }
 #searchtips a { color: #5d8080; }
@@ -1225,6 +1225,7 @@ a:hover { text-decoration: underline; }
     text-align: justify;
     padding-top: 10px;
     font-size: 16px;
+    margin-bottom: 50px;
 }
 
 .about a {
@@ -1344,23 +1345,30 @@ a:hover { text-decoration: underline; }
 	box-shadow: 0px 1px 6pt 1pt #bdf4fc;
 	outline: none;
 }
-
 .share_buttons {
 	margin: auto;
 }
-
 .share_button {
 	padding-top: 10px;
 	margin-left: 5px;
 }
-
-.share_button img {
-	width: 20px;
-	border: 0;
-	box-shadow: 0;
-	display: inline;
+.share_button a {
+	text-decoration: none;
+	border-radius: 50%;
+	padding: 3px 1.5px;
+	font-size: .85em;
+	color:white;
 }
-
+.share_button .icn-fb{
+	background: #3c5b9b;
+}
+.share_button .icn-twitter{
+	background: #2caae1;
+}
+.share_button a:hover {
+	background-color: #60aed0;
+	text-decoration: none;
+}
 .hadith_reference_sticky {
     display: none;
 }
@@ -1396,32 +1404,17 @@ a:hover { text-decoration: underline; }
 .hadith_nav_wrapper .button.next {
 	float: right;
 }
-
-.hadith_nav.button:after,
-.hadith_nav.button.prev:before {
-    content:  " ";
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2375a7a8'><polygon points='0,100 0,0 50,50'/></svg>") 5px 3px/16px 11px no-repeat;
-    height: 14px;
-    width: 13px;
-    display: inline-block;
+.hadith_nav i {
+	font-size: .95em;
 }
-
-.hadith_nav.button.prev[disabled]:before,
-.hadith_nav.button[disabled]:after {
-	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23afafaf'><polygon points='0,100 0,0 50,50'/></svg>") 5px 3px/16px 11px no-repeat;
-}
-
-.hadith_nav.button.prev:after {
-    display: none;
-}
-
-.hadith_nav.button.prev:before {
-    transform: scaleX(-1);
+.hadith_nav i:before {
+	margin: 0;
 }
 
 .footer .sm_links {
-    display: inline-block;
+	display: inline;
     font-size: .75em;
+    line-height: 16px;
 }
 .sm_links a {
     margin: 0 .1em;
@@ -1449,7 +1442,12 @@ a:hover { text-decoration: underline; }
 		border-radius: 6px;
 	}
 	.bttenabled {
-		background-color: #f9f7f2;
+		background-color: #79aaab;
+		mix-blend-mode: unset;
+	}
+	.bttenabled:before {
+		font-size: 23px;
+		line-height: 27px;
 	}
 	
     .text_details {
@@ -1515,7 +1513,7 @@ a:hover { text-decoration: underline; }
 	}
 	
     #searchbar {
-        width: 77%;
+        width: 74%;
         float: none;
         display: inline-block;
         margin: 0;
@@ -1691,6 +1689,7 @@ a:hover { text-decoration: underline; }
         min-width: auto;
 		position: relative;
 		overflow: initial;
+		padding-bottom: 5em;
 	}
 
 	.hadith_reference_sticky {
@@ -1732,12 +1731,7 @@ a:hover { text-decoration: underline; }
     #banner {
     	width: 100%;
 	}
-
-    input.indexsearchsubmit {
-        left: auto;
-        right: 10px;
-    }
-
+	
     /* Books */
     .book_titles {
         width: 100%;
@@ -1828,7 +1822,7 @@ a:hover { text-decoration: underline; }
 	#rightPanel {
 		min-width: auto;
 		width: 100%;
-		margin: 0 0 50px;
+		margin: 0 0 70px;
 	}
 }
 

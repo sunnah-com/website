@@ -58,7 +58,7 @@ $parameters = parse_ini_file(__DIR__ ."/../.env.local");
     <div id="searchbar" class="sblur">
         <form name="searchform" action="/search_redirect.php" method=get id="searchform">
             <input type="text" class="searchquery" name=query value="Search …" />
-            <input type="image" src="/images/search.png" class="searchsubmit" value="" />
+            <input type="image" src="/images/search.png" class="searchsubmit" value="l" />
         </form>
     </div>
 

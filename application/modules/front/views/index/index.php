@@ -12,7 +12,7 @@
 	<div id="indexsearch" class="idxsblur">
  	 	<form name="searchform" action="/search/" method=get id="searchform">
        		<input type="text" class="indexsearchquery" name=q value="Search &#8230;" />
-                <input type="submit" class="indexsearchsubmit" value="" />
+                <input type="submit" class="indexsearchsubmit" value="l" />
 		</form>
 	</div>
 	<a class="indexsearchtipslink">Search Tips</a>
