@@ -12,7 +12,7 @@ If you have found this site useful, <b>please</b> consider the following:
 <p style="padding-left: 20px; padding-right: 20px; font-style: italic;">
 Abdullah bin 'Amr bin Al-'as (May Allah be pleased with him) reported:
 <br>A man asked Messenger of Allah (peace be upon him), "Which act in Islam is the best?" He (peace be upon him) replied, "To feed (the poor and the needy) and to greet those whom you know and those you do not know."
-<br><a href="https://sunnah.com/urn/1608030">Bukhari &amp; Muslim</a><br>
+<br><a href="https://sunnah.com/riyadussalihin/5/1">Bukhari &amp; Muslim</a><br>
 </p>
 <br>
 Therefore we highly encourage you, that if you find this site useful, to <b>please</b> buy the original works and also provide support for those Muslims who are <b>starving</b> and in <b>dire need</b>. This would be the most generous way of supporting our website and its mission.
