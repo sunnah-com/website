@@ -15,7 +15,7 @@
   <meta name="Distribution" content="Global"/>
   <meta name="Rating" content="General"/>
  
-  <meta property="og:image" content="http://sunnah.com/images/hadith_icon2_huge.png" />
+  <meta property="og:image" content="https://sunnah.com/images/hadith_icon2_huge.png" />
   <?php if (isset($this->params['_ogDesc'])) echo "<meta property=\"og:description\" content=\"".htmlspecialchars($this->params['_ogDesc'])."\" />"; ?>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

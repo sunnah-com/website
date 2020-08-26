@@ -35,7 +35,7 @@ if (isset($errorMsg)) {
 
     if ($resultset->getCount() === 0) {
         echo "<p align=center>Sorry, there were no results found.";
-        $googlequery = "http://www.google.com/#q=".preg_replace("/ /", "+", htmlentities($searchQuery))."+site:sunnah.com";
+        $googlequery = "https://www.google.com/#q=".preg_replace("/ /", "+", htmlentities($searchQuery))."+site:sunnah.com";
         echo "<br><a href=\"".$googlequery."\">Click here</a> to use Google's site search feature for your query instead.<br><br></p>";
     } else {
         $beginResult = ($pageNumber-1)*$resultsPerPage+1;
