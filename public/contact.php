@@ -39,18 +39,17 @@ $parameters = parse_ini_file(__DIR__ ."/../.env.local");
 	<div id="header">
     	<div id="toolbar">
        		<div id="toolbarRight">
-				            <a href="http://quran.com">Qur'an</a> |
-            <a href="http://corpus.quran.com/wordbyword.jsp">Word by Word</a> |
-            <a href="http://quranicaudio.com">Audio</a> |
-            <a href="http://sunnah.com"><b>sunnah.com</b></a> |
-            <a href="http://salah.com">Prayer Times</a> |
-            <a href="http://android.quran.com">Android</a> |
-            <a href="http://beta.quran.com" style="position: relative; padding-right: 18px;">beta.quran.com <img style="position: absolute; top: -6px; right: -10px;" src="/images/labs.png"></a>
-
+                <a href="https://quran.com">Qur'an</a> |
+                <a href="http://corpus.quran.com/wordbyword.jsp">Word by Word</a> |
+                <a href="https://quranicaudio.com">Audio</a> |
+                <a href="https://sunnah.com"><b>sunnah.com</b></a> |
+                <a href="https://salah.com">Prayer Times</a> |
+                <a href="https://android.quran.com">Android</a> |
+                <a href="https://beta.quran.com" style="position: relative; padding-right: 18px;">beta.quran.com <img style="position: absolute; top: -6px; right: -10px;" src="/images/labs.png"></a>
 	        </div>
     	</div>
 
-		<a href="http://sunnah.com"><div id="banner" class=bannerTop></div></a>
+		<a href="https://sunnah.com"><div id="banner" class=bannerTop></div></a>
 		<!-- <a href="#"><div id=back-to-top></div></a> -->
 		
 <div id=search>

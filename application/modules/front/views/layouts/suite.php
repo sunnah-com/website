@@ -1,4 +1,4 @@
-            <a href="http://quran.com">Qur'an</a> |
-            <a href="http://sunnah.com"><b>Sunnah</b></a> |
-            <a href="http://salah.com">Prayer Times</a> |
-            <a href="http://quranicaudio.com">Audio</a> 
+            <a href="https://quran.com">Qur'an</a> |
+            <a href="https://sunnah.com"><b>Sunnah</b></a> |
+            <a href="https://salah.com">Prayer Times</a> |
+            <a href="https://quranicaudio.com">Audio</a> 

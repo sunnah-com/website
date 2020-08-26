@@ -10,8 +10,8 @@
   <meta name="Distribution" content="Global"/>
   <meta name="Rating" content="General"/>
 
-  <meta property="og:image" content="http://sunnah.com/images/fb_logo.png" />
-  <meta property="og:url" content="http://sunnah.com/" />
+  <meta property="og:image" content="https://sunnah.com/images/fb_logo.png" />
+  <meta property="og:url" content="https://sunnah.com/" />
   <meta property="og:title" content="Sunnah.com - Sayings and Teachings of Prophet Muhammad (صلى الله عليه و سلم)" />
   <meta property="og:description" content="Hadith of the Prophet Muhammad (saws) in several languages" />
  
