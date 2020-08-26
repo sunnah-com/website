@@ -19,9 +19,9 @@ $parameters = parse_ini_file(__DIR__ ."/../.env.local");
 
   <link rel="shortcut icon" href="/favicon.ico" >
 
-  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="/js/jquery.cookie.js"></script>
 
   	<script>
@@ -56,8 +56,8 @@ $parameters = parse_ini_file(__DIR__ ."/../.env.local");
     <a class="searchtipslink">Search Tips</a>
     <div id="searchbar" class="sblur">
         <form name="searchform" action="/search_redirect.php" method=get id="searchform">
-            <input type="text" class="searchquery" name=query value="Search …" />
-            <input type="image" src="/images/search.png" class="searchsubmit" value="l" />
+            <input type="text" class="searchquery" name=q placeholder= "Search …" value="" />
+            <input type="submit" class="searchsubmit" value="l" />
         </form>
     </div>
 
@@ -240,7 +240,7 @@ var sc_security="63a57073";
 <img class="statcounter" src="https://c.statcounter.com/7148282/0/63a57073/1/" alt="Web Analytics"></a>
 </div>
 </noscript>
-
+<link href="/css/fonts/fontello/css/icn-font.css" rel="stylesheet" type="text/css" />
 </div><!-- site div close -->
 </body>
 </html>
