@@ -2,15 +2,15 @@
             $searchQuery = NULL;
             if (strcmp($this->params['_pageType'], "search") == 0) $searchQuery = $this->params['_searchQuery'];
 			if (isset($searchQuery)) $stextval = $searchQuery;
-			else $stextval = "Search …";
+			else $stextval = "";
 		}
 ?>
 
 <div id=search>
     <a class="searchtipslink">Search Tips</a>
-    <div id="searchbar" class="sblur">
+    <div id="searchbar">
         <form name="searchform" action="/search/" method=get id="searchform">
-            <input type="text" class="searchquery" name=q value="<?php echo htmlspecialchars(strip_tags($stextval)); ?>" />
+            <input type="text" class="searchquery" name=q placeholder= "Search …" value="<?php echo htmlspecialchars(strip_tags($stextval)); ?>" />
             <input type="submit" class="searchsubmit" value="l" />
         </form>
     </div>

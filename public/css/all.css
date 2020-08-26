@@ -68,20 +68,29 @@
 html,body{
     margin:0;
     padding:0;
-	height: 100%;
+    height: 100%;
     font-family: "Akzidenz Roman", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height:1.5;
 }
 
-
 a {
 	text-decoration: none;
-	/* color: #75A1A1; */
 	color: #5F9999;
 }
 
-a:hover { text-decoration: underline; }
+a:hover {
+	text-decoration: underline
+}
+
+input,
+textarea {
+	color:#2d2d2d;
+}
+
+:-ms-input-placeholder { color:#ccc }
+::-ms-input-placeholder { color:#ccc }
+::placeholder { color:#ccc;opacity: 1 }
 
 .nounderline:hover { text-decoration: none; }
 
@@ -434,30 +443,9 @@ a:hover { text-decoration: underline; }
 
 #indexsearch {
 	margin:auto;
-	height:40px;
 	margin-top: 15px;
-	position:relative; 
-	width: 380px;
-	background-color: rgba(255, 255, 255, 0.65);
-	border-radius: 8px;
+	position:relative;
 }
-
-.idxsblur {
-	box-shadow: 0px 0px 9pt 2pt #ccc;
-}
-
-.idxsfocus {
-	box-shadow: 0px 0px 11pt 3pt #75a1a1;
-}
-
-.sfocus {
-	box-shadow: 0px 0px 9pt 2pt #ccc;
-}
-
-.sblur {
-	box-shadow: 0px 0px 9pt 2pt #75a1a1;
-}
-
 #search {
 	position: absolute;
 	bottom: 45px;
@@ -470,59 +458,62 @@ a:hover { text-decoration: underline; }
 	position:relative;
 	float: right;
 	width: 280px;
-	background-color: rgba(255, 255, 255, 0.85);
-	border-radius: 5px;
-	margin: 2px 5px 0 0;
 }
-
+#searchform {
+    margin-top: 1px;
+}
 
 .indexsearchquery {
-	border:0px; 
-	background-color:transparent;
-	position:absolute;
-	top:4px;
-	left:15px;
-	width:320px;
-	height:30px;
 	font-size: 18px;
-	color: #bbb;
+	width: 100%;
+	height: 40px;
+	border:0px;
+	border-radius: 8px;
+	padding: 0 .8em;
+	box-sizing: border-box;
+	background-color: rgba(255, 255, 255, 0.65);
+	box-shadow: 0px 0px 9pt 2pt #ccc;
 }
 
+.indexsearchquery:focus {
+    box-shadow: 0px 0px 11pt 3pt #75a1a1;
+}
 .searchquery {
-	border:0px; 
-	background-color:transparent;
-	position:absolute;
-	top:4px;
-	left:10px;
-	width:225px;
-	height:20px;
+	border:0;
+	width: 100%;
+	height: 29px;
+	padding: 0 .8em;
 	font-size: 14px;
-	color: #bbb;
+	background-color: rgba(255, 255, 255, 0.85);
+	border-radius: 5px;
+	box-shadow: 0px 0px 9pt 2pt #75a1a1;
+	box-sizing: border-box;
 }
 
 .indexsearchquery:focus { outline: none; }
-.searchquery:focus { outline: none; }
+.searchquery:focus {
+	box-shadow: 0px 0px 9pt 2pt #ccc;
+    outline: none;
+}
 
 .indexsearchsubmit,
 .searchsubmit {
 	border:0px;
 	cursor: pointer;
 	position:absolute;
-	top: 3px;
-	right: 7px;
-	height: 19px;
+	top: 0px;
+	right: 0;
 	width:17px;
 	font-family: "icn-font";
-	font-size: 19px;
+	font-size: 17px;
 	color: #5F9999;
-	padding: 0;
+	height: 28px;
 	background: 0;
+	box-sizing: content-box;
 }
 .indexsearchsubmit {
-	top:7px;
-	height:25px;
-	right: 10px;
-	width: 24px;
+	height: 40px;
+	width: 34px;
 	font-size: 24px;
 }
 
@@ -541,12 +532,12 @@ a:hover { text-decoration: underline; }
 .searchtipslink {
 	float: right;
 	font-size: 12px;
-	padding-right: 10px;
+	padding-left: 10px;
 	padding-top: 8px;
-	cursor: pointer
+	cursor: pointer;
 }
 
-#search a { color: #fff; }
+#search a {color: #fff;}
 #searchtips a { color: #5d8080; }
 
 #searchtips {
@@ -555,8 +546,8 @@ a:hover { text-decoration: underline; }
 	background-repeat: repeat-x repeat-y;
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
-    border-radius: 8px;
-    color: #666;
+	border-radius: 8px;
+	color: #666;
 	float: right;
 	margin-bottom: 10px;
 	display: none;
@@ -1492,40 +1483,40 @@ a:hover { text-decoration: underline; }
     #search {
         position: initial;
         float: unset;
-        right: auto;
-        padding: 0 .5em .5em;
+        padding: 0 .5em .5em .5em;
         width: 100%;
+        max-width: 410px;
         box-sizing: border-box;
+        margin: 0 auto;
+        display: grid;
+        grid-area: auto;
+        grid-template-columns: 70px auto;
+        grid-gap: 10px;
+        align-content: space-evenly;
+        align-items: center;
 	}
-	
+
     .searchtipslink {
         position: initial;
         float: none;
         display: inline-block;
-        width: 21%;
-        box-sizing: border-box;
         padding-top: 0;
         vertical-align: middle;
+        padding-left: 0;
 	}
 
 	#indexsearchtips {
 		font-size: 16px;
 		height: 555px;
 	}
-	
+	#searchtips {
+		left: 0;
+		top: 90px;
+		position: absolute;
+	}
     #searchbar {
-        width: 74%;
-        float: none;
-        display: inline-block;
-        margin: 0;
-        vertical-align: middle;
-	}
-	
-    .searchsubmit {
-        right: .5em;
-        left: auto;
-	}
-	
+        width: auto;
+    }
     .crumbs {
         padding: 3px .5em 5px;
         white-space: nowrap;
@@ -1714,14 +1705,6 @@ a:hover { text-decoration: underline; }
         width: 100%;
 	}
 	
-    #indexsearch {
-        max-width: 100%;
-	}
-	
-    .indexsearchquery {
-        width: 100%;
-	}
-	
     .english_collection_title {
         box-sizing: border-box;
         width: 48%;
@@ -1761,9 +1744,10 @@ a:hover { text-decoration: underline; }
 	
     .book_range {
 		width: 100%;
-        padding: 0;
+		padding: 0;
 		margin-top: .5em;
 		padding-left: 2.1em;
+		box-sizing: border-box;
 	}
 	
     .book_range > div {
@@ -1842,16 +1826,4 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 700px) 
 			  background-position: 64%;
 			  background-size: auto 70%;
   	}
-  }
-
-/* Very small screens */
-@media (max-width: 320px) {
-
-	.searchtipslink {
-		width: 26%;
-	}
-
-	#searchbar {
-		width: 72%;
-	}
 }
