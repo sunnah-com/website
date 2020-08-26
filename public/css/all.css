@@ -130,6 +130,7 @@ a:hover { text-decoration: underline; }
 	min-height: 100%;
 	position: relative;
 	padding-bottom: 70px;
+	box-sizing: border-box;
 }
 
 
