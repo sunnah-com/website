@@ -3,7 +3,7 @@
 use app\modules\front\models\EnglishHadith;
 use app\modules\front\models\ArabicHadith;
 
-function displayBab($chapter, $collection, $ourBookID) {
+function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
 	if ($chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
 	$arabicBabNumber = $chapter->arabicBabNumber;
 	$arabicBabName = $chapter->arabicBabName;
@@ -38,11 +38,13 @@ function displayBab($chapter, $collection, $ourBookID) {
 	echo "<div class=clear></div>\n";
 	echo "</div>\n";
 
-	$acOnlyClass = "";
-	if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"echapintro\">$englishIntro</div>\n";
-	else $acOnlyClass = " aconly";
-	if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic achapintro$acOnlyClass\">$arabicIntro</div>\n";
-	echo "<div class=clear></div>\n";
+    if ($showIntro) {
+    	$acOnlyClass = "";
+	    if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"echapintro\">$englishIntro</div>\n";
+	    else $acOnlyClass = " aconly";
+	    if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic achapintro$acOnlyClass\">$arabicIntro</div>\n";
+	    echo "<div class=clear></div>\n";
+    }
 }
 
 if (isset($errorMsg)) echo $errorMsg;
@@ -56,7 +58,10 @@ else {
 	if (isset($chapters)) $babIDs = array_keys($chapters);
 	if (isset($ajaxCrawler) and isset($otherlangs) and count($otherlangs) > 0) {
 		$haveotherlangs = true;
-	}
+    }
+
+    $showChapterIntro = true;
+    if ($this->params['_pageType'] === "hadith") $showChapterIntro = false;
 	
 ?>
 
@@ -121,7 +126,7 @@ else {
 					// (only Hisn al-Muslim as of now)
                     if ($totalCount == 0 and $status == 4 and strcmp($collectionHasChapters, "yes") == 0) {
                         foreach ($chapters as $chapter)
-                            displayBab($chapter, $collection, $ourBookID);
+                            displayBab($chapter, $collection, $ourBookID, $showChapterIntro);
                     }
 
 
@@ -175,11 +180,11 @@ else {
 								else $oldChapIdx = -1;
 								$newChapIdx = array_search($babID, $babIDs);
 								for ($j = 0; $j < $newChapIdx - $oldChapIdx - 1; $j++)
-									displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID);
+									displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID, $showChapterIntro);
 							}
 
 							// Now display the current chapter
-							displayBab($chapters[$babID], $collection, $ourBookID);
+							displayBab($chapters[$babID], $collection, $ourBookID, $showChapterIntro);
 							$oldChapNo = $babID;
 						}
 
@@ -269,7 +274,7 @@ else {
 						$oldChapIdx = array_search($oldChapNo, $babIDs);
 						if ($oldChapIdx < count($babIDs)-1) {
 							for ($j = 0; $j < count($babIDs)-$oldChapIdx-1; $j++) {
-								displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID);
+								displayBab($chapters[$babIDs[$oldChapIdx+$j+1]], $collection, $ourBookID, $showChapterIntro);
 							}
 						}
 					}
