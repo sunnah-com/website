@@ -370,12 +370,21 @@ class CollectionController extends SController
             throw new NotFoundHttpException($errorMsg);
 		}
 
+        $viewVars = [
+            'englishEntries' => null,
+            'arabicEntries' => null,
+            'pairs' => array(array(0,0)),
+            'expectedHadithCount' => 1,
+        ];
+
+
         if (strcmp($lang, "english") === 0) {
             $this->_collectionName = $englishHadith->collection;
             $this->_book = $this->util->getBookByLanguageID($this->_collectionName, $englishHadith->bookID, "english");
             $this->view->params['book'] = $this->_book;
             $viewVars['collectionName'] = $this->_collectionName;
             $viewVars['book'] = $this->_book;
+            $viewVars['ourBookID'] = $this->_book->ourBookID;
         }
         else if (!(is_null($arabicHadith))) {
             $this->_collectionName = $arabicHadith->collection;
@@ -383,35 +392,49 @@ class CollectionController extends SController
             $this->view->params['book'] = $this->_book;
             $viewVars['collectionName'] = $this->_collectionName;
             $viewVars['book'] = $this->_book;
+            $viewVars['ourBookID'] = $this->_book->ourBookID;
         }
-            
+
+        if (!is_null($arabicHadith)) {
+            $viewVars['arabicEntries'] = array($arabicHadith->arabicURN => $arabicHadith);
+            $viewVars['pairs'][0][1] = $arabicHadith->arabicURN;
+        }
+        if (!is_null($englishHadith)) {
+            $viewVars['englishEntries'] = array($englishHadith->englishURN => $englishHadith);
+            $viewVars['pairs'][0][0] = $englishHadith->englishURN;
+        }
+
         $this->_collection = $this->util->getCollection($this->_collectionName);
         $this->view->params['collection'] = $this->_collection;
         $viewVars['collection'] = $this->_collection;
         
-		$viewVars['englishEntry'] = $englishHadith;
-        $viewVars['arabicEntry'] = $arabicHadith;
+		if (array_key_exists('book', $viewVars) && !is_null($viewVars['book']) && $this->_book->status >= 3) {
+            $this->_chapters = array();
+            $retval = $this->util->getChapterDataForBook($this->_collectionName, $this->_book->ourBookID);
+            foreach ($retval as $chapter) $this->_chapters[$chapter->babID] = $chapter;
+            $viewVars['chapters'] = $this->_chapters;
 
-
-		if (array_key_exists('book', $viewVars) && !is_null($viewVars['book']) && $this->_book->status > 3) {
-	        $nextURN = $this->util->getNextURNInCollection($englishHadith->englishURN);
-    	    $previousURN = $this->util->getPreviousURNInCollection($englishHadith->englishURN);
-        	if (!is_null($nextURN)) {
-        		$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
-	            $viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
-    	    }
-        	if (!is_null($previousURN)) {
-            	$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
-	            $viewVars['previousHadithNumber'] = $this->util->getVerifiedHadithNumber($previousURN, $language = "english");
-    	    }
-		}
+            if ($this->_book->status > 3) {
+                $nextURN = $this->util->getNextURNInCollection($englishHadith->englishURN);
+        	    $previousURN = $this->util->getPreviousURNInCollection($englishHadith->englishURN);
+            	if (!is_null($nextURN)) {
+        	    	$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
+	                $viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
+        	    }
+            	if (!is_null($previousURN)) {
+                	$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
+	                $viewVars['previousHadithNumber'] = $this->util->getVerifiedHadithNumber($previousURN, $language = "english");
+    	        }
+		    }
+        }
 
         $this->view->params['_pageType'] = "hadith";
+		$this->view->params['lastUpdated'] = null;
         $this->pathCrumbs('Hadith', "");
         if (strlen($this->_book->englishBookName) > 0) {
             $this->pathCrumbs($this->_book->englishBookName." - <span class=arabic_text>".$this->_book->arabicBookName.'</span>', "/".$this->_collectionName."/".$this->_book->ourBookID);
         }
         $this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
-        return $this->render('urn', $viewVars);
+        return $this->render('dispbook', $viewVars);
 	}
 }
