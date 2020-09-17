@@ -303,8 +303,8 @@ else {
 	<script>
 		(function () {
 
-			var hCount = $(".actualHadithContainer").length;
-			var hExpectedCount = <?php echo $expectedHadithCount ?>;
+			var hCount = $(".chapter").length;
+			var hExpectedCount = <?php echo count($babIDs) ?>
 			
 			if ( hCount != hExpectedCount ) {
 				var message = "\n" + location.pathname.substring(1) + "\tshown: " + hCount + "\texpected: " + hExpectedCount;
