@@ -112,7 +112,7 @@ if (isset($errorMsg)) {
                 }
             }
 
-            echo "<div class=\"boh\" style=\"margin-bottom: 10px;\">\n";
+            echo "<div class=\"boh\">\n";
             echo "<!-- URN [{$result['language']}] {$result['urn']} -->";
 
             // Print the path of the hadith

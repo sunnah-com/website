@@ -1190,8 +1190,13 @@ textarea {
 .boh {
 	border-radius: 10px;
 	background-color: rgba(255, 255, 255, 0.4);
+	box-shadow: 0 21px 28px -21px rgba(0,0,0,.09), 0 22px 29px rgba(0,0,0,.02);
+	margin-bottom: 20px;
 }
-
+.boh .actualHadithContainer {
+	box-shadow: none;
+	margin-bottom: 5em;
+}
 .boh:hover {
 	background-color: rgba(255, 255, 255, 0.8);
 }
@@ -1766,11 +1771,6 @@ textarea {
     .AllHadith > a:not([href]) {
 		scroll-margin-top: 100px;
 		scroll-snap-margin-top: 100px;
-	}
-
-    /* Search results */
-    .boh {
-		margin-bottom: 2em !important;
 	}
 
     .bc_search {
