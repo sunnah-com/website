@@ -1521,7 +1521,7 @@ textarea {
         padding: 3px .5em 5px;
         white-space: nowrap;
         position: relative;
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: hidden;
 	}
 	
