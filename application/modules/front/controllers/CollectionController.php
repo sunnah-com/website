@@ -177,7 +177,7 @@ class CollectionController extends SController
             }
         }
 
-		if (isset($this->_entries[0][$pairs[0][0]])) {
+		if (count($pairs) > 0 && isset($this->_entries[0][$pairs[0][0]])) {
             $this->view->params['_ogDesc'] = substr(strip_tags($this->_entries[0][$pairs[0][0]]->hadithText), 0, 300);
         }
 

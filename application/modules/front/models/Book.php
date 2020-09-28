@@ -144,7 +144,12 @@ class Book extends ActiveRecord
 		*/
 		$lastup = null;
 		
-        if (count($englishSet) == 0 && count($arabicSet) == 0) return NULL;
+        if (count($englishSet) == 0 && count($arabicSet) == 0) {
+            // If this happens, we want to return null EXCEPT in case of valid zero-hadith books
+            if (!($this->collection === 'hisn' && $this->ourBookID == -1)) {
+                return NULL;
+            }
+        }
 
         $eurns_string = '';
         $aurns_string = '';
