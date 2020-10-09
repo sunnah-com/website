@@ -831,7 +831,8 @@ textarea {
     margin: 0 auto;
 }
 .chapter_index {
-    font-size: 15px;
+	font-size: 15px;
+	margin-bottom: 1em;
 }
 .chapter_link {
     padding: 0 0 0 20px;
@@ -875,6 +876,42 @@ textarea {
 .AllHadith > a:not([href]) {
 	scroll-margin-top: 60px;
 	scroll-snap-margin-top: 60px;
+}
+/* Hisn collapsed chapter list */
+.collapsed {
+    height: 65vh;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    margin-bottom: 3em;
+}
+.collapsible:not(.collapsed) .button_expand {
+    display: none;
+}
+.button_expand {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 6em;
+    padding-bottom: .5em;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 51%) 20% ,#faf9f6 100%);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+}
+.button_expand:after {
+    content: ">";
+    transform: rotateZ(90deg);
+    font-family: icn-font;
+    text-decoration: none;
+}
+.button_expand:hover {
+    text-shadow: 2px 0px 5px #75a7a842;
+    text-decoration: none;
+    color: #84B8B8;
+    cursor: pointer;
 }
 /* / Hisn al-Muslim */
 .surah {
