@@ -18,9 +18,7 @@ Under the applications folder, here are the important locations:
 
 ## Running on windows
 
-* Install PHP 5.6
-* [Download](http://windows.php.net/downloads/pecl/releases/memcache/3.0.8/) and copy the memcache extension
-* [Download](http://s3.amazonaws.com/downloads.northscale.com/memcached-win32-1.4.4-14.zip) and install memcache
+* Install PHP 7.3
 * Create an iis website and point it to the public folder
 * Add the index.php file as default document
 * Add handler mapping for .php files in iis
@@ -33,18 +31,14 @@ Under the applications folder, here are the important locations:
 
 ## Launching the Dev Container
 
-Launching the dev container is composed of two simple commands. First, building the image, then running it.
+Launching the dev container is composed of a simple `docker-compose` command:
 
-In order to build the image, run the following command in the same directory as the Dockerfile:
+Run the following command in the same directory as the Dockerfile:
 
-`docker build -t {username}/{imagename} .`
+`docker-compose up --build`
 
-Once the docker image builds, run it by doing the following:
-
-`docker run -d -p 80:80 {username}/{imagename}` 
-
-If you've used the ports above, you should be able to access the webserver using port 80 on the container's host.
+You should then be able to access the webserver using port 80 on the container's host.
 
 Use [Visual Studio Code](https://code.visualstudio.com/) with [Remote Containers](https://code.visualstudio.com/docs/remote/containers) extensions to attach to running instance and try out changes rapidly.
 
-Use [php cs fixer](https://marketplace.visualstudio.com/items?itemName=makao.phpcsfixer) extension for formatting code 
+Use the [php cs fixer](https://marketplace.visualstudio.com/items?itemName=makao.phpcsfixer) extension for formatting code.
