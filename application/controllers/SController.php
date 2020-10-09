@@ -71,7 +71,8 @@ class SController extends Controller
             $crumbString .= $name;
             $crumbString .= " - ";
         }
-        return preg_replace("/- <span.*?<\/span>/", "", $crumbString);
+        $crumbString = preg_replace("/- <span.*?<\/span>/", "", $crumbString);
+		return strip_tags($crumbString);
     }
 
     public function auto_version($filename) {
