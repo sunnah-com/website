@@ -864,6 +864,10 @@ textarea {
 	white-space: pre-line;
 }
 
+.hadith_container_nasai .text_details {
+	white-space: pre-line;
+}
+
 .reference_label {
     display: block;
     margin-top: 1em;
