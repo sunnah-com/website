@@ -100,7 +100,7 @@ else {
     <?php if ((strcmp($collection->name, "hisn") == 0) 
 			  and (strcmp($this->params['_pageType'], "book") == 0)
 			  and $ourBookID == 1) { ?>
-    <div class=chapter_index_container><div class="chapter_index titles">
+    <div class=chapter_index_container><div class="chapter_index titles collapsible collapsed">
     <?php
         $chapterCount = count($babIDs);
         foreach ($chapters as $chapter) {
@@ -114,6 +114,7 @@ else {
             echo "</div> <!-- end chapter_link div-->\n";
         }
     ?>
+	<a class="button_expand" onclick="jQuery(this).closest('.collapsible').toggleClass('collapsed')"></a>
     </div></div>
     <div class=clear></div>
     <?php } ?>
