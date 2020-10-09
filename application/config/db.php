@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => "mysql:host={$parameters['db_host']};dbname={$parameters['db_name']}",
-    'username' => $parameters['db_username'],
-    'password' => $parameters['db_password'],
+    'dsn' => "mysql:host={$parameters['MYSQL_HOST']};dbname={$parameters['MYSQL_DATABASE']}",
+    'username' => $parameters['MYSQL_USER'],
+    'password' => $parameters['MYSQL_PASSWORD'],
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
