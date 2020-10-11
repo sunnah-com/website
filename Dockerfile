@@ -11,10 +11,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php --install-dir=. --filename=composer
 RUN mv composer /usr/local/bin/
 
-COPY ./application /app/application
-COPY ./public /app/public
 COPY composer.json composer.lock /app/
-COPY ./.env.local.sample /app/.env.local
 
 RUN composer install
 

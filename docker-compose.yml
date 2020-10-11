@@ -12,6 +12,7 @@ services:
     build: .
     volumes:
       - .:/app
+      - /app/vendor/
     ports:
       - "80:80"
     env_file:

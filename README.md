@@ -29,11 +29,10 @@ Under the `application` folder, here are the important locations:
 * Visit localhost in a browser to see the site running   
 
 
-## Launching the Dev Container
+## Working with the Dev Container
+If you don't want to set up a complete dev environment on your host, you can use a Docker container to host the PHP environment, dependencies, and web server. The source code is mounted as a volume inside the container, so any changes will reflect immediately inside the container without having to rebuild it.
 
-Launching the dev container is composed of a simple `docker-compose` command:
-
-Run the following command in the same directory as the Dockerfile:
+Launching the dev container is composed of a simple `docker-compose` command. First however, copy the `.env.local.sample` file to `.env.local` (**important**). Then run the following command in the same directory as the Dockerfile:
 
 `docker-compose up --build`
 
