@@ -776,6 +776,8 @@ textarea {
 .title .arabic_chapter_name {
 	width: 47%;
 	font-size: 20px;
+	padding-right: 10px;
+	box-sizing: border-box;
 }
 
 .book_range {
@@ -883,7 +885,7 @@ textarea {
 }
 /* Hisn collapsed chapter list */
 .collapsed {
-    height: 65vh;
+    height: 49vh;
     overflow: hidden;
     position: relative;
     border-radius: 8px;
