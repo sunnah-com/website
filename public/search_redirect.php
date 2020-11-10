@@ -1,5 +1,7 @@
 <?php
-	
+
+$parameters = parse_ini_file(__DIR__ ."/../.env.local");
+
 	function url_encode($query) {
 		/* This function takes a given URL and "cleans it up" to get rid of ugly 
 	   character sequences */
@@ -20,9 +22,8 @@
 		elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) $IP=$_SERVER['HTTP_X_FORWARDED_FOR'];
 		else $IP=$_SERVER['REMOTE_ADDR'];
 
-//		$con = mysql_connect("localhost", "ansari") or die(mysql_error());
-		$con = mysqli_connect("localhost", "webread") or die(mysqli_error($con));
-		mysqli_select_db("searchdb") or die(mysqli_error($con));
+		$con = mysqli_connect($parameters['searchdb_host'], $parameters['searchdb_username'], $parameters['searchdb_password']) or die(mysqli_error($con));
+		mysqli_select_db($parameters['searchdb_name']) or die(mysqli_error($con));
 		$query = "INSERT into didyoumean (query, suggestion, IP) values ('".addslashes($_GET['old'])."','".addslashes($_GET['query'])."','".$IP."')";
 		mysqli_query($con, $query) or die(mysqli_error($con).$query);
 		mysqli_close($con);
