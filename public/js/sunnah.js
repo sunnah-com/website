@@ -143,21 +143,110 @@
 	var sharescriptsInserted = false;
 	var justloaded = false;
 
+	/**
+	 * 
+	 * @param {HTML} data HTML to insert into created dialog box
+	 */
+	function createCenteredDialogBox(data) {
+		if (!$(".share_mb").length)
+			$("body").append('<div class="share_mb"></div>');
+		$(".share_mb").html(data);
+
+		$(".share_mb").css("left", ($(window).width() - $(".share_mb").width()) / 2 + "px");
+		$(".share_mb").css("top", ($(window).height() - $(".share_mb").height()) / 2.8 + "px");
+
+		$('#sharefuzz, .share_mb').animate({ 'opacity': '.25' }, 200, 'linear');
+		$('.share_mb').animate({ 'opacity': '1.00' }, 200, 'linear');
+		$('#sharefuzz, .share_mb').css('display', 'block');
+	}
+
 	function share(permalink) {		
 		$.get("/share.php", {"link": permalink}, function(data) {
-			if (!$(".share_mb").length) $("body").append('<div class="share_mb"></div>');
-			$(".share_mb").html(data); 
-			
-			$(".share_mb").css("left", ($(window).width() - $(".share_mb").width())/2+"px");
-			$(".share_mb").css("top", ($(window).height() - $(".share_mb").height())/2.8+"px");
-		
-			$('#sharefuzz, .share_mb').animate({'opacity':'.25'}, 200, 'linear');
-			$('.share_mb').animate({'opacity':'1.00'}, 200, 'linear');
-			$('#sharefuzz, .share_mb').css('display', 'block');
-
-			$(".permalink_box").select();			
+			createCenteredDialogBox(data);	
+			$(".permalink_box").select();		
 		});
 	}
+
+
+	/**
+	 * default copy menu values
+	 */
+	let itemsToCopy = { 
+		copyArabic: true,
+		copyTranslation: true,
+		copyBasicReference: false,
+		copyDetailedReference: true,
+		copyWebReference: true,
+	};
+
+	
+	/**
+	 * This dialog box provides Hadith copy options
+	 */
+	function showCopyDialogBox() {
+		$.get('/copy_hadith_menu.php', function(data) {
+			createCenteredDialogBox(data);
+
+			if (storageAvailable("localStorage")) {
+				let localItemsToCopy = localStorage.getItem("ItemsToCopy");
+				if (!itemsToCopy) {                    
+					localItemsToCopy = itemsToCopy;
+					localStorage.setItem('ItemsToCopy', JSON.stringify(localItemsToCopy));
+                } else {
+					localItemsToCopy = JSON.parse(localItemsToCopy);					
+				}
+				for(var name in localItemsToCopy) {
+					document.getElementById(name).checked = localItemsToCopy[name];
+				}
+            }
+		});
+	}
+
+
+	/**
+	 * Checking if Storage is both supported and available in the browser 
+	 * in order to persist user preference
+	 * @param  {string}  type 'localStorage' or 'sessionStorage'
+	 * @return {boolean} Storage available or not
+	 */
+	function storageAvailable(type) {
+		var storage;
+		try {
+			storage = window[type];
+			var x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		}
+		catch(e) {
+			return e instanceof DOMException && (
+				// everything except Firefox
+				e.code === 22 ||
+				// Firefox
+				e.code === 1014 ||
+				// test name field too, because code might not be present
+				// everything except Firefox
+				e.name === 'QuotaExceededError' ||
+				// Firefox
+				e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+				// acknowledge QuotaExceededError only if there's something already stored
+				(storage && storage.length !== 0);
+		}
+	}
+
+	/**
+	 * Copy menu item click event handler
+	 */
+	function updateItemsToCopyInLocalStorage() {
+		if (storageAvailable("localStorage")) {
+			for(var name in itemsToCopy) {
+				itemsToCopy[name] = document.getElementById(name).checked;
+			}
+			localStorage.setItem('ItemsToCopy', JSON.stringify(itemsToCopy));
+		}
+	}
+
+
 	
    $(document).ready(function () {  
 

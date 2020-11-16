@@ -177,7 +177,8 @@
 			//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
 			//echo "<a href=\"$permalink\">Permalink</a>";
 			if (!isset($hideReportError) or !$hideReportError) echo "<a href=\"javascript: void(0);\" onclick=\"reportHadith(".$values[0].", '".$divname."')\">Report Error</a> | ";
-			if (!$hideShare) echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span>";
+			if (!$hideShare) echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span> | ";
+			echo "<span class=sharelink onclick=\"showCopyDialogBox()\">Copy</span>";
 			echo "</div>";
 
 			echo "\n</div>";
