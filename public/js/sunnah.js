@@ -179,13 +179,14 @@
 		copyWebReference: true,
 	};
 
-	
+	let copySuccessIndicator;
 	/**
 	 * This dialog box provides Hadith copy options
 	 */
 	function showCopyDialogBox() {
 		$.get('/copy_hadith_menu.php', function(data) {
 			createCenteredDialogBox(data);
+			copySuccessIndicator = $('#copyContainer #copySuccessIndicator');
 
 			if (storageAvailable("localStorage")) {
 				let localItemsToCopy = localStorage.getItem("ItemsToCopy");
@@ -282,21 +283,29 @@
 	function updateClipboard(newClip) {
         navigator.clipboard.writeText(newClip).then(
             function () {
-				let indicatorSpan = $('#copyContainer #copyError')
-				indicatorSpan.text('Copied!');
-				indicatorSpan.css('color', '#4BB543');
-				indicatorSpan.fadeIn();
-				setTimeout(() => { 
-				}, 3000);
+				showCopySuccessIndicator('✓', '#006400');					
             },
             function () {
-                console.error('Clipboard update failed!');
+				showCopySuccessIndicator('✗', '#640000');					
             }
         );
+
+		
     }
 
+	/**
+	 * Display indication of copy-to-clipboard operation success or failure
+	 * @param {string} text What characters to display on screen, such as ✓ or 🚫
+	 * @param {string} color The color code
+	 */
+	function showCopySuccessIndicator(text, color) {		
+		copySuccessIndicator.finish();
+		copySuccessIndicator.css('opacity', '0');
+		copySuccessIndicator.text(text);
+		copySuccessIndicator.css('color', color);
+		copySuccessIndicator.animate({ opacity: 1 }, 300).delay(600).animate({ opacity: 0 }, 300);
+	}
 
-	
    $(document).ready(function () {  
 
 	$(window).scroll(function() {
