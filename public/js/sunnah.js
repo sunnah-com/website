@@ -246,6 +246,55 @@
 		}
 	}
 
+	/**
+	 * Copy button in Copy Dialog Box click event handler
+	 */
+	function copyToClipboard() {
+		navigator.permissions.query({name: "clipboard-write"}).then(result => {
+			if (result.state == "granted" || result.state == "prompt") {
+				let copyText = '';
+				if (itemsToCopy.copyArabic)
+					copyText += document.querySelector('.arabic_hadith_full').innerText.trim();
+				
+				if (itemsToCopy.copyTranslation)
+					copyText += "\n\n" + document.querySelector('.english_hadith_full').innerText.trim().replace('\n','');
+				
+				if (itemsToCopy.copyBasicReference) {
+					copyText += '\n\nReference: ' + document.querySelectorAll('.hadith_reference tr:first-child td')[1].innerText.trim().slice(2);				
+				} else if (itemsToCopy.copyDetailedReference) {
+					copyText += `\n\nReference: ${document.querySelectorAll('.hadith_reference tr:first-child td')[1].innerText.trim().slice(2)}
+								 In-book reference: `;
+					console.log(copyText);
+				}
+				
+				if (itemsToCopy.copyWebReference)
+					copyText += "\n\nSource: " + window.location.href;
+
+				updateClipboard(copyText.trim());
+			}
+		});
+	}
+
+	/**
+	 * Write text to clipboard and show success or error message.
+	 * @param {string} newClip The text that should be copied to clipboard 
+	 */
+	function updateClipboard(newClip) {
+        navigator.clipboard.writeText(newClip).then(
+            function () {
+				let indicatorSpan = $('#copyContainer #copyError')
+				indicatorSpan.text('Copied!');
+				indicatorSpan.css('color', '#4BB543');
+				indicatorSpan.fadeIn();
+				setTimeout(() => { 
+				}, 3000);
+            },
+            function () {
+                console.error('Clipboard update failed!');
+            }
+        );
+    }
+
 
 	
    $(document).ready(function () {  
