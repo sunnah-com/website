@@ -174,12 +174,15 @@
 	let itemsToCopy = { 
 		copyArabic: true,
 		copyTranslation: true,
+		copyGrade: true,
 		copyBasicReference: false,
-		copyDetailedReference: true,
+		copyDetailedReference: true,		
 		copyWebReference: true,
 	};
 
 	let copySuccessIndicator;
+
+	
 	/**
 	 * This dialog box provides Hadith copy options
 	 */
@@ -187,14 +190,20 @@
 		$.get('/copy_hadith_menu.php', function(data) {
 			createCenteredDialogBox(data);
 			copySuccessIndicator = $('#copyContainer #copySuccessIndicator');
+			
+			// if grade for the Hadith is not available, then do not show the option in the dialog box
+			if (!$('.arabic_grade').length) 
+				$('#copyContainer #copyGrade').parent().hide();				
 
 			if (storageAvailable("localStorage")) {
 				let localItemsToCopy = localStorage.getItem("ItemsToCopy");
-				if (!itemsToCopy) {                    
-					localItemsToCopy = itemsToCopy;
+				if (!localItemsToCopy) {    //Info not stored in Local Storage as of yey                
+					localItemsToCopy = itemsToCopy;  //setting default value for first use if 
+													//nothing is stored as of yet in Local Storage
 					localStorage.setItem('ItemsToCopy', JSON.stringify(localItemsToCopy));
-                } else {
-					localItemsToCopy = JSON.parse(localItemsToCopy);					
+                } else {	//Info available in Local Storage  
+					localItemsToCopy = JSON.parse(localItemsToCopy);
+					itemsToCopy = localItemsToCopy;	//caching value in memory as well for later use				
 				}
 				for(var name in localItemsToCopy) {
 					document.getElementById(name).checked = localItemsToCopy[name];
@@ -208,7 +217,7 @@
 	 * Checking if Storage is both supported and available in the browser 
 	 * in order to persist user preference
 	 * @param  {string}  type 'localStorage' or 'sessionStorage'
-	 * @return {boolean} Storage available or not
+	 * @returns {boolean} Storage available or not
 	 */
 	function storageAvailable(type) {
 		var storage;
@@ -235,6 +244,7 @@
 		}
 	}
 
+
 	/**
 	 * Copy menu item click event handler
 	 */
@@ -244,8 +254,9 @@
 				itemsToCopy[name] = document.getElementById(name).checked;
 			}
 			localStorage.setItem('ItemsToCopy', JSON.stringify(itemsToCopy));
-		}
+		}		
 	}
+
 
 	/**
 	 * Copy button in Copy Dialog Box click event handler
@@ -254,48 +265,73 @@
 		navigator.permissions.query({name: "clipboard-write"}).then(result => {
 			if (result.state == "granted" || result.state == "prompt") {
 				let copyText = '';
+				
 				if (itemsToCopy.copyArabic)
-					copyText += document.querySelector('.arabic_hadith_full').innerText.trim();
-				
+					copyText += `${getTextFromDOM('.arabic_hadith_full')}\n`;
+
 				if (itemsToCopy.copyTranslation)
-					copyText += "\n\n" + document.querySelector('.english_hadith_full').innerText.trim().replace('\n','');
+					copyText += `\n${getTextFromDOM('.english_hadith_full').replace('\n','')}\n`;
 				
-				if (itemsToCopy.copyBasicReference) {
-					copyText += '\n\nReference: ' + document.querySelectorAll('.hadith_reference tr:first-child td')[1].innerText.trim().slice(2);				
-				} else if (itemsToCopy.copyDetailedReference) {
-					copyText += `\n\nReference: ${document.querySelectorAll('.hadith_reference tr:first-child td')[1].innerText.trim().slice(2)}
-								 In-book reference: `;
-					console.log(copyText);
+				let arabicGrade = getTextFromDOM('.arabic_grade');
+				if (itemsToCopy.copyGrade && arabicGrade) { 
+					// Grade checkbox is selected and arabic grade for the Hadith exists
+					arabicGrade = arabicGrade.split(' ');
+					arabicGrade = `حكم: ${arabicGrade[0].trim()} ${arabicGrade[1].trim()}` 										
+					copyText += `Grade: ${getTextFromDOM('.english_grade:nth-child(2)').slice(2)} | ${arabicGrade}\n`;	
+				}					
+
+				if (itemsToCopy.copyBasicReference)
+					copyText += `\nReference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)').slice(2)}\n`;				
+				else if (itemsToCopy.copyDetailedReference) {
+					copyText += '\n' +
+					`Reference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)').slice(2)}\n` +
+					`In-book reference:\n` +
+					` - ${getTextFromDOM('.book_page_english_name')} (${getTextFromDOM('.book_page_number')}) ${getTextFromDOM('.book_page_arabic_name')}\n` +
+					` - ${getTextFromDOM('.englishchapter')} ${getTextFromDOM('.echapno')} ${getTextFromDOM('.arabicchapter')}\n` +
+					` - ${getTextFromDOM('.hadith_reference tr:nth-child(2) td:nth-child(2)').split(',')[1].trim()}\n`;
 				}
 				
 				if (itemsToCopy.copyWebReference)
-					copyText += "\n\nSource: " + window.location.href;
+					copyText += "Source: " + window.location.href;
 
-				updateClipboard(copyText.trim());
+				// REMOVE AFTER DEBUGGING!
+				console.log(copyText.trim());
+				
+				updateClipboardWithPlainText(copyText.trim());
 			}
 		});
 	}
+	
 
 	/**
-	 * Write text to clipboard and show success or error message.
-	 * @param {string} newClip The text that should be copied to clipboard 
+	 * 
+	 * @param  {string} cssSelector cssSelector string to extract text from DOM elements on page
+	 * @returns {string} If text is found, returns it; otherwise, returns an empty string 
 	 */
-	function updateClipboard(newClip) {
-        navigator.clipboard.writeText(newClip).then(
-            function () {
-				showCopySuccessIndicator('✓', '#006400');					
-            },
-            function () {
-				showCopySuccessIndicator('✗', '#640000');					
-            }
-        );
+	function getTextFromDOM(cssSelector) {
+		let textNode = document.querySelector(cssSelector);
+		if (textNode)
+			return textNode.innerText.trim();
+		else 
+			return '';
+	}
 
-		
+
+	/**
+	 * Writes plain text to clipboard and shows success or error message.
+	 * @param {string} text The text that should be copied to clipboard 
+	 */
+	function updateClipboardWithPlainText(text) {
+        navigator.clipboard.writeText(text).then(
+			() => showCopySuccessIndicator('✓', '#006400'),
+			(e) => showCopySuccessIndicator('✗', '#640000')
+        );		
     }
+
 
 	/**
 	 * Display indication of copy-to-clipboard operation success or failure
-	 * @param {string} text What characters to display on screen, such as ✓ or 🚫
+	 * @param {string} text What characters to display on screen, such as ✓ or ✗
 	 * @param {string} color The color code
 	 */
 	function showCopySuccessIndicator(text, color) {		
@@ -305,6 +341,7 @@
 		copySuccessIndicator.css('color', color);
 		copySuccessIndicator.animate({ opacity: 1 }, 300).delay(600).animate({ opacity: 0 }, 300);
 	}
+
 
    $(document).ready(function () {  
 
