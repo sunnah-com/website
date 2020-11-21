@@ -186,6 +186,7 @@
 	
 	/**
 	 * This dialog box provides Hadith copy options
+	 * @param {object} e An object representing the button whose click calls this function
 	 */
 	function showCopyDialogBox(e) {
 		$.get('/copy_hadith_menu.php', function(data) {
@@ -263,7 +264,7 @@
 	/**
 	 * Copy button in Copy Dialog Box click event handler
 	 */
-	function copyToClipboard(e) {
+	function copyToClipboard() {
 		navigator.permissions.query({name: "clipboard-write"}).then(result => {
 			if (result.state == "granted" || result.state == "prompt") {
 				let copyText = '';
@@ -298,9 +299,6 @@
 				
 				if (itemsToCopy.copyWebReference)
 					copyText += `Source: ${window.location.hostname}${$hadithContainerInObservance.find('.sharelink')[0].onclick.toString().match(/["'](.*?)["']/)[1]}`;
-
-				// REMOVE AFTER DEBUGGING!
-				console.log(copyText.trim());
 				
 				updateClipboardWithPlainText(copyText.trim());
 			} else {
@@ -312,7 +310,8 @@
 
 	/**
 	 * Find an element using a CSS selector within a parent element and then return its text
-	 * @param  {string} cssSelector cssSelector string to extract text from DOM elements on page
+	 * @param {string} cssSelector cssSelector string to extract text from DOM elements on page
+	 * @param {object} $element The jQuery element within which to find the given cssSelector
 	 * @returns {string} If text is found, returns it; otherwise, returns an empty string 
 	 */
 	function getTextFromDOM(cssSelector, $element) {
