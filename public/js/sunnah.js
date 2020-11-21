@@ -175,8 +175,8 @@
 		copyArabic: true,
 		copyTranslation: true,
 		copyGrade: true,
-		copyBasicReference: false,
-		copyDetailedReference: true,		
+		copyBasicReference: true,
+		copyDetailedReference: false,		
 		copyWebReference: true,
 	};
 
