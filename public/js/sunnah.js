@@ -143,22 +143,212 @@
 	var sharescriptsInserted = false;
 	var justloaded = false;
 
+	/**
+	 * 
+	 * @param {HTML} data HTML to insert into created dialog box
+	 */
+	function createCenteredDialogBox(data) {
+		if (!$(".share_mb").length)
+			$("body").append('<div class="share_mb"></div>');
+		$(".share_mb").html(data);
+
+		$(".share_mb").css("left", ($(window).width() - $(".share_mb").width()) / 2 + "px");
+		$(".share_mb").css("top", ($(window).height() - $(".share_mb").height()) / 2.8 + "px");
+
+		$('#sharefuzz, .share_mb').animate({ 'opacity': '.25' }, 200, 'linear');
+		$('.share_mb').animate({ 'opacity': '1.00' }, 200, 'linear');
+		$('#sharefuzz, .share_mb').css('display', 'block');
+	}
+
 	function share(permalink) {		
 		$.get("/share.php", {"link": permalink}, function(data) {
-			if (!$(".share_mb").length) $("body").append('<div class="share_mb"></div>');
-			$(".share_mb").html(data); 
-			
-			$(".share_mb").css("left", ($(window).width() - $(".share_mb").width())/2+"px");
-			$(".share_mb").css("top", ($(window).height() - $(".share_mb").height())/2.8+"px");
-		
-			$('#sharefuzz, .share_mb').animate({'opacity':'.25'}, 200, 'linear');
-			$('.share_mb').animate({'opacity':'1.00'}, 200, 'linear');
-			$('#sharefuzz, .share_mb').css('display', 'block');
+			createCenteredDialogBox(data);	
+			$(".permalink_box").select();		
+		});
+	}
 
-			$(".permalink_box").select();			
+
+	/**
+	 * default copy menu values
+	 */
+	let itemsToCopy = { 
+		copyArabic: true,
+		copyTranslation: true,
+		copyGrade: true,
+		copyBasicReference: true,
+		copyDetailedReference: false,		
+		copyWebReference: true,
+	};
+
+	let $copySuccessIndicator;
+	let $hadithContainerInObservance;
+
+	
+	/**
+	 * This dialog box provides Hadith copy options
+	 * @param {object} e An object representing the button whose click calls this function
+	 */
+	function showCopyDialogBox(e) {
+		$.get('/copy_hadith_menu.php', function(data) {
+			createCenteredDialogBox(data);
+			$copySuccessIndicator = $('#copyContainer #copySuccessIndicator');
+			$hadithContainerInObservance = $(e).parents('.actualHadithContainer');
+			
+			// if grade for the Hadith is not available, then do not show the option in the dialog box
+			if (!$('.arabic_grade').length) 
+				$('#copyContainer #copyGrade').parent().hide();				
+
+			if (storageAvailable("localStorage")) {
+				let localItemsToCopy = localStorage.getItem("ItemsToCopy");
+				if (!localItemsToCopy) {    //Info not stored in Local Storage as of yey                
+					localItemsToCopy = itemsToCopy;  //setting default value for first use if 
+													//nothing is stored as of yet in Local Storage
+					localStorage.setItem('ItemsToCopy', JSON.stringify(localItemsToCopy));
+                } else {	//Info available in Local Storage  
+					localItemsToCopy = JSON.parse(localItemsToCopy);
+					itemsToCopy = localItemsToCopy;	//caching value in memory as well for later use				
+				}
+				for(var name in localItemsToCopy) {
+					document.getElementById(name).checked = localItemsToCopy[name];
+				}
+            }
+		});
+	}
+
+
+	/**
+	 * Checking if Storage is both supported and available in the browser 
+	 * in order to persist user preference
+	 * @param  {string}  type 'localStorage' or 'sessionStorage'
+	 * @returns {boolean} Storage available or not
+	 */
+	function storageAvailable(type) {
+		var storage;
+		try {
+			storage = window[type];
+			var x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		}
+		catch(e) {
+			return e instanceof DOMException && (
+				// everything except Firefox
+				e.code === 22 ||
+				// Firefox
+				e.code === 1014 ||
+				// test name field too, because code might not be present
+				// everything except Firefox
+				e.name === 'QuotaExceededError' ||
+				// Firefox
+				e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+				// acknowledge QuotaExceededError only if there's something already stored
+				(storage && storage.length !== 0);
+		}
+	}
+
+
+	/**
+	 * Copy menu item click event handler
+	 */
+	function updateItemsToCopyInLocalStorage() {
+		if (storageAvailable("localStorage")) {
+			for(var name in itemsToCopy) {
+				itemsToCopy[name] = document.getElementById(name).checked;
+			}
+			localStorage.setItem('ItemsToCopy', JSON.stringify(itemsToCopy));
+		}		
+	}
+
+
+	/**
+	 * Copy button in Copy Dialog Box click event handler
+	 */
+	function copyToClipboard() {
+		navigator.permissions.query({name: "clipboard-write"}).then(result => {
+			if (result.state == "granted" || result.state == "prompt") {
+				let copyText = '';
+				
+				if (itemsToCopy.copyArabic)
+					copyText += `${getTextFromDOM('.arabic_hadith_full', $hadithContainerInObservance)}\n`;
+
+				if (itemsToCopy.copyTranslation)
+					copyText += `\n${getTextFromDOM('.english_hadith_full', $hadithContainerInObservance).replace('\n','')}\n`;
+				
+				let arabicGrade = getTextFromDOM('.arabic_grade', $hadithContainerInObservance);
+				if (itemsToCopy.copyGrade && arabicGrade) { 
+					// Grade checkbox is selected and arabic grade for the Hadith exists
+					arabicGrade = arabicGrade.split(' ');
+					arabicGrade = `حكم: ${arabicGrade[0].trim()} ${arabicGrade[1].trim()}` 										
+					copyText += `Grade: ${getTextFromDOM('.english_grade:nth-child(2)', $hadithContainerInObservance).slice(2)} | ${arabicGrade}`;	
+				}					
+
+				if (itemsToCopy.copyBasicReference)
+					copyText += `\nReference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)', $hadithContainerInObservance).slice(2)}\n`;				
+				else if (itemsToCopy.copyDetailedReference) {
+					let $bookInfo = $('.book_info');
+					let $chapterInfo = $hadithContainerInObservance.prevAll('.chapter:first');
+					
+					copyText += '\n' +
+					`Reference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)', $hadithContainerInObservance).slice(2)}\n` +
+					`In-book reference:\n` +
+					` - ${getTextFromDOM('.book_page_english_name', $bookInfo)} (${getTextFromDOM('.book_page_number', $bookInfo)}) ${getTextFromDOM('.book_page_arabic_name', $bookInfo)}\n` +
+					` - ${getTextFromDOM('.englishchapter', $chapterInfo)} ${getTextFromDOM('.echapno', $chapterInfo)} ${getTextFromDOM('.arabicchapter', $chapterInfo)}\n` +
+					` - ${getTextFromDOM('.hadith_reference tr:nth-child(2) td:nth-child(2)', $hadithContainerInObservance).split(',')[1].trim()}\n`;
+				}
+				
+				if (itemsToCopy.copyWebReference)
+					copyText += `Source: ${window.location.hostname}${$hadithContainerInObservance.find('.sharelink')[0].onclick.toString().match(/["'](.*?)["']/)[1]}`;
+				
+				updateClipboardWithPlainText(copyText.trim());
+			} else {
+				showCopySuccessIndicator('✗', '#640000');
+			}
 		});
 	}
 	
+
+	/**
+	 * Find an element using a CSS selector within a parent element and then return its text
+	 * @param {string} cssSelector cssSelector string to extract text from DOM elements on page
+	 * @param {object} $element The jQuery element within which to find the given cssSelector
+	 * @returns {string} If text is found, returns it; otherwise, returns an empty string 
+	 */
+	function getTextFromDOM(cssSelector, $element) {
+		let textNode = $element.find(cssSelector);
+		if (textNode.length)
+			return textNode.text().trim();
+		else 
+			return '';
+	}
+
+
+	/**
+	 * Writes plain text to clipboard and shows success or error message.
+	 * @param {string} text The text that should be copied to clipboard 
+	 */
+	function updateClipboardWithPlainText(text) {
+        navigator.clipboard.writeText(text).then(
+			() => showCopySuccessIndicator('✓', '#006400'),
+			() => showCopySuccessIndicator('✗', '#640000')
+        );		
+    }
+
+
+	/**
+	 * Display indication of copy-to-clipboard operation success or failure
+	 * @param {string} text What characters to display on screen, such as ✓ or ✗
+	 * @param {string} color The color code
+	 */
+	function showCopySuccessIndicator(text, color) {		
+		$copySuccessIndicator.finish();
+		$copySuccessIndicator.css('opacity', '0');
+		$copySuccessIndicator.text(text);
+		$copySuccessIndicator.css('color', color);
+		$copySuccessIndicator.animate({ opacity: 1 }, 300).delay(600).animate({ opacity: 0 }, 300);
+	}
+
+
    $(document).ready(function () {  
 
 	$(window).scroll(function() {
