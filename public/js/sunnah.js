@@ -180,16 +180,18 @@
 		copyWebReference: true,
 	};
 
-	let copySuccessIndicator;
+	let $copySuccessIndicator;
+	let $hadithContainerInObservance;
 
 	
 	/**
 	 * This dialog box provides Hadith copy options
 	 */
-	function showCopyDialogBox() {
+	function showCopyDialogBox(e) {
 		$.get('/copy_hadith_menu.php', function(data) {
 			createCenteredDialogBox(data);
-			copySuccessIndicator = $('#copyContainer #copySuccessIndicator');
+			$copySuccessIndicator = $('#copyContainer #copySuccessIndicator');
+			$hadithContainerInObservance = $(e).parents('.actualHadithContainer');
 			
 			// if grade for the Hadith is not available, then do not show the option in the dialog box
 			if (!$('.arabic_grade').length) 
@@ -261,57 +263,62 @@
 	/**
 	 * Copy button in Copy Dialog Box click event handler
 	 */
-	function copyToClipboard() {
+	function copyToClipboard(e) {
 		navigator.permissions.query({name: "clipboard-write"}).then(result => {
 			if (result.state == "granted" || result.state == "prompt") {
 				let copyText = '';
 				
 				if (itemsToCopy.copyArabic)
-					copyText += `${getTextFromDOM('.arabic_hadith_full')}\n`;
+					copyText += `${getTextFromDOM('.arabic_hadith_full', $hadithContainerInObservance)}\n`;
 
 				if (itemsToCopy.copyTranslation)
-					copyText += `\n${getTextFromDOM('.english_hadith_full').replace('\n','')}\n`;
+					copyText += `\n${getTextFromDOM('.english_hadith_full', $hadithContainerInObservance).replace('\n','')}\n`;
 				
-				let arabicGrade = getTextFromDOM('.arabic_grade');
+				let arabicGrade = getTextFromDOM('.arabic_grade', $hadithContainerInObservance);
 				if (itemsToCopy.copyGrade && arabicGrade) { 
 					// Grade checkbox is selected and arabic grade for the Hadith exists
 					arabicGrade = arabicGrade.split(' ');
 					arabicGrade = `حكم: ${arabicGrade[0].trim()} ${arabicGrade[1].trim()}` 										
-					copyText += `Grade: ${getTextFromDOM('.english_grade:nth-child(2)').slice(2)} | ${arabicGrade}\n`;	
+					copyText += `Grade: ${getTextFromDOM('.english_grade:nth-child(2)', $hadithContainerInObservance).slice(2)} | ${arabicGrade}`;	
 				}					
 
 				if (itemsToCopy.copyBasicReference)
-					copyText += `\nReference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)').slice(2)}\n`;				
+					copyText += `\nReference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)', $hadithContainerInObservance).slice(2)}\n`;				
 				else if (itemsToCopy.copyDetailedReference) {
+					let $bookInfo = $('.book_info');
+					let $chapterInfo = $hadithContainerInObservance.prevAll('.chapter:first');
+					
 					copyText += '\n' +
-					`Reference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)').slice(2)}\n` +
+					`Reference: ${getTextFromDOM('.hadith_reference tr:first-child td:nth-child(2)', $hadithContainerInObservance).slice(2)}\n` +
 					`In-book reference:\n` +
-					` - ${getTextFromDOM('.book_page_english_name')} (${getTextFromDOM('.book_page_number')}) ${getTextFromDOM('.book_page_arabic_name')}\n` +
-					` - ${getTextFromDOM('.englishchapter')} ${getTextFromDOM('.echapno')} ${getTextFromDOM('.arabicchapter')}\n` +
-					` - ${getTextFromDOM('.hadith_reference tr:nth-child(2) td:nth-child(2)').split(',')[1].trim()}\n`;
+					` - ${getTextFromDOM('.book_page_english_name', $bookInfo)} (${getTextFromDOM('.book_page_number', $bookInfo)}) ${getTextFromDOM('.book_page_arabic_name', $bookInfo)}\n` +
+					` - ${getTextFromDOM('.englishchapter', $chapterInfo)} ${getTextFromDOM('.echapno', $chapterInfo)} ${getTextFromDOM('.arabicchapter', $chapterInfo)}\n` +
+					` - ${getTextFromDOM('.hadith_reference tr:nth-child(2) td:nth-child(2)', $hadithContainerInObservance).split(',')[1].trim()}\n`;
 				}
 				
 				if (itemsToCopy.copyWebReference)
-					copyText += "Source: " + window.location.href;
+					copyText += `Source: ${window.location.hostname}${$hadithContainerInObservance.find('.sharelink')[0].onclick.toString().match(/["'](.*?)["']/)[1]}`;
 
 				// REMOVE AFTER DEBUGGING!
 				console.log(copyText.trim());
 				
 				updateClipboardWithPlainText(copyText.trim());
+			} else {
+				showCopySuccessIndicator('✗', '#640000');
 			}
 		});
 	}
 	
 
 	/**
-	 * 
+	 * Find an element using a CSS selector within a parent element and then return its text
 	 * @param  {string} cssSelector cssSelector string to extract text from DOM elements on page
 	 * @returns {string} If text is found, returns it; otherwise, returns an empty string 
 	 */
-	function getTextFromDOM(cssSelector) {
-		let textNode = document.querySelector(cssSelector);
-		if (textNode)
-			return textNode.innerText.trim();
+	function getTextFromDOM(cssSelector, $element) {
+		let textNode = $element.find(cssSelector);
+		if (textNode.length)
+			return textNode.text().trim();
 		else 
 			return '';
 	}
@@ -324,7 +331,7 @@
 	function updateClipboardWithPlainText(text) {
         navigator.clipboard.writeText(text).then(
 			() => showCopySuccessIndicator('✓', '#006400'),
-			(e) => showCopySuccessIndicator('✗', '#640000')
+			() => showCopySuccessIndicator('✗', '#640000')
         );		
     }
 
@@ -335,11 +342,11 @@
 	 * @param {string} color The color code
 	 */
 	function showCopySuccessIndicator(text, color) {		
-		copySuccessIndicator.finish();
-		copySuccessIndicator.css('opacity', '0');
-		copySuccessIndicator.text(text);
-		copySuccessIndicator.css('color', color);
-		copySuccessIndicator.animate({ opacity: 1 }, 300).delay(600).animate({ opacity: 0 }, 300);
+		$copySuccessIndicator.finish();
+		$copySuccessIndicator.css('opacity', '0');
+		$copySuccessIndicator.text(text);
+		$copySuccessIndicator.css('color', color);
+		$copySuccessIndicator.animate({ opacity: 1 }, 300).delay(600).animate({ opacity: 0 }, 300);
 	}
 
 
