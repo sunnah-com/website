@@ -341,7 +341,8 @@
 	 * @param {string} color The color code
 	 */
 	function showCopySuccessIndicator(text, color) {		
-		$copySuccessIndicator.finish();
+		$copySuccessIndicator.finish();  // if user presses the Copy button quickly, 
+										// finish previous animation before starting the following animation
 		$copySuccessIndicator.css('opacity', '0');
 		$copySuccessIndicator.text(text);
 		$copySuccessIndicator.css('color', color);

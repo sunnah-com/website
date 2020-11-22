@@ -55,7 +55,7 @@
 			onclick="copyToClipboard(this);">
 				<span style="flex:1; text-align:left;"></span>
 				<span id="copyBtnText" style="flex:1;"><i class="icn-docs"></i> Copy</span>
-				<span id="copySuccessIndicator" style="flex:1; text-align:right;"></span>
+				<span id="copySuccessIndicator" style="flex:1; text-align:right; font-weight:900;"></span>
 		</button>
 		<div style="flex:1;"></div>
 	</div>
