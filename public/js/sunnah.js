@@ -272,8 +272,13 @@
 				if (itemsToCopy.copyArabic)
 					copyText += `${getTextFromDOM('.arabic_hadith_full', $hadithContainerInObservance)}\n`;
 
-				if (itemsToCopy.copyTranslation)
-					copyText += `\n${getTextFromDOM('.english_hadith_full', $hadithContainerInObservance).replace('\n','')}\n`;
+				if (itemsToCopy.copyTranslation) {
+					$hadithContainerInObservance.find('.englishcontainer').children().each(function() {
+						$this = $(this);
+						if ($this.is(':visible'))
+							copyText += `\n${$this.text().trim().replace('\n','')}\n`;
+					});
+				}
 				
 				let arabicGrade = getTextFromDOM('.arabic_grade', $hadithContainerInObservance);
 				if (itemsToCopy.copyGrade && arabicGrade) { 
