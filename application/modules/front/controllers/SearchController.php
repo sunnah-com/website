@@ -35,13 +35,22 @@ class SearchController extends SController
 
     public function processSearch($query, $page)
     {
-        $this->pathCrumbs('Search Results - '.helpers\Html::encode($query).' (page '.$page.')', '');
+        $this->pathCrumbs('Search Results', '');
 
         $limit = Yii::$app->params['pageSize'];
 
         $searchEngine = new KeywordSearchEngine();
         $searchEngine->setLimitPage($limit, $page);
-        $resultset = $searchEngine->doSearch($query);
+		
+		set_error_handler(function ($err_severity, $err_msg, $err_file, $err_line, array $err_context)
+							{ throw new \ErrorException($err_msg, 0, $err_severity, $err_file, $err_line); }, E_WARNING);
+		try {
+        	$resultset = $searchEngine->doSearch($query);
+		} catch (\ErrorException $e) {
+			$errorMsg = "Your search query cannot be performed. It may contain improper characters, be too long, or be malformed in another way.";
+			return $this->render('index', ['errorMsg' => $errorMsg]);
+		}
+		restore_error_handler();
 
         if ($resultset === null) {
             return $this->searchEngineDown();
@@ -72,6 +81,7 @@ class SearchController extends SController
             'pagination' => $pagination,
         );
 
+        $this->pathCrumbs('Search Results - '.helpers\Html::encode($query).' (page '.$page.')', '');
         return $this->render('index', $viewVars);
     }
 
