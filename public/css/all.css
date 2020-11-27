@@ -1161,7 +1161,9 @@ textarea {
 .hadith_permalink a:hover {
     text-decoration: underline;
 }
-
+.hadith_reference a {
+    color: #037d7d;
+}
 .hadith_reference {
     font-size: 11px;
     text-decoration: none;
