@@ -236,6 +236,10 @@ class CollectionController extends SController
 			
 			if (isset($previousURN) && !is_null($previousURN))
 				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+
+			// Add canonical links to single pages only
+			if ( $permalinkCanonical && count($pairs) === 1)
+				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
 		}
 		
 		return $this->render('dispbook', $viewVars);
@@ -462,6 +466,9 @@ class CollectionController extends SController
 
 			if (isset($previousURN) && !is_null($previousURN))
 				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+
+			if ( $permalinkCanonical )
+				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
 		}
 
         return $this->render('dispbook', $viewVars);
