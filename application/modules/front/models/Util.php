@@ -323,6 +323,30 @@ class Util extends Model {
         return $permalink;
     }
 
+    public function getPermalinkByURN($urn, $language="arabic") {
+        // As of now, this method only works for hadith in verified books. 
+        // TODO: Extend to other books
+        if ($language !== "arabic") {
+            $hadithTranslation = $this->getHadith($urn, $language);
+            $urn = $hadithTranslation->matchingArabicURN;
+            
+            if ($urn === null) return null;
+        }
+
+        $hadith = $this->getHadith($urn, "arabic");
+        $collectionName = $hadith->collection;
+        $collection = $this->getCollection($collectionName);
+        
+        $book = $this->getBook($hadith->collection, $hadith->bookID, "english");
+        if ($book->status < 4) return null;
+        
+        // In case an entry lists multiple hadith numbers, use the first one
+        $hadithNumber = explode(",", $hadith->hadithNumber)[0];
+
+        $permalink = "/$collectionName:$hadithNumber";        
+        return $permalink;
+    }
+
     public function getCarouselHTML($arabicURNs) {
         $aURNs = $arabicURNs;
 		shuffle($aURNs);

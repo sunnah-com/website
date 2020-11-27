@@ -1,4 +1,7 @@
 <?php
+			use app\modules\front\models\Util;
+			$util = new Util();
+
 			$collection = $values[7];
 			$ourHadithNumber = $values[6];
 			$ourBookID = $values[8];
@@ -11,6 +14,8 @@
 			$hideReportError = $values[15];
 			$divname = $values[16];
 			$hideShare = $values[17] ?? false;
+			// TODO: Expand to all verified collections at the end of the experiment
+			$url = ($collection === "riyadussalihin") ? $util->getPermalinkByURN($values[0], "english") : null;
 
 			echo "<div class=bottomItems>\n";
 	    if (strlen($englishGrade1) > 0 or strlen($arabicGrade1) > 0) {
@@ -75,7 +80,10 @@
 			if ($bookstatus == 4) {
 				echo "<tr><td><b>Reference</b></td>";
 				echo "<td>&nbsp;:&nbsp;";
-				echo "$collectionEnglishTitle ".$values[5]."";
+				if ( $url !== null && $this->params["_pageType"] !== "hadith" )
+					echo "<a href=\"$url\">$collectionEnglishTitle ".$values[5]."</a>";
+				else
+					echo "$collectionEnglishTitle ".$values[5]."";
 				echo "</b></td></tr>";
 
 				if (strcmp($collectionHasBooks, "yes") == 0) {
@@ -112,6 +120,8 @@
 					elseif ($ourBookID == -1) $permalink = "/$collection/introduction/$ourHadithNumber";
 				}
 				else $permalink = "/$collection/$ourHadithNumber"; // This collection has no books.
+
+				if ( $url !== null ) $permalink = $url;
 			}
 			else {
 
