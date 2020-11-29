@@ -160,20 +160,44 @@
 	}	
 
 
-	// BEGIN REGION Copy Menu Management
-	var openedMenu;
 
+
+	// BEGIN REGION Copy Menu UI Management
+	var openedMenu;
+	var $hadithContainerInObservance;
+
+	/**
+	 * Opens copy menu, fills it from user's preferences from Local Storage
+	 * @param {object} $copyMenu jQuery object representing the copy menu container 
+	 */	
 	function openCopyMenu($copyMenu) {
 		if ($copyMenu) {
 			if (openedMenu) {
 				closeCopyMenu(openedMenu);
-			}	
+			}
+			
+			$hadithContainerInObservance = $copyMenu.closest('.actualHadithContainer');
+			
+			// if grade for the Hadith is not available, then do not show the option in the dialog box
+			if (!$hadithContainerInObservance.find('.arabic_grade').length) 
+				$hadithContainerInObservance.find('.copyGrade').parent().hide();				
+
+			let localItemsToCopy = syncAppCopyUserPreferenceWithLocalStorage();
+
+			// Updating the UI with values saved in Local Storage if they were set; 
+			// otherwise, with the default values
+			for (var className in localItemsToCopy)
+				$hadithContainerInObservance.find('.' + className)
+					.prop('checked', localItemsToCopy[className])
+			
 			$copyMenu.find('.downCaret').show();		
 			$copyMenu.find('.rightCaret').hide();		
 			$copyMenu.find('.copyContainer').fadeIn('fast');
 			openedMenu = $copyMenu;	
 		}
 	}
+
+
 
 	function closeCopyMenu($copyMenu) {
 		if ($copyMenu) {
@@ -205,6 +229,102 @@
 		}
 	});
 	// END REGION Copy Menu Management
+
+
+
+
+	// BEGIN REGION Copy Menu Options Local Storage Management
+
+	/**
+	 * default copy menu values
+	 */
+	let itemsToCopy = { 
+		copyArabic: true,
+		copyTranslation: true,
+		copyGrade: true,
+		copyBasicReference: true,
+		copyDetailedReference: false,		
+		copyWebReference: true,
+	};
+
+
+	/**
+	 * Sync App's Copy User Preferences in the UI with Local Storage
+	 * @returns {object} An object with boolean properties with keys same as the class name of the UI elements 
+	 */
+	function syncAppCopyUserPreferenceWithLocalStorage() {
+		if (storageAvailable("localStorage")) {
+			let localItemsToCopy = localStorage.getItem("ItemsToCopy");
+
+			if (!localItemsToCopy) { 
+				// Info not stored in Local Storage as of yet                
+				localItemsToCopy = itemsToCopy;	 // setting default value for first use if 
+												// nothing is stored as of yet in Local Storage
+				localStorage.setItem('ItemsToCopy', JSON.stringify(localItemsToCopy));
+			} else { 
+				// Info available in Local Storage  
+				localItemsToCopy = JSON.parse(localItemsToCopy);
+				itemsToCopy = localItemsToCopy; // caching value in memory as well for later use				
+			}
+			return localItemsToCopy;
+		}
+	}
+
+
+	let $copySuccessIndicator;
+
+	/**
+	 * Checking if Storage is both supported and available in the browser 
+	 * in order to persist user preference
+	 * @param  {string}  type 'localStorage' or 'sessionStorage'
+	 * @returns {boolean} Storage available or not
+	 */
+	function storageAvailable(type) {
+		var storage;
+		try {
+			storage = window[type];
+			var x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		}
+		catch(e) {
+			return e instanceof DOMException && (
+				// everything except Firefox
+				e.code === 22 ||
+				// Firefox
+				e.code === 1014 ||
+				// test name field too, because code might not be present
+				// everything except Firefox
+				e.name === 'QuotaExceededError' ||
+				// Firefox
+				e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+				// acknowledge QuotaExceededError only if there's something already stored
+				(storage && storage.length !== 0);
+		}
+	}
+
+
+	/**
+	 * Copy menu item click event handler
+	 */
+	function updateItemsToCopyInLocalStorage() {
+		if (storageAvailable("localStorage")) {
+			for(var className in itemsToCopy)
+				itemsToCopy[className] = $hadithContainerInObservance
+											.find('.' + className)
+											.prop('checked');
+			localStorage.setItem('ItemsToCopy', JSON.stringify(itemsToCopy));
+		}		
+	}
+
+	// END REGION Copy Menu Options Local Storage Management
+
+
+	
+
+
+
 
 
 	
