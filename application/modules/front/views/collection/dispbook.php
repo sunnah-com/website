@@ -142,11 +142,13 @@ else {
 						if ($englishEntry == NULL) {
 							$englishEntry = new EnglishHadith();
 							$urn = $arabicEntry->arabicURN;
+							$urn_language = "arabic";
 							$englishExists = false;
 							$ourHadithNumber = $arabicEntry->ourHadithNumber;
 						}
 						else {
 							$urn = $englishEntry->englishURN;
+							$urn_language = "english";
 							$ourHadithNumber = $englishEntry->ourHadithNumber;
 						}
 
@@ -233,7 +235,10 @@ else {
 											$englishEntry->grade1, 
 											$arabicEntry->grade1,
 											false, // hide report error flag
-											"h".$arabicEntry->arabicURN)
+											"h".$arabicEntry->arabicURN,
+                                            false, // hide share flag,
+                                            $urn_language
+                                        )
                             ));	
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
 						echo "<div class=clear></div>";

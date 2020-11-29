@@ -14,8 +14,9 @@
 			$hideReportError = $values[15];
 			$divname = $values[16];
 			$hideShare = $values[17] ?? false;
+			$urn_language = $values[18];
 			// TODO: Expand to all verified collections at the end of the experiment
-			$url = ($collection === "riyadussalihin") ? $util->getPermalinkByURN($values[0], "english") : null;
+			$url = ($collection === "riyadussalihin") ? $util->getPermalinkByURN($values[0], $urn_language) : null;
 
 			echo "<div class=bottomItems>\n";
 	    if (strlen($englishGrade1) > 0 or strlen($arabicGrade1) > 0) {

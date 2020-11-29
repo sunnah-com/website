@@ -328,9 +328,9 @@ class Util extends Model {
         // TODO: Extend to other books
         if ($language !== "arabic") {
             $hadithTranslation = $this->getHadith($urn, $language);
+            if ($hadithTranslation === null) { return null; }
             $urn = $hadithTranslation->matchingArabicURN;
-            
-            if ($urn === null) return null;
+            if ($urn === null) { return null; }
         }
 
         $hadith = $this->getHadith($urn, "arabic");
