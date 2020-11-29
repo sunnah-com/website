@@ -546,16 +546,16 @@ textarea {
 	background-repeat: repeat-x repeat-y;
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
-	border-radius: 8px;
+	border-radius: 6px;
 	color: #666;
 	float: right;
 	margin-bottom: 10px;
 	display: none;
 	font-size: 12px;
-	padding: 5px;
+	padding: 15px;
 	position: absolute;
 	top: 30px;
-	border: 2px solid;
+	border: 1px solid;
 	right: 50px;
 }
 
@@ -1142,11 +1142,12 @@ textarea {
     border-style: solid;
     padding-left: 15px;
     padding-top: 15px;
-    padding-right: 25px;
+    padding-right: 15px;
     float: right;
     padding-bottom: 10px;
     border: 0px solid;
 	color: #5F9999;
+	width: 170px;
 }
 
 .hadith_permalink a {
@@ -1193,7 +1194,7 @@ textarea {
 
 .bottomItems {
     width: 100%;
-    overflow: auto;
+    overflow: visible;
 	padding-top: 17px;
 }
 
@@ -1360,6 +1361,44 @@ textarea {
 
 .sharelink:hover {
 	text-decoration: underline;
+}
+
+.menuCaretBtn {
+	cursor: pointer;
+	position: relative;
+}
+
+.menuCaretBtn:hover {
+	color: #426a6a;
+}
+
+.copyContainer {
+	/* width: 400px; */
+	background:url(../images/bg_small.png);
+	background-repeat: repeat-x repeat-y;
+	background-color: rgba(255, 255, 255, 0.5);
+	z-index: 10;
+	border-radius: 6px 4px 6px 6px;
+	color: #666;
+	/* float: right;
+	margin-bottom: 10px; */
+	display: none;
+	font-size: 12px;
+	padding: 15px;
+	position: absolute;
+	top: 17px;
+	border: 1px solid;
+	/* right: -1px; */
+}
+
+.copyContainer fieldset {
+	border:1px dashed #aaa; 
+	border-radius:3px; 
+}
+
+.copyContainer ul {
+	list-style-type: none; 
+	padding: 0px;
 }
 
 .share_close {

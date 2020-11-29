@@ -157,7 +157,56 @@
 
 			$(".permalink_box").select();			
 		});
+	}	
+
+
+	// BEGIN REGION Copy Menu Management
+	var openedMenu;
+
+	function openCopyMenu($copyMenu) {
+		if ($copyMenu) {
+			if (openedMenu) {
+				closeCopyMenu(openedMenu);
+			}	
+			$copyMenu.find('.downCaret').show();		
+			$copyMenu.find('.rightCaret').hide();		
+			$copyMenu.find('.copyContainer').fadeIn('fast');
+			openedMenu = $copyMenu;	
+		}
 	}
+
+	function closeCopyMenu($copyMenu) {
+		if ($copyMenu) {
+			$copyMenu.find('.downCaret').hide();		
+			$copyMenu.find('.rightCaret').show();		
+			$copyMenu.find('.copyContainer').fadeOut('fast');
+			openedMenu = null;				
+		}
+	}
+
+
+	$(document).on('click', function(event) {
+		$clickedElement = $(event.target);
+		var elementClass = $clickedElement.attr('class');
+		if (elementClass == 'rightCaret') {
+			// user is trying to open a copy menu
+			openCopyMenu($clickedElement.closest('.menuCaretBtn'));
+		} else if (elementClass == 'downCaret') {
+			// user is trying to close a copy menu
+			closeCopyMenu($clickedElement.closest('.menuCaretBtn'));
+		} else {
+			if ($clickedElement.closest('.copyContainer').length) {
+				// user is clicking within an opened copy menu
+				// Don't do anything. Let it remain open.
+			} else {
+				// user is clicking on the website outside the copy menu
+				closeCopyMenu(openedMenu);					
+			}
+		}
+	});
+	// END REGION Copy Menu Management
+
+
 	
    $(document).ready(function () {  
 

@@ -12,6 +12,7 @@
 			$divname = $values[16];
 			$hideShare = $values[17] ?? false;
 
+			echo "<div class=\"clear\"></div>";			
 			echo "<div class=bottomItems>\n";
 	    if (strlen($englishGrade1) > 0 or strlen($arabicGrade1) > 0) {
     	    echo "<div class=hadith_annotation>";
@@ -179,8 +180,9 @@
 			if (!isset($hideReportError) or !$hideReportError) echo "<a href=\"javascript: void(0);\" onclick=\"reportHadith(".$values[0].", '".$divname."')\">Report Error</a> | ";
 			if (!$hideShare) echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span> | ";
 			echo "<span class=sharelink onclick=\"copyHadith(this);\">Copy</span> ";
-			echo "<span class=sharelink onclick=\"showCopyDialogBox(this);\" title=\"Click to select which text to copy to the clipboard\">▼</span>";
-			echo "</div>";
+			echo "<span class=menuCaretBtn title=\"Click to select which text to copy to the clipboard\"><span class=rightCaret>▶</span><span class=downCaret style=\"display:none;\">▼</span>";
+			include 'copy_hadith_menu.php';
+			echo "</span></div>";
 
 			echo "\n</div>";
 ?>
