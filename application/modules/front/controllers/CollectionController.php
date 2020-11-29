@@ -238,7 +238,7 @@ class CollectionController extends SController
 				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
 
 			// Add canonical links to single pages only
-			if ( $permalinkCanonical && count($pairs) === 1)
+			if ( $permalinkCanonical && $this->view->params['_pageType'] == "hadith" && count($pairs) === 1 )
 				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
 		}
 		
