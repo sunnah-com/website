@@ -69,7 +69,7 @@ else {
     }
 
     $collapse_book_intro = "";
-    if ($collection->name === "nawawi40") { $collapse_book_intro = " collapsible book_intro_initial_height"; }
+    if ($collection->name === "nawawi40") { $collapse_book_intro = " collapsible collapsed book_intro_initial_height"; }
 ?>
 
     <div class="book_info">
@@ -98,10 +98,10 @@ else {
 					echo "<div class=ebookintro>".$book->englishBookIntro."</div>";
 					echo "<div class=\"arabic abookintro\">".$book->arabicBookIntro."</div>";
 					echo "<div class=clear></div>";
-                    echo "</div>\n";
                     if ($collection->name === "nawawi40") {
                         echo "<a class=\"button_expand\" onclick=\"jQuery(this).closest('.collapsible').toggleClass('collapsed')\"></a>\n";
                     }
+                    echo "</div>\n";
 		}
 	?>
 

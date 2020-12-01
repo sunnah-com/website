@@ -896,7 +896,7 @@ textarea {
 }
 
 .book_intro_initial_height {
-    height: 60vh;
+    height: 65vh;
 }
 
 .collapsed {
@@ -1016,12 +1016,12 @@ textarea {
 .ebookintro {
 	font-size: 15px;
 	float: left;
-	width: 47%;
+	width: 48%;
 }
 
 .abookintro {
 	float: right;
-	width: 47%;
+	width: 48%;
 	font-size: 22px;
 }
 
