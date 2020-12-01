@@ -62,12 +62,16 @@ else {
 
     $showChapterIntro = true;
     if ($this->params['_pageType'] === "hadith") $showChapterIntro = false;
-	
+
+	$book_name_center_style = "";
+	if (strcmp($collectionHasBooks, "no") == 0) {
+		$book_name_center_style = " centertext";
+	}
 ?>
 
 	<div class="book_info">
-    	<div class=book_page_colindextitle>
-    		<div class="book_page_arabic_name arabic"><?php echo $book->arabicBookName; ?></div>
+    	<div class="book_page_colindextitle">
+    		<div class="book_page_arabic_name arabic<?php echo $book_name_center_style; ?>"><?php echo $book->arabicBookName; ?></div>
 			<?php if (strcmp($collectionHasBooks, "yes") == 0) {
     				echo "<div class=\"book_page_number\">";
 					if (intval($ourBookID) > 0) echo "$ourBookID";
@@ -76,11 +80,12 @@ else {
 					echo "</div>";
 				  }
 			?>
-    		<div class="book_page_english_name">
+    		<div class="book_page_english_name<?php echo $book_name_center_style; ?>">
 				<?php echo $book->englishBookName; ?>
 			</div>
     		<div class=clear></div>
 		</div>
+    	<div class=clear></div>
 		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b><?php echo $totalCount; ?></b> hadith</div> -->
 
 	<?php
@@ -318,7 +323,7 @@ else {
 				$.ajax({
 					type : "POST",
 					url : "/ajax/log/hadithcount",
-					data: {msg: message, _csrf:'<?=\Yii::$app->request->csrfToken?>'},
+					data: {msg: message, _csrf_frontend:'<?=\Yii::$app->request->csrfToken?>'},
 				});
 			}
 		})();

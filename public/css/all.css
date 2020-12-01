@@ -798,12 +798,18 @@ textarea {
 	padding: 0 20px;
 	width: auto;
 }
+
+.book_info {
+	width: 94%;
+	padding-left: 10px;
+}
+
 .book_page_colindextitle {
 	float: left;
+	width: 100%;
 	padding: 5px 20px 5px 5px;
 	margin-left: 0px;
 	text-align: justify;
-	width: 94%;
 }
 
 .book_page_number {
@@ -817,15 +823,15 @@ textarea {
 	float: left;
 	font-size: 24px;
 	padding-top: 5px;
-	width: 50%;
+	width: 47%;
 	text-align: left;
 }
 
 .book_page_arabic_name {
 	float: right;
 	font-size: 30px;
-	padding-right: 10px;
-	width: 40%;
+	/* padding-right: 10px; */
+	width: 47%;
 }
 /* Hisn al-Muslim */
 .chapter_index_container {
@@ -994,7 +1000,12 @@ textarea {
 	float: left;
 }
 
+.bookintro {
+	white-space: pre-line;
+}
+
 .ebookintro {
+	font-size: 15px;
 	float: left;
 	width: 47%;
 }
@@ -1858,6 +1869,11 @@ textarea {
 		margin: 0 0 70px;
 	}
 }
+
+.centertext {
+	text-align: center;
+}
+
 
 /* Medium screen, retina, stuff to override above media query */
 @media
