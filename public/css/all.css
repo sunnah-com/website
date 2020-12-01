@@ -890,8 +890,16 @@ textarea {
 	scroll-snap-margin-top: 60px;
 }
 /* Hisn collapsed chapter list */
-.collapsed {
+
+.hisn_chapters_initial_height {
     height: 49vh;
+}
+
+.book_intro_initial_height {
+    height: 60vh;
+}
+
+.collapsed {
     overflow: hidden;
     position: relative;
     border-radius: 8px;
@@ -900,6 +908,7 @@ textarea {
 .collapsible:not(.collapsed) .button_expand {
     display: none;
 }
+
 .button_expand {
     position: absolute;
     bottom: 0;
