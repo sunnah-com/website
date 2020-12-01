@@ -18,6 +18,8 @@
   <meta property="og:image" content="https://sunnah.com/images/hadith_icon2_huge.png" />
   <?php if (isset($this->params['_ogDesc'])) echo "<meta property=\"og:description\" content=\"".htmlspecialchars($this->params['_ogDesc'])."\" />"; ?>
 
+  <?= yii\helpers\Html::csrfMetaTags() ?>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="<?php echo $this->context->auto_version('/css/all.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
   <?php if (strcmp($this->params['_pageType'], "search") == 0) { ?>

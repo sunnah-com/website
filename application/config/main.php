@@ -49,6 +49,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'ZZVnebTQY6SwqiKZhL7eXCkl-7bSAQyX',
+			'csrfParam' => '_csrf_frontend',
         ],
         'cache' => [
             'class' => 'yii\caching\DummyCache',
@@ -73,6 +74,13 @@ $config = [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+					'except' => ['yii\web\HttpException:404'],
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+					'categories' => ['yii\web\HttpException:404'],
+					'logFile' => '@runtime/logs/404.log',
                 ],
                 [
                     'class' => 'yii\log\FileTarget',
