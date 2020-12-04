@@ -62,12 +62,19 @@ else {
 
     $showChapterIntro = true;
     if ($this->params['_pageType'] === "hadith") $showChapterIntro = false;
-	
+
+	$book_name_center_style = "";
+	if (strcmp($collectionHasBooks, "no") == 0) {
+		$book_name_center_style = " centertext";
+    }
+
+    $collapse_book_intro = "";
+    if ($collection->name === "nawawi40") { $collapse_book_intro = " collapsible collapsed book_intro_initial_height"; }
 ?>
 
-	<div class="book_info">
-    	<div class=book_page_colindextitle>
-    		<div class="book_page_arabic_name arabic"><?php echo $book->arabicBookName; ?></div>
+    <div class="book_info">
+    	<div class="book_page_colindextitle">
+    		<div class="book_page_arabic_name arabic<?php echo $book_name_center_style; ?>"><?php echo $book->arabicBookName; ?></div>
 			<?php if (strcmp($collectionHasBooks, "yes") == 0) {
     				echo "<div class=\"book_page_number\">";
 					if (intval($ourBookID) > 0) echo "$ourBookID";
@@ -76,21 +83,25 @@ else {
 					echo "</div>";
 				  }
 			?>
-    		<div class="book_page_english_name">
+    		<div class="book_page_english_name<?php echo $book_name_center_style; ?>">
 				<?php echo $book->englishBookName; ?>
 			</div>
     		<div class=clear></div>
 		</div>
+    	<div class=clear></div>
 		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b><?php echo $totalCount; ?></b> hadith</div> -->
 
 	<?php
 		if (!is_null($book->arabicBookIntro) and strcmp($this->params['_pageType'], "book") == 0) {
 					if (strcmp($collection->name, "muslim") == 0 and $ourBookID == -1) include("muslimintro.txt");
-					echo "<div class=bookintro>";
+					echo "<div class=\"bookintro".$collapse_book_intro."\">";
 					echo "<div class=ebookintro>".$book->englishBookIntro."</div>";
 					echo "<div class=\"arabic abookintro\">".$book->arabicBookIntro."</div>";
 					echo "<div class=clear></div>";
-					echo "</div>\n";
+                    if ($collection->name === "nawawi40") {
+                        echo "<a class=\"button_expand\" onclick=\"jQuery(this).closest('.collapsible').toggleClass('collapsed')\"></a>\n";
+                    }
+                    echo "</div>\n";
 		}
 	?>
 
@@ -100,7 +111,7 @@ else {
     <?php if ((strcmp($collection->name, "hisn") == 0) 
 			  and (strcmp($this->params['_pageType'], "book") == 0)
 			  and $ourBookID == 1) { ?>
-    <div class=chapter_index_container><div class="chapter_index titles collapsible collapsed">
+    <div class=chapter_index_container><div class="chapter_index titles collapsible collapsed hisn_chapters_initial_height">
     <?php
         $chapterCount = count($babIDs);
         foreach ($chapters as $chapter) {
@@ -142,11 +153,13 @@ else {
 						if ($englishEntry == NULL) {
 							$englishEntry = new EnglishHadith();
 							$urn = $arabicEntry->arabicURN;
+							$urn_language = "arabic";
 							$englishExists = false;
 							$ourHadithNumber = $arabicEntry->ourHadithNumber;
 						}
 						else {
 							$urn = $englishEntry->englishURN;
+							$urn_language = "english";
 							$ourHadithNumber = $englishEntry->ourHadithNumber;
 						}
 
@@ -233,7 +246,10 @@ else {
 											$englishEntry->grade1, 
 											$arabicEntry->grade1,
 											false, // hide report error flag
-											"h".$arabicEntry->arabicURN)
+											"h".$arabicEntry->arabicURN,
+                                            false, // hide share flag,
+                                            $urn_language
+                                        )
                             ));	
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
 						echo "<div class=clear></div>";
@@ -313,7 +329,7 @@ else {
 				$.ajax({
 					type : "POST",
 					url : "/ajax/log/hadithcount",
-					data: {msg: message, _csrf:'<?=\Yii::$app->request->csrfToken?>'},
+					data: {msg: message, _csrf_frontend:'<?=\Yii::$app->request->csrfToken?>'},
 				});
 			}
 		})();

@@ -224,7 +224,26 @@ class CollectionController extends SController
 			$this->pathCrumbs($this->_book->englishBookName, "/".$collectionName."/".$lastlink);
 		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
-        return $this->render('dispbook', $viewVars);  
+
+		// TODO: Expand to all verified collections at the end of the experiment
+		if ($this->_book->status > 3 && $collectionName == "riyadussalihin") {
+			$urn = $this->_entries[1][$pairs[0][1]]->arabicURN;
+			$permalinkCanonical = $this->util->getPermalinkByURN($urn);
+			$viewVars['permalinkCanonical'] = $permalinkCanonical;
+
+			if (isset($nextURN) && !is_null($nextURN))
+				$viewVars['nextPermalink'] = $this->util->getPermalinkByURN($nextURN, "english");
+			
+			if (isset($previousURN) && !is_null($previousURN))
+				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+
+			// Add canonical links to single pages only
+			if ( $permalinkCanonical && $this->view->params['_pageType'] == "hadith" && count($pairs) === 1 )
+				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
+		}
+		
+		return $this->render('dispbook', $viewVars);
+
 	}
 
 	public function actionTce() {
@@ -434,7 +453,24 @@ class CollectionController extends SController
         if (strlen($this->_book->englishBookName) > 0) {
             $this->pathCrumbs($this->_book->englishBookName." - <span class=arabic_text>".$this->_book->arabicBookName.'</span>', "/".$this->_collectionName."/".$this->_book->ourBookID);
         }
-        $this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
+		$this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
+		
+		// TODO: Expand to all verified collections at the end of the experiment
+		if ($this->_book->status > 3 && $this->_collectionName == "riyadussalihin") {
+			$urn = $arabicHadith->arabicURN;
+			$permalinkCanonical = $this->util->getPermalinkByURN($urn);
+			$viewVars['permalinkCanonical'] = $permalinkCanonical;
+
+			if (isset($nextURN) && !is_null($nextURN))
+				$viewVars['nextPermalink'] = $this->util->getPermalinkByURN($nextURN, "english");
+
+			if (isset($previousURN) && !is_null($previousURN))
+				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+
+			if ( $permalinkCanonical )
+				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
+		}
+
         return $this->render('dispbook', $viewVars);
 	}
 }

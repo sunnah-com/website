@@ -28,7 +28,7 @@
             }
             else {
                 echo "<div class=hadith_narrated>".strstr($englishText, ":", true).":</div>";
-                echo "<div class=text_details>".substr(strstr($englishText, ":", false), 1)."</div>\n";
+                echo "<div class=text_details>".trim(substr(strstr($englishText, ":", false), 1))."</div>\n";
             }
             echo "<div class=clear></div></div></div>";
             $arabicSanad1 = "";

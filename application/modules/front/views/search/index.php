@@ -91,6 +91,7 @@ if (isset($errorMsg)) {
             $truncation = false;
 
             if ($result['language'] === 'en') {
+                $urn_language = "english";
                 [$arabicText, $truncation] = truncateHadithText($data['ar']);
 
                 if ($result['highlighted'] !== null) {
@@ -101,6 +102,7 @@ if (isset($errorMsg)) {
                     $englishText = "Preview not available. Please click on the link to view the hadith.";
                 }
             } elseif ($result['language'] === 'ar') {
+                $urn_language = "arabic";
                 [$englishText, $truncation] = truncateHadithText($data['en']);
 
                 if ($result['highlighted'] !== null) {
@@ -147,7 +149,7 @@ if (isset($errorMsg)) {
                     $data['en']['hadithNumber'],
                     $data['ar']['bookNumber'],
                     $data['ar']['hadithNumber'],
-                    $hadith['ourHadithNumber'], $collection['name'], $ourBookID, $collection['hasbooks'], $collection['hasvolumes'], $book['status'], $collection['englishTitle'], $data['en']['grade1'], $data['ar']['grade1'], true, "h".$data['ar']['arabicURN'], true)
+                    $hadith['ourHadithNumber'], $collection['name'], $ourBookID, $collection['hasbooks'], $collection['hasvolumes'], $book['status'], $collection['englishTitle'], $data['en']['grade1'], $data['ar']['grade1'], true, "h".$data['ar']['arabicURN'], true, $urn_language)
             ));
 
             echo "</div>"; // end actualHadithContainer

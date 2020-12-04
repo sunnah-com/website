@@ -800,12 +800,18 @@ textarea {
 	padding: 0 20px;
 	width: auto;
 }
+
+.book_info {
+	width: 94%;
+	padding-left: 10px;
+}
+
 .book_page_colindextitle {
 	float: left;
+	width: 100%;
 	padding: 5px 20px 5px 5px;
 	margin-left: 0px;
 	text-align: justify;
-	width: 94%;
 }
 
 .book_page_number {
@@ -819,15 +825,15 @@ textarea {
 	float: left;
 	font-size: 24px;
 	padding-top: 5px;
-	width: 50%;
+	width: 47%;
 	text-align: left;
 }
 
 .book_page_arabic_name {
 	float: right;
 	font-size: 30px;
-	padding-right: 10px;
-	width: 40%;
+	/* padding-right: 10px; */
+	width: 47%;
 }
 /* Hisn al-Muslim */
 .chapter_index_container {
@@ -886,8 +892,16 @@ textarea {
 	scroll-snap-margin-top: 60px;
 }
 /* Hisn collapsed chapter list */
-.collapsed {
+
+.hisn_chapters_initial_height {
     height: 49vh;
+}
+
+.book_intro_initial_height {
+    height: 65vh;
+}
+
+.collapsed {
     overflow: hidden;
     position: relative;
     border-radius: 8px;
@@ -896,6 +910,7 @@ textarea {
 .collapsible:not(.collapsed) .button_expand {
     display: none;
 }
+
 .button_expand {
     position: absolute;
     bottom: 0;
@@ -996,14 +1011,19 @@ textarea {
 	float: left;
 }
 
+.bookintro {
+	white-space: pre-line;
+}
+
 .ebookintro {
+	font-size: 15px;
 	float: left;
-	width: 47%;
+	width: 48%;
 }
 
 .abookintro {
 	float: right;
-	width: 47%;
+	width: 48%;
 	font-size: 22px;
 }
 
@@ -1164,7 +1184,9 @@ textarea {
 .hadith_permalink a:hover {
     text-decoration: underline;
 }
-
+.hadith_reference a {
+    color: #037d7d;
+}
 .hadith_reference {
     font-size: 11px;
     text-decoration: none;
@@ -1917,6 +1939,11 @@ textarea {
 		margin: 0 0 70px;
 	}
 }
+
+.centertext {
+	text-align: center;
+}
+
 
 /* Medium screen, retina, stuff to override above media query */
 @media
