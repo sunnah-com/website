@@ -345,9 +345,6 @@
 
 		var copyText = extractHadithTextFromPage();
 		
-		// REMOVE LINE AFTER DEBUGGING!
-		console.log(copyText);
-
 		if ("permissions" in navigator && "clipboard" in navigator) 
 			navigator.permissions.query({name: "clipboard-write"})
 				.then(result => {
