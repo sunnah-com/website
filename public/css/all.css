@@ -546,7 +546,7 @@ textarea {
 	background-repeat: repeat-x repeat-y;
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
-	border-radius: 6px;
+	border-radius: 4px;
 	color: #666;
 	float: right;
 	margin-bottom: 10px;
@@ -554,10 +554,12 @@ textarea {
 	font-size: 12px;
 	padding: 15px;
 	position: absolute;
-	top: 30px;
-	border: 1px solid;
+	top: 30px;	
+	border: 1px solid rgba(0,0,0,.20);
+	box-shadow: 0 2px 4px rgba(0,0,0,.25);
 	right: 50px;
 }
+
 
 #indexsearchtips {
     width: 45%;
@@ -1147,7 +1149,7 @@ textarea {
     padding-bottom: 10px;
     border: 0px solid;
 	color: #5F9999;
-	width: 170px;
+	user-select: none;
 }
 
 .hadith_permalink a {
@@ -1355,21 +1357,21 @@ textarea {
 	padding-bottom: 5px;
 }
 
-.sharelink {
+.sharelink, .copyMenuCaret, .reportlink {
 	cursor: pointer;
 }
 
-.sharelink:hover {
-	text-decoration: underline;
-}
-
-.menuCaretBtn {
+.copyLink {
 	cursor: pointer;
 	position: relative;
 }
 
-.menuCaretBtn:hover {
+.copyMenuCaret:hover, .reportlink:hover, .sharelink:hover, .copyLink:hover {
 	color: #426a6a;
+}
+
+.copyMenuAndCaret {
+	position: relative;
 }
 
 .copyContainer {
@@ -1378,7 +1380,7 @@ textarea {
 	background-repeat: repeat-x repeat-y;
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
-	border-radius: 6px 4px 6px 6px;
+	border-radius: 4px;
 	color: #666;
 	/* float: right;
 	margin-bottom: 10px; */
@@ -1387,19 +1389,39 @@ textarea {
 	padding: 15px;
 	position: absolute;
 	top: 17px;
-	border: 1px solid;
+	border: 1px solid rgba(0,0,0,.20);
+	box-shadow: 0 2px 4px rgba(0,0,0,.25);
 	/* right: -1px; */
 }
 
 .copyContainer fieldset {
 	border:1px dashed #aaa; 
 	border-radius:3px; 
+	padding-bottom: 4px;
 }
 
 .copyContainer ul {
 	list-style-type: none; 
 	padding: 0px;
+	line-height: 25px;
+	margin: 8px 0;
 }
+
+.copyContainer label, .copyContainer input {
+	cursor: pointer;
+}
+
+.copySuccessIndicator {
+	color: #5f995f;
+	font-weight: bold;
+	font-size: medium;
+	opacity: 0;
+	text-shadow: 1px 1px 3px rgba(95, 153, 95, 0.65);
+	position: absolute;
+	top: -15px;
+	left: 8px;
+}
+
 
 .share_close {
 	position: relative;

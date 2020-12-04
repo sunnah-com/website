@@ -3,23 +3,20 @@
 		<fieldset style="margin:0 15px 0 0; min-width:100px;">
 			<legend>Hadith Text</legend>
 			<ul>
-				<li title="The Arabic text of the Hadith.">
+				<li title="The Arabic text of the Hadith."><label>
 					<input type="checkbox" class="copyArabic" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>
-					<label for="copyArabic">Arabic</label>
+					</input>Arabic</label>
 				</li>
-				<li title="The translation that is displaying on page.">
+				<li title="The translation that is displaying on page."><label>
 					<input type="checkbox" class="copyTranslation" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>
-					<label for="copyTranslation">Translation</label>	
+					</input>Translation</label>	
 				</li>		
-				<li title="The authenticity grade of the Hadith, if available.">
+				<li title="The authenticity grade of the Hadith, if available."><label>
 					<input type="checkbox" class="copyGrade" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>
-					<label for="copyGrade">Grade</label>
+					</input>Grade</label>
 				</li>
 			</ul>
 		</fieldset>
@@ -27,23 +24,20 @@
 		<fieldset style="margin:0; min-width:120px;">
 			<legend>Hadith Reference</legend>
 			<ul>
-				<li title="The reference will only contain the collection name and the overall Hadith number.">
+				<li title="The reference will only contain the collection name and the overall Hadith number."><label>
 					<input type="radio" name="referenceType" class="copyBasicReference" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>
-					<label for="copyBasicReference">Basic</label>
+					</input>Basic</label>
 				</li>
-				<li title="The reference will contain more information in English and Arabic, such as the book name/number, chapter name/number, Hadith number within book, etc., whatever is available.">
+				<li title="The reference will contain more information in English and Arabic, such as the book name/number, chapter name/number, Hadith number within book, etc., whatever is available."><label>
 					<input type="radio" name="referenceType" class="copyDetailedReference" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>
-					<label for="copyDetailedReference">Detailed</label>
+					</input>Detailed</label>
 				</li>
-				<li title="The web link for the Hadith.">
+				<li title="The web link for the Hadith."><label>
 					<input type="checkbox" class="copyWebReference" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>
-					<label for="copyWebReference">Web</label>
+					</input>Web</label>
 				</li>
 			</ul>	
 		</fieldset>		

@@ -171,18 +171,25 @@
 				}
 			}
 			
-			echo "</table>";
-
-			echo "<div class=\"hadith_permalink\">";
-			//echo "<a href=\"javascript:sharethis()\">Share</a>";
-			//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
-			//echo "<a href=\"$permalink\">Permalink</a>";
-			if (!isset($hideReportError) or !$hideReportError) echo "<a href=\"javascript: void(0);\" onclick=\"reportHadith(".$values[0].", '".$divname."')\">Report Error</a> | ";
-			if (!$hideShare) echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span> | ";
-			echo "<span class=sharelink onclick=\"copyHadith(this);\">Copy</span> ";
-			echo "<span class=menuCaretBtn title=\"Click to select which text to copy to the clipboard\"><span class=rightCaret>▶</span><span class=downCaret style=\"display:none;\">▼</span>";
-			include 'copy_hadith_menu.php';
-			echo "</span></div>";
-
-			echo "\n</div>";
+			echo "</table>"; 
+			echo 
+			"<div class=\"hadith_permalink\">";
+				//echo "<a href=\"javascript:sharethis()\">Share</a>";
+				//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
+				//echo "<a href=\"$permalink\">Permalink</a>";
+			if (!isset($hideReportError) or !$hideReportError) echo 
+				"<span class=reportlink href=\"javascript: void(0);\" onclick=\"reportHadith(".$values[0].", '".$divname."')\">Report Error</span> | ";
+			if (!$hideShare) echo 
+				"<span class=sharelink onclick=\"share('$permalink')\">Share</span> | "; 
+				echo 
+				"<span class=copyLink onclick=\"copyHadithToClipboard(this);\">Copy".
+					"<span class=copySuccessIndicator>✓</span>".
+				"</span> "; 
+				echo
+				"<span class=copyMenuAndCaret title=\"Click to select which text to copy to the clipboard\">".
+					"<span class=copyMenuCaret>▼</span>";
+					include 'copy_hadith_menu.php'; echo 
+				"</span>".
+			"</div>". 
+		"</div>";
 ?>
