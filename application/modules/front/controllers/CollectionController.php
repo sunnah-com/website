@@ -451,7 +451,12 @@ class CollectionController extends SController
 		$this->view->params['lastUpdated'] = null;
         $this->pathCrumbs('Hadith', "");
         if (strlen($this->_book->englishBookName) > 0) {
-            $this->pathCrumbs($this->_book->englishBookName." - <span class=arabic_text>".$this->_book->arabicBookName.'</span>', "/".$this->_collectionName."/".$this->_book->ourBookID);
+			$bookPathPart = $this->_book->ourBookID;
+			if ($this->_book->ourBookID === -1) $bookPathPart = "introduction";
+			elseif (($this->_book->ourBookID === -35)) $bookPathPart = "35b";
+			elseif (($this->_book->ourBookID === -8)) $bookPathPart = "8b";
+
+            $this->pathCrumbs($this->_book->englishBookName." - <span class=arabic_text>".$this->_book->arabicBookName.'</span>', "/".$this->_collectionName."/".$bookPathPart);
         }
 		$this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
 		
