@@ -252,10 +252,27 @@
 		copyArabic				: true ,
 		copyTranslation			: true ,
 		copyGrade				: true ,
-		copyBasicReference		: true ,
-		copyDetailedReference	: false,		
-		copyWebReference		: true ,
+		copyConciseReference	: true ,
+		copyCompleteReference	: false,		
+		copyURLReference		: true ,
 	};
+
+	
+	/**
+	 * Check to see if all properties in first object are present in the second.
+	 * @param {object} objToCheck The object whose properties need to be checked
+	 * @param {object} objToCompareTo The object whose properties are compared to
+	 * @returns {boolean} true if properties in the second object are present in the first object; otherwise false.
+	 */
+	function checkIfObjectPropertiesExist(objToCheck, objToCompareTo) {
+		for (var prop in objToCompareTo) {
+			if (Object.prototype.hasOwnProperty.call(objToCompareTo, prop)) {
+				if (!objToCheck.hasOwnProperty(prop))
+					return false;
+			}
+		}
+		return true;
+	}
 
 
 	/**
@@ -264,17 +281,17 @@
 	 */
 	function syncAppCopyUserPreferenceWithLocalStorage() {
 		if (storageAvailable("localStorage")) {
-			var localItemsToCopy = localStorage.getItem("ItemsToCopy");
+			var localItemsToCopy = JSON.parse(localStorage.getItem("ItemsToCopy"));			
 
-			if (!localItemsToCopy || localItemsToCopy == "null") { 
+			if ( localItemsToCopy && checkIfObjectPropertiesExist(localItemsToCopy, itemsToCopy) ) {
+				// Info available in Local Storage.
+				// Caching value in memory for app use.  
+				itemsToCopy = localItemsToCopy;								
+			} else { 
 				// Info not stored in Local Storage as of yet.                
 				// Setting default value for first use if 
 				// nothing is stored as of yet in Local Storage.
 				localStorage.setItem('ItemsToCopy', JSON.stringify(itemsToCopy));
-			} else { 
-				// Info available in Local Storage.
-				// Caching value in memory for app use.  
-				itemsToCopy = JSON.parse(localItemsToCopy);				
 			}
 		}
 	}
@@ -420,18 +437,23 @@
 			}
 		}
 
-		// Adding a simple reference of Hadith in English
-		if ($hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(1)') == "Reference") {
-			var $basicRef = $hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(2)');
-			if ($basicRef.length){
-				var basicRef	 = 	$basicRef.text().trim().slice(2);
-				if (basicRef)
-					hadithStr	+=	'\nReference: ' + basicRef
-								+	'\n';					 
-			}	
-		} else { // Required reference numbering is not available for this, 
-				// including the  Collection name.  
-			   // We will have to manually extract this from the breadcrumbs.
+		// Adding a concise reference of Hadith in English
+		var conciseRef = false;
+		var $standardReferenceField = $hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(1)');
+		if ($standardReferenceField.length) {
+			if ($standardReferenceField.text().trim() == "Reference") {
+				var $conciseRef = $hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(2)');
+				if ($conciseRef.length)	{
+					conciseRef	 = 	$conciseRef.text().trim().slice(2);
+					if (conciseRef)
+						hadithStr	+=	'\nReference: ' + conciseRef
+									+	'\n';					 
+				}
+			}
+		} 
+		if (!conciseRef) { // Required reference numbering is not available for this, 
+									 // including the Collection name.  
+									// We will have to manually extract this from the breadcrumbs.
 			var $crumbs = $('.crumbs');
 			if ($crumbs.length) {
 				var crumbs = $crumbs.text();
@@ -443,9 +465,9 @@
 							var refNums	 = 	$refNums.text().trim().slice(2);
 							if (refNums)
 								hadithStr	+=	'\nReference: ' 
-											+ crumbsArray[1].trim() 
-											+ ', ' 
-											+ refNums
+											+ 	crumbsArray[1].trim() 
+											+ 	', ' 
+											+ 	refNums
 											+	'\n';					 
 						}
 					}
@@ -534,7 +556,7 @@
 				hadithStr += 'In-book reference:\n' + detailedReferenceStr;
 		}
 		
-		if (itemsToCopy.copyWebReference) {
+		if (itemsToCopy.copyURLReference) {
 			// Adding sunnah.com web source reference of Hadith
 			$shareLink = $hadithContainerInObservance.find('.sharelink');
 			if ($shareLink.length) {

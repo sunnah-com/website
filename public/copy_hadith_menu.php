@@ -21,23 +21,23 @@
 			</ul>
 		</fieldset>
 
-		<fieldset style="margin:0; min-width:120px;">
-			<legend>Hadith Reference</legend>
+		<fieldset style="margin:0; min-width:100px;">
+			<legend>Reference</legend>
 			<ul>
 				<li title="The reference will only contain the collection name and the overall Hadith number."><label>
-					<input type="radio" name="referenceType" class="copyBasicReference" 
+					<input type="radio" name="referenceType" class="copyConciseReference" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>Basic</label>
+					</input>Concise</label>
 				</li>
 				<li title="The reference will contain more information in English and Arabic, such as the book name/number, chapter name/number, Hadith number within book, etc., whatever is available."><label>
-					<input type="radio" name="referenceType" class="copyDetailedReference" 
+					<input type="radio" name="referenceType" class="copyCompleteReference" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>Detailed</label>
+					</input>Complete</label>
 				</li>
 				<li title="The web link for the Hadith."><label>
-					<input type="checkbox" class="copyWebReference" 
+					<input type="checkbox" class="copyURLReference" 
 						onchange="updateItemsToCopyInLocalStorage(this);">
-					</input>Web</label>
+					</input>URL</label>
 				</li>
 			</ul>	
 		</fieldset>		
