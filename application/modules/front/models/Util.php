@@ -88,9 +88,11 @@ class Util extends Model {
 
         // First, try a direct match
         $direct = $this->searchByNumber($collectionName, $num);
-        if (!is_null($direct) && count($direct) === 1) {
-            $book = $this->getBook($collectionName, $direct[0]['bookNumber']);    
-            if ($book->status >= 4) return $direct[0]['arabicURN'];
+        if (!is_null($direct)) {
+			foreach ($direct as $result) {
+            	$book = $this->getBook($collectionName, $result['bookNumber']);    
+            	if ($book->status >= 4) return $result['arabicURN'];
+			}
             return null;
         }
 
