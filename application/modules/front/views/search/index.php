@@ -147,9 +147,21 @@ if (isset($errorMsg)) {
                     $data['en']['volumeNumber'],
                     $data['en']['bookNumber'],
                     $data['en']['hadithNumber'],
-                    $data['ar']['bookNumber'],
-                    $data['ar']['hadithNumber'],
-                    $hadith['ourHadithNumber'], $collection['name'], $ourBookID, $collection['hasbooks'], $collection['hasvolumes'], $book['status'], $collection['englishTitle'], $data['en']['grade1'], $data['ar']['grade1'], true, "h".$data['ar']['arabicURN'], true, $urn_language)
+                    is_null($data['ar']) ? "" : $data['ar']['bookNumber'],
+                    is_null($data['ar']) ? "" : $data['ar']['hadithNumber'],
+		    $hadith['ourHadithNumber'], 
+		    $collection['name'], 
+		    $ourBookID, 
+		    $collection['hasbooks'], 
+		    $collection['hasvolumes'], 
+		    $book['status'], 
+		    $collection['englishTitle'], 
+		    $data['en']['grade1'], 
+		    is_null($data['ar']) ? "" : $data['ar']['grade1'], 
+		    true, 
+		    "h".(is_null($data['ar']) ? "" : $data['ar']['arabicURN']), 
+		    true, 
+		    $urn_language)
             ));
 
             echo "</div>"; // end actualHadithContainer
