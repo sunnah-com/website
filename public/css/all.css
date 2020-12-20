@@ -1438,7 +1438,7 @@ textarea {
 	font-weight: bold;
 	font-size: medium;
 	opacity: 0;
-	text-shadow: 1px 1px 3px rgba(95, 153, 95, 0.65);
+	text-shadow: 1px 1px 3px rgba(95, 153, 95, 0.55);
 	position: absolute;
 	top: -15px;
 	left: 8px;
