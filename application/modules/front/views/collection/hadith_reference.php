@@ -193,11 +193,11 @@
 			if (!$hideShare) echo 
 				"<span class=sharelink onclick=\"share('$permalink')\">Share</span> | "; 
 				echo 
-				"<span class=copyLink onclick=\"copyHadithToClipboard(this);\">Copy".
+				"<span class=copyLink onclick=\"copyHadithToClipboard(this);\" title=\"Copy to clipboard\">Copy".
 					"<span class=copySuccessIndicator>✓</span>".
 				"</span> "; 
 				echo
-				"<span class=copyMenuAndCaret title=\"Click to select which text to copy to the clipboard\">".
+				"<span class=copyMenuAndCaret title=\"Select which text to copy to clipboard\">".
 					"<span class=copyMenuCaret>▼</span>";
 					include 'copy_hadith_menu.php'; echo 
 				"</span>".

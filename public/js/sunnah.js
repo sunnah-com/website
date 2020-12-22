@@ -387,7 +387,7 @@
 			// Adding the Arabic text of Hadith
 			var $arabicContainer = $hadithContainerInObservance.find('.arabic_hadith_full');
 			if ($arabicContainer.length) {
-				var arabicText 	 = getTextClean($arabicContainer);
+				var arabicText 	 = getCleanedText(preserveNewLines($arabicContainer));
 				if (arabicText)
 					hadithStr	+= arabicText 
 								+  '\n';
@@ -401,7 +401,8 @@
 				$translationContainer.children().each(function () {
 					$this = $(this);
 					if ($this.is(':visible')) { // Whichever translation is visible, copy that only.
-						var translation = getTextClean($this);
+						var translation = getCleanedText(preserveNewLines($this))
+											.replace(/(\S)\[/g, '$1 ['); // Adding a space between a character and opening bracket, which can contain Reference. Needed in Riyadus Saliheen for now.
 						if (translation)
 							hadithStr	+=	'\n'
 										+	translation 
@@ -417,7 +418,7 @@
 
 			$englishGrade = $hadithContainerInObservance.find('.english_grade:nth-child(2)');			
 			if ($englishGrade.length) {
-				englishGrade = getTextClean($englishGrade).slice(2);
+				englishGrade = getCleanedText($englishGrade).slice(2);
 				if (englishGrade)
 					hadithStr += '\nGrade: ' + englishGrade;
 			}
@@ -425,7 +426,7 @@
 			if (!englishGrade) {
 				$arabicGrade = $hadithContainerInObservance.find('.arabic_grade:first');
 				if ($arabicGrade.length) {
-					var arabicGrade = getTextClean($arabicGrade);
+					var arabicGrade = getCleanedText($arabicGrade);
 					if (arabicGrade)
 						hadithStr += '\nGrade: ' + arabicGrade;
 				}	
@@ -436,10 +437,10 @@
 		var conciseRef = '';
 		var $standardReferenceField = $hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(1)');
 		if ($standardReferenceField.length) {
-			if (getTextClean($standardReferenceField) == "Reference") {
+			if (getCleanedText($standardReferenceField) == "Reference") {
 				var $conciseRef = $hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(2)');
 				if ($conciseRef.length)	{
-					conciseRef = getTextClean($conciseRef).slice(2);
+					conciseRef = getCleanedText($conciseRef).slice(2);
 					if (conciseRef)
 						hadithStr	+=	'\n' 
 									+	conciseRef
@@ -452,15 +453,19 @@
 						 // We will have to manually extract this from the breadcrumbs.
 			var $crumbs = $('.crumbs');
 			if ($crumbs.length) {
-				var crumbs = getTextClean($crumbs);
+				var crumbs = getCleanedText($crumbs);
 				if (crumbs) {
 					var crumbsArray = crumbs.split('»');
 					if (crumbsArray.length > 1) {
 						hadithStr	+= 	'\n' 
-									+	crumbsArray[1].trim();						
-						if (crumbsArray.length > 2)
-							hadithStr	+= 	', ' 
-										+ 	crumbsArray[2].trim();
+									+	crumbsArray[1].trim();			
+									
+						
+						
+						// !!! REMOVE LINE !!!
+
+						/*if (crumbsArray.length > 2)
+							hadithStr	+= 	', ' + crumbsArray[2].trim();*/
 						hadithStr 	+= '\n';						
 					}
 					
@@ -469,7 +474,7 @@
 		}
 		
 	
-		if (itemsToCopy.copyCompleteReference && conciseRef) {
+		if (itemsToCopy.copyCompleteReference) {
 			// Adding a more complete reference of Hadith in both Arabic and English
 			var completeReferenceStr= '';						
 	
@@ -493,6 +498,7 @@
 			*/
 
 			// Getting chapter number and name for complete reference
+			var flagChapterInfoAvailable = false;
 			var $chapterInfo = $hadithContainerInObservance.prevAll('.chapter:first');
 			if ($chapterInfo.length) {
 				var $chapterNameEnglish	= $chapterInfo.find('.englishchapter');
@@ -500,12 +506,12 @@
 				var chapterNameEnglish, chapterNumber;
 
 				if ($chapterNameEnglish.length) {
-					chapterNameEnglish = getTextClean($chapterNameEnglish);
+					chapterNameEnglish = getCleanedText($chapterNameEnglish);
 					if (chapterNameEnglish.substring(0, 9) == "Chapter: ")
 						chapterNameEnglish = chapterNameEnglish.substr(9);
 				}
 				if ($chapterNumber.length) {
-					chapterNumber = getTextClean($chapterNumber);
+					chapterNumber = getCleanedText($chapterNumber);
 					if (chapterNumber[0] == '(')
 						chapterNumber = chapterNumber.substring(1, chapterNumber.length - 1)
 				}
@@ -518,8 +524,14 @@
 					chapterNameArabic = $chapterNameArabic.text().trim();
 				*/
 
-				if (chapterNameEnglish && chapterNumber)
-					completeReferenceStr += "Chapter " + chapterNumber + ": " + chapterNameEnglish + ", ";
+				if (chapterNumber || chapterNameEnglish) {
+					completeReferenceStr += "Chapter";
+					flagChapterInfoAvailable = true;
+				}
+				if (chapterNumber)				
+					completeReferenceStr += " " + chapterNumber;
+				if (chapterNameEnglish)
+					completeReferenceStr += ": " + chapterNameEnglish;
 			}
 
 			// Getting Book number and name for complete reference
@@ -531,9 +543,9 @@
 
 				// check if book name tags (divs/classes) are present on page
 				if ($bookNameEnglish.length)
-					bookNameEnglish = getTextClean($bookNameEnglish);					
+					bookNameEnglish = getCleanedText($bookNameEnglish);					
 				if ($bookNumber.length)
-					bookNumber = getTextClean($bookNumber);					
+					bookNumber = getCleanedText($bookNumber);					
 				
 				/* // Arabic book name not required right now according to decision of stakeholders, 
 				  // so commented out.
@@ -543,9 +555,15 @@
 					bookNameArabic = $bookNameArabic.text().trim();
 				*/
 
-				if (bookNameEnglish && bookNumber) {					
-					completeReferenceStr += "Book " + bookNumber + ": " + bookNameEnglish;
+				if (bookNumber || bookNameEnglish) {
+					if (flagChapterInfoAvailable)
+						completeReferenceStr += ", ";
+					completeReferenceStr += "Book";
 				}
+				if (bookNumber)				
+					completeReferenceStr += " " + bookNumber;
+				if (bookNameEnglish)
+					completeReferenceStr += ": " + bookNameEnglish;
 			}	
 
 			if (completeReferenceStr)
@@ -573,13 +591,32 @@
 
 
 	/**
-	 * Get text from HTML element, remove any newlines present inside it which is possible in HTML
+	 * Get text from HTML element, control newlines present inside it which is possible in HTML
 	 * remove multiple-spacing (double-space, &nbsp; , etc.), and trim any whitespace from its ends
 	 * @param {object} $obj jQuery object representing an HTML element from which to extract text 
 	 * @returns {string} Extracted and cleaned text for use
 	 */
-	function getTextClean($obj) {
-		return $obj.text().replace(/\n{1,}/g, ' ').replace(/( |\u00a0)+/g, ' ').trim();
+	function getCleanedText($obj) {
+		return 	$obj.text()
+					.replace(/(\S)( *)(\r\n|\r|\n){1}( *)(\S)/g, '$1 $5') // make a single newline character to a space
+					.replace(/( *)(\r\n|\r|\n){2,}( *)/g, '\n') // make 2 or more newline characters to a single newline character
+					.replace(/( *: *)/g, ': ') // Making spaces around colon correct — there should be no space before colon and only 1 space after it
+					.replace(/( |\u00a0)+/g, ' ') // make multiple spaces or &nbsp; characters into a single space.
+					.trim();
+	}
+
+
+	/**
+	 * Converting <br> element to newline character so that we don't lose newline when converting it to simple text. 
+	 * @param {object} $obj jQuery object whose child element need change of <br> into newline.
+	 * @returns {object} A new jQuery element with the required changes made.
+	 */
+	function preserveNewLines($obj) {
+		var temp = 	$obj.html()
+						.trim()
+						.replace(/<br *\/?>/g, '\n\n');
+						// .replace(/<\/div>/g, '</div>\n\n'); // creates separation in narrator line, if needed
+		return $($.parseHTML("<div>" + temp + "</div>")[0]);
 	}
 
 
@@ -599,12 +636,13 @@
 	/**
 	 * Display an indication for copy-to-clipboard operation success
 	 */
-	function showCopySuccessIndicator() {		
+	function showCopySuccessIndicator() {
+		$('.copySuccessIndicator').css('opacity', 0); // turn off previously showing indicators
 		$hadithContainerInObservance.find('.copySuccessIndicator')
-									.finish()
+									.finish() // remove previously running animations from queue if user is interating quickly and not waiting for them to finish
 									.animate({'opacity': 1}, 'fast')
-									.delay(1300)
-									.animate({'opacity': 0})									
+									.delay(4800) // show indicator for 4 seconds
+									.animate({'opacity': 0}, 'slow');									
 	}
 
 
