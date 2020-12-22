@@ -459,13 +459,6 @@
 					if (crumbsArray.length > 1) {
 						hadithStr	+= 	'\n' 
 									+	crumbsArray[1].trim();			
-									
-						
-						
-						// !!! REMOVE LINE !!!
-
-						/*if (crumbsArray.length > 2)
-							hadithStr	+= 	', ' + crumbsArray[2].trim();*/
 						hadithStr 	+= '\n';						
 					}
 					
@@ -477,25 +470,6 @@
 		if (itemsToCopy.copyCompleteReference) {
 			// Adding a more complete reference of Hadith in both Arabic and English
 			var completeReferenceStr= '';						
-	
-			/* // In-book Hadith number is not required right now according to decision of stakeholders, 
-			  // so commented out.
-			// Getting Hadith number for complete reference
-			var $hadithInfo	= $hadithContainerInObservance.find('.hadith_reference tr:nth-child(2)');
-			if ($hadithInfo.length) {
-				var $hadithNumberType = $hadithInfo.find('td:first');
-				if ($hadithNumberType.length) {
-					if ($hadithNumberType.text().trim() == "In-book reference") {
-						var $hadithNumber = $hadithInfo.find('td:nth-child(2)');
-						if ($hadithNumber.length) {
-							var hadithNumber = $hadithNumber.text().trim().split(',');
-							if (hadithNumber.length > 1)
-								completeReferenceStr += hadithNumber[1].trim() + ', ';			
-						}
-					}
-				}
-			}
-			*/
 
 			// Getting chapter number and name for complete reference
 			var flagChapterInfoAvailable = false;
@@ -515,14 +489,6 @@
 					if (chapterNumber[0] == '(')
 						chapterNumber = chapterNumber.substring(1, chapterNumber.length - 1)
 				}
-				
-				/* // Arabic chapter name not required right now according to decision of stakeholders, 
-				  // so commented out.
-				var chapterNameArabic;
-				var $chapterNameArabic	= $chapterInfo.find('.arabicchapter');
-				if ($chapterNameArabic.length)
-					chapterNameArabic = $chapterNameArabic.text().trim();
-				*/
 
 				if (chapterNumber || chapterNameEnglish) {
 					completeReferenceStr += "Chapter";
@@ -546,14 +512,6 @@
 					bookNameEnglish = getCleanedText($bookNameEnglish);					
 				if ($bookNumber.length)
 					bookNumber = getCleanedText($bookNumber);					
-				
-				/* // Arabic book name not required right now according to decision of stakeholders, 
-				  // so commented out.
-				var bookNameArabic;
-				var $bookNameArabic	= $bookInfo.find('.book_page_arabic_name');
-				if ($bookNameArabic.length)
-					bookNameArabic = $bookNameArabic.text().trim();
-				*/
 
 				if (bookNumber || bookNameEnglish) {
 					if (flagChapterInfoAvailable)
@@ -580,11 +538,6 @@
 					hadithStr += 'https://' + window.location.hostname + pageLink;
 			}
 		}
-		
-
-		// !!! REMOVE LINE !!!
-		console.log(hadithStr.trim());
-		
 		
 		return hadithStr.trim();
 	}
@@ -615,7 +568,6 @@
 		var temp = 	$obj.html()
 						.trim()
 						.replace(/<br *\/?>/g, '\n\n');
-						// .replace(/<\/div>/g, '</div>\n\n'); // creates separation in narrator line, if needed
 		return $($.parseHTML("<div>" + temp + "</div>")[0]);
 	}
 

@@ -193,7 +193,7 @@
 			if (!$hideShare) echo 
 				"<span class=sharelink onclick=\"share('$permalink')\">Share</span> | "; 
 				echo 
-				"<span class=copyLink onclick=\"copyHadithToClipboard(this);\" title=\"Copy to clipboard\">Copy".
+				"<span class=copyLink onclick=\"copyHadithToClipboard(this);\" title=\"Copy Hadith to clipboard\">Copy".
 					"<span class=copySuccessIndicator>✓</span>".
 				"</span> "; 
 				echo
