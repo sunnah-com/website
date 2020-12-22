@@ -3,10 +3,6 @@
 $parameters = parse_ini_file(__DIR__ ."/../.env.local");
 $stage = $parameters['stage'];
 
-// change the following paths if necessary
-$yii = $parameters['yiiPath'].'/yii.php';
-
-// comment out the following two lines when deployed to production
 if (strcmp($stage, "prod") != 0) {
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     defined('YII_ENV') or define('YII_ENV', 'dev');
