@@ -48,6 +48,7 @@ else {
 						$arabicExists = true;
 
 						$urn = $englishEntry->englishURN;
+						$urn_language = "english";
 						$ourHadithNumber = $englishEntry->ourHadithNumber;
 
 						if ($oldBookID != $arabicEntry->bookID) {
@@ -108,7 +109,10 @@ else {
                                             $englishEntry->grade1, 
                                             $arabicEntry->grade1, 
                                             true, 
-                                            "h".$arabicEntry->arabicURN)
+                                            "h".$arabicEntry->arabicURN,
+											false, // hide share flag
+											$urn_language
+											)
                             ));	
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
                         echo "<div class=clear></div>";

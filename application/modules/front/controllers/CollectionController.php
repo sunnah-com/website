@@ -137,9 +137,11 @@ class CollectionController extends SController
         if (!is_null($this->_book)) $expectedHadithCount = $this->_book->totalNumber;
         else throw new NotFoundHttpException("Book $ourBookID is unavailable or does not exist.");
         $this->view->params['book'] = $this->_book;
-        if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
-        $pairs = $this->_entries[2];
-		if (is_null($pairs)) {
+        if ($this->_book) {
+			$this->_entries = $this->_book->fetchHadith($hadithRange);
+        	if (!is_null($this->_entries)) $pairs = $this->_entries[2];
+		}
+		if (!isset($pairs) or is_null($pairs)) {
 			throw new NotFoundHttpException("The data is unavailable or does not exist. Please <a href=\"/contact\">send us a message</a> if you think this is an error.");
 		}
         if (($this->_book) and ($this->_book->status === 4) and is_array($pairs) and ($expectedHadithCount != count($pairs)) and is_null($hadithRange))
@@ -390,8 +392,8 @@ class CollectionController extends SController
 		}
 
         $viewVars = [
-            'englishEntries' => null,
-            'arabicEntries' => null,
+            'englishEntries' => array(0 => NULL),
+            'arabicEntries' => array(0 => NULL),
             'pairs' => array(array(0,0)),
             'expectedHadithCount' => 1,
         ];
