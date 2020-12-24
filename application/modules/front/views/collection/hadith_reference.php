@@ -45,13 +45,16 @@
             }
 
             $num_grades = max(count($english_grades), count($arabic_grades));
+			$firstGradePrinted = false;
             for ($i = 0; $i < $num_grades; $i++) {
                 echo "<tr>";
                 if (array_key_exists($i, $english_grades)) {
                     $grade = $english_grades[$i]['grade'];
                     $graded_by = $english_grades[$i]['graded_by'];
-                    echo "<td class=english_grade width=\"50px\"><b>Grade</b></td>";
-                    echo "<td class=english_grade width=\"36%\">:&nbsp;<b>".$grade."</b>";
+                    echo "<td class=english_grade width=\"50px\">";
+					if (!$firstGradePrinted) echo "<b>Grade</b>:";
+					echo "</td>";
+                    echo "<td class=english_grade width=\"36%\">&nbsp;<b>".$grade."</b>";
                     echo " (".$graded_by.")</td>";
                 } else {
                     echo "<td height=100% class=english_grade></td>";
@@ -63,13 +66,16 @@
                     $graded_by = $arabic_grades[$i]['graded_by'];
     				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$grade."</b>";
 	    			echo "&nbsp;&nbsp; (".$graded_by.") </td>";
-		    		echo "<td class=\"arabic_grade arabic\" width=\"50px\"><b>حكم</b>&nbsp;&nbsp;&nbsp;:</td>";
+		    		echo "<td class=\"arabic_grade arabic\" width=\"50px\">";
+					if (!$firstGradePrinted) echo "<b>حكم</b>&nbsp;&nbsp;&nbsp;:";
+					echo "</td>";
                 } else {
                     echo "<td height=100% width=60% class=arabic_grade></td>";
                     echo "<td height=100% width=60% class=arabic_grade></td>";
                 }
 
                 echo "</tr>";
+				$firstGradePrinted = true;
             }
             echo "</table>";
 	        echo "</div>";
