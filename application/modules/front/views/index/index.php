@@ -41,7 +41,9 @@
     	<div class="collection_titles" style="padding-right: 6px;">
 			<?php 
 				for ($i = 0; $i < $splitSize; $i++)  {
-					$collection = $collections[$i]; ?>
+					$collection = $collections[$i];
+					if ($collection['showOnHome'] == 0) continue; 
+					?>
 					<div class=collection_title>
 						<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
 							<div class=english_collection_title><?php echo $collection['englishTitle']; ?></div>
@@ -56,7 +58,8 @@
 			<?php 
 				for ($i = $splitSize; $i < $num_collections; $i++) {
 					$collection = $collections[$i]; 
-					if (strcmp($collection['name'], "hisn") == 0) continue; ?>
+					if ($collection['showOnHome'] == 0) continue; 
+					?>
 					<div class=collection_title>			
 						<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
 							<div class=english_collection_title><?php echo $collection['englishTitle']; ?></div>
