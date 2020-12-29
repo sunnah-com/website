@@ -43,7 +43,7 @@ else {
 
                         echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
 
-                        if (!is_null($entry->path)) echo "<a href=\"/".$entry->path."\">\n";
+                        if (!is_null($entry->linkpath)) echo "<a href=\"/".$entry->linkpath."\">\n";
 						else echo "<a href=\"/".$entry->collection."/".$entry->ourBookID."\">\n";
 
 						echo "<div class=\"book_number title_number\">";
