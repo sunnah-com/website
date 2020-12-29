@@ -1,6 +1,5 @@
 <?php 
-	// $collections = $this->collections; 
-	$num_collections = count($collections);
+    $num_collections = count($collections);
 	$splitSize=round($num_collections/2, 0, PHP_ROUND_HALF_UP);
 ?>
 
@@ -42,7 +41,6 @@
 			<?php 
 				for ($i = 0; $i < $splitSize; $i++)  {
 					$collection = $collections[$i];
-					if ($collection['showOnHome'] == 0) continue; 
 					?>
 					<div class=collection_title>
 						<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
@@ -58,7 +56,6 @@
 			<?php 
 				for ($i = $splitSize; $i < $num_collections; $i++) {
 					$collection = $collections[$i]; 
-					if ($collection['showOnHome'] == 0) continue; 
 					?>
 					<div class=collection_title>			
 						<a href="/<?php echo $collection['name']; ?>" style="display: inline;">

@@ -149,15 +149,18 @@ class Util extends Model {
 		return $count;
 	}
 	
-	public function getCollectionsInfo($mode = 'none') {
-		$this->_collectionsInfo = Yii::$app->cache->get("collectionsInfo");
+    public function getCollectionsInfo($mode = 'none', $display_only = false) {
+        $cache_key = "collectionsInfo"."_".(string)$display_only;
+		$this->_collectionsInfo = Yii::$app->cache->get($cache_key);
 		if ($this->_collectionsInfo === false) {
 			$connection = Yii::$app->db;
-			if ($connection == NULL) return array();
-			$query = "SELECT * FROM Collections order by collectionID ASC";
+            if ($connection == NULL) return array();
+            $showOnHomeCondition = "";
+            if ($display_only) { $showOnHomeCondition = "where showOnHome = 1"; }
+			$query = "SELECT * FROM Collections $showOnHomeCondition order by collectionID ASC";
 			$command = $connection->createCommand($query);
 			$this->_collectionsInfo = $command->queryAll();
-			Yii::$app->cache->set("collectionsInfo", $this->_collectionsInfo, Yii::$app->params['cacheTTL']);
+			Yii::$app->cache->set($cache_key, $this->_collectionsInfo, Yii::$app->params['cacheTTL']);
 		}
 		if (strcmp($mode, "indexed") == 0) {
 			foreach ($this->collectionsInfo as $collection)

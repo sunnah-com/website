@@ -46,7 +46,7 @@ class IndexController extends SController
 	public function actionIndex()
 	{
 		$this->layout = "home";
-        $this->_collections = $this->util->getCollectionsInfo();
+        $this->_collections = $this->util->getCollectionsInfo('none', true);
         $this->_hadithCount = $this->util->getHadithCount();
         $this->view->params['_pageType'] = "home";
 
