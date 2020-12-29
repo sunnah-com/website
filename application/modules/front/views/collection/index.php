@@ -43,9 +43,7 @@ else {
 
                         echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
 
-						if ($entry->ourBookID == -1) echo "<a href=\"/".$entry->collection."/introduction\">\n";
-						elseif ($entry->ourBookID == -35 and strcmp($collectionName, "nasai") == 0) echo "<a href=\"/".$entry->collection."/35b\">\n";
-						elseif ($entry->ourBookID == -8 and strcmp($collectionName, "shamail") == 0) echo "<a href=\"/".$entry->collection."/8b\">\n";
+                        if (!is_null($entry->path)) echo "<a href=\"/".$entry->path."\">\n";
 						else echo "<a href=\"/".$entry->collection."/".$entry->ourBookID."\">\n";
 
 						echo "<div class=\"book_number title_number\">";
