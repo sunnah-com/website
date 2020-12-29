@@ -132,13 +132,23 @@ $config = [
                 'socialmedia' => 'front/collection/socialmedia',
                 'urn/<urn:\d+>' => 'front/collection/urn',
 
-				'<collectionName:\w+>:<hadithNumber\w+>' => 'front/collection/hadith-by-number',
+                [ 'pattern' => 'shahwaliullah40:<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'shahwaliullah40',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                
+                '<collectionName:\w+>:<hadithNumber\w+>' => 'front/collection/hadith-by-number',
 
 				'ajax/log/hadithcount' => 'front/index/ajaxhadithcount',
 
                 [ 'pattern' => 'ajax/<lang:\w+>/<collectionName>/<ourBookID>',
                   'route' => 'front/collection/ajax-hadith',
                 ],
+
                 [ 'pattern' => '<collectionName:nawawi40>/<hadithNumbers:\d+>',
                   'route' => 'front/collection/dispbook', 
                   'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
