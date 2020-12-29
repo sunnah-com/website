@@ -44,13 +44,16 @@ else {
                         echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
 
                         if (!is_null($entry->linkpath)) echo "<a href=\"/".$entry->linkpath."\">\n";
-						else echo "<a href=\"/".$entry->collection."/".$entry->ourBookID."\">\n";
+                        else {
+                            if (!is_null($entry->ourBookNum)) $booklinkpath = $entry->ourBookNum;
+                            else $booklinkpath = (string) $entry->ourBookID;
+						    echo "<a href=\"/".$entry->collection."/".$booklinkpath."\">\n";
+                        }
 
-						echo "<div class=\"book_number title_number\">";
-						if ($entry->ourBookID == -1) echo "&nbsp;";
-						elseif ($entry->ourBookID == -35 and strcmp($collectionName, "nasai") == 0) echo "35b";
-						elseif ($entry->ourBookID == -8 and strcmp($collectionName, "shamail") == 0) echo "8b";
-						else echo $entry->ourBookID;
+                        echo "<div class=\"book_number title_number\">";
+                        $book_number_to_display = (string) $entry->ourBookID;
+                        if (!is_null($entry->ourBookNum)) $book_number_to_display = $entry->ourBookNum;
+						echo $book_number_to_display;
 						echo "</div>";
 
 						echo "<div class=\"english english_book_name\">";

@@ -76,11 +76,13 @@ else {
     	<div class="book_page_colindextitle">
     		<div class="book_page_arabic_name arabic<?php echo $book_name_center_style; ?>"><?php echo $book->arabicBookName; ?></div>
 			<?php if (strcmp($collectionHasBooks, "yes") == 0) {
-    				echo "<div class=\"book_page_number\">";
-					if (intval($ourBookID) > 0) echo "$ourBookID";
-				  	elseif ($ourBookID == -35) echo "35b&nbsp;&nbsp; "; 
-				  	elseif ($ourBookID == -8) echo "8b&nbsp;&nbsp; "; 
-					echo "</div>";
+			        $book_number_to_display = (string) $ourBookID;
+                    if (!is_null($book->ourBookNum)) { $book_number_to_display = $book->ourBookNum; }
+                    if (strlen($book_number_to_display) > 0) {
+        				echo "<div class=\"book_page_number\">";
+	    				echo $book_number_to_display."&nbsp;&nbsp;";
+		    		  	echo "</div>";
+                    }
 				  }
 			?>
     		<div class="book_page_english_name<?php echo $book_name_center_style; ?>">
