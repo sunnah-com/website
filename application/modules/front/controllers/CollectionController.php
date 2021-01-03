@@ -218,7 +218,7 @@ class CollectionController extends SController
 			$bookTitlePrefix = "";
 			if (strcmp(substr($this->_book->englishBookName, 0, 4), "Book") !== 0 && strcmp(substr($this->_book->englishBookName, 0, 7), "Chapter") !== 0 && strcmp(substr($this->_book->englishBookName, 0, 4), "The ") !== 0)
 				$bookTitlePrefix = "Book of ";
-            $this->pathCrumbs($bookTitlePrefix.$this->_book->englishBookName, "/".$collectionName."/".$lastlink);
+            $this->pathCrumbs($this->_book->englishBookName, "/".$collectionName."/".$lastlink);
         }
 		elseif ($ourBookID === -1) {
 			// The case where the collection doesn't technically have books but there is an introduction pseudobook
