@@ -1869,6 +1869,19 @@ textarea {
 	.sm_links:before {
 		display: none;
 	}
+	.hadith_container_hisn {
+		display: flex;
+		flex-direction: column;
+	}
+	.hadith_container_hisn .arabic_hadith_full {
+		order: 0;
+		margin-top: 0;
+		margin-bottom: 1em;
+	}
+	.hadith_container_hisn .englishcontainer,
+	.hadith_container_hisn .bottomItems {
+		order: 1;
+	}
 	
 	/* Ramadan Home */
 	#rightPanel {
