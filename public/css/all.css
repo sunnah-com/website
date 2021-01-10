@@ -771,7 +771,7 @@ textarea {
 	text-align: right;
 }
 .title .english_chapter_name {
-	width: 48%;	
+	width: 47%;	
 }
 .title .arabic_chapter_name {
 	width: 47%;
@@ -851,13 +851,19 @@ textarea {
     font-size: 16px;
     margin-bottom: 1em;
     line-height: 2.55;
+	text-align: left;
 }
 .hadith_container_hisn  .arabic_text_details {
     font-size: 27px;
+	text-align: right;
 }
 
 .hadith_container_hisn .translation {
-    	white-space: pre-line;
+    white-space: pre-line;
+}
+
+.hisn_arabic_instructions {
+    color: gray;
 }
 
 .hadith_container_mishkat .text_details {
