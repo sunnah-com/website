@@ -72,7 +72,6 @@ else {
 					<?php
 							}
 							$oldBookID = $arabicEntry->bookID;
-							Yii::trace("arabicURN is ".$arabicEntry->arabicURN);
 							if ($showChapters) displayBab($chapters[$arabicEntry->arabicURN], $showChapterNumbers);
 							$oldBabID = $chapters[$arabicEntry->arabicURN]->arabicBabNumber;
 						}
