@@ -227,8 +227,8 @@ class CollectionController extends SController
 		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
 
-		// TODO: Expand to all verified collections at the end of the experiment
-		if ($this->_book->status > 3 && $collectionName == "riyadussalihin") {
+		// TODO: Expand to all verified collections at the end of the experiment - disabling 13 Jan 2021
+		if ($this->_book->status > 3 && $collectionName == "riyadussalihin" && false) {
 			$urn = $this->_entries[1][$pairs[0][1]]->arabicURN;
 			$permalinkCanonical = $this->util->getPermalinkByURN($urn);
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
