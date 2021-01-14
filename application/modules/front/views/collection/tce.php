@@ -86,6 +86,9 @@ else {
 							'englishText' => $englishEntry->hadithText,
 							'arabicText' => $arabicEntry->hadithText,
                             'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => NULL,
+                            'hadithNumber' => $arabicEntry->hadithNumber,
+							'book'	=> $books[$arabicEntry->arabicURN],
+							'collection'	=> $collections[$arabicEntry->collection],
                         ));
 
 						echo $this->render('/collection/hadith_reference', array(

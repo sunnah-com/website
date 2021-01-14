@@ -223,9 +223,8 @@ else {
 							'arabicText' => $arabicEntry->hadithText,
 							'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
 							'hadithNumber' => $arabicEntry->hadithNumber,
-							'bookEngTitle' => $collection->englishTitle,
-							'bookStatus'	=> $status,
-							'collection'	=> $collection->name,
+							'book'	=> $book,
+							'collection'	=> $collection,
 							));
 
 						echo $this->render('/collection/hadith_reference', array(

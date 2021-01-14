@@ -18,14 +18,23 @@
 	echo "<!-- Begin hadith -->\n\n";
 	echo "<a name=$linknum></a>\n";
 	
-			if ( isset($bookStatus) and $bookStatus == 4 ) {
-				echo "<div class=\"hadith_reference_sticky\">$bookEngTitle $hadithNumber</div>";
+			if ( isset($book->status) and $book->status == 4 ) {
+				echo "<div class=\"hadith_reference_sticky\">";
+				if (!is_null($book->reference_template)) {
+                    	$reference_string = $book->reference_template;
+                    	$reference_string = str_replace("{hadithNumber}", $hadithNumber, $reference_string);
+                    	echo $reference_string;
+				}
+				else {
+					echo "$collection->englishTitle $hadithNumber";
+				}
+				echo "</div>";
 			}
 			echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
 			echo "<div class=\"english_hadith_full\">";
 
             $colon_match = preg_match("/[^0-9]:[^0-9]/", $englishText, $match, PREG_OFFSET_CAPTURE);
-            if (($colon_match == 1) and (!isset($collection) or (isset($collection) and strcmp($collection, "hisn") != 0))) {
+            if (($colon_match === 1) and ($collection->name !== "hisn")) {
                 $narrated_part = substr($englishText, 0, $match[0][1] + 1);
                 $text_part = trim(substr($englishText, $match[0][1] + 2));
                 echo "<div class=hadith_narrated>".$narrated_part.":</div>";

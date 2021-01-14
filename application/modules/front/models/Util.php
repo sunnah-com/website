@@ -164,7 +164,7 @@ class Util extends Model {
 		}
 		if (strcmp($mode, "indexed") == 0) {
 			foreach ($this->collectionsInfo as $collection)
-				$collections[$collection['name']] = $collection;
+				$collections[$collection['name']] = $this->getCollection($collection['name']);
 			return $collections;
 		}
 		return $this->_collectionsInfo;
