@@ -15,8 +15,12 @@
 			$divname = $values[16];
 			$hideShare = $values[17] ?? false;
 			$urn_language = $values[18];
+			
+
+			$url = null;
+			// Disabling experiment Jan 13 to see if the downtick in Google Search is related
 			// TODO: Expand to all verified collections at the end of the experiment
-			$url = ($collection === "riyadussalihin") ? $util->getPermalinkByURN($values[0], $urn_language) : null;
+			// if ($collection === "riyadussalihin") $url = $util->getPermalinkByURN($values[0], $urn_language);
 
 			echo "<div class=bottomItems>\n";
 	    if (strlen($englishGrade1) > 0 or strlen($arabicGrade1) > 0) {
