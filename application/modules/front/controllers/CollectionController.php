@@ -350,6 +350,7 @@ class CollectionController extends SController
             'arabicEntries' => $this->_entries[1],
             'pairs' => $this->_entries[2],
             'chapters' => $this->_chapters,
+            'books' => $this->_books,
             'showBookNames' => $showBookNames,
             'showChapterNumbers' => $showChapterNumbers,
         ];

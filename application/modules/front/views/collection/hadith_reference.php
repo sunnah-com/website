@@ -15,6 +15,8 @@
 			$divname = $values[16];
 			$hideShare = $values[17] ?? false;
 			$urn_language = $values[18];
+			$reference_template = $values[19];
+			$showInBookReference = $values[20];
 			
 
 			$url = null;
@@ -93,11 +95,18 @@
 				echo "<td>&nbsp;:&nbsp;";
 				if ( $url !== null && $this->params["_pageType"] !== "hadith" )
 					echo "<a href=\"$url\">$collectionEnglishTitle ".$values[5]."</a>";
-				else
-					echo "$collectionEnglishTitle ".$values[5]."";
+                else
+                    if (!is_null($reference_template)) {
+                    	$reference_string = $reference_template;
+                    	$reference_string = str_replace("{hadithNumber}", $values[5], $reference_string);
+                    	echo $reference_string;
+					}
+					else {
+						echo "$collectionEnglishTitle ".$values[5]."";
+					}
 				echo "</b></td></tr>";
 
-				if (strcmp($collectionHasBooks, "yes") == 0) {
+				if ($collectionHasBooks == "yes" && $showInBookReference) {
 					echo "<tr><td>In-book reference</td>";
 					echo "<td>&nbsp;:&nbsp;";
 					if ($ourBookID > 0) echo "Book $ourBookID, ";

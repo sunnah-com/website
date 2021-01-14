@@ -161,7 +161,10 @@ if (isset($errorMsg)) {
 		    true, 
 		    "h".(is_null($data['ar']) ? "" : $data['ar']['arabicURN']), 
 		    true, 
-		    $urn_language)
+		    $urn_language,
+                    $book->reference_template,
+                    true // show in-book reference
+                )
             ));
 
             echo "</div>"; // end actualHadithContainer

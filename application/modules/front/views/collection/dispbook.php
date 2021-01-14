@@ -250,7 +250,9 @@ else {
 											false, // hide report error flag
 											"h".$arabicEntry->arabicURN,
                                             false, // hide share flag,
-                                            $urn_language
+                                            $urn_language,
+                                            $book->reference_template,
+                                            $collection->showInBookReference
                                         )
                             ));	
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";

@@ -57,12 +57,12 @@ else {
 					    <div class="book_info">
 					        <div class=book_page_colindextitle>
 					            <div class="book_page_arabic_name arabic">
-									<?php echo $this->_books[$arabicEntry->arabicURN]->arabicBookName; ?></div>
+									<?php echo $books[$arabicEntry->arabicURN]->arabicBookName; ?></div>
 					            <div class="book_page_number">
-									<?php echo $this->_books[$arabicEntry->arabicURN]->ourBookID; ?>
+									<?php echo $books[$arabicEntry->arabicURN]->ourBookID; ?>
 								</div>
 					            <div class="book_page_english_name">
-					                <?php echo $this->_books[$arabicEntry->arabicURN]->englishBookName; ?>
+					                <?php echo $books[$arabicEntry->arabicURN]->englishBookName; ?>
 					            </div>
 					            <div class=clear></div>
 					        </div>
@@ -111,7 +111,9 @@ else {
                                             true, 
                                             "h".$arabicEntry->arabicURN,
 											false, // hide share flag
-											$urn_language
+											$urn_language,
+                                            $books[$arabicEntry->arabicURN]->reference_template,
+                                            true // show in-book reference
 											)
                             ));	
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
