@@ -64,12 +64,12 @@ else {
     if ($this->params['_pageType'] === "hadith") $showChapterIntro = false;
 
 	$book_name_center_style = "";
-	if (strcmp($collectionHasBooks, "no") == 0) {
+	if ($collectionHasBooks === "no" || ($collection->name === "forty" && $book->ourBookID == 1)) {
 		$book_name_center_style = " centertext";
     }
 
     $collapse_book_intro = "";
-    if ($collection->name === "nawawi40") { $collapse_book_intro = " collapsible collapsed book_intro_initial_height"; }
+    if ($collection->name === "forty" && $book->ourBookID == 1) { $collapse_book_intro = " collapsible collapsed book_intro_initial_height"; }
 ?>
 
     <div class="book_info">
@@ -100,7 +100,7 @@ else {
 					echo "<div class=ebookintro>".$book->englishBookIntro."</div>";
 					echo "<div class=\"arabic abookintro\">".$book->arabicBookIntro."</div>";
 					echo "<div class=clear></div>";
-                    if ($collection->name === "nawawi40") {
+                    if ($collection->name === "forty" && $book->ourBookID == 1) {
                         echo "<a class=\"button_expand\" onclick=\"jQuery(this).closest('.collapsible').toggleClass('collapsed')\"></a>\n";
                     }
                     echo "</div>\n";
