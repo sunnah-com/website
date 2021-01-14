@@ -135,7 +135,10 @@ if (isset($errorMsg)) {
                     'arabicText' => $arabicText,
                     'ourHadithNumber' => null,
                     'counter' => null,
-                    'otherlangs' => null
+                    'otherlangs' => null,
+					'hadithNumber' => is_null($data['ar']) ? "" : $data['ar']['hadithNumber'],
+                    'book' => $book,
+                    'collection' => $collection,
                 )
             );
 
