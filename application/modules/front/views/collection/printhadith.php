@@ -25,7 +25,7 @@
 			echo "<div class=\"english_hadith_full\">";
 
             $colon_match = preg_match("/[^0-9]:[^0-9]/", $englishText, $match, PREG_OFFSET_CAPTURE);
-            if (($colon_match == 1) and (isset($collection) and strcmp($collection, "hisn") != 0)) {
+            if (($colon_match == 1) and (!isset($collection) or (isset($collection) and strcmp($collection, "hisn") != 0))) {
                 $narrated_part = substr($englishText, 0, $match[0][1] + 1);
                 $text_part = trim(substr($englishText, $match[0][1] + 2));
                 echo "<div class=hadith_narrated>".$narrated_part.":</div>";
