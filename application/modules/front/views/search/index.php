@@ -165,7 +165,7 @@ if (isset($errorMsg)) {
 		    "h".(is_null($data['ar']) ? "" : $data['ar']['arabicURN']), 
 		    true, 
 		    $urn_language,
-                    $book->reference_template,
+                    $book,
                     true // show in-book reference
                 )
             ));

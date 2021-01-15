@@ -250,7 +250,7 @@ else {
 											"h".$arabicEntry->arabicURN,
                                             false, // hide share flag,
                                             $urn_language,
-                                            $book->reference_template,
+                                            $book,
                                             $collection->showInBookReference
                                         )
                             ));	

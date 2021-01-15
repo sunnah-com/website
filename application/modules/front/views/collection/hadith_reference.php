@@ -15,7 +15,8 @@
 			$divname = $values[16];
 			$hideShare = $values[17] ?? false;
 			$urn_language = $values[18];
-			$reference_template = $values[19];
+			$book = $values[19];
+			$reference_template = $book->reference_template;
 			$showInBookReference = $values[20];
 			
 
@@ -134,13 +135,15 @@
                         echo "</td></tr>";
                 }
 
-				if (strcmp($collectionHasBooks, "yes") == 0) {
-					if ($ourBookID > 0) $permalink = "/$collection/$ourBookID/$ourHadithNumber";
-					elseif ($ourBookID < -1) $permalink = "/$collection/".abs($ourBookID)."b/$ourHadithNumber";
-					elseif ($ourBookID == -1) $permalink = "/$collection/introduction/$ourHadithNumber";
+				if (!is_null($book->linkpath)) $permalink = "/$book->linkpath/$ourHadithNumber";
+				else {
+					if (strcmp($collectionHasBooks, "yes") == 0) {
+						if (!is_null($book->ourBookNum)) $booklinkpath = $book->ourBookNum;
+						else $booklinkpath = (string) $book->ourBookID;
+						$permalink = "/$collection/$booklinkpath/$ourHadithNumber";
+					}
+					else $permalink = "/$collection/$ourHadithNumber"; // This collection has no books.
 				}
-				else $permalink = "/$collection/$ourHadithNumber"; // This collection has no books.
-
 				if ( $url !== null ) $permalink = $url;
 			}
 			else {

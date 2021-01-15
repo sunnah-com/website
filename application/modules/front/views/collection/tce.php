@@ -114,7 +114,7 @@ else {
                                             "h".$arabicEntry->arabicURN,
 											false, // hide share flag
 											$urn_language,
-                                            $books[$arabicEntry->arabicURN]->reference_template,
+                                            $books[$arabicEntry->arabicURN],
                                             true // show in-book reference
 											)
                             ));	
