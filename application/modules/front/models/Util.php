@@ -33,7 +33,7 @@ class Util extends Model {
             ->select("*")
             ->where(['arabicURN' => $aURNs]);
         $arabicSet = $query->all();
-        foreach ($arabicSet as $arabicHadith) $arabicHadith->process_text();
+        foreach ($arabicSet as $arabicHadith) { $arabicHadith->process_text(); $arabicHadith->populate($this); }
         foreach ($arabicSet as $row) $arabicEntries[$row->arabicURN] = $row;
 
         for ($i = 0; $i < count($aURNs); $i++) {
@@ -43,7 +43,7 @@ class Util extends Model {
             ->select('*')
             ->where(['englishURN' => $eURNs]);
         $englishSet = $query->all();
-        foreach ($englishSet as $englishHadith) $englishHadith->process_text();
+        foreach ($englishSet as $englishHadith) { $englishHadith->process_text(); $englishHadith->populate($this); }
         foreach ($englishSet as $row) $englishEntries[$row->englishURN] = $row;
 
         $pairs = array_map(NULL, $eURNs, $aURNs);
@@ -203,7 +203,7 @@ class Util extends Model {
 		//if (is_null($language) and is_numeric($bookID)) return $books[$bookID];
 		//if (strcmp($language, "arabic") == 0 && is_numeric($bookID)) return $arabic_books[$bookID];
 		//if (strcmp($language, "english") == 0 && is_numeric($bookID)) return $english_books[$bookID];
-		
+
 		return NULL;
 	}
 
@@ -248,6 +248,7 @@ class Util extends Model {
                                                                 ->where("arabicURN = :urn", [':urn' => $urn])->one();
 			if ($hadith) {
 				$hadith->process_text();
+				$hadith->populate($this);
 				Yii::$app->cache->set($language."urn:".$urn, $hadith, Yii::$app->params['cacheTTL']);
 			}
 		}

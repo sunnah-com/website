@@ -91,33 +91,23 @@ else {
 							'collection'	=> $collections[$arabicEntry->collection],
                         ));
 
-						echo $this->render('/collection/hadith_reference', array(
-							'englishEntry' => $englishExists,
-                            'arabicEntry' => $arabicExists,
-                            '_collection' => $collections[$arabicEntry->collection],
-							'values' => array($urn, 
-											$englishEntry->volumeNumber, 
-											$englishEntry->bookNumber,
-											NULL,
-											$arabicEntry->bookNumber,
-											$arabicEntry->hadithNumber,
-                                            $ourHadithNumber, 
-                                            $arabicEntry->collection, 
-                                            intval($arabicEntry->bookID), 
-                                            "yes", 
-                                            true, 
-                                            4, 
-                                            $collections[$arabicEntry->collection]['englishTitle'], 
-                                            $englishEntry->grade1, 
-                                            $arabicEntry->grade1, 
-                                            true, 
-                                            "h".$arabicEntry->arabicURN,
-											false, // hide share flag
-											$urn_language,
-                                            $books[$arabicEntry->arabicURN],
-                                            true // show in-book reference
-											)
-                            ));	
+                        echo $this->render('/collection/hadith_reference', array(
+                            'englishExists' => $englishExists,
+                            'arabicExists' => $arabicExists,
+                            'englishEntry' => $englishEntry,
+                            'arabicEntry' => $arabicEntry,
+                            'collection' => $collections[$arabicEntry->collection],
+                            'book' => $books[$arabicEntry->arabicURN],
+                            'urn' => $urn,
+                            'ourHadithNumber' => $ourHadithNumber,
+                            'ourBookID' => (int)$arabicEntry->bookID,
+                            'hideReportError' => true,
+                            'divName' => "h".$arabicEntry->arabicURN,
+                            'hideShare' => false,
+                            'urn_language' => $urn_language,
+                            'showEnglishTranslationNumber' => "no",
+                        ));
+
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
                         echo "<div class=clear></div>";
 						}

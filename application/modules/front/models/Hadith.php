@@ -25,7 +25,27 @@ class Hadith extends ActiveRecord
 {
 
 	public $lastup = NULL;
-	
+	public $canonicalReference = null;
+	public $inbookReference = null;
+	public $permalink = null;
+	public $sunnahReference = null;
+
+    public function __construct($config = []) {
+        parent::__construct();
+        if (!is_null($config)) {
+            foreach ($config as $key => $val) {
+                $this->$key = $val;
+            }
+        }
+    }
+
+    public function populateReferences($util, $collection = null, $book = null) {}
+    public function populatePermalink($util, $collection = null, $book = null) {}
+    public function populate($util, $collection = null, $book = null) {
+        $this->populateReferences($util, $collection, $book);
+        $this->populatePermalink($util, $collection, $book);
+    }
+
 	public function toJSON() {
 		$json = new \StdClass();
 		foreach ($this as $key => $value) {

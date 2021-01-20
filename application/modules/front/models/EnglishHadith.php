@@ -24,7 +24,58 @@ use app\modules\front\models\Hadith;
 class EnglishHadith extends Hadith
 {
 
-	public function process_text() {
+    public $translationReference = null;
+    public $translationReferenceTitle = null;
+    public $postReferenceNote = null;
+    public $englishReference = null; // For non-verified ahadith
+    public $englishReferenceTitle = null;
+
+    public function populateReferences($util, $collection = null, $book = null) {
+        if (is_null($collection)) { $collection = $util->getCollection($this->collection); }
+        if (is_null($book)) { $book = $util->getBook($this->collection, $this->bookID, "english"); }
+
+        if ($book->status === 4) {
+            if ((int)$this->hadithNumber !== 0 && $collection->showEnglishTranslationNumber === "yes") {
+                $this->translationReferenceTitle = "English translation";
+                $span_attribute = "";
+                if (in_array($this->collection, array("bukhari", "muslim", "malik"))) {
+                    $span_attribute = " class=\"deprecated_reference\"";
+                    $this->translationReferenceTitle = "<span$span_attribute>USC-MSA web (English) reference</span>";
+                }
+
+                $this->translationReference = "<span$span_attribute>";
+                if ($collection->hasvolumes === "yes") {
+                    $this->translationReference .= "Vol. " . $this->volumeNumber . ", ";
+                }
+                if ($collection->hasbooks === "yes") {
+                    $this->translationReference .= "Book " . $this->bookNumber . ", ";
+                }
+                $this->translationReference .= "Hadith $this->hadithNumber";
+                $this->translationReference .= "</span>";
+
+                if (in_array($this->collection, array("bukhari", "muslim", "malik"))) {
+                    $this->postReferenceNote = "<span$span_attribute><i>(deprecated numbering scheme)</i></span>";
+                }
+            }
+        }
+        else {
+            $this->englishReference = "";
+            if ($collection->hasvolumes === "yes") { $this->englishReference .= "Vol. ".$this->volumeNumber.", "; }
+            if ($collection->hasbooks === "yes") { $this->englishReference .= "Book ".$this->bookNumber.", "; }
+            $this->englishReference .= "Hadith ".$this->hadithNumber;
+
+            $this->englishReferenceTitle = "English translation";
+            if (in_array($this->collection, array("bukhari", "muslim", "malik"))) {
+                $this->englishReferenceTitle = "USC-MSA web (English) reference";
+            }
+        }
+    }
+
+    public function populatePermalink($util, $collection = null, $book = null) {
+        $this->permalink = "/urn/$this->englishURN";
+    }
+
+    public function process_text() {
         $processed_text = trim($this->hadithText);
         $processed_text .= "</b>";
 		$imgsawstext = "<img class=sawsimg src=\"/images/sallallahu_alaihi_wa_sallam.png\" title=\"sallallahu 'alaihi wa sallam\">";

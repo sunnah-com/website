@@ -1219,6 +1219,10 @@ textarea {
     float: left;
 }
 
+.deprecated_reference {
+    color: #696969;
+    opacity: 0.5;
+}
 
 .bottomItems {
     width: 100%;
