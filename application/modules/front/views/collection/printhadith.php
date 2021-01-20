@@ -47,7 +47,7 @@
 
             $arabicSanad1 = "";
             $arabicSanad2 = "";
-            if (substr_count($arabicText, "\"") == 2) {
+            if (substr_count($arabicText, "\"") == 2 && ($collection->name !== "hisn")) {
                 $arabicSanad1 = strstr($arabicText, "\"", true);
                 $arabicText = substr(strstr($arabicText, "\"", false), 1);
                 $arabicSanad2 = substr(strstr($arabicText, "\"", false), 1);
