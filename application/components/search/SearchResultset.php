@@ -122,11 +122,11 @@ class SearchResultset
             $arabicEntry = null; $englishEntry = null;
             if (isset($hadithData['ar'][$arUrn]) && !is_null($hadithData['ar'][$arUrn])) {
                 $arabicEntry = new ArabicHadith($hadithData['ar'][$arUrn]);
-                $arabicEntry->populateReferences($util, $collectionData[$hadith['collection']], $book);
+                $arabicEntry->populate($util, $collectionData[$hadith['collection']], $book);
             }
             if (isset($hadithData['en'][$enUrn]) && !is_null($hadithData['en'][$enUrn])) {
                 $englishEntry = new EnglishHadith($hadithData['en'][$enUrn]);
-                $englishEntry->populateReferences($util, $collectionData[$hadith['collection']], $book);
+                $englishEntry->populate($util, $collectionData[$hadith['collection']], $book);
             }
 
             $result['data'] = array(

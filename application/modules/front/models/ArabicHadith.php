@@ -50,12 +50,14 @@ class ArabicHadith extends Hadith
         if (is_null($book)) { $book = $util->getBook($this->collection, $this->bookID, "arabic"); }
 
         if ($book->status === 4) {
+            $hadithNumber = $this->hadithNumber;
+            if ($collection->name == "muslim" && $book->ourBookID !== -1) { $hadithNumber = str_replace(' ', '', $hadithNumber); }
             if (!is_null($book->reference_template)) {
                 $reference_string = $book->reference_template;
-                $reference_string = str_replace("{hadithNumber}", $this->hadithNumber, $reference_string);
+                $reference_string = str_replace("{hadithNumber}", $hadithNumber, $reference_string);
                 $this->canonicalReference = $reference_string;
             } else {
-                $this->canonicalReference = $collection->englishTitle . " " . $this->hadithNumber;
+                $this->canonicalReference = $collection->englishTitle . " " . $hadithNumber;
             }
 
             $bookNumberReference = "Book " . $book->ourBookID;
@@ -91,22 +93,34 @@ class ArabicHadith extends Hadith
         if (is_null($collection)) { $collection = $util->getCollection($this->collection); }
         if (is_null($book)) { $book = $util->getBook($this->collection, $this->bookID, "arabic"); }
 
+        $use_colon_permalinks = true;
+
         if ($book->status === 4) {
-            if (!is_null($book->linkpath)) {
-                $this->permalink = "/$book->linkpath/$this->ourHadithNumber";
-            } else {
-                if ($collection->hasbooks === "yes") {
-                    if (!is_null($book->ourBookNum)) { $booklinkpath = $book->ourBookNum; }
-                    else { $booklinkpath = (string)$book->ourBookID; }
-                    $this->permalink = "/" . $collection->name . "/$booklinkpath/$this->ourHadithNumber";
+            if ($use_colon_permalinks) {
+                $this->permalink = "/$collection->name:".str_replace(' ', '', $this->hadithNumber);
+            }
+            else {
+                if (!is_null($book->linkpath)) {
+                    $this->permalink = "/$book->linkpath/$this->ourHadithNumber";
+                } else {
+                    if ($collection->hasbooks === "yes") {
+                        if (!is_null($book->ourBookNum)) {
+                            $booklinkpath = $book->ourBookNum;
+                        } else {
+                            $booklinkpath = (string)$book->ourBookID;
+                        }
+                        $this->permalink = "/" . $collection->name . "/$booklinkpath/$this->ourHadithNumber";
+                    } else {
+                        $this->permalink = "/" . $collection->name . "/$this->ourHadithNumber";
+                    } // This collection has no books.
                 }
-                else { $this->permalink = "/" . $collection->name . "/$this->ourHadithNumber"; } // This collection has no books.
             }
         }
         else {
             if ($this->ourHadithNumber > 0) {
                 if ($collection->hasbooks === "yes") {
                     $this->permalink = "/" . $collection->name . "/$book->ourBookID/$this->ourHadithNumber";
+                    if ($book->ourBookID === -1) { $this->permalink = "/" . $collection->name . "/introduction/$this->ourHadithNumber"; }
                 } else $this->permalink = "/" . $collection->name . "/$this->ourHadithNumber"; // This collection has no books.
             }
             else {
