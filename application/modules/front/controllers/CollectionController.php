@@ -163,7 +163,13 @@ class CollectionController extends SController
 		}
         else {
             $this->view->params['_pageType'] = "hadith";
-            $this->pathCrumbs('Hadith', "");
+            $hadithCrumb = 'Hadith';
+            if ($this->_book->status > 3) {
+                $hadithCrumb = "".$this->_entries[1][$pairs[0][1]]->hadithNumber;
+                if (is_numeric(substr($hadithCrumb, 0, 1))) { $hadithCrumb = "Hadith $hadithCrumb"; }
+            }
+            $this->pathCrumbs($hadithCrumb, "");
+            if ($this->_book->status > 3) { $this->prependToPageTitle($this->_entries[1][$pairs[0][1]]->canonicalReference); }
             if ($this->_book->status > 3 and count($pairs) === 1) { // If it's a single-hadith view page
                 $urn = $this->_entries[0][$pairs[0][0]]->englishURN;
                 $nextURN = $this->util->getNextURNInCollection($urn);
@@ -219,6 +225,7 @@ class CollectionController extends SController
 			if (strcmp(substr($this->_book->englishBookName, 0, 4), "Book") !== 0 && strcmp(substr($this->_book->englishBookName, 0, 7), "Chapter") !== 0 && strcmp(substr($this->_book->englishBookName, 0, 4), "The ") !== 0)
 				$bookTitlePrefix = "Book of ";
             $this->pathCrumbs($this->_book->englishBookName, "/".$collectionName."/".$lastlink);
+            if ($this->_book->status > 3) { $this->prependToPageTitle($this->_book->englishBookName); }
         }
 		elseif ($ourBookID === -1) {
 			// The case where the collection doesn't technically have books but there is an introduction pseudobook
@@ -452,7 +459,14 @@ class CollectionController extends SController
 
         $this->view->params['_pageType'] = "hadith";
 		$this->view->params['lastUpdated'] = null;
-        $this->pathCrumbs('Hadith', "");
+
+        $hadithCrumb = 'Hadith';
+        if ($this->_book->status > 3 and !is_null($arabicHadith)) {
+            $hadithCrumb = "".$arabicHadith->hadithNumber;
+            if (is_numeric(substr($hadithCrumb, 0, 1))) { $hadithCrumb = "Hadith $hadithCrumb"; }
+        }
+        $this->pathCrumbs($hadithCrumb, "");
+
         if (strlen($this->_book->englishBookName) > 0) {
 			$bookPathPart = $this->_book->ourBookID;
 			if ($this->_book->ourBookID === -1) $bookPathPart = "introduction";

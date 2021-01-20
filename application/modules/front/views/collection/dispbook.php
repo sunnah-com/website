@@ -228,32 +228,20 @@ else {
 							));
 
 						echo $this->render('/collection/hadith_reference', array(
-							'englishEntry' => $englishExists,
-                            'arabicEntry' => $arabicExists,
-                            '_collection' => $collection,
-							'values' => array($urn, 
-											$englishEntry->volumeNumber, 
-											$englishEntry->bookNumber,
-											$englishEntry->hadithNumber,
-											$arabicEntry->bookNumber,
-											$arabicEntry->hadithNumber,
-											$ourHadithNumber, 
-											$collection->name, 
-											$ourBookID, 
-											$collectionHasBooks, 
-											$collectionHasVolumes, 
-											$status, 
-											$collection->englishTitle, 
-											$englishEntry->grade1, 
-											$arabicEntry->grade1,
-											false, // hide report error flag
-											"h".$arabicEntry->arabicURN,
-                                            false, // hide share flag,
-                                            $urn_language,
-                                            $book,
-                                            $collection->showInBookReference
-                                        )
-                            ));	
+							'englishExists' => $englishExists,
+                            'arabicExists' => $arabicExists,
+                            'englishEntry' => $englishEntry,
+                            'arabicEntry' => $arabicEntry,
+                            'collection' => $collection,
+							'book' => $book,
+							'urn' => $urn,
+							'ourHadithNumber' => $ourHadithNumber,
+							'ourBookID' => $ourBookID,
+							'hideReportError' => false,
+							'divName' => "h".$arabicEntry->arabicURN,
+							'hideShare' => false,
+							'urn_language' => $urn_language,
+                            ));
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
 						echo "<div class=clear></div>";
 

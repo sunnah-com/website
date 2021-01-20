@@ -1,24 +1,6 @@
 <?php
-			use app\modules\front\models\Util;
-			$util = new Util();
-
-			$collection = $values[7];
-			$ourHadithNumber = $values[6];
-			$ourBookID = $values[8];
-			$collectionHasBooks = $values[9]; 
-			$collectionHasVolumes = $values[10];
-			$bookstatus = $values[11];
-			$collectionEnglishTitle = $values[12];
-			$permalink = "/urn/".$values[0];
-			$englishGrade1 = $values[13]; $arabicGrade1 = $values[14];
-			$hideReportError = $values[15];
-			$divname = $values[16];
-			$hideShare = $values[17] ?? false;
-			$urn_language = $values[18];
-			$book = $values[19];
-			$reference_template = $book->reference_template;
-			$showInBookReference = $values[20];
-			
+			if (!isset($showInBookReference)) { $showInBookReference = $collection->showInBookReference; }
+			if (!isset($showEnglishTranslationNumber)) { $showEnglishTranslationNumber = $collection->showEnglishTranslationNumber; }
 
 			$url = null;
 			// Disabling experiment Jan 13 to see if the downtick in Google Search is related
@@ -26,28 +8,28 @@
 			// if ($collection === "riyadussalihin") $url = $util->getPermalinkByURN($values[0], $urn_language);
 
 			echo "<div class=bottomItems>\n";
-	    if (strlen($englishGrade1) > 0 or strlen($arabicGrade1) > 0) {
+	    if (($englishExists && strlen($englishEntry->grade1) > 0) or ($arabicExists && strlen($arabicEntry->grade1) > 0)) {
     	    echo "<div class=hadith_annotation>";
             echo "<table class=gradetable cellspacing=0 cellpadding=0 border=0>";
 
             // This should really happen in the controllers/models
             // Figure out how many grades there are and populate a structure
-            $english_grades = json_decode($englishGrade1, true);
+            $english_grades = json_decode($englishEntry->grade1, true);
             if (is_null($english_grades) or !is_array($english_grades)) {
                 $english_grades = array();
-                if (strlen($englishGrade1) > 0) {
+                if (strlen($englishEntry->grade1) > 0) {
                     $english_grades[0] = array();
-                    $english_grades[0]['grade'] = ucfirst(trim($englishGrade1));
-                    $english_grades[0]['graded_by'] = $_collection['englishgrade1'];
+                    $english_grades[0]['grade'] = ucfirst(trim($englishEntry->grade1));
+                    $english_grades[0]['graded_by'] = $collection->englishgrade1;
                 }
             }
-            $arabic_grades = json_decode($arabicGrade1, true);
+            $arabic_grades = json_decode($arabicEntry->grade1, true);
             if (is_null($arabic_grades) or !is_array($arabic_grades)) {
                 $arabic_grades = array();
-                if (strlen($arabicGrade1) > 0) {
+                if (strlen($arabicEntry->grade1) > 0) {
                     $arabic_grades[0] = array();
-                    $arabic_grades[0]['grade'] = $arabicGrade1;
-                    $arabic_grades[0]['graded_by'] = $_collection['arabicgrade1'];
+                    $arabic_grades[0]['grade'] = $arabicEntry->grade1;
+                    $arabic_grades[0]['graded_by'] = $collection->arabicgrade1;
                 }
             }
 
@@ -91,113 +73,70 @@
 
 			echo "<table class=hadith_reference cellspacing=0 cellpadding=0>";
 
-			if ($bookstatus == 4) {
+	    	if ($arabicExists) { $permalink = $arabicEntry->permalink; }
+	    	elseif ($englishExists) { $permalink = $englishEntry->permalink; }
+
+			if ($book->status == 4) {
 				echo "<tr><td><b>Reference</b></td>";
 				echo "<td>&nbsp;:&nbsp;";
-				if ( $url !== null && $this->params["_pageType"] !== "hadith" )
-					echo "<a href=\"$url\">$collectionEnglishTitle ".$values[5]."</a>";
-                else
-                    if (!is_null($reference_template)) {
-                    	$reference_string = $reference_template;
-                    	$reference_string = str_replace("{hadithNumber}", $values[5], $reference_string);
-                    	echo $reference_string;
-					}
-					else {
-						echo "$collectionEnglishTitle ".$values[5]."";
-					}
-				echo "</b></td></tr>";
+				$surroundingBeginTag = "";
+				$surroundingEndTag = "";
+				if ($this->params["_pageType"] !== "hadith" ) {
+					$surroundingBeginTag = "<a href=\"$permalink\">";
+					$surroundingEndTag = "</a>";
+				}
+                echo $surroundingBeginTag.$arabicEntry->canonicalReference.$surroundingEndTag;
+				echo "</td></tr>";
 
-				if ($collectionHasBooks == "yes" && $showInBookReference) {
+				if ($collection->hasbooks == "yes" && $showInBookReference) {
 					echo "<tr><td>In-book reference</td>";
-					echo "<td>&nbsp;:&nbsp;";
-					if ($ourBookID > 0) echo "Book $ourBookID, ";
-					elseif ($ourBookID == -35) echo "Book 35b, ";
-					elseif ($ourBookID == -8) echo "Book 8b, ";
-					else echo "Introduction, ";
-					if (strcmp($collection, "muslim") == 0 and ($ourBookID == -1)) echo "Narration ";
-					else echo "Hadith ";
-					echo $ourHadithNumber;
-					echo "</td></tr>";
+					echo "<td>&nbsp;:&nbsp;$arabicEntry->inbookReference</td></tr>";
 				}
 
-				if ($englishEntry 
-				    and /* $values[5] != $values[3] and */ intval($values[3]) != 0
-					and strcmp($_collection['showEnglishTranslationNumber'], "yes") == 0) {
-                        echo "<tr><td>";
-						if (strcmp($collection, "bukhari")==0 or strcmp($collection, "muslim")==0 or strcmp($collection, "malik")==0) echo "USC-MSA web (English) reference</td><td>&nbsp;: ";
-                       	else echo "English translation</td><td>&nbsp;:&nbsp;";
-	                    if (strcmp($collectionHasVolumes, "yes") == 0)
-    	                	echo "Vol. ".$values[1].", ";
-        	            if (strcmp($collectionHasBooks, "yes") == 0) echo "Book ".$values[2].", ";
-            	        echo "Hadith ".$values[3];
-                        echo "</td></tr>";
-						if (strcmp($collection, "bukhari")==0 or strcmp($collection, "muslim")==0 or strcmp($collection, "malik")==0) echo " <tr><td>&nbsp;&nbsp;<i>(deprecated numbering scheme)</i>";
-                        echo "</td></tr>";
+				if ($englishExists
+				    and /* $values[5] != $values[3] and */ (int)$englishEntry->hadithNumber != 0
+					and strcmp($showEnglishTranslationNumber, "yes") == 0) {
+                        echo "<tr><td>$englishEntry->translationReferenceTitle</td>";
+                        echo "<td>&nbsp;: $englishEntry->translationReference</td></tr>";
+						if (!is_null($englishEntry->postReferenceNote)) {
+							echo " <tr><td>&nbsp;&nbsp;$englishEntry->postReferenceNote</td></tr>";
+						}
                 }
-
-				if (!is_null($book->linkpath)) $permalink = "/$book->linkpath/$ourHadithNumber";
-				else {
-					if (strcmp($collectionHasBooks, "yes") == 0) {
-						if (!is_null($book->ourBookNum)) $booklinkpath = $book->ourBookNum;
-						else $booklinkpath = (string) $book->ourBookID;
-						$permalink = "/$collection/$booklinkpath/$ourHadithNumber";
-					}
-					else $permalink = "/$collection/$ourHadithNumber"; // This collection has no books.
-				}
-				if ( $url !== null ) $permalink = $url;
 			}
 			else {
-
-				if ($values[3] == $values[5] && ((strcmp($collectionHasBooks, "yes") == 0 && $values[4] == $values[2]) || strcmp($collectionHasBooks, "yes") != 0)) { // Unified reference number
+				// If there is a unified reference number
+				if ($englishEntry->hadithNumber == $arabicEntry->hadithNumber &&
+					(($collection->hasbooks === "yes" && $englishEntry->bookNumber == $arabicEntry->bookNumber) || $collection->hasbooks !== "yes")) { // Unified reference number
 					if ($ourHadithNumber > 0) {
-						if ($values[3] != $ourHadithNumber) {
+						if ($englishEntry->hadithNumber != $ourHadithNumber) {
 							echo "<tr><td>Sunnah.com reference</td>";
 							echo "<td>&nbsp;:&nbsp;";
-							if (strcmp($collectionHasBooks, "yes") == 0) echo "Book ".$values[4].", ";
-							echo "Hadith ".$ourHadithNumber;
+							echo $arabicEntry->sunnahReference;
 							echo "</td>";
 						}
-						if (strcmp($collectionHasBooks, "yes") == 0) {
-							$permalink = "/$collection/$ourBookID/$ourHadithNumber";
-							if ($ourBookID == -1) $permalink = "/$collection/introduction/$ourHadithNumber";
-						}
-						else $permalink = "/$collection/$ourHadithNumber"; // This collection has no books.
 					}
 					echo "<tr><td>Arabic/English book reference</td>";
 					echo "<td>&nbsp;:&nbsp;";
-					if (strcmp($collectionHasVolumes, "yes") == 0) 
-						echo "Vol. ".$values[1].", ";
-					if (strcmp($collectionHasBooks, "yes") == 0)
-						echo "Book ".$values[4].", ";
-					echo "Hadith ".$values[3];
+					echo $englishEntry->englishReference;
 					echo "</td></tr>";
 				}
 				else { // Different reference numbers
 					if ($ourHadithNumber > 0) {
 						echo "<tr><td>Sunnah.com reference</td><td>&nbsp;:&nbsp;";
-						if (strcmp($collectionHasBooks, "yes") == 0) echo "Book ".$values[4].", ";
-						echo "Hadith ".$ourHadithNumber;
-						echo "</td></tr>";
-						if (strcmp($collectionHasBooks, "yes") == 0) $permalink = "/$collection/$ourBookID/$ourHadithNumber";
-						else $permalink = "/$collection/$ourHadithNumber"; // This collection has no books.
-					}
-				
-					if ($englishEntry) {
-						echo "<tr><td>";
-						if (strcmp($collection, "bukhari")==0 or strcmp($collection, "muslim")==0 or strcmp($collection, "malik")==0) echo "USC-MSA web (English) reference</td><td>&nbsp;: ";
-						else echo "English reference</td><td>&nbsp;: ";
-						if (strcmp($collectionHasVolumes, "yes") == 0) 
-							echo "Vol. ".$values[1].", ";
-						if (strcmp($collectionHasBooks, "yes") == 0) echo "Book ".$values[2].", ";
-						echo "Hadith ".$values[3];
+						echo $arabicEntry->sunnahReference;
 						echo "</td></tr>";
 					}
 				
-					if ($arabicEntry) {
+					if ($englishExists) {
+						echo "<tr><td>$englishEntry->englishReferenceTitle</td><td>&nbsp;: ";
+						echo $englishEntry->englishReference;
+						echo "</td></tr>";
+					}
+				
+					if ($arabicExists) {
 						echo "<tr><td>";
 						echo "Arabic reference</td><td>&nbsp;: ";
-						if (strcmp($collectionHasBooks, "yes") == 0) echo "Book ".$values[4].", ";
-						echo "Hadith ".$values[5];
+						echo $arabicEntry->arabicReference;
 						echo "</td></tr>";
 					}
 				}
@@ -209,7 +148,7 @@
 			//echo "<a href=\"javascript:sharethis()\">Share</a>";
 			//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
 			//echo "<a href=\"$permalink\">Permalink</a>";
-			if (!isset($hideReportError) or !$hideReportError) echo "<a href=\"javascript: void(0);\" onclick=\"reportHadith(".$values[0].", '".$divname."')\">Report Error</a> | ";
+			if (!isset($hideReportError) or !$hideReportError) echo "<a href=\"javascript: void(0);\" onclick=\"reportHadith(".$urn.", '".$divName."')\">Report Error</a> | ";
 			if (!$hideShare) echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span>";
 			echo "</div>";
 
