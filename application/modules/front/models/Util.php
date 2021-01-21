@@ -261,7 +261,7 @@ class Util extends Model {
         $hadithNumber = $hadith->hadithNumber;
         $hadithNumber = explode(",", $hadithNumber)[0];
         if ($hadith->collection == "muslim" && $hadith->bookID !== -1) {
-            $hadithNumber = preg_replace("/(\d)\s*(\w)/", "$1$2", $hadithNumber);
+            $hadithNumber = preg_replace("/(\d)\s*([a-zA-Z])/", "$1$2", $hadithNumber);
         }
         return $hadithNumber;
     }

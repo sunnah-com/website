@@ -52,7 +52,7 @@ class ArabicHadith extends Hadith
         if ($book->status === 4) {
             $hadithNumber = $this->hadithNumber;
             if ($collection->name == "muslim" && $book->ourBookID !== -1) {
-                $hadithNumber = preg_replace("/(\d)\s*(\w)/", "$1$2", $hadithNumber);
+                $hadithNumber = preg_replace("/(\d)\s*([a-zA-Z])/", "$1$2", $hadithNumber);
             }
             if (!is_null($book->reference_template)) {
                 $reference_string = $book->reference_template;
@@ -101,7 +101,7 @@ class ArabicHadith extends Hadith
             if ($use_colon_permalinks) {
                 // In case an entry lists multiple hadith numbers, use the first one
                 $hadithNumber = explode(",", $this->hadithNumber)[0];
-                $hadithNumber = preg_replace("/(\d)\s*(\w)/", "$1$2", $hadithNumber);
+                $hadithNumber = preg_replace("/(\d)\s*([a-zA-Z])/", "$1$2", $hadithNumber);
                 $this->permalink = "/$collection->name:".$hadithNumber;
 
                 // Special cases
