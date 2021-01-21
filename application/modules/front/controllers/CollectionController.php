@@ -234,17 +234,16 @@ class CollectionController extends SController
 		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
 
-		// TODO: Expand to all verified collections at the end of the experiment - disabling 13 Jan 2021
-		if ($this->_book->status > 3 && $collectionName == "riyadussalihin" && false) {
+		if ($this->_book->status > 3) {
 			$urn = $this->_entries[1][$pairs[0][1]]->arabicURN;
-			$permalinkCanonical = $this->util->getPermalinkByURN($urn);
+			$permalinkCanonical = $this->util->get_permalink($urn);
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
 
 			if (isset($nextURN) && !is_null($nextURN))
-				$viewVars['nextPermalink'] = $this->util->getPermalinkByURN($nextURN, "english");
+				$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
 			
 			if (isset($previousURN) && !is_null($previousURN))
-				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+				$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
 
 			// Add canonical links to single pages only
 			if ( $permalinkCanonical && $this->view->params['_pageType'] == "hadith" && count($pairs) === 1 )
@@ -478,16 +477,16 @@ class CollectionController extends SController
 		$this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
 		
 		// TODO: Expand to all verified collections at the end of the experiment
-		if ($this->_book->status > 3 && $this->_collectionName == "riyadussalihin") {
+		if ($this->_book->status > 3) {
 			$urn = $arabicHadith->arabicURN;
-			$permalinkCanonical = $this->util->getPermalinkByURN($urn);
+			$permalinkCanonical = $this->util->get_permalink($urn);
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
 
 			if (isset($nextURN) && !is_null($nextURN))
-				$viewVars['nextPermalink'] = $this->util->getPermalinkByURN($nextURN, "english");
+				$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
 
 			if (isset($previousURN) && !is_null($previousURN))
-				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+				$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
 
 			if ( $permalinkCanonical )
 				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
