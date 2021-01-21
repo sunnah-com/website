@@ -236,7 +236,7 @@ class CollectionController extends SController
 
 		if ($this->_book->status > 3) {
 			$urn = $this->_entries[1][$pairs[0][1]]->arabicURN;
-			$permalinkCanonical = $this->util->get_permalink($urn);
+			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
 
 			if (isset($nextURN) && !is_null($nextURN))
@@ -479,7 +479,7 @@ class CollectionController extends SController
 		// TODO: Expand to all verified collections at the end of the experiment
 		if ($this->_book->status > 3) {
 			$urn = $arabicHadith->arabicURN;
-			$permalinkCanonical = $this->util->get_permalink($urn);
+			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
 
 			if (isset($nextURN) && !is_null($nextURN))
