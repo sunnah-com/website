@@ -51,7 +51,9 @@ class ArabicHadith extends Hadith
 
         if ($book->status === 4) {
             $hadithNumber = $this->hadithNumber;
-            if ($collection->name == "muslim" && $book->ourBookID !== -1) { $hadithNumber = str_replace(' ', '', $hadithNumber); }
+            if ($collection->name == "muslim" && $book->ourBookID !== -1) {
+                $hadithNumber = preg_replace("/(\d)\s*(\w)/", "$1$2", $hadithNumber);
+            }
             if (!is_null($book->reference_template)) {
                 $reference_string = $book->reference_template;
                 $reference_string = str_replace("{hadithNumber}", $hadithNumber, $reference_string);
@@ -97,7 +99,16 @@ class ArabicHadith extends Hadith
 
         if ($book->status === 4) {
             if ($use_colon_permalinks) {
-                $this->permalink = "/$collection->name:".str_replace(' ', '', $this->hadithNumber);
+                // In case an entry lists multiple hadith numbers, use the first one
+                $hadithNumber = explode(",", $this->hadithNumber)[0];
+                $hadithNumber = preg_replace("/(\d)\s*(\w)/", "$1$2", $hadithNumber);
+                $this->permalink = "/$collection->name:".$hadithNumber;
+
+                // Special cases
+                if ($collection->name == "forty") { $this->permalink = "/$book->linkpath:$this->hadithNumber"; }
+                if ($collection->name == "muslim" && $book->ourBookID == -1 && substr($this->hadithNumber, 0, 12) == "Introduction") {
+                    $this->permalink = "/muslim/introduction/$this->ourHadithNumber";
+                }
             }
             else {
                 if (!is_null($book->linkpath)) {

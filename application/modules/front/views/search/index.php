@@ -76,24 +76,8 @@ if (isset($errorMsg)) {
             $arabicEntry = $data['ar'];
             $englishEntry = $data['en'];
 
-            if ($hadith['ourHadithNumber'] > 0) {
-                $hasbooks = $collection['hasbooks'];
-                if ($hasbooks === 'yes') {
-                    $booklink = $ourBookID;
-                    if ($ourBookID === -1) {
-                        $booklink = 'introduction';
-                    } elseif ($ourBookID === -35) {
-                        $booklink = '35b';
-                    } elseif ($ourBookID === -8) {
-                        $booklink = '8b';
-                    }
-                    $permalink = '/'.$collection['name'].'/'.$booklink.'/'.$hadith['ourHadithNumber'];
-                } else {
-                    $permalink = '/'.$collection['name'].'/'.$hadith['ourHadithNumber'];
-                }
-            } else {
-                $permalink = '/urn/'.$result['urn'];
-            }
+            if ((bool)$arabicEntry) $permalink = $arabicEntry->permalink;
+            else $permalink = $englishEntry->permalink;
 
             $truncation = false;
 

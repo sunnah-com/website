@@ -256,10 +256,14 @@ class Util extends Model {
     }
 
     public function getVerifiedHadithNumber($urn, $language = "english") {
-        $hadith = $this->getHadith($urn, $language);
-        $arabicURN = $hadith->matchingArabicURN;
-        $arabic_hadith = $this->getHadith($arabicURN, "arabic");
-        return $arabic_hadith->hadithNumber;
+	    $hadith = $this->getHadith($urn, $language);
+        if ($language != "arabic") { $hadith = $this->getHadith($hadith->matchingArabicURN, "arabic"); }
+        $hadithNumber = $hadith->hadithNumber;
+        $hadithNumber = explode(",", $hadithNumber)[0];
+        if ($hadith->collection == "muslim" && $hadith->bookID !== -1) {
+            $hadithNumber = preg_replace("/(\d)\s*(\w)/", "$1$2", $hadithNumber);
+        }
+        return $hadithNumber;
     }
 
     // The following two functions should really be written for arabicURNs
@@ -308,25 +312,9 @@ class Util extends Model {
 
     public function get_permalink($urn, $language = "english") {
         // As of now, this method only works for hadith in verified books. 
-        // TODO: Extend to other books
         $hadith = $this->getHadith($urn, $language);
-        
-        $collectionName = $hadith->collection;
-        $collection = $this->getCollection($collectionName);
-        
-        $book = $this->getBook($hadith->collection, $hadith->bookID, "english");
-        if ($book->status < 4) return null;
-        
-        $ourBookID = $book->ourBookID;
-        $bookPart = strval($ourBookID);
-        if ($ourBookID < -1) $bookPart = strval(abs($ourBookID))."b";
-        elseif ($ourBookID == -1) $bookPart = "introduction";
-
-        $ourHadithNumber = $hadith->ourHadithNumber;
-        
-        if ($collection->hasbooks === 'yes') $permalink = "/$collectionName/$bookPart/$ourHadithNumber";
-        else $permalink = "/$collectionName/$ourHadithNumber";
-        return $permalink;
+        if ($language != "arabic") { $hadith = $this->getHadith($hadith->matchingArabicURN, "arabic"); }
+        return $hadith->permalink;
     }
 
     public function getPermalinkByURN($urn, $language="arabic") {
