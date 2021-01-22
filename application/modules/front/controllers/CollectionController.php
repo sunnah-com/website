@@ -234,7 +234,7 @@ class CollectionController extends SController
 		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
 
-		if ($this->_book->status > 3) {
+		if ($this->_book->status > 3 and count($pairs) > 0) {
 			$urn = $this->_entries[1][$pairs[0][1]]->arabicURN;
 			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
