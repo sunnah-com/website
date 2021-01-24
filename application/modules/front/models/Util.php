@@ -86,11 +86,11 @@ class Util extends Model {
 
         $num = $hadithNumber;
 
-        // First, try a direct match
+        // First, try a direct match (in ArabicHadithTable)
         $direct = $this->searchByNumber($collectionName, $num);
         if (!is_null($direct)) {
 			foreach ($direct as $result) {
-            	$book = $this->getBook($collectionName, $result['bookNumber']);    
+            	$book = $this->getBook($collectionName, $result['bookID'], "arabic");
             	if ($book->status >= 4) return $result['arabicURN'];
 			}
             return null;
@@ -203,7 +203,6 @@ class Util extends Model {
 		//if (is_null($language) and is_numeric($bookID)) return $books[$bookID];
 		//if (strcmp($language, "arabic") == 0 && is_numeric($bookID)) return $arabic_books[$bookID];
 		//if (strcmp($language, "english") == 0 && is_numeric($bookID)) return $english_books[$bookID];
-
 		return NULL;
 	}
 
