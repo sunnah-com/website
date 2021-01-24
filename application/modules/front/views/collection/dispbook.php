@@ -4,7 +4,7 @@ use app\modules\front\models\EnglishHadith;
 use app\modules\front\models\ArabicHadith;
 
 function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
-	if ($chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
+	if (in_array($collection->name, array("bukhari", "muslim")) && $chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
 	$arabicBabNumber = $chapter->arabicBabNumber;
 	$arabicBabName = $chapter->arabicBabName;
 	$englishBabNumber = $chapter->englishBabNumber;
@@ -64,7 +64,10 @@ else {
     if ($this->params['_pageType'] === "hadith") $showChapterIntro = false;
 
 	$book_name_center_style = "";
-	if ($collectionHasBooks === "no" || ($collection->name === "forty" && $book->ourBookID == 1)) {
+	if ($collectionHasBooks === "no" 
+	    || ($collection->name === "forty" && $book->ourBookID === 1)
+		|| ($collection->name === "mishkat" && $book->ourBookID === -1)
+		) {
 		$book_name_center_style = " centertext";
     }
 
