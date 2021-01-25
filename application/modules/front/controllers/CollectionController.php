@@ -375,6 +375,7 @@ class CollectionController extends SController
 		return Yii::$app->runAction('front/collection/urn', ['urn' => $arabicURN]);
 	}
 
+	// TODO: We could probably get away with a call to actionDispbook here.
 	public function actionUrn($urn) {
         $englishHadith = NULL; $arabicHadith = NULL;
         $viewVars = array();
@@ -463,6 +464,7 @@ class CollectionController extends SController
         if ($this->_book->status > 3 and !is_null($arabicHadith)) {
             $hadithCrumb = "".$arabicHadith->hadithNumber;
             if (is_numeric(substr($hadithCrumb, 0, 1))) { $hadithCrumb = "Hadith $hadithCrumb"; }
+            $this->prependToPageTitle($arabicHadith->canonicalReference);
         }
         $this->pathCrumbs($hadithCrumb, "");
 
@@ -473,10 +475,10 @@ class CollectionController extends SController
 			elseif (($this->_book->ourBookID === -8)) $bookPathPart = "8b";
 
             $this->pathCrumbs($this->_book->englishBookName." - <span class=arabic_text>".$this->_book->arabicBookName.'</span>', "/".$this->_collectionName."/".$bookPathPart);
+            $this->prependToPageTitle($this->_book->englishBookName." - ".$this->_book->arabicBookName);
         }
 		$this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
-		
-		// TODO: Expand to all verified collections at the end of the experiment
+
 		if ($this->_book->status > 3) {
 			$urn = $arabicHadith->arabicURN;
 			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
