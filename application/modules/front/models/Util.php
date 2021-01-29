@@ -105,7 +105,7 @@ class Util extends Model {
                 $num = $matches[1]." ".$matches[2];
                 $direct = $this->searchByNumber($collectionName, $num);
                 if (!is_null($direct) && count($direct) === 1) {
-                    $book = $this->getBook($collectionName, $direct[0]['bookNumber']);
+                    $book = $this->getBook($collectionName, $direct[0]['bookID'], "arabic");
                     if ($book->status >= 4) return $direct[0]['arabicURN'];
                     return null;
                 }
@@ -115,7 +115,7 @@ class Util extends Model {
 			$this_num = $hadithNumber." a";
 			$direct = $this->searchByNumber($collectionName, $this_num);
 			if (!is_null($direct) && count($direct) === 1) {
-                $book = $this->getBook($collectionName, $direct[0]['bookNumber']);
+                $book = $this->getBook($collectionName, $direct[0]['bookID'], "arabic");
                 if ($book->status >= 4) return $direct[0]['arabicURN'];
                 return null;
             }
