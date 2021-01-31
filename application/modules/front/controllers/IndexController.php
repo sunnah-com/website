@@ -16,7 +16,7 @@ class IndexController extends SController
         return [
             [
                    'class' => 'yii\filters\PageCache',
-                   'except' => ['flush-cache', 'ajaxhadithcount'],
+                   'except' => ['flush-cache', 'ajaxhadithcount', 'contact', 'captcha'],
                    'duration' => Yii::$app->params['cacheTTL'],
                    'variations' => [ Yii::$app->request->get('id') ],
         
@@ -36,6 +36,11 @@ class IndexController extends SController
             ],
         ];
     }
+
+	public function beforeAction($action) {
+		if ($action->id == 'ajaxhadithcount') { $this->enableCsrfValidation = false; }
+		return parent::beforeAction($action);
+	}
 
     public function actionError() {
         $exception = Yii::$app->errorHandler->exception;

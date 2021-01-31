@@ -10,6 +10,7 @@ if (isset($success)) {
             <tr>
             <td align=center>
             <br><br><br>Your message has been sent. Thank you!
+			<br><br>Return to the <a href=\"/\">homepage</a>.
             </td></tr>
         </table>";
     }
