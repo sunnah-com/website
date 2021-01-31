@@ -48,7 +48,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'ZZVnebTQY6SwqiKZhL7eXCkl-7bSAQyX',
+            'cookieValidationKey' => $parameters['cookieValidationKey'],
 			'csrfParam' => '_csrf_frontend',
         ],
         'cache' => [
@@ -63,10 +63,15 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => $parameters['smtpServer'],  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                'username' => $parameters['smtpUser'],
+                'password' => $parameters['smtpPassword'],
+                'port' => $parameters['smtpPort'], // Port 25 is a very common port too
+                'encryption' => 'tls', // It is often used, check your provider or mail server specs
+         ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -123,6 +128,7 @@ $config = [
                 'changelog' => 'front/index/change-log',
                 'support' => 'front/index/support',
                 'developers' => 'front/index/developers',
+                'contact' => 'front/index/contact',
                 'searchtips' => 'front/index/search-tips',
                 'tce' => 'front/collection/tce',
                 '<selection:ramadan>' => 'front/collection/selection',
@@ -130,6 +136,7 @@ $config = [
                 '<selection:ashura>' => 'front/collection/selection',
                 'selectiondata/<selection:\w+>' => 'front/collection/selection-data', 
                 'socialmedia' => 'front/collection/socialmedia',
+                'captcha' => 'front/index/captcha',
                 'urn/<urn:\d+>' => 'front/collection/urn',
 
                 [ 'pattern' => 'nawawi40:<hadithNumbers:\d+>',

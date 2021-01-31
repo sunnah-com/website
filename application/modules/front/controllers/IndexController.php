@@ -3,6 +3,7 @@
 namespace app\modules\front\controllers;
 
 use app\controllers\SController;
+use app\modules\front\models\ContactForm;
 use Yii;
 
 class IndexController extends SController
@@ -26,6 +27,10 @@ class IndexController extends SController
     public function actions()
     {
         return [
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
@@ -111,7 +116,23 @@ class IndexController extends SController
         $this->pathCrumbs('Developers', "/developers");
         $this->view->params['_pageType'] = "about";
 		return $this->render('developers');
-	}
+    }
+
+    public function actionContact() {
+        $this->pathCrumbs('Contact', "/contact");
+        $this->view->params['_pageType'] = "about";
+        $form = new ContactForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            // valid data received in $form
+            $success = false;
+            $result = $form->sendMessage();
+            if ($result == 1) { $success = true; } // Supposed to return an integer but it's returning a bool
+            return $this->render('contact', ['model' => $form, 'success' => $success]);
+        } else {
+            // either the page is initially displayed or there is some validation error
+            return $this->render('contact', ['model' => $form]);
+        }
+    }
 
 	public function actionFlushCache($key = NULL) {
 		if (is_null($key)) $success = Yii::$app->cache->flush();
