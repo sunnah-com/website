@@ -1608,7 +1608,10 @@ textarea {
         overflow-y: hidden;
 	}
 	
-    .book_info,
+	.ebookintro { width: 95%; }
+	.abookintro { width: 95%; }
+    
+	.book_info,
     .AllHadith {
         padding: 10px 20px;
         width: auto;
