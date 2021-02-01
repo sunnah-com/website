@@ -23,13 +23,17 @@ else {
 			<div class="progress_text"><?php echo floor(100*($collection->numhadith)/($collection->totalhadith)); ?>% complete</div>
 		</div>
 		<?php }
-			if (strlen($collection->shortintro) > 0) { ?>
-				<div class=colindextitle>
-				<?php
-				echo $collection->shortintro; 
-				echo "<br><div align=right style=\"padding-top: 7px;\"><a href=\"/$collectionName/about\">More information ...</a></div>\n\n"; ?>
-				</div>
-				<?php
+			if (strlen($collection->shortintro) > 0) {
+				echo "<div class=\"colindextitle\">\n";
+				echo $collection->shortintro;
+
+                $aboutpath = "about/".$collectionName.".php";
+                $path = __DIR__ ."/".$aboutpath;
+                if (realpath($path)) {
+                    echo "<br><div align=right style=\"padding-top: 7px;\"><a href=\"/$collectionName/about\">More information ...</a></div>\n\n";
+                }
+
+				echo "</div>\n";
 			}
 		?>
 	<div class=clear></div>
