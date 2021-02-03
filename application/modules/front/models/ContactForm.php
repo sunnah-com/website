@@ -4,12 +4,14 @@ namespace app\modules\front\models;
 use Yii;
 use yii\base\Model;
 
+use kekaadrenalin\recaptcha3\ReCaptchaValidator;
+
 class ContactForm extends Model
 {
     public $name;
     public $email;
     public $contacttext;
-    public $verifyCode;
+    public $reCaptcha;
 
     public function rules()
     {
@@ -17,7 +19,7 @@ class ContactForm extends Model
             ['contacttext', 'required'],
             ['name', 'default', 'value' => "None"],
             ['email', 'email'],
-            ['verifyCode', 'captcha', 'captchaAction' => '/front/index/captcha'],
+            [['reCaptcha'], ReCaptchaValidator::class, 'acceptance_score' => 0],
         ];
     }
 

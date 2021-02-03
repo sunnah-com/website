@@ -51,6 +51,11 @@ $config = [
             'cookieValidationKey' => $parameters['cookieValidationKey'],
 			'csrfParam' => '_csrf_frontend',
         ],
+        'reCaptcha3' => [
+            'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
+            'site_key'   => $parameters['recaptcha_v3_site_key'],
+            'secret_key' => $parameters['recaptcha_v3_secret_key'],
+        ],
         'cache' => [
             'class' => 'yii\caching\DummyCache',
         ],

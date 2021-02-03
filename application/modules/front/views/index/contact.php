@@ -1,7 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\captcha\Captcha;
+
+use kekaadrenalin\recaptcha3\ReCaptchaWidget;
 
 if (isset($success)) {
     if ($success) {
@@ -65,10 +66,9 @@ else {
                 <tr style="height:5px;"></tr>
                 <tr align=center>
                     <td colspan=2>
-                        <?= $form->field($model, 'verifyCode', ['template'=> "{input} {error}"])
-                            ->widget(Captcha::class, ['captchaAction' => '/front/index/captcha',
-                                                           'template' => "{image}<br>Enter the captcha shown:<br> {input}"
-                                ])
+                        <?=
+                        $form->field($model, 'reCaptcha', ['template'=> "{input} {error}"])
+                            ->widget(ReCaptchaWidget::class)
                         ?>
                     </td>
                 </tr>
