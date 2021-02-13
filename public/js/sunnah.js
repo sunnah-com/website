@@ -160,150 +160,10 @@
 	}	
 
 
-
-
-
-	//#region Copy Menu UI Management
-
-	var openedMenu;
-	var $hadithContainerInObservance;
-
 	/**
-	 * Opens copy menu, fills it from user's preferences from Local Storage
-	 * @param {object} $copyMenu jQuery object representing the copy menu container 
-	 */	
-	function openCopyMenu($copyMenu) {
-		if ($copyMenu) {
-			if (openedMenu) {
-				closeCopyMenu();
-			}
-			
-			$hadithContainerInObservance = $copyMenu.closest('.actualHadithContainer');
-			
-			// if grade for the Hadith is not available, then do not show the option in the dialog box
-			if(!$hadithContainerInObservance.find('.arabic_grade').length) 
-				$hadithContainerInObservance.find('.copyGrade')
-											.parent()
-											.hide();				
-
-			syncAppCopyUserPreferenceWithLocalStorage();
-
-			// Updating the UI with values saved in Local Storage if they were set; 
-			// otherwise, with the default values
-			for (var className in itemsToCopy)
-				$hadithContainerInObservance.find('.' + className)
-											.prop('checked', itemsToCopy[className])
-			
-			$copyMenu.fadeIn('fast');
-			openedMenu = $copyMenu;				
-		}
-	}
-
-
-	/**
-	 * Close the menu that was previously opened, if any. 
-	 * Otherwise, do nothing.
-	 */
-	function closeCopyMenu() {
-		if (openedMenu) {
-			openedMenu.fadeOut('fast');
-			openedMenu = null;					
-		}
-	}
-
-
-	/**
-	 * Manages the closing and opening of copy menus 
-	 * depending on where the user clicks on a page. 
-	 */
-	$(document).on('click', function(event) {
-		$clickedElement = $(event.target);
-		if ($clickedElement.attr('class') == 'copyMenuCaret') {
-			if ($clickedElement.siblings('.copyContainer').is(':visible')) {
-				// user is trying to close a copy menu
-				closeCopyMenu();
-			} else {
-				// user is trying to open a copy menu
-				openCopyMenu($clickedElement.siblings('.copyContainer'));
-			}
-		} else if (openedMenu) {
-			if ($clickedElement.closest('.copyContainer').length) {
-				// User is clicking within an opened copy menu
-				// Don't do anything. Let it remain open.
-			} else {
-				// User is clicking on the website outside the copy menu
-				closeCopyMenu();					
-			}
-		}
-	});
-
-	//#endregion Copy Menu UI Management
-
-
-
-
-
-	//#region Copy Menu Options Local Storage Management
-
-	/**
-	 * Set default copy menu values in this object!
-	 */
-	var itemsToCopy	= { 
-		copyArabic				: true ,
-		copyTranslation			: true ,
-		copyGrade				: true ,
-		copyConciseReference	: true ,
-		copyCompleteReference	: false,		
-		copyURLReference		: true ,
-	};
-
-	
-	/**
-	 * Check to see if all properties in first object are present in the second.
-	 * @param {object} objToCheck The object whose properties need to be checked
-	 * @param {object} objToCompareTo The object whose properties are compared to
-	 * @returns {boolean} true if properties in the second object are present in the first object; otherwise false.
-	 */
-	function checkIfObjectPropertiesExist(objToCheck, objToCompareTo) {
-		for (var prop in objToCompareTo) {
-			if (Object.prototype.hasOwnProperty.call(objToCompareTo, prop)) {
-				if (!objToCheck.hasOwnProperty(prop))
-					return false;
-			}
-		}
-		return true;
-	}
-
-
-	/**
-	 * Sync App's Copy User Preferences in the UI with Local Storage
-	 * @returns {object} An object with boolean properties with keys same as the class name of the UI elements 
-	 */
-	function syncAppCopyUserPreferenceWithLocalStorage() {
-		if (storageAvailable("localStorage")) {
-			var localItemsToCopy = JSON.parse(localStorage.getItem("ItemsToCopy"));			
-
-			if ( localItemsToCopy && checkIfObjectPropertiesExist(localItemsToCopy, itemsToCopy) ) {
-				// Info available in Local Storage.
-				// Caching value in memory for app use.  
-				itemsToCopy = localItemsToCopy;								
-			} else { 
-				// Info not stored in Local Storage as of yet.                
-				// Setting default value for first use if 
-				// nothing is stored as of yet in Local Storage.
-				localStorage.setItem('ItemsToCopy', JSON.stringify(itemsToCopy));
-			}
-		}
-	}
-
-
-	var $copySuccessIndicator;
-
-	/**
-	 * Checking if Storage is both supported and available in the browser 
-	 * in order to persist user preference
+	 * Checks if Storage is supported and available in the browser 
 	 * @param  {string}  type 'localStorage' or 'sessionStorage'
-	 * @returns {boolean} Storage available or not
+	 * @returns {boolean} Is Storage available
 	 */
 	function storageAvailable(type) {
 		var storage;
@@ -330,301 +190,258 @@
 		}
 	}
 
-
 	/**
-	 * Copy menu item click event handler
+	 * Save Clipboard Settings to localStorage
 	 */
-	function updateItemsToCopyInLocalStorage() {
+	function saveCbSettings() {
 		if (storageAvailable("localStorage")) {
-			for(var className in itemsToCopy)
-				itemsToCopy[className] = $hadithContainerInObservance
-											.find('.' + className)
-											.prop('checked');
-			localStorage.setItem('ItemsToCopy', JSON.stringify(itemsToCopy));
+			var $flyout = $("#cb_flyout"),
+				cbSettings = {};
+
+			$flyout.find("input[type=checkbox]").each( function() {
+				cbSettings[ $(this).attr("name") ] = $(this).is(":checked");
+			});
+
+			$flyout.find("input[type=radio]:checked").each( function() {
+				cbSettings[ $(this).attr("name") ] = $(this).val();
+			});
+
+			localStorage.setItem('cbSettings', JSON.stringify(cbSettings));
 		}		
 	}
 
-	//#endregion Copy Menu Options Local Storage Management
 
+	function getCbSettings() {
+		var cbSettings = $.parseJSON(localStorage.getItem('cbSettings'));
+		
+		if ( cbSettings === null ) {
+			// Defaults
+			cbSettings = {
+				arabic: true,
+				translation: true,
+				ref: "concise",
+				url: true,
+				grade: false
+			}
+		}
 
+		return cbSettings;
+	}
 
-
-
-	//#region Copy to Clipboard Operation 
 
 	/**
-	 * Copy button in Copy Dialog Box click event handler
+	 * Handles Copy button
+	 * 
+	 * @listens document#click
 	 */
-	function copyHadithToClipboard(e) {
-		// Get which Hadith to copy and what parts of it to copy
-		$hadithContainerInObservance = $(e).closest('.actualHadithContainer');
-		syncAppCopyUserPreferenceWithLocalStorage();
-
-		var copyText = extractHadithTextFromPage();
+	function cbCopy() {
+		var $hadithContainer = $(this).closest('.actualHadithContainer'),
+			$copyLink = $hadithContainer.find(".copylink"),
+			copyText = getCopyText($hadithContainer);
 		
 		if ("permissions" in navigator && "clipboard" in navigator) 
 			navigator.permissions.query({name: "clipboard-write"})
 				.then(result => {
-					if (result.state == "granted" || result.state == "prompt")								
+					if (result.state === "granted" || result.state === "prompt")
 						copyToClipboard(copyText);
 					else
 						copyToClipboardFallback(copyText);
 				});				
 		else			
 			copyToClipboardFallback(copyText);
+
+		$copyLink.addClass("success");
+		setTimeout(() => {
+			$copyLink.removeClass("success");
+		}, 2500);
 	}
 	
 
 	/**
-	 * Get Hadith text and references from the webpage, 
-	 * and neatly format it into a string according to user specifications
-	 * @returns {string} Hadith text and references neatly formatted into a string 
+	 * Get Hadith text and references from the page
+	 * 
+	 * @returns {string} Formatted hadith text
 	 */
-	function extractHadithTextFromPage() {
-		var hadithStr = '';
+	function getCopyText($hadithContainer) {
+		var hadithStr = '', arabic, translation, grade, ref='', hadithUrl;
+		var itemsToCopy = getCbSettings();
 
-		if (itemsToCopy.copyArabic) {
-			// Adding the Arabic text of Hadith
-			var $arabicContainer = $hadithContainerInObservance.find('.arabic_hadith_full');
+		if (itemsToCopy.arabic) {
+			var $arabicContainer = $hadithContainer.find('.arabic_hadith_full');
 			if ($arabicContainer.length) {
-				var arabicText 	 = getCleanedText(preserveNewLines($arabicContainer));
-				if (arabicText)
-					hadithStr	+= arabicText 
-								+  '\n';
+				arabic = cleanText($arabicContainer.text());
 			}
 		}
 
-		if (itemsToCopy.copyTranslation) {
-			// Adding the translation of Hadith that is visible
-			var $translationContainer = $hadithContainerInObservance.find('.englishcontainer');
+		if (itemsToCopy.translation) {
+			var $translationContainer = $hadithContainer.find('.englishcontainer');
 			if ($translationContainer.length) {
 				$translationContainer.children().each(function () {
 					$this = $(this);
-					if ($this.is(':visible')) { // Whichever translation is visible, copy that only.
-						var translation = getCleanedText(preserveNewLines($this))
+					if ($this.is(':visible')) { // Copy visible translation
+						translation = cleanText($this.text())
 											.replace(/(\S)\[/g, '$1 ['); // Adding a space between a character and opening bracket, which can contain Reference. Needed in Riyadus Saliheen for now.
-						if (translation)
-							hadithStr	+=	'\n'
-										+	translation 
-										+	'\n';
 					} 
 				});					
 			}
 		}
 
-		if (itemsToCopy.copyGrade && $hadithContainerInObservance.find('.gradetable').length) {
-			// Adding the grade of the Hadith
+		if (itemsToCopy.grade && $hadithContainer.find('.gradetable').length) {
 			var $englishGrade, $arabicGrade, englishGrade='';
 
-			$englishGrade = $hadithContainerInObservance.find('.english_grade:nth-child(2)');			
+			$englishGrade = $hadithContainer.find('.english_grade:nth-child(2)');
 			if ($englishGrade.length) {
-				englishGrade = getCleanedText($englishGrade).slice(2);
+				englishGrade = cleanText($englishGrade.text()).slice(2);
 				if (englishGrade)
-					hadithStr += '\nGrade: ' + englishGrade;
+					grade = englishGrade;
 			}
-						 
+
 			if (!englishGrade) {
-				$arabicGrade = $hadithContainerInObservance.find('.arabic_grade:first');
+				$arabicGrade = $hadithContainer.find('.arabic_grade:first');
 				if ($arabicGrade.length) {
-					var arabicGrade = getCleanedText($arabicGrade);
+					var arabicGrade = cleanText($arabicGrade.text());
 					if (arabicGrade)
-						hadithStr += '\nGrade: ' + arabicGrade;
-				}	
+						grade = arabicGrade;
+				}
 			}
 		}
-
-		// Adding a concise reference of Hadith in English
+		// Concise reference
 		var conciseRef = '';
-		var $standardReferenceField = $hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(1)');
-		if ($standardReferenceField.length) {
-			if (getCleanedText($standardReferenceField) == "Reference") {
-				var $conciseRef = $hadithContainerInObservance.find('.hadith_reference tr:first-child td:nth-child(2)');
+		var $refStandard = $hadithContainer.find('.hadith_reference tr:first-child td:nth-child(1)');
+		if ($refStandard.length) {
+			if (cleanText($refStandard.text()) == "Reference") {
+				var $conciseRef = $hadithContainer.find('.hadith_reference tr:first-child td:nth-child(2)');
 				if ($conciseRef.length)	{
-					conciseRef = getCleanedText($conciseRef).slice(2);
+					conciseRef = cleanText($conciseRef.text()).slice(2);
 					if (conciseRef)
-						hadithStr	+=	'\n' 
-									+	conciseRef
-									+	'\n';					 
+						ref = conciseRef;
 				}
 			}
 		} 
-		if (!conciseRef) { // Standard reference numbering is not available for this, 
-						  // including the Collection name.  
-						 // We will have to manually extract this from the breadcrumbs.
+
+		if (!conciseRef) {
+			// Extract from the breadcrumbs
 			var $crumbs = $('.crumbs');
 			if ($crumbs.length) {
-				var crumbs = getCleanedText($crumbs);
-				if (crumbs) {
+				var crumbs = cleanText($crumbs.text());
+				if (crumbs !== "") {
 					var crumbsArray = crumbs.split('»');
 					if (crumbsArray.length > 1) {
-						hadithStr	+= 	'\n' 
-									+	crumbsArray[1].trim();			
-						hadithStr 	+= '\n';						
+						ref = crumbsArray[1].trim();
 					}
-					
 				}
 			}
 		}
-		
 	
-		if (itemsToCopy.copyCompleteReference) {
-			// Adding a more complete reference of Hadith in both Arabic and English
-			var completeReferenceStr= '';						
+		if (itemsToCopy.ref === "detailed") {
+				$chap = $hadithContainer.prevAll('.chapter:first');
 
-			// Getting chapter number and name for complete reference
-			var flagChapterInfoAvailable = false;
-			var $chapterInfo = $hadithContainerInObservance.prevAll('.chapter:first');
-			if ($chapterInfo.length) {
-				var $chapterNameEnglish	= $chapterInfo.find('.englishchapter');
-				var $chapterNumber		= $chapterInfo.find('.achapno');
-				var chapterNameEnglish, chapterNumber;
+			if ($chap.length) {
+				var chapEn	= $chap.find('.englishchapter').text(),
+					chapNo	= $chap.find('.achapno').text();
 
-				if ($chapterNameEnglish.length) {
-					chapterNameEnglish = getCleanedText($chapterNameEnglish);
-					if (chapterNameEnglish.substring(0, 9) == "Chapter: ")
-						chapterNameEnglish = chapterNameEnglish.substr(9);
-				}
-				if ($chapterNumber.length) {
-					chapterNumber = getCleanedText($chapterNumber);
-					if (chapterNumber[0] == '(')
-						chapterNumber = chapterNumber.substring(1, chapterNumber.length - 1)
+				if (chapEn) {
+					chapEn = cleanText(chapEn);
+					if (chapEn.substring(0, 9) == "Chapter: ")
+						chapEn = chapEn.substr(9);
 				}
 
-				if (chapterNumber || chapterNameEnglish) {
-					completeReferenceStr += "Chapter";
-					flagChapterInfoAvailable = true;
+				if (chapNo) {
+					chapNo = cleanText(chapNo);
+					if (chapNo[0] == '(')
+						chapNo = chapNo.substring(1, chapNo.length - 1)
 				}
-				if (chapterNumber)				
-					completeReferenceStr += " " + chapterNumber;
-				if (chapterNameEnglish)
-					completeReferenceStr += ": " + chapterNameEnglish;
+
+				if (chapNo || chapEn) {
+					ref += "\nChapter";
+					ref += chapNo ? " " + chapNo : "";
+					ref += chapEn ? ": " + chapEn : "";
+				}
 			}
 
 			// Getting Book number and name for complete reference
 			var $bookInfo = $('.book_info');
 			if ($bookInfo.length) {
-				var $bookNameEnglish= $bookInfo.find('.book_page_english_name');
-				var $bookNumber		= $bookInfo.find('.book_page_number');
-				var bookNameEnglish, bookNumber;
+				var bookEn	= $bookInfo.find('.book_page_english_name').text();
+				var bookNo		= $bookInfo.find('.book_page_number').text();
 
-				// check if book name tags (divs/classes) are present on page
-				if ($bookNameEnglish.length)
-					bookNameEnglish = getCleanedText($bookNameEnglish);					
-				if ($bookNumber.length)
-					bookNumber = getCleanedText($bookNumber);					
+				bookEn = bookEn !== "" ? cleanText(bookEn) : "";
+				bookNo = bookNo !== "" ? cleanText(bookNo) : "";
 
-				if (bookNumber || bookNameEnglish) {
-					if (flagChapterInfoAvailable)
-						completeReferenceStr += ", ";
-					completeReferenceStr += "Book";
+				if (bookNo || bookEn) {
+					if (chapNo || chapEn)
+						ref += ", ";
+					
+					ref += "Book";
+					ref += bookNo ? " " + bookNo : "";
+					ref += bookEn ? ": " + bookEn : "";
 				}
-				if (bookNumber)				
-					completeReferenceStr += " " + bookNumber;
-				if (bookNameEnglish)
-					completeReferenceStr += ": " + bookNameEnglish;
 			}	
-
-			if (completeReferenceStr)
-				hadithStr += completeReferenceStr + '\n';
 		}
 		
-		if (itemsToCopy.copyURLReference) {
-			// Adding sunnah.com web source reference of Hadith
-			$shareLink = $hadithContainerInObservance.find('.sharelink');
+		if (itemsToCopy.url) {
+			var $shareLink = $hadithContainer.find('.sharelink');
 			if ($shareLink.length) {
-				var pageLink = $shareLink.attr('onclick')
-										 .match(/["'](.*?)["']/)[1];				
-				if (pageLink)
-					hadithStr += 'https://' + window.location.hostname + pageLink;
+				var uri = $shareLink.attr('onclick')
+										 .match(/["'](.*?)["']/)[1];
+				hadithUrl = 'https://' + window.location.hostname + uri;
 			}
 		}
-		
-		return hadithStr.trim();
+
+		if (arabic && translation) {
+			// Add an extra line-break between text and translation
+			arabic += "\n";
+		}
+
+		hadithStr += !arabic	?	"" :  arabic +  '\n';
+		hadithStr += !translation?	"" :  translation + '\n';
+		hadithStr += !ref		?	"" :  '\n' + ref;
+		hadithStr += !grade		?	"" :  '\n' + 'Grade: ' + grade;
+		hadithStr += !hadithUrl	?	"" :  '\n' + hadithUrl;
+
+		return hadithStr;
+	}
+
+
+	function cleanText(text) {
+		text = text
+			.replace(/<br *\/?>/g, '\n\n')
+			.replace(/(\S)( *)(\r\n|\r|\n){1}( *)(\S)/g, '$1 $5') // convert single newline to space
+			.replace(/( *)(\r\n|\r|\n){2,}( *)/g, '\n') // make >2 \n to a single \n
+			.replace(/( *: *)/g, ': ') // Fix colon spacing
+			.replace(/( |\u00a0)+/g, ' ') // Convert multiple spaces or &nbsp; chars into a single space
+			.trim();
+
+		return text;
 	}
 
 
 	/**
-	 * Get text from HTML element, control newlines present inside it which is possible in HTML
-	 * remove multiple-spacing (double-space, &nbsp; , etc.), and trim any whitespace from its ends
-	 * @param {object} $obj jQuery object representing an HTML element from which to extract text 
-	 * @returns {string} Extracted and cleaned text for use
-	 */
-	function getCleanedText($obj) {
-		return 	$obj.text()
-					.replace(/(\S)( *)(\r\n|\r|\n){1}( *)(\S)/g, '$1 $5') // make a single newline character to a space
-					.replace(/( *)(\r\n|\r|\n){2,}( *)/g, '\n') // make 2 or more newline characters to a single newline character
-					.replace(/( *: *)/g, ': ') // Making spaces around colon correct — there should be no space before colon and only 1 space after it
-					.replace(/( |\u00a0)+/g, ' ') // make multiple spaces or &nbsp; characters into a single space.
-					.trim();
-	}
-
-
-	/**
-	 * Converting <br> element to newline character so that we don't lose newline when converting it to simple text. 
-	 * @param {object} $obj jQuery object whose child element need change of <br> into newline.
-	 * @returns {object} A new jQuery element with the required changes made.
-	 */
-	function preserveNewLines($obj) {
-		var temp = 	$obj.html()
-						.trim()
-						.replace(/<br *\/?>/g, '\n\n');
-		return $($.parseHTML("<div>" + temp + "</div>")[0]);
-	}
-
-
-	/**
-	 * Writes text to clipboard and shows success message.
-	 * @param {string} text The text that should be copied to clipboard 
+	 * Writes text to clipboard
+	 * 
+	 * @param {string} text
 	 */
 	function copyToClipboard(text) {
 		navigator.clipboard.writeText(text)
 						   .then(
-								() => showCopySuccessIndicator(),    
 								() => copyToClipboardFallback(text) // In case of failure, use fallback
         					);		
     }
 
 
 	/**
-	 * Display an indication for copy-to-clipboard operation success
-	 */
-	function showCopySuccessIndicator() {
-		$('.copySuccessIndicator').css('opacity', 0); // turn off previously showing indicators
-		$hadithContainerInObservance.find('.copySuccessIndicator')
-									.finish() // remove previously running animations from queue if user is interating quickly and not waiting for them to finish
-									.animate({'opacity': 1}, 'fast')
-									.delay(4800) // show indicator for 4 seconds
-									.animate({'opacity': 0}, 'slow');									
-	}
-
-
-	/**
-	 * Copies to clipboard using a dummy text area and Ctrl+C. 
-	 * Use this as a fallback method if clipboard doesn't work. 
-	 * @param {string} text The text to copy to clipboard 
+	 * Fallback when clipboard not available 
+	 * @param {string} text 
 	 */
 	function copyToClipboardFallback(text) {
 		var dummy = document.createElement("textarea");
-		// to avoid breaking orgain page when copying more words
-		// cant copy when adding below this code
-		// dummy.style.display = 'none'
 		document.body.appendChild(dummy);
 		dummy.value = text;
-
-		// Select the text field
 		dummy.select();
-		dummy.setSelectionRange(0, 99999); /*For mobile devices*/
-		
-		// Copy the text inside the text field
+		dummy.setSelectionRange(0, 99999); /*For mobile devices*/		
 		document.execCommand("copy");
 		document.body.removeChild(dummy);
-		showCopySuccessIndicator();
 	}
-
-	//#endregion Copy to Clipboard Operation 
-
-
-
 
 	
    $(document).ready(function () {  
@@ -710,6 +527,35 @@
 		if (langDisplay != 'english') setLanguageDisplay('english', false);
 		setLanguageDisplay(langDisplay, true);
 	}
+
+	// Listeners for Copy feature
+	$(document).on("click", ".copylink", cbCopy);
+	
+	$("#cb_flyout").on("click", function(e) { e.stopPropagation() });
+
+	$(".copycbcaret").on("click", function(e) {
+		var offset = $(e.currentTarget).offset(),
+			settings = getCbSettings(),
+			$cbFlyout = jQuery("#cb_flyout");
+
+		for (option in settings) {
+			$cbFlyout.find("[type=checkbox][name="+option+"]").prop("checked", settings[option])
+			$cbFlyout.find("[type=radio][value="+settings[option]+"]").prop("checked", true)
+		}
+
+		$("#cb_flyout")
+			.css("top", offset.top)
+			.css("left", offset.left)
+			.show(400);
+	
+		// Avoid immediate trigger
+		setTimeout( function() {
+			$("body").one("click.flyout", function(e) {
+				$("#cb_flyout").hide(400)
+			});
+		}, 500);
+	});
+
 
   });
 

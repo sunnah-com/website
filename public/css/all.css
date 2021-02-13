@@ -1354,7 +1354,7 @@ textarea {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	opacity: .0;
+	opacity: 0;
 	filter:alpha(opacity=0);
 	background: #000;
 	z-index: 10;
@@ -1370,7 +1370,6 @@ textarea {
 	border: 1px solid #fff;
 	box-shadow: 0px 2px 7px #292929;
 	border-radius: 6px;
-	/* background: #f2f2f2;*/
 	background:url(../images/bg_small.png);
 	z-index: 50;
 	padding-left: 15px;
@@ -1379,69 +1378,66 @@ textarea {
 	padding-bottom: 5px;
 }
 
-.sharelink, .copyMenuCaret, .reportlink {
-	cursor: pointer;
-}
-
-.copyLink {
+.sharelink, .copycbcaret, .reportlink, .copylink {
 	cursor: pointer;
 	position: relative;
 }
 
-.copyMenuCaret:hover, .reportlink:hover, .sharelink:hover, .copyLink:hover {
+.copycbcaret:hover, .reportlink:hover, .sharelink:hover, .copylink:hover {
 	color: #426a6a;
 }
-
-.copyMenuAndCaret {
-	position: relative;
-}
-
-.copyContainer {
-	/* width: 400px; */
+#cb_flyout {
+	position: absolute;
+	display: flex;
+	gap: 15px;
+    margin-top: 17px;
+	margin-left: -251px;
 	background:url(../images/bg_small.png);
-	background-repeat: repeat-x repeat-y;
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
 	border-radius: 4px;
-	color: #666;
-	/* float: right;
-	margin-bottom: 10px; */
-	display: none;
 	font-size: 12px;
 	padding: 15px;
-	position: absolute;
-	top: 17px;
 	border: 1px solid rgba(0,0,0,.20);
 	box-shadow: 0 2px 4px rgba(0,0,0,.25);
-	/* right: -1px; */
 }
-
-.copyContainer fieldset {
+#cb_flyout fieldset {
 	border:1px dashed #aaa; 
 	border-radius:3px; 
 	padding-bottom: 4px;
+	width: 100px;
+	margin: 0;
 }
-
-.copyContainer ul {
-	list-style-type: none; 
+#cb_flyout label {
+	display: block; 
+	cursor: pointer;
 	padding: 0px;
-	line-height: 25px;
 	margin: 8px 0;
 }
-
-.copyContainer label, .copyContainer input {
-	cursor: pointer;
+#cb_flyout label input {
+	margin: 0 5px 0 0;
+	vertical-align: text-top;
 }
-
-.copySuccessIndicator {
-	color: #5f995f;
-	font-weight: bold;
-	font-size: medium;
-	opacity: 0;
-	text-shadow: 1px 1px 3px rgba(95, 153, 95, 0.55);
-	position: absolute;
-	top: -15px;
-	left: 8px;
+.copylink {
+	transition: 1s all;
+}
+.copylink.success {
+	color: #07ad07;
+	text-shadow: 0 0 2px #fff, 0 0 5px #77e877;	
+}
+.copylink.success:after {
+    content:"\2714\0020";
+    position: absolute;
+    font-size: 20px;
+    margin-left: -20px;
+    opacity: 0;
+    animation: checkmark 2.5s ease;
+}
+@keyframes checkmark {
+  0%   { opacity: 0; top:-5px;}
+  20%  { opacity: .8; top:-16px;}
+  80%  { opacity: .8; top:-16px;}
+  100% { opacity: 0; top:-5px;}
 }
 
 
@@ -1915,7 +1911,9 @@ textarea {
 		float: none;
 		width: auto;
 	}
-
+	#cb_flyout {
+		margin-left: -150px
+	}
     .footer {
 	    height: 70px;
 	   }

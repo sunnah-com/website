@@ -192,15 +192,8 @@
 				"<span class=reportlink href=\"javascript: void(0);\" onclick=\"reportHadith(".$values[0].", '".$divname."')\">Report Error</span> | ";
 			if (!$hideShare) echo 
 				"<span class=sharelink onclick=\"share('$permalink')\">Share</span> | "; 
-				echo 
-				"<span class=copyLink onclick=\"copyHadithToClipboard(this);\" title=\"Copy Hadith to clipboard\">Copy".
-					"<span class=copySuccessIndicator>✓</span>".
-				"</span> "; 
-				echo
-				"<span class=copyMenuAndCaret title=\"Select which text to copy to clipboard\">".
-					"<span class=copyMenuCaret>▼</span>";
-					include 'copy_hadith_menu.php'; echo 
-				"</span>".
+				echo "<span class=copylink title=\"Copy hadith to clipboard\">Copy</span> "; 
+				echo "<span class=copycbcaret title=\"Change copy options\">▼</span>".
 			"</div>". 
 		"</div>";
 ?>
