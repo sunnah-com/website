@@ -174,7 +174,7 @@ class CollectionController extends SController
                 $urn = $this->_entries[0][$pairs[0][0]]->englishURN;
                 $nextURN = $this->util->getNextURNInCollection($urn);
 				$previousURN = $this->util->getPreviousURNInCollection($urn);
-				$permalinkCanonical = $this->util->get_permalink($this->_entries[1][$pairs[0][1]]->arabicURN, "arabic");
+				$permalinkCanonical = $this->_entries[1][$pairs[0][1]]->permalink;
 				
                 if (!is_null($nextURN)) {
                     $viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
@@ -457,8 +457,11 @@ class CollectionController extends SController
 		if ($this->_book->status > 3) {
 			$nextURN = $this->util->getNextURNInCollection($englishHadith->englishURN);
 			$previousURN = $this->util->getPreviousURNInCollection($englishHadith->englishURN);
-			$permalinkCanonical = $this->util->get_permalink($arabicHadith->arabicURN, "arabic");
 			
+			if (!is_null($arabicHadith)) {
+				$permalinkCanonical = $arabicHadith->permalink;
+			}
+
 			if (!is_null($nextURN)) {
 				$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
 				$viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
