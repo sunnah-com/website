@@ -33,7 +33,7 @@ class Util extends Model {
             ->select("*")
             ->where(['arabicURN' => $aURNs]);
         $arabicSet = $query->all();
-        foreach ($arabicSet as $arabicHadith) $arabicHadith->process_text();
+        foreach ($arabicSet as $arabicHadith) { $arabicHadith->process_text(); $arabicHadith->populate($this); }
         foreach ($arabicSet as $row) $arabicEntries[$row->arabicURN] = $row;
 
         for ($i = 0; $i < count($aURNs); $i++) {
@@ -43,7 +43,7 @@ class Util extends Model {
             ->select('*')
             ->where(['englishURN' => $eURNs]);
         $englishSet = $query->all();
-        foreach ($englishSet as $englishHadith) $englishHadith->process_text();
+        foreach ($englishSet as $englishHadith) { $englishHadith->process_text(); $englishHadith->populate($this); }
         foreach ($englishSet as $row) $englishEntries[$row->englishURN] = $row;
 
         $pairs = array_map(NULL, $eURNs, $aURNs);
@@ -86,11 +86,11 @@ class Util extends Model {
 
         $num = $hadithNumber;
 
-        // First, try a direct match
+        // First, try a direct match (in ArabicHadithTable)
         $direct = $this->searchByNumber($collectionName, $num);
         if (!is_null($direct)) {
 			foreach ($direct as $result) {
-            	$book = $this->getBook($collectionName, $result['bookNumber']);    
+            	$book = $this->getBook($collectionName, $result['bookID'], "arabic");
             	if ($book->status >= 4) return $result['arabicURN'];
 			}
             return null;
@@ -105,7 +105,7 @@ class Util extends Model {
                 $num = $matches[1]." ".$matches[2];
                 $direct = $this->searchByNumber($collectionName, $num);
                 if (!is_null($direct) && count($direct) === 1) {
-                    $book = $this->getBook($collectionName, $direct[0]['bookNumber']);
+                    $book = $this->getBook($collectionName, $direct[0]['bookID'], "arabic");
                     if ($book->status >= 4) return $direct[0]['arabicURN'];
                     return null;
                 }
@@ -115,7 +115,7 @@ class Util extends Model {
 			$this_num = $hadithNumber." a";
 			$direct = $this->searchByNumber($collectionName, $this_num);
 			if (!is_null($direct) && count($direct) === 1) {
-                $book = $this->getBook($collectionName, $direct[0]['bookNumber']);
+                $book = $this->getBook($collectionName, $direct[0]['bookID'], "arabic");
                 if ($book->status >= 4) return $direct[0]['arabicURN'];
                 return null;
             }
@@ -149,19 +149,22 @@ class Util extends Model {
 		return $count;
 	}
 	
-	public function getCollectionsInfo($mode = 'none') {
-		$this->_collectionsInfo = Yii::$app->cache->get("collectionsInfo");
+    public function getCollectionsInfo($mode = 'none', $display_only = false) {
+        $cache_key = "collectionsInfo"."_".(string)$display_only;
+		$this->_collectionsInfo = Yii::$app->cache->get($cache_key);
 		if ($this->_collectionsInfo === false) {
 			$connection = Yii::$app->db;
-			if ($connection == NULL) return array();
-			$query = "SELECT * FROM Collections order by collectionID ASC";
+            if ($connection == NULL) return array();
+            $showOnHomeCondition = "";
+            if ($display_only) { $showOnHomeCondition = "where showOnHome = 1"; }
+			$query = "SELECT * FROM Collections $showOnHomeCondition order by collectionID ASC";
 			$command = $connection->createCommand($query);
 			$this->_collectionsInfo = $command->queryAll();
-			Yii::$app->cache->set("collectionsInfo", $this->_collectionsInfo, Yii::$app->params['cacheTTL']);
+			Yii::$app->cache->set($cache_key, $this->_collectionsInfo, Yii::$app->params['cacheTTL']);
 		}
 		if (strcmp($mode, "indexed") == 0) {
 			foreach ($this->collectionsInfo as $collection)
-				$collections[$collection['name']] = $collection;
+				$collections[$collection['name']] = $this->getCollection($collection['name']);
 			return $collections;
 		}
 		return $this->_collectionsInfo;
@@ -200,7 +203,6 @@ class Util extends Model {
 		//if (is_null($language) and is_numeric($bookID)) return $books[$bookID];
 		//if (strcmp($language, "arabic") == 0 && is_numeric($bookID)) return $arabic_books[$bookID];
 		//if (strcmp($language, "english") == 0 && is_numeric($bookID)) return $english_books[$bookID];
-		
 		return NULL;
 	}
 
@@ -245,6 +247,7 @@ class Util extends Model {
                                                                 ->where("arabicURN = :urn", [':urn' => $urn])->one();
 			if ($hadith) {
 				$hadith->process_text();
+				$hadith->populate($this);
 				Yii::$app->cache->set($language."urn:".$urn, $hadith, Yii::$app->params['cacheTTL']);
 			}
 		}
@@ -252,10 +255,14 @@ class Util extends Model {
     }
 
     public function getVerifiedHadithNumber($urn, $language = "english") {
-        $hadith = $this->getHadith($urn, $language);
-        $arabicURN = $hadith->matchingArabicURN;
-        $arabic_hadith = $this->getHadith($arabicURN, "arabic");
-        return $arabic_hadith->hadithNumber;
+	    $hadith = $this->getHadith($urn, $language);
+        if ($language != "arabic") { $hadith = $this->getHadith($hadith->matchingArabicURN, "arabic"); }
+        $hadithNumber = $hadith->hadithNumber;
+        $hadithNumber = explode(",", $hadithNumber)[0];
+        if ($hadith->collection == "muslim" && $hadith->bookID !== -1) {
+            $hadithNumber = preg_replace("/(\d)\s*([a-zA-Z])/", "$1$2", $hadithNumber);
+        }
+        return $hadithNumber;
     }
 
     // The following two functions should really be written for arabicURNs
@@ -304,49 +311,9 @@ class Util extends Model {
 
     public function get_permalink($urn, $language = "english") {
         // As of now, this method only works for hadith in verified books. 
-        // TODO: Extend to other books
         $hadith = $this->getHadith($urn, $language);
-        
-        $collectionName = $hadith->collection;
-        $collection = $this->getCollection($collectionName);
-        
-        $book = $this->getBook($hadith->collection, $hadith->bookID, "english");
-        if ($book->status < 4) return null;
-        
-        $ourBookID = $book->ourBookID;
-        $bookPart = strval($ourBookID);
-        if ($ourBookID < -1) $bookPart = strval(abs($ourBookID))."b";
-        elseif ($ourBookID == -1) $bookPart = "introduction";
-
-        $ourHadithNumber = $hadith->ourHadithNumber;
-        
-        if ($collection->hasbooks === 'yes') $permalink = "/$collectionName/$bookPart/$ourHadithNumber";
-        else $permalink = "/$collectionName/$ourHadithNumber";
-        return $permalink;
-    }
-
-    public function getPermalinkByURN($urn, $language="arabic") {
-        // As of now, this method only works for hadith in verified books. 
-        // TODO: Extend to other books
-        if ($language !== "arabic") {
-            $hadithTranslation = $this->getHadith($urn, $language);
-            if ($hadithTranslation === null) { return null; }
-            $urn = $hadithTranslation->matchingArabicURN;
-            if ($urn === null) { return null; }
-        }
-
-        $hadith = $this->getHadith($urn, "arabic");
-        $collectionName = $hadith->collection;
-        $collection = $this->getCollection($collectionName);
-        
-        $book = $this->getBook($hadith->collection, $hadith->bookID, "english");
-        if ($book->status < 4) return null;
-        
-        // In case an entry lists multiple hadith numbers, use the first one
-        $hadithNumber = explode(",", $hadith->hadithNumber)[0];
-
-        $permalink = "/$collectionName:$hadithNumber";        
-        return $permalink;
+        if ($language != "arabic") { $hadith = $this->getHadith($hadith->matchingArabicURN, "arabic"); }
+        return $hadith->permalink;
     }
 
     public function getCarouselHTML($arabicURNs) {

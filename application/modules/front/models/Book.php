@@ -4,11 +4,7 @@ namespace app\modules\front\models;
 
 use yii\db\ActiveRecord;
 use Yii;
-use Util;
-use app\modules\front\models\EnglishHadith;
-use app\modules\front\models\ArabicHadith;
-use app\modules\front\models\UrduHadith;
-use app\modules\front\models\IndonesianHadith;
+use app\modules\front\models\Util;
 
 /**
  * This is the model class for table "BookData".
@@ -26,6 +22,13 @@ use app\modules\front\models\IndonesianHadith;
 
 class Book extends ActiveRecord
 {
+    private $util = null;
+
+    public function __construct($config = []) {
+        parent::__construct($config);
+        $this->util = new Util();
+    }
+
     private function find_closest_element($arr, $val) {
         $last = 0;
         for ($counter = 0; $counter < count($arr); $counter++) {
@@ -61,10 +64,11 @@ class Book extends ActiveRecord
             $query = $query->andWhere('ourHadithNumber <= :endIndex', [':endIndex' => $endIndex]);
             $cacheID .= ":".$beginIndex."-".$endIndex;
         }
+        $collection = $this->util->getCollection($this->collection);
         $englishSet = Yii::$app->cache->get($cacheID);
         if ($englishSet === false) {
 			$englishSet = $query->all();
-            foreach ($englishSet as $englishHadith) $englishHadith->process_text();
+            foreach ($englishSet as $englishHadith) { $englishHadith->process_text(); $englishHadith->populate($this->util, $collection, $this); }
             Yii::$app->cache->set($cacheID, $englishSet, Yii::$app->params['cacheTTL']);
         }
 		foreach ($englishSet as $englishHadith) $retval[] = $englishHadith->toJSON();
@@ -87,6 +91,9 @@ class Book extends ActiveRecord
         }
 
         if (strlen($this->englishBookID) < 1 && strlen($this->arabicBookID) < 1) return array();
+
+        $collection = $this->util->getCollection($this->collection);
+
         $query = EnglishHadith::find()
                   ->select('*')
                   ->where('collection = :collection', [':collection' => $this->collection])
@@ -102,7 +109,7 @@ class Book extends ActiveRecord
 		$englishSet = Yii::$app->cache->get($cacheID);
 		if ($englishSet === false) {
         	$englishSet = $query->all();
-			foreach ($englishSet as $englishHadith) $englishHadith->process_text();
+			foreach ($englishSet as $englishHadith) { $englishHadith->process_text(); $englishHadith->populate($this->util, $collection, $this); }
 			Yii::$app->cache->set($cacheID, $englishSet, Yii::$app->params['cacheTTL']);
 		}
 
@@ -128,7 +135,7 @@ class Book extends ActiveRecord
         $arabicSet = Yii::$app->cache->get($cacheID); 
 		if ($arabicSet === false) {
         	$arabicSet = $query->all();
-			foreach ($arabicSet as $arabicHadith) $arabicHadith->process_text();
+			foreach ($arabicSet as $arabicHadith) { $arabicHadith->process_text(); $arabicHadith->populate($this->util, $collection, $this); }
 			Yii::$app->cache->set($cacheID, $arabicSet, Yii::$app->params['cacheTTL']);
         }
 		else Yii::trace("$cacheID was hit in cache");

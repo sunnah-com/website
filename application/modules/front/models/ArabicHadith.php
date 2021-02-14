@@ -2,7 +2,7 @@
 
 namespace app\modules\front\models;
 
-use app\modules\front\models\Hadith;
+use Yii;
 
 /**
  * This is the model class for table "EnglishHadithTable".
@@ -23,20 +23,121 @@ use app\modules\front\models\Hadith;
  */
 class ArabicHadith extends Hadith
 {
+    private $util = null;
+    public $arabicReference = null; // For non-verified ahadith
 
-    public function process_text() {
+    public function process_text()
+    {
         $processed_text = trim($this->hadithText);
         $processed_text = preg_replace("/^- /", "", $processed_text);
 
         // Collection-specific processing of text
-        if (strcmp($this->collection, "muslim")) { $processed_text = preg_replace("/\n+/", "<br>\n", $processed_text); }
+        if (strcmp($this->collection, "muslim")) {
+            $processed_text = preg_replace("/\n+/", "<br>\n", $processed_text);
+        }
         if (strcmp($this->collection, "riyadussalihin") == 0) {
         }
         if (strcmp($this->collection, "qudsi") == 0) {
         }
-		$processed_text = preg_replace("/\n\n/", "<br><p>\n", $processed_text);
-	
+        $processed_text = preg_replace("/\n\n/", "<br><p>\n", $processed_text);
+
         $this->hadithText = $processed_text;
+    }
+
+    public function populateReferences($util, $collection = null, $book = null)
+    {
+        if (is_null($collection)) { $collection = $util->getCollection($this->collection); }
+        if (is_null($book)) { $book = $util->getBook($this->collection, $this->bookID, "arabic"); }
+
+        if ($book->status === 4) {
+            $hadithNumber = $this->hadithNumber;
+            if ($collection->name == "muslim" && $book->ourBookID !== -1) {
+                $hadithNumber = preg_replace("/(\d)\s*([a-zA-Z])/", "$1$2", $hadithNumber);
+            }
+            if (!is_null($book->reference_template)) {
+                $reference_string = $book->reference_template;
+                $reference_string = str_replace("{hadithNumber}", $hadithNumber, $reference_string);
+                $this->canonicalReference = $reference_string;
+            } else {
+                $this->canonicalReference = $collection->englishTitle . " " . $hadithNumber;
+            }
+
+            $bookNumberReference = "Book " . $book->ourBookID;
+            if (!is_null($book->ourBookNum) && strlen($book->ourBookNum) > 0) {
+                $bookNumberReference = "Book " . $book->ourBookNum;
+            } elseif ($book->ourBookID === -1) {
+                $bookNumberReference = "Introduction";
+            }
+
+            $this->inbookReference = $bookNumberReference . ", ";
+
+            if (($this->collection === "muslim") && ($book->ourBookID === -1)) {
+                $this->inbookReference .= "Narration ";
+            } else {
+                $this->inbookReference .= "Hadith ";
+            }
+            $this->inbookReference .= $this->ourHadithNumber;
+        }
+        else {
+            if ($this->ourHadithNumber > 0) {
+                $this->sunnahReference = "";
+                if ($collection->hasbooks === "yes") { $this->sunnahReference .= "Book ".$this->bookNumber.", "; }
+                $this->sunnahReference .= "Hadith ".$this->ourHadithNumber;
+            }
+
+            $this->arabicReference = "";
+            if ($collection->hasbooks === "yes") { $this->arabicReference .= "Book ".$this->bookNumber.", "; }
+            $this->arabicReference .= "Hadith ".$this->hadithNumber;
+        }
+    }
+
+    public function populatePermalink($util, $collection = null, $book = null) {
+        if (is_null($collection)) { $collection = $util->getCollection($this->collection); }
+        if (is_null($book)) { $book = $util->getBook($this->collection, $this->bookID, "arabic"); }
+
+        $use_colon_permalinks = true;
+
+        if ($book->status === 4) {
+            if ($use_colon_permalinks) {
+                // In case an entry lists multiple hadith numbers, use the first one
+                $hadithNumber = explode(",", $this->hadithNumber)[0];
+                $hadithNumber = preg_replace("/(\d)\s*([a-zA-Z])/", "$1$2", $hadithNumber);
+                $this->permalink = "/$collection->name:".$hadithNumber;
+
+                // Special cases
+                if ($collection->name == "forty") { $this->permalink = "/$book->linkpath:$this->hadithNumber"; }
+                if ($collection->name == "muslim" && $book->ourBookID == -1 && substr($this->hadithNumber, 0, 12) == "Introduction") {
+                    $this->permalink = "/muslim/introduction/$this->ourHadithNumber";
+                }
+            }
+            else {
+                if (!is_null($book->linkpath)) {
+                    $this->permalink = "/$book->linkpath/$this->ourHadithNumber";
+                } else {
+                    if ($collection->hasbooks === "yes") {
+                        if (!is_null($book->ourBookNum)) {
+                            $booklinkpath = $book->ourBookNum;
+                        } else {
+                            $booklinkpath = (string)$book->ourBookID;
+                        }
+                        $this->permalink = "/" . $collection->name . "/$booklinkpath/$this->ourHadithNumber";
+                    } else {
+                        $this->permalink = "/" . $collection->name . "/$this->ourHadithNumber";
+                    } // This collection has no books.
+                }
+            }
+        }
+        else {
+            if ($this->ourHadithNumber > 0) {
+                if ($collection->hasbooks === "yes") {
+                    $this->permalink = "/" . $collection->name . "/$book->ourBookID/$this->ourHadithNumber";
+                    if ($book->ourBookID === -1) { $this->permalink = "/" . $collection->name . "/introduction/$this->ourHadithNumber"; }
+                } else $this->permalink = "/" . $collection->name . "/$this->ourHadithNumber"; // This collection has no books.
+            }
+            else {
+                $this->permalink = "/urn/$this->arabicURN";
+            }
+        }
     }
 
     public static function tableName()

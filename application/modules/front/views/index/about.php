@@ -50,7 +50,7 @@ We are working on importing hadith from other major collections as well.
 We support full search of both the English text of the hadith as well as the Arabic through
 a powerful search engine based on <a href="http://lucene.apache.org">Lucene</a>. To improve your
 search experience, browse through our <a href="/searchtips">Search Tips</a> and 
-Lucene's <a href="http://lucene.apache.org/java/2_4_0/queryparsersyntax.html">query syntax</a> 
+Lucene's <a href="http://lucene.apache.org/java/2_9_4/queryparsersyntax.html">query syntax</a> 
 to create custom and accurate search queries.
 <br><br>
 </div>
@@ -73,7 +73,7 @@ downloading and installing the <a href="http://fonts.qurancomplex.gov.sa/?page_i
 KFGQPC Uthman Taha Naskh font</a>. Any Arabic font with a complete set of ligatures
 will also do. In particular, we use a Unicode character ﷺ to represent <i>sallallahu `alaihi wa sallam</i>.
 If you do not see the character in the previous sentence, your font does not fully support Arabic.
-For Urdu we recommend any Nastaliq font (such as <a href="http://www.urdujahan.com/urdu-fonts/Fajer%20Noori%20Nastalique%2015-12-2006.ttf">Fajer Noori</a>).
+For Urdu we recommend any Nastaliq font (such as <a href="https://urdufonts.net/fonts/fajer-noori-nastalique-regular">Fajer Noori</a>).
 </div></br>
 
 <a name="SourcesNumbering"><div class=section>6. Sources, numbering, and grading</div></a>

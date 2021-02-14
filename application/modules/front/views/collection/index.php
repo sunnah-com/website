@@ -23,13 +23,17 @@ else {
 			<div class="progress_text"><?php echo floor(100*($collection->numhadith)/($collection->totalhadith)); ?>% complete</div>
 		</div>
 		<?php }
-			if (strlen($collection->shortintro) > 0) { ?>
-				<div class=colindextitle>
-				<?php
-				echo $collection->shortintro; 
-				echo "<br><div align=right style=\"padding-top: 7px;\"><a href=\"/$collectionName/about\">More information ...</a></div>\n\n"; ?>
-				</div>
-				<?php
+			if (strlen($collection->shortintro) > 0) {
+				echo "<div class=\"colindextitle\">\n";
+				echo $collection->shortintro;
+
+                $aboutpath = "about/".$collectionName.".php";
+                $path = __DIR__ ."/".$aboutpath;
+                if (realpath($path)) {
+                    echo "<br><div align=right style=\"padding-top: 7px;\"><a href=\"/$collectionName/about\">More information ...</a></div>\n\n";
+                }
+
+				echo "</div>\n";
 			}
 		?>
 	<div class=clear></div>
@@ -43,16 +47,17 @@ else {
 
                         echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
 
-						if ($entry->ourBookID == -1) echo "<a href=\"/".$entry->collection."/introduction\">\n";
-						elseif ($entry->ourBookID == -35 and strcmp($collectionName, "nasai") == 0) echo "<a href=\"/".$entry->collection."/35b\">\n";
-						elseif ($entry->ourBookID == -8 and strcmp($collectionName, "shamail") == 0) echo "<a href=\"/".$entry->collection."/8b\">\n";
-						else echo "<a href=\"/".$entry->collection."/".$entry->ourBookID."\">\n";
+                        if (!is_null($entry->linkpath)) echo "<a href=\"/".$entry->linkpath."\">\n";
+                        else {
+                            if (!is_null($entry->ourBookNum)) $booklinkpath = $entry->ourBookNum;
+                            else $booklinkpath = (string) $entry->ourBookID;
+						    echo "<a href=\"/".$entry->collection."/".$booklinkpath."\">\n";
+                        }
 
-						echo "<div class=\"book_number title_number\">";
-						if ($entry->ourBookID == -1) echo "&nbsp;";
-						elseif ($entry->ourBookID == -35 and strcmp($collectionName, "nasai") == 0) echo "35b";
-						elseif ($entry->ourBookID == -8 and strcmp($collectionName, "shamail") == 0) echo "8b";
-						else echo $entry->ourBookID;
+                        echo "<div class=\"book_number title_number\">";
+                        $book_number_to_display = (string) $entry->ourBookID;
+                        if (!is_null($entry->ourBookNum)) $book_number_to_display = $entry->ourBookNum;
+						echo $book_number_to_display;
 						echo "</div>";
 
 						echo "<div class=\"english english_book_name\">";

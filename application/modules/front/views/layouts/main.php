@@ -59,8 +59,7 @@
   <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
  
   <title>
-	<?php echo $this->context->titleString() ?>
-	Sunnah.com - Sayings and Teachings of Prophet Muhammad (صلى الله عليه و سلم)
+	<?php echo $this->context->titleString() ?>Sunnah.com - Sayings and Teachings of Prophet Muhammad (صلى الله عليه و سلم)
   </title>
 <?php $this->head() ?>
 </head>

@@ -4,6 +4,8 @@ namespace app\components\search;
 
 use app\modules\front\models\Book;
 use app\modules\front\models\Util;
+use app\modules\front\models\ArabicHadith;
+use app\modules\front\models\EnglishHadith;
 use Yii;
 use yii\db\Query;
 
@@ -117,11 +119,21 @@ class SearchResultset
                 array(':bookId' => $hadith['bookID'], ':collection' => $hadith['collection'])
             )->one();
 
+            $arabicEntry = null; $englishEntry = null;
+            if (isset($hadithData['ar'][$arUrn]) && !is_null($hadithData['ar'][$arUrn])) {
+                $arabicEntry = new ArabicHadith($hadithData['ar'][$arUrn]);
+                $arabicEntry->populate($util, $collectionData[$hadith['collection']], $book);
+            }
+            if (isset($hadithData['en'][$enUrn]) && !is_null($hadithData['en'][$enUrn])) {
+                $englishEntry = new EnglishHadith($hadithData['en'][$enUrn]);
+                $englishEntry->populate($util, $collectionData[$hadith['collection']], $book);
+            }
+
             $result['data'] = array(
                 'collection' => $collectionData[$hadith['collection']],
                 'book' => $book,
-                'en' => $hadithData['en'][$enUrn] ?? null,
-                'ar' => $hadithData['ar'][$arUrn] ?? null,
+                'en' => $englishEntry,
+                'ar' => $arabicEntry,
             );
             $newResults[] = $result;
         }

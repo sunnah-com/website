@@ -137,9 +137,11 @@ class CollectionController extends SController
         if (!is_null($this->_book)) $expectedHadithCount = $this->_book->totalNumber;
         else throw new NotFoundHttpException("Book $ourBookID is unavailable or does not exist.");
         $this->view->params['book'] = $this->_book;
-        if ($this->_book) $this->_entries = $this->_book->fetchHadith($hadithRange);
-        $pairs = $this->_entries[2];
-		if (is_null($pairs)) {
+        if ($this->_book) {
+			$this->_entries = $this->_book->fetchHadith($hadithRange);
+        	if (!is_null($this->_entries)) $pairs = $this->_entries[2];
+		}
+		if (!isset($pairs) or is_null($pairs)) {
 			throw new NotFoundHttpException("The data is unavailable or does not exist. Please <a href=\"/contact\">send us a message</a> if you think this is an error.");
 		}
         if (($this->_book) and ($this->_book->status === 4) and is_array($pairs) and ($expectedHadithCount != count($pairs)) and is_null($hadithRange))
@@ -161,7 +163,13 @@ class CollectionController extends SController
 		}
         else {
             $this->view->params['_pageType'] = "hadith";
-            $this->pathCrumbs('Hadith', "");
+            $hadithCrumb = 'Hadith';
+            if ($this->_book->status > 3) {
+                $hadithCrumb = "".$this->_entries[1][$pairs[0][1]]->hadithNumber;
+                if (is_numeric(substr($hadithCrumb, 0, 1))) { $hadithCrumb = "Hadith $hadithCrumb"; }
+            }
+            $this->pathCrumbs($hadithCrumb, "");
+            if ($this->_book->status > 3) { $this->prependToPageTitle($this->_entries[1][$pairs[0][1]]->canonicalReference); }
             if ($this->_book->status > 3 and count($pairs) === 1) { // If it's a single-hadith view page
                 $urn = $this->_entries[0][$pairs[0][0]]->englishURN;
                 $nextURN = $this->util->getNextURNInCollection($urn);
@@ -216,7 +224,8 @@ class CollectionController extends SController
 			$bookTitlePrefix = "";
 			if (strcmp(substr($this->_book->englishBookName, 0, 4), "Book") !== 0 && strcmp(substr($this->_book->englishBookName, 0, 7), "Chapter") !== 0 && strcmp(substr($this->_book->englishBookName, 0, 4), "The ") !== 0)
 				$bookTitlePrefix = "Book of ";
-            $this->pathCrumbs($bookTitlePrefix.$this->_book->englishBookName, "/".$collectionName."/".$lastlink);
+            $this->pathCrumbs($this->_book->englishBookName, "/".$collectionName."/".$lastlink);
+            if ($this->_book->status > 3) { $this->prependToPageTitle($this->_book->englishBookName); }
         }
 		elseif ($ourBookID === -1) {
 			// The case where the collection doesn't technically have books but there is an introduction pseudobook
@@ -225,17 +234,16 @@ class CollectionController extends SController
 		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
 
-		// TODO: Expand to all verified collections at the end of the experiment
-		if ($this->_book->status > 3 && $collectionName == "riyadussalihin") {
+		if ($this->_book->status > 3 and count($pairs) > 0) {
 			$urn = $this->_entries[1][$pairs[0][1]]->arabicURN;
-			$permalinkCanonical = $this->util->getPermalinkByURN($urn);
+			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
 
 			if (isset($nextURN) && !is_null($nextURN))
-				$viewVars['nextPermalink'] = $this->util->getPermalinkByURN($nextURN, "english");
+				$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
 			
 			if (isset($previousURN) && !is_null($previousURN))
-				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+				$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
 
 			// Add canonical links to single pages only
 			if ( $permalinkCanonical && $this->view->params['_pageType'] == "hadith" && count($pairs) === 1 )
@@ -348,6 +356,7 @@ class CollectionController extends SController
             'arabicEntries' => $this->_entries[1],
             'pairs' => $this->_entries[2],
             'chapters' => $this->_chapters,
+            'books' => $this->_books,
             'showBookNames' => $showBookNames,
             'showChapterNumbers' => $showChapterNumbers,
         ];
@@ -366,6 +375,7 @@ class CollectionController extends SController
 		return Yii::$app->runAction('front/collection/urn', ['urn' => $arabicURN]);
 	}
 
+	// TODO: We could probably get away with a call to actionDispbook here.
 	public function actionUrn($urn) {
         $englishHadith = NULL; $arabicHadith = NULL;
         $viewVars = array();
@@ -390,8 +400,8 @@ class CollectionController extends SController
 		}
 
         $viewVars = [
-            'englishEntries' => null,
-            'arabicEntries' => null,
+            'englishEntries' => array(0 => NULL),
+            'arabicEntries' => array(0 => NULL),
             'pairs' => array(array(0,0)),
             'expectedHadithCount' => 1,
         ];
@@ -449,7 +459,15 @@ class CollectionController extends SController
 
         $this->view->params['_pageType'] = "hadith";
 		$this->view->params['lastUpdated'] = null;
-        $this->pathCrumbs('Hadith', "");
+
+        $hadithCrumb = 'Hadith';
+        if ($this->_book->status > 3 and !is_null($arabicHadith)) {
+            $hadithCrumb = "".$arabicHadith->hadithNumber;
+            if (is_numeric(substr($hadithCrumb, 0, 1))) { $hadithCrumb = "Hadith $hadithCrumb"; }
+            $this->prependToPageTitle($arabicHadith->canonicalReference);
+        }
+        $this->pathCrumbs($hadithCrumb, "");
+
         if (strlen($this->_book->englishBookName) > 0) {
 			$bookPathPart = $this->_book->ourBookID;
 			if ($this->_book->ourBookID === -1) $bookPathPart = "introduction";
@@ -457,20 +475,20 @@ class CollectionController extends SController
 			elseif (($this->_book->ourBookID === -8)) $bookPathPart = "8b";
 
             $this->pathCrumbs($this->_book->englishBookName." - <span class=arabic_text>".$this->_book->arabicBookName.'</span>', "/".$this->_collectionName."/".$bookPathPart);
+            $this->prependToPageTitle($this->_book->englishBookName." - ".$this->_book->arabicBookName);
         }
 		$this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
-		
-		// TODO: Expand to all verified collections at the end of the experiment
-		if ($this->_book->status > 3 && $this->_collectionName == "riyadussalihin") {
+
+		if ($this->_book->status > 3) {
 			$urn = $arabicHadith->arabicURN;
-			$permalinkCanonical = $this->util->getPermalinkByURN($urn);
+			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
 			$viewVars['permalinkCanonical'] = $permalinkCanonical;
 
 			if (isset($nextURN) && !is_null($nextURN))
-				$viewVars['nextPermalink'] = $this->util->getPermalinkByURN($nextURN, "english");
+				$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
 
 			if (isset($previousURN) && !is_null($previousURN))
-				$viewVars['previousPermalink'] = $this->util->getPermalinkByURN($previousURN, "english");
+				$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
 
 			if ( $permalinkCanonical )
 				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);

@@ -30,4 +30,5 @@ $parameters = parse_ini_file(__DIR__ ."/../.env.local");
 	}
 	
 	header('Location: /search/'.addslashes(url_encode(trim($_GET['query']))));
+	exit();
 ?>

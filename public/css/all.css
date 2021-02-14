@@ -773,7 +773,7 @@ textarea {
 	text-align: right;
 }
 .title .english_chapter_name {
-	width: 48%;	
+	width: 47%;	
 }
 .title .arabic_chapter_name {
 	width: 47%;
@@ -851,16 +851,23 @@ textarea {
     white-space: pre-line;
     display: block;
     font-size: 16px;
-    font-family: Akzidenz;
     margin-bottom: 1em;
     line-height: 2.55;
+	text-align: left;
+	font-family: Helvetica, Arial, sans-serif;
 }
+
 .hadith_container_hisn  .arabic_text_details {
     font-size: 27px;
+	text-align: right;
 }
 
 .hadith_container_hisn .translation {
-    	white-space: pre-line;
+    white-space: pre-line;
+}
+
+.hisn_arabic_instructions {
+    color: gray;
 }
 
 .hadith_container_mishkat .text_details {
@@ -1215,6 +1222,9 @@ textarea {
     float: left;
 }
 
+.deprecated_reference {
+    color: #8E8E8E;
+}
 
 .bottomItems {
     width: 100%;
@@ -1655,7 +1665,10 @@ textarea {
         overflow-y: hidden;
 	}
 	
-    .book_info,
+	.ebookintro { width: 95%; }
+	.abookintro { width: 95%; }
+    
+	.book_info,
     .AllHadith {
         padding: 10px 20px;
         width: auto;
@@ -1928,6 +1941,19 @@ textarea {
 	}
 	.sm_links:before {
 		display: none;
+	}
+	.hadith_container_hisn {
+		display: flex;
+		flex-direction: column;
+	}
+	.hadith_container_hisn .arabic_hadith_full {
+		order: 0;
+		margin-top: 0;
+		margin-bottom: 1em;
+	}
+	.hadith_container_hisn .englishcontainer,
+	.hadith_container_hisn .bottomItems {
+		order: 1;
 	}
 	
 	/* Ramadan Home */

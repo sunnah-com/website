@@ -48,6 +48,7 @@ else {
 						$arabicExists = true;
 
 						$urn = $englishEntry->englishURN;
+						$urn_language = "english";
 						$ourHadithNumber = $englishEntry->ourHadithNumber;
 
 						if ($oldBookID != $arabicEntry->bookID) {
@@ -56,12 +57,12 @@ else {
 					    <div class="book_info">
 					        <div class=book_page_colindextitle>
 					            <div class="book_page_arabic_name arabic">
-									<?php echo $this->_books[$arabicEntry->arabicURN]->arabicBookName; ?></div>
+									<?php echo $books[$arabicEntry->arabicURN]->arabicBookName; ?></div>
 					            <div class="book_page_number">
-									<?php echo $this->_books[$arabicEntry->arabicURN]->ourBookID; ?>
+									<?php echo $books[$arabicEntry->arabicURN]->ourBookID; ?>
 								</div>
 					            <div class="book_page_english_name">
-					                <?php echo $this->_books[$arabicEntry->arabicURN]->englishBookName; ?>
+					                <?php echo $books[$arabicEntry->arabicURN]->englishBookName; ?>
 					            </div>
 					            <div class=clear></div>
 					        </div>
@@ -71,7 +72,6 @@ else {
 					<?php
 							}
 							$oldBookID = $arabicEntry->bookID;
-							Yii::trace("arabicURN is ".$arabicEntry->arabicURN);
 							if ($showChapters) displayBab($chapters[$arabicEntry->arabicURN], $showChapterNumbers);
 							$oldBabID = $chapters[$arabicEntry->arabicURN]->arabicBabNumber;
 						}
@@ -86,30 +86,28 @@ else {
 							'englishText' => $englishEntry->hadithText,
 							'arabicText' => $arabicEntry->hadithText,
                             'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => NULL,
+                            'hadithNumber' => $arabicEntry->hadithNumber,
+							'book'	=> $books[$arabicEntry->arabicURN],
+							'collection'	=> $collections[$arabicEntry->collection],
                         ));
 
-						echo $this->render('/collection/hadith_reference', array(
-							'englishEntry' => $englishExists,
-                            'arabicEntry' => $arabicExists,
-                            '_collection' => $collections[$arabicEntry->collection],
-							'values' => array($urn, 
-											$englishEntry->volumeNumber, 
-											$englishEntry->bookNumber,
-											NULL,
-											$arabicEntry->bookNumber,
-											$arabicEntry->hadithNumber,
-                                            $ourHadithNumber, 
-                                            $arabicEntry->collection, 
-                                            intval($arabicEntry->bookID), 
-                                            "yes", 
-                                            true, 
-                                            4, 
-                                            $collections[$arabicEntry->collection]['englishTitle'], 
-                                            $englishEntry->grade1, 
-                                            $arabicEntry->grade1, 
-                                            true, 
-                                            "h".$arabicEntry->arabicURN)
-                            ));	
+                        echo $this->render('/collection/hadith_reference', array(
+                            'englishExists' => $englishExists,
+                            'arabicExists' => $arabicExists,
+                            'englishEntry' => $englishEntry,
+                            'arabicEntry' => $arabicEntry,
+                            'collection' => $collections[$arabicEntry->collection],
+                            'book' => $books[$arabicEntry->arabicURN],
+                            'urn' => $urn,
+                            'ourHadithNumber' => $ourHadithNumber,
+                            'ourBookID' => (int)$arabicEntry->bookID,
+                            'hideReportError' => true,
+                            'divName' => "h".$arabicEntry->arabicURN,
+                            'hideShare' => false,
+                            'urn_language' => $urn_language,
+                            'showEnglishTranslationNumber' => "no",
+                        ));
+
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
                         echo "<div class=clear></div>";
 						}

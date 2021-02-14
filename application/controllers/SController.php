@@ -32,14 +32,16 @@ class SController extends Controller
 	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
 	 * for more details on how to specify this property.
 	 */
-	public $breadcrumbs=array();
+	public $breadcrumbs = array();
 
 	protected $_viewVars;
 	protected $_pageType;
 	protected $_errorMsg;
 
+	protected $_titleOverrideCrumbs = false;
 	protected $_pageNames = array();
     protected $_pageLinks = array();
+    protected $_titleSections = array();
 
 	protected $util;
 
@@ -64,15 +66,26 @@ class SController extends Controller
         return $crumbString;
     }
 
+    public function prependToPageTitle($section) {
+        $this->_titleOverrideCrumbs = true;
+        array_splice($this->_titleSections, 0, 0, $section);
+        return $this->titleString();
+    }
+
     public function titleString() {
-        $crumbString = "";
-        for ($i = count($this->_pageNames)-1; $i >= 0; $i--) {
-            $name = $this->_pageNames[$i];
-            $crumbString .= $name;
-            $crumbString .= " - ";
+        $src_array = $this->_pageNames;
+        if ($this->_titleOverrideCrumbs) {
+            $src_array = $this->_titleSections;
         }
-        $crumbString = preg_replace("/- <span.*?<\/span>/", "", $crumbString);
-		return strip_tags($crumbString);
+
+        $title = "";
+        for ($i = count($src_array) - 1; $i >= 0; $i--) {
+            $name = $src_array[$i];
+            $title .= $name;
+            $title .= " - ";
+        }
+        $title = preg_replace("/- <span.*?<\/span>/", "", $title);
+        return strip_tags($title);
     }
 
     public function auto_version($filename) {

@@ -1,6 +1,9 @@
 <?php
 
 use yii\widgets\LinkPager;
+use app\modules\front\models\Util;
+use app\modules\front\models\ArabicHadith;
+use app\modules\front\models\EnglishHadith;
 
 function truncateHadithText($hadith)
 {
@@ -62,6 +65,7 @@ if (isset($errorMsg)) {
 
         echo "<div style=\"height: 20px;\"></div>";
 
+        $util = new Util();
         foreach ($resultset->getResults() as $result) {
             $data = $result['data'];
             $hadith = $data[$result['language']];
@@ -69,24 +73,11 @@ if (isset($errorMsg)) {
             $book = $data['book'];
             $ourBookID = $book->ourBookID;
 
-            if ($hadith['ourHadithNumber'] > 0) {
-                $hasbooks = $collection['hasbooks'];
-                if ($hasbooks === 'yes') {
-                    $booklink = $ourBookID;
-                    if ($ourBookID === -1) {
-                        $booklink = 'introduction';
-                    } elseif ($ourBookID === -35) {
-                        $booklink = '35b';
-                    } elseif ($ourBookID === -8) {
-                        $booklink = '8b';
-                    }
-                    $permalink = '/'.$collection['name'].'/'.$booklink.'/'.$hadith['ourHadithNumber'];
-                } else {
-                    $permalink = '/'.$collection['name'].'/'.$hadith['ourHadithNumber'];
-                }
-            } else {
-                $permalink = '/urn/'.$result['urn'];
-            }
+            $arabicEntry = $data['ar'];
+            $englishEntry = $data['en'];
+
+            if ((bool)$arabicEntry) $permalink = $arabicEntry->permalink;
+            else $permalink = $englishEntry->permalink;
 
             $truncation = false;
 
@@ -135,33 +126,27 @@ if (isset($errorMsg)) {
                     'arabicText' => $arabicText,
                     'ourHadithNumber' => null,
                     'counter' => null,
-                    'otherlangs' => null
+                    'otherlangs' => null,
+					'hadithNumber' => is_null($data['ar']) ? "" : $data['ar']['hadithNumber'],
+                    'book' => $book,
+                    'collection' => $collection,
                 )
             );
 
             echo $this->render('/collection/hadith_reference', array(
-                'englishEntry' => !!$data['en'],
-                'arabicEntry' => !!$data['ar'],
-                '_collection' => $collection,
-                'values' => array($result['urn'],
-                    $data['en']['volumeNumber'],
-                    $data['en']['bookNumber'],
-                    $data['en']['hadithNumber'],
-                    is_null($data['ar']) ? "" : $data['ar']['bookNumber'],
-                    is_null($data['ar']) ? "" : $data['ar']['hadithNumber'],
-		    $hadith['ourHadithNumber'], 
-		    $collection['name'], 
-		    $ourBookID, 
-		    $collection['hasbooks'], 
-		    $collection['hasvolumes'], 
-		    $book['status'], 
-		    $collection['englishTitle'], 
-		    $data['en']['grade1'], 
-		    is_null($data['ar']) ? "" : $data['ar']['grade1'], 
-		    true, 
-		    "h".(is_null($data['ar']) ? "" : $data['ar']['arabicURN']), 
-		    true, 
-		    $urn_language)
+                'englishExists' => (bool)$englishEntry,
+                'arabicExists' => (bool)$arabicEntry,
+                'englishEntry' => $englishEntry ?? new EnglishHadith(),
+                'arabicEntry' => $arabicEntry ?? new ArabicHadith(),
+                'collection' => $collection,
+                'book' => $book,
+                'urn' => $result['urn'],
+                'ourHadithNumber' => $hadith['ourHadithNumber'],
+                'ourBookID' => $ourBookID,
+                'hideReportError' => true,
+                'divName' => "h".(is_null($data['ar']) ? "" : $data['ar']['arabicURN']),
+                'hideShare' => true,
+                'urn_language' => $urn_language,
             ));
 
             echo "</div>"; // end actualHadithContainer

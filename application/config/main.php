@@ -48,8 +48,13 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'ZZVnebTQY6SwqiKZhL7eXCkl-7bSAQyX',
+            'cookieValidationKey' => $parameters['cookieValidationKey'],
 			'csrfParam' => '_csrf_frontend',
+        ],
+        'reCaptcha3' => [
+            'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
+            'site_key'   => $parameters['recaptcha_v3_site_key'],
+            'secret_key' => $parameters['recaptcha_v3_secret_key'],
         ],
         'cache' => [
             'class' => 'yii\caching\DummyCache',
@@ -63,10 +68,15 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => $parameters['smtpServer'],  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                'username' => $parameters['smtpUser'],
+                'password' => $parameters['smtpPassword'],
+                'port' => $parameters['smtpPort'], // Port 25 is a very common port too
+                'encryption' => 'tls', // It is often used, check your provider or mail server specs
+         ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -123,6 +133,7 @@ $config = [
                 'changelog' => 'front/index/change-log',
                 'support' => 'front/index/support',
                 'developers' => 'front/index/developers',
+                'contact' => 'front/index/contact',
                 'searchtips' => 'front/index/search-tips',
                 'tce' => 'front/collection/tce',
                 '<selection:ramadan>' => 'front/collection/selection',
@@ -130,31 +141,54 @@ $config = [
                 '<selection:ashura>' => 'front/collection/selection',
                 'selectiondata/<selection:\w+>' => 'front/collection/selection-data', 
                 'socialmedia' => 'front/collection/socialmedia',
+                'captcha' => 'front/index/captcha',
                 'urn/<urn:\d+>' => 'front/collection/urn',
 
-				'<collectionName:\w+>:<hadithNumber\w+>' => 'front/collection/hadith-by-number',
+                [ 'pattern' => 'nawawi40:<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'nawawi40/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'nawawi40',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'qudsi40:<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 2, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'qudsi40/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 2, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'qudsi40',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 2, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'shahwaliullah40:<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'shahwaliullah40/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'shahwaliullah40',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                
+                '<collectionName:\w+>:<hadithNumber\w+>' => 'front/collection/hadith-by-number',
 
 				'ajax/log/hadithcount' => 'front/index/ajaxhadithcount',
 
                 [ 'pattern' => 'ajax/<lang:\w+>/<collectionName>/<ourBookID>',
                   'route' => 'front/collection/ajax-hadith',
                 ],
-                [ 'pattern' => '<collectionName:nawawi40>/<hadithNumbers:\d+>',
-                  'route' => 'front/collection/dispbook', 
-                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
-                ],
-                [ 'pattern' => '<collectionName:nawawi40>',
-                  'route' => 'front/collection/dispbook',
-                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
-                ],
-                [ 'pattern' => '<collectionName:qudsi40>/<hadithNumbers:\d+>',
-                  'route' => 'front/collection/dispbook', 
-                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
-                ],
-                [ 'pattern' => '<collectionName:qudsi40>',
-                  'route' => 'front/collection/dispbook', 
-                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
-                ],
+
                 [ 'pattern' => '<collectionName:hisn>/<hadithNumbers:\d+>',
                   'route' => 'front/collection/dispbook', 
                   'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),

@@ -4,7 +4,7 @@ use app\modules\front\models\EnglishHadith;
 use app\modules\front\models\ArabicHadith;
 
 function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
-	if ($chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
+	if (in_array($collection->name, array("bukhari", "muslim")) && $chapter->babID == 0.1 && intval($chapter->arabicBabNumber) == 0) return;
 	$arabicBabNumber = $chapter->arabicBabNumber;
 	$arabicBabName = $chapter->arabicBabName;
 	$englishBabNumber = $chapter->englishBabNumber;
@@ -64,23 +64,28 @@ else {
     if ($this->params['_pageType'] === "hadith") $showChapterIntro = false;
 
 	$book_name_center_style = "";
-	if (strcmp($collectionHasBooks, "no") == 0) {
+	if ($collectionHasBooks === "no" 
+	    || ($collection->name === "forty" && $book->ourBookID === 1)
+		|| ($collection->name === "mishkat" && $book->ourBookID === -1)
+		) {
 		$book_name_center_style = " centertext";
     }
 
     $collapse_book_intro = "";
-    if ($collection->name === "nawawi40") { $collapse_book_intro = " collapsible collapsed book_intro_initial_height"; }
+    if ($collection->name === "forty" && $book->ourBookID == 1) { $collapse_book_intro = " collapsible collapsed book_intro_initial_height"; }
 ?>
 
     <div class="book_info">
     	<div class="book_page_colindextitle">
     		<div class="book_page_arabic_name arabic<?php echo $book_name_center_style; ?>"><?php echo $book->arabicBookName; ?></div>
 			<?php if (strcmp($collectionHasBooks, "yes") == 0) {
-    				echo "<div class=\"book_page_number\">";
-					if (intval($ourBookID) > 0) echo "$ourBookID";
-				  	elseif ($ourBookID == -35) echo "35b&nbsp;&nbsp; "; 
-				  	elseif ($ourBookID == -8) echo "8b&nbsp;&nbsp; "; 
-					echo "</div>";
+			        $book_number_to_display = (string) $ourBookID;
+                    if (!is_null($book->ourBookNum)) { $book_number_to_display = $book->ourBookNum; }
+                    if (strlen($book_number_to_display) > 0) {
+        				echo "<div class=\"book_page_number\">";
+	    				echo $book_number_to_display."&nbsp;&nbsp;";
+		    		  	echo "</div>";
+                    }
 				  }
 			?>
     		<div class="book_page_english_name<?php echo $book_name_center_style; ?>">
@@ -98,7 +103,7 @@ else {
 					echo "<div class=ebookintro>".$book->englishBookIntro."</div>";
 					echo "<div class=\"arabic abookintro\">".$book->arabicBookIntro."</div>";
 					echo "<div class=clear></div>";
-                    if ($collection->name === "nawawi40") {
+                    if ($collection->name === "forty" && $book->ourBookID == 1) {
                         echo "<a class=\"button_expand\" onclick=\"jQuery(this).closest('.collapsible').toggleClass('collapsed')\"></a>\n";
                     }
                     echo "</div>\n";
@@ -221,36 +226,25 @@ else {
 							'arabicText' => $arabicEntry->hadithText,
 							'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
 							'hadithNumber' => $arabicEntry->hadithNumber,
-							'bookEngTitle' => $collection->englishTitle,
-							'bookStatus'	=> $status,
-							'collection'	=> $collection->name,
+							'book'	=> $book,
+							'collection'	=> $collection,
 							));
 
 						echo $this->render('/collection/hadith_reference', array(
-							'englishEntry' => $englishExists,
-                            'arabicEntry' => $arabicExists,
-                            '_collection' => $collection,
-							'values' => array($urn, 
-											$englishEntry->volumeNumber, 
-											$englishEntry->bookNumber,
-											$englishEntry->hadithNumber,
-											$arabicEntry->bookNumber,
-											$arabicEntry->hadithNumber,
-											$ourHadithNumber, 
-											$collection->name, 
-											$ourBookID, 
-											$collectionHasBooks, 
-											$collectionHasVolumes, 
-											$status, 
-											$collection->englishTitle, 
-											$englishEntry->grade1, 
-											$arabicEntry->grade1,
-											false, // hide report error flag
-											"h".$arabicEntry->arabicURN,
-                                            false, // hide share flag,
-                                            $urn_language
-                                        )
-                            ));	
+							'englishExists' => $englishExists,
+                            'arabicExists' => $arabicExists,
+                            'englishEntry' => $englishEntry,
+                            'arabicEntry' => $arabicEntry,
+                            'collection' => $collection,
+							'book' => $book,
+							'urn' => $urn,
+							'ourHadithNumber' => $ourHadithNumber,
+							'ourBookID' => $ourBookID,
+							'hideReportError' => false,
+							'divName' => "h".$arabicEntry->arabicURN,
+							'hideShare' => false,
+							'urn_language' => $urn_language,
+                            ));
 						echo "<div class=clear></div></div><!-- end actual hadith container -->";
 						echo "<div class=clear></div>";
 
