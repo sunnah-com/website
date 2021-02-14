@@ -112,6 +112,10 @@
 	<div class="clear"></div>
 	</div> <!-- nonheader close -->
     <?php echo $this->render('//layouts/footer') ?>
+    <?php
+		if ($this->params['_pageType'] === "book" || $this->params['_pageType'] === "hadith")
+			echo $this->render('//layouts/clipboard_options')
+	?>
 	<div class="clear"></div>
 
 </div><!-- site div close -->

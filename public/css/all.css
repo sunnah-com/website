@@ -541,23 +541,25 @@ textarea {
 #searchtips a { color: #5d8080; }
 
 #searchtips {
-	width: 400px;
+	width: 300px;
 	background:url(../images/bg_small.png);
 	background-repeat: repeat-x repeat-y;
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
-	border-radius: 8px;
+	border-radius: 4px;
 	color: #666;
 	float: right;
 	margin-bottom: 10px;
 	display: none;
 	font-size: 12px;
-	padding: 5px;
+	padding: 15px;
 	position: absolute;
-	top: 30px;
-	border: 2px solid;
-	right: 50px;
+	top: 30px;	
+	border: 1px solid rgba(0,0,0,.20);
+	box-shadow: 0 2px 4px rgba(0,0,0,.25);
+	right: 30px;
 }
+
 
 #indexsearchtips {
     width: 45%;
@@ -1169,11 +1171,12 @@ textarea {
     border-style: solid;
     padding-left: 15px;
     padding-top: 15px;
-    padding-right: 25px;
+    padding-right: 15px;
     float: right;
     padding-bottom: 10px;
     border: 0px solid;
 	color: #5F9999;
+	user-select: none;
 }
 
 .hadith_permalink a {
@@ -1225,7 +1228,7 @@ textarea {
 
 .bottomItems {
     width: 100%;
-    overflow: auto;
+    overflow: visible;
 	padding-top: 17px;
 }
 
@@ -1361,7 +1364,7 @@ textarea {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	opacity: .0;
+	opacity: 0;
 	filter:alpha(opacity=0);
 	background: #000;
 	z-index: 10;
@@ -1377,7 +1380,6 @@ textarea {
 	border: 1px solid #fff;
 	box-shadow: 0px 2px 7px #292929;
 	border-radius: 6px;
-	/* background: #f2f2f2;*/
 	background:url(../images/bg_small.png);
 	z-index: 50;
 	padding-left: 15px;
@@ -1386,13 +1388,68 @@ textarea {
 	padding-bottom: 5px;
 }
 
-.sharelink {
+.sharelink, .copycbcaret, .reportlink, .copylink {
 	cursor: pointer;
+	position: relative;
 }
 
-.sharelink:hover {
-	text-decoration: underline;
+.copycbcaret:hover, .reportlink:hover, .sharelink:hover, .copylink:hover {
+	color: #426a6a;
 }
+#cb_flyout {
+	position: absolute;
+	display: flex;
+	gap: 15px;
+    margin-top: 17px;
+	margin-left: -251px;
+	background:url(../images/bg_small.png);
+	background-color: rgba(255, 255, 255, 0.5);
+	z-index: 10;
+	border-radius: 4px;
+	font-size: 12px;
+	padding: 15px;
+	border: 1px solid rgba(0,0,0,.20);
+	box-shadow: 0 2px 4px rgba(0,0,0,.25);
+}
+#cb_flyout fieldset {
+	border:1px dashed #aaa; 
+	border-radius:3px; 
+	padding-bottom: 4px;
+	width: 100px;
+	margin: 0;
+}
+#cb_flyout label {
+	display: block; 
+	cursor: pointer;
+	padding: 0px;
+	margin: 8px 0;
+}
+#cb_flyout label input {
+	margin: 0 5px 0 0;
+	vertical-align: text-top;
+}
+.copylink {
+	transition: 1s all;
+}
+.copylink.success {
+	color: #07ad07;
+	text-shadow: 0 0 2px #fff, 0 0 5px #77e877;	
+}
+.copylink.success:after {
+    content:"\2714\0020";
+    position: absolute;
+    font-size: 20px;
+    margin-left: -20px;
+    opacity: 0;
+    animation: checkmark 2.5s ease;
+}
+@keyframes checkmark {
+  0%   { opacity: 0; top:-5px;}
+  20%  { opacity: .8; top:-16px;}
+  80%  { opacity: .8; top:-16px;}
+  100% { opacity: 0; top:-5px;}
+}
+
 
 .share_close {
 	position: relative;
@@ -1867,7 +1924,9 @@ textarea {
 		float: none;
 		width: auto;
 	}
-
+	#cb_flyout {
+		margin-left: -150px
+	}
     .footer {
 	    height: 70px;
 	   }

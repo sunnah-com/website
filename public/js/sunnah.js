@@ -157,7 +157,292 @@
 
 			$(".permalink_box").select();			
 		});
+	}	
+
+
+	/**
+	 * Checks if Storage is supported and available in the browser 
+	 * @param  {string}  type 'localStorage' or 'sessionStorage'
+	 * @returns {boolean} Is Storage available
+	 */
+	function storageAvailable(type) {
+		var storage;
+		try {
+			storage = window[type];
+			var x	= '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		}
+		catch(e) {
+			return e instanceof DOMException && (
+				// everything except Firefox
+				e.code === 22 ||
+				// Firefox
+				e.code === 1014 ||
+				// test name field too, because code might not be present
+				// everything except Firefox
+				e.name === 'QuotaExceededError' ||
+				// Firefox
+				e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+				// acknowledge QuotaExceededError only if there's something already stored
+				(storage && storage.length !== 0);
+		}
 	}
+
+	/**
+	 * Save Clipboard Settings to localStorage
+	 */
+	function saveCbSettings() {
+		if (storageAvailable("localStorage")) {
+			var $flyout = $("#cb_flyout"),
+				cbSettings = {};
+
+			$flyout.find("input[type=checkbox]").each( function() {
+				cbSettings[ $(this).attr("name") ] = $(this).is(":checked");
+			});
+
+			$flyout.find("input[type=radio]:checked").each( function() {
+				cbSettings[ $(this).attr("name") ] = $(this).val();
+			});
+
+			localStorage.setItem('cbSettings', JSON.stringify(cbSettings));
+		}		
+	}
+
+
+	function getCbSettings() {
+		var cbSettings = $.parseJSON(localStorage.getItem('cbSettings'));
+		
+		if ( cbSettings === null ) {
+			// Defaults
+			cbSettings = {
+				arabic: true,
+				translation: true,
+				ref: "concise",
+				url: true,
+				grade: false
+			}
+		}
+
+		return cbSettings;
+	}
+
+
+	/**
+	 * Handles Copy button
+	 * 
+	 * @listens document#click
+	 */
+	function cbCopy() {
+		var $hadithContainer = $(this).closest('.actualHadithContainer'),
+			$copyLink = $hadithContainer.find(".copylink"),
+			copyText = getCopyText($hadithContainer);
+		
+		if ("permissions" in navigator && "clipboard" in navigator) 
+			navigator.permissions.query({name: "clipboard-write"})
+				.then(result => {
+					if (result.state === "granted" || result.state === "prompt")
+						copyToClipboard(copyText);
+					else
+						copyToClipboardFallback(copyText);
+				});				
+		else			
+			copyToClipboardFallback(copyText);
+
+		$copyLink.addClass("success");
+		setTimeout(() => {
+			$copyLink.removeClass("success");
+		}, 2500);
+	}
+	
+
+	/**
+	 * Get Hadith text and references from the page
+	 * 
+	 * @returns {string} Formatted hadith text
+	 */
+	function getCopyText($hadithContainer) {
+		var hadithStr = '', arabic, translation, grade, ref='', hadithUrl;
+		var itemsToCopy = getCbSettings();
+
+		if (itemsToCopy.arabic) {
+			var $arabicContainer = $hadithContainer.find('.arabic_hadith_full');
+			if ($arabicContainer.length) {
+				arabic = cleanText($arabicContainer.text());
+			}
+		}
+
+		if (itemsToCopy.translation) {
+			var $translationContainer = $hadithContainer.find('.englishcontainer');
+			if ($translationContainer.length) {
+				$translationContainer.children().each(function () {
+					$this = $(this);
+					if ($this.is(':visible')) { // Copy visible translation
+						translation = cleanText($this.text())
+											.replace(/(\S)\[/g, '$1 ['); // Adding a space between a character and opening bracket, which can contain Reference. Needed in Riyadus Saliheen for now.
+					} 
+				});					
+			}
+		}
+
+		if (itemsToCopy.grade && $hadithContainer.find('.gradetable').length) {
+			var $englishGrade, $arabicGrade, englishGrade='';
+
+			$englishGrade = $hadithContainer.find('.english_grade:nth-child(2)');
+			if ($englishGrade.length) {
+				englishGrade = cleanText($englishGrade.text()).slice(2);
+				if (englishGrade)
+					grade = englishGrade;
+			}
+
+			if (!englishGrade) {
+				$arabicGrade = $hadithContainer.find('.arabic_grade:first');
+				if ($arabicGrade.length) {
+					var arabicGrade = cleanText($arabicGrade.text());
+					if (arabicGrade)
+						grade = arabicGrade;
+				}
+			}
+		}
+		// Concise reference
+		var conciseRef = '';
+		var $refStandard = $hadithContainer.find('.hadith_reference tr:first-child td:nth-child(1)');
+		if ($refStandard.length) {
+			if (cleanText($refStandard.text()) == "Reference") {
+				var $conciseRef = $hadithContainer.find('.hadith_reference tr:first-child td:nth-child(2)');
+				if ($conciseRef.length)	{
+					conciseRef = cleanText($conciseRef.text()).slice(2);
+					if (conciseRef)
+						ref = conciseRef;
+				}
+			}
+		} 
+
+		if (!conciseRef) {
+			// Extract from the breadcrumbs
+			var $crumbs = $('.crumbs');
+			if ($crumbs.length) {
+				var crumbs = cleanText($crumbs.text());
+				if (crumbs !== "") {
+					var crumbsArray = crumbs.split('»');
+					if (crumbsArray.length > 1) {
+						ref = crumbsArray[1].trim();
+					}
+				}
+			}
+		}
+	
+		if (itemsToCopy.ref === "detailed") {
+				$chap = $hadithContainer.prevAll('.chapter:first');
+
+			if ($chap.length) {
+				var chapEn	= $chap.find('.englishchapter').text(),
+					chapNo	= $chap.find('.achapno').text();
+
+				if (chapEn) {
+					chapEn = cleanText(chapEn);
+					if (chapEn.substring(0, 9) == "Chapter: ")
+						chapEn = chapEn.substr(9);
+				}
+
+				if (chapNo) {
+					chapNo = cleanText(chapNo);
+					if (chapNo[0] == '(')
+						chapNo = chapNo.substring(1, chapNo.length - 1)
+				}
+
+				if (chapNo || chapEn) {
+					ref += "\nChapter";
+					ref += chapNo ? " " + chapNo : "";
+					ref += chapEn ? ": " + chapEn : "";
+				}
+			}
+
+			// Getting Book number and name for complete reference
+			var $bookInfo = $('.book_info');
+			if ($bookInfo.length) {
+				var bookEn	= $bookInfo.find('.book_page_english_name').text();
+				var bookNo		= $bookInfo.find('.book_page_number').text();
+
+				bookEn = bookEn !== "" ? cleanText(bookEn) : "";
+				bookNo = bookNo !== "" ? cleanText(bookNo) : "";
+
+				if (bookNo || bookEn) {
+					if (chapNo || chapEn)
+						ref += ", ";
+					
+					ref += "Book";
+					ref += bookNo ? " " + bookNo : "";
+					ref += bookEn ? ": " + bookEn : "";
+				}
+			}	
+		}
+		
+		if (itemsToCopy.url) {
+			var $shareLink = $hadithContainer.find('.sharelink');
+			if ($shareLink.length) {
+				var uri = $shareLink.attr('onclick')
+										 .match(/["'](.*?)["']/)[1];
+				hadithUrl = 'https://' + window.location.hostname + uri;
+			}
+		}
+
+		if (arabic && translation) {
+			// Add an extra line-break between text and translation
+			arabic += "\n";
+		}
+
+		hadithStr += !arabic	?	"" :  arabic +  '\n';
+		hadithStr += !translation?	"" :  translation + '\n';
+		hadithStr += !ref		?	"" :  '\n' + ref;
+		hadithStr += !grade		?	"" :  '\n' + 'Grade: ' + grade;
+		hadithStr += !hadithUrl	?	"" :  '\n' + hadithUrl;
+
+		return hadithStr;
+	}
+
+
+	function cleanText(text) {
+		text = text
+			.replace(/<br *\/?>/g, '\n\n')
+			.replace(/(\S)( *)(\r\n|\r|\n){1}( *)(\S)/g, '$1 $5') // convert single newline to space
+			.replace(/( *)(\r\n|\r|\n){2,}( *)/g, '\n') // make >2 \n to a single \n
+			.replace(/( *: *)/g, ': ') // Fix colon spacing
+			.replace(/( |\u00a0)+/g, ' ') // Convert multiple spaces or &nbsp; chars into a single space
+			.trim();
+
+		return text;
+	}
+
+
+	/**
+	 * Writes text to clipboard
+	 * 
+	 * @param {string} text
+	 */
+	function copyToClipboard(text) {
+		navigator.clipboard.writeText(text)
+						   .then(
+								() => copyToClipboardFallback(text) // In case of failure, use fallback
+        					);		
+    }
+
+
+	/**
+	 * Fallback when clipboard not available 
+	 * @param {string} text 
+	 */
+	function copyToClipboardFallback(text) {
+		var dummy = document.createElement("textarea");
+		document.body.appendChild(dummy);
+		dummy.value = text;
+		dummy.select();
+		dummy.setSelectionRange(0, 99999); /*For mobile devices*/		
+		document.execCommand("copy");
+		document.body.removeChild(dummy);
+	}
+
 	
    $(document).ready(function () {  
 
@@ -242,6 +527,35 @@
 		if (langDisplay != 'english') setLanguageDisplay('english', false);
 		setLanguageDisplay(langDisplay, true);
 	}
+
+	// Listeners for Copy feature
+	$(document).on("click", ".copylink", cbCopy);
+	
+	$("#cb_flyout").on("click", function(e) { e.stopPropagation() });
+
+	$(".copycbcaret").on("click", function(e) {
+		var offset = $(e.currentTarget).offset(),
+			settings = getCbSettings(),
+			$cbFlyout = jQuery("#cb_flyout");
+
+		for (option in settings) {
+			$cbFlyout.find("[type=checkbox][name="+option+"]").prop("checked", settings[option])
+			$cbFlyout.find("[type=radio][value="+settings[option]+"]").prop("checked", true)
+		}
+
+		$("#cb_flyout")
+			.css("top", offset.top)
+			.css("left", offset.left)
+			.show(400);
+	
+		// Avoid immediate trigger
+		setTimeout( function() {
+			$("body").one("click.flyout", function(e) {
+				$("#cb_flyout").hide(400)
+			});
+		}, 500);
+	});
+
 
   });
 

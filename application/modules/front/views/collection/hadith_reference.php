@@ -7,6 +7,7 @@
 			// TODO: Expand to all verified collections at the end of the experiment
 			// if ($collection === "riyadussalihin") $url = $util->getPermalinkByURN($values[0], $urn_language);
 
+			echo "<div class=\"clear\"></div>";			
 			echo "<div class=bottomItems>\n";
 	    if (($englishExists && strlen($englishEntry->grade1) > 0) or ($arabicExists && strlen($arabicEntry->grade1) > 0)) {
     	    echo "<div class=hadith_annotation>";
@@ -142,15 +143,15 @@
 				}
 			}
 			
-			echo "</table>";
-
+			echo "</table>"; 
 			echo "<div class=\"hadith_permalink\">";
-			//echo "<a href=\"javascript:sharethis()\">Share</a>";
-			//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
-			//echo "<a href=\"$permalink\">Permalink</a>";
-			if (!isset($hideReportError) or !$hideReportError) echo "<a href=\"javascript: void(0);\" onclick=\"reportHadith(".$urn.", '".$divName."')\">Report Error</a> | ";
-			if (!$hideShare) echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span>";
-			echo "</div>";
-
-			echo "\n</div>";
+				//echo "<a href=\"javascript:sharethis()\">Share</a>";
+				//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
+				//echo "<a href=\"$permalink\">Permalink</a>";
+			if (!isset($hideReportError) or !$hideReportError) echo "<span class=reportlink href=\"javascript: void(0);\" onclick=\"reportHadith(".$urn.", '".$divname."')\">Report Error</span> | ";
+			if (!$hideShare) echo  "<span class=sharelink onclick=\"share('$permalink')\">Share</span> | "; 
+				echo "<span class=copylink title=\"Copy hadith to clipboard\">Copy</span> "; 
+				echo "<span class=copycbcaret title=\"Change copy options\">▼</span>".
+			"</div>". 
+		"</div>";
 ?>
