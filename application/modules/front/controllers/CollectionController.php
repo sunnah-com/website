@@ -173,7 +173,9 @@ class CollectionController extends SController
             if ($this->_book->status > 3 and count($pairs) === 1) { // If it's a single-hadith view page
                 $urn = $this->_entries[0][$pairs[0][0]]->englishURN;
                 $nextURN = $this->util->getNextURNInCollection($urn);
-                $previousURN = $this->util->getPreviousURNInCollection($urn);
+				$previousURN = $this->util->getPreviousURNInCollection($urn);
+				$permalinkCanonical = $this->_entries[1][$pairs[0][1]]->permalink;
+				
                 if (!is_null($nextURN)) {
                     $viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
                     $viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
@@ -181,7 +183,9 @@ class CollectionController extends SController
                 if (!is_null($previousURN)) {
                     $viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
                     $viewVars['previousHadithNumber'] = $this->util->getVerifiedHadithNumber($previousURN, $language = "english");
-                }
+				}
+				if ($permalinkCanonical)
+					$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);	
             }
         }
 
@@ -233,22 +237,6 @@ class CollectionController extends SController
 			$this->pathCrumbs($this->_book->englishBookName, "/".$collectionName."/".$lastlink);
 		}
         $this->pathCrumbs($this->_collection->englishTitle, "/$collectionName");
-
-		if ($this->_book->status > 3 and count($pairs) > 0) {
-			$urn = $this->_entries[1][$pairs[0][1]]->arabicURN;
-			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
-			$viewVars['permalinkCanonical'] = $permalinkCanonical;
-
-			if (isset($nextURN) && !is_null($nextURN))
-				$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
-			
-			if (isset($previousURN) && !is_null($previousURN))
-				$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
-
-			// Add canonical links to single pages only
-			if ( $permalinkCanonical && $this->view->params['_pageType'] == "hadith" && count($pairs) === 1 )
-				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
-		}
 		
 		return $this->render('dispbook', $viewVars);
 
@@ -442,19 +430,6 @@ class CollectionController extends SController
             $retval = $this->util->getChapterDataForBook($this->_collectionName, $this->_book->ourBookID);
             foreach ($retval as $chapter) $this->_chapters[$chapter->babID] = $chapter;
             $viewVars['chapters'] = $this->_chapters;
-
-            if ($this->_book->status > 3) {
-                $nextURN = $this->util->getNextURNInCollection($englishHadith->englishURN);
-        	    $previousURN = $this->util->getPreviousURNInCollection($englishHadith->englishURN);
-            	if (!is_null($nextURN)) {
-        	    	$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
-	                $viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
-        	    }
-            	if (!is_null($previousURN)) {
-                	$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
-	                $viewVars['previousHadithNumber'] = $this->util->getVerifiedHadithNumber($previousURN, $language = "english");
-    	        }
-		    }
         }
 
         $this->view->params['_pageType'] = "hadith";
@@ -480,16 +455,21 @@ class CollectionController extends SController
 		$this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
 
 		if ($this->_book->status > 3) {
-			$urn = $arabicHadith->arabicURN;
-			$permalinkCanonical = $this->util->get_permalink($urn, "arabic");
-			$viewVars['permalinkCanonical'] = $permalinkCanonical;
+			$nextURN = $this->util->getNextURNInCollection($englishHadith->englishURN);
+			$previousURN = $this->util->getPreviousURNInCollection($englishHadith->englishURN);
+			
+			if (!is_null($arabicHadith)) {
+				$permalinkCanonical = $arabicHadith->permalink;
+			}
 
-			if (isset($nextURN) && !is_null($nextURN))
+			if (!is_null($nextURN)) {
 				$viewVars['nextPermalink'] = $this->util->get_permalink($nextURN, "english");
-
-			if (isset($previousURN) && !is_null($previousURN))
+				$viewVars['nextHadithNumber'] = $this->util->getVerifiedHadithNumber($nextURN, $language = "english");
+			}
+			if (!is_null($previousURN)) {
 				$viewVars['previousPermalink'] = $this->util->get_permalink($previousURN, "english");
-
+				$viewVars['previousHadithNumber'] = $this->util->getVerifiedHadithNumber($previousURN, $language = "english");
+			}
 			if ( $permalinkCanonical )
 				$this->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://sunnah.com" . ($permalinkCanonical)]);
 		}
