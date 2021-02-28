@@ -269,7 +269,7 @@
 		if (itemsToCopy.arabic) {
 			var $arabicContainer = $hadithContainer.find('.arabic_hadith_full');
 			if ($arabicContainer.length) {
-				arabic = cleanText($arabicContainer.text());
+				arabic = cleanText(preserveNewLines($arabicContainer));
 			}
 		}
 
@@ -291,7 +291,7 @@
 
 			$englishGrade = $hadithContainer.find('.english_grade:nth-child(2)');
 			if ($englishGrade.length) {
-				englishGrade = cleanText($englishGrade.text()).slice(2);
+				englishGrade = cleanText($englishGrade.text());
 				if (englishGrade)
 					grade = englishGrade;
 			}
@@ -338,7 +338,7 @@
 
 			if ($chap.length) {
 				var chapEn	= $chap.find('.englishchapter').text(),
-					chapNo	= $chap.find('.achapno').text();
+					chapNo	= $chap.find('.echapno').text();
 
 				if (chapEn) {
 					chapEn = cleanText(chapEn);
@@ -371,7 +371,9 @@
 				if (bookNo || bookEn) {
 					if (chapNo || chapEn)
 						ref += ", ";
-					
+					else
+						ref += "\n";
+
 					ref += "Book";
 					ref += bookNo ? " " + bookNo : "";
 					ref += bookEn ? ": " + bookEn : "";
@@ -399,7 +401,7 @@
 		hadithStr += !grade		?	"" :  '\n' + 'Grade: ' + grade;
 		hadithStr += !hadithUrl	?	"" :  '\n' + hadithUrl;
 
-		return hadithStr;
+		return hadithStr.trim();
 	}
 
 
@@ -407,12 +409,23 @@
 		text = text
 			.replace(/<br *\/?>/g, '\n\n')
 			.replace(/(\S)( *)(\r\n|\r|\n){1}( *)(\S)/g, '$1 $5') // convert single newline to space
-			.replace(/( *)(\r\n|\r|\n){2,}( *)/g, '\n') // make >2 \n to a single \n
+			.replace(/( *)(\r\n|\r|\n){2,}( *)/g, '\n') // make >=2 \n to a single \n
 			.replace(/( *: *)/g, ': ') // Fix colon spacing
 			.replace(/( |\u00a0)+/g, ' ') // Convert multiple spaces or &nbsp; chars into a single space
 			.trim();
 
 		return text;
+	}
+
+
+	/**
+	 * Converting <br> element to newline character so that we don't lose paragraph information
+	 */
+	function preserveNewLines($obj) {
+		var temp = 	$obj.html()
+						.trim()
+						.replace(/<br *\/?>/g, '\n\n');
+		return $.parseHTML("<div>" + temp + "</div>")[0].innerText;
 	}
 
 
