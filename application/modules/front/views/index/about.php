@@ -132,7 +132,8 @@ We ask that you to keep all those people who worked on this website in your du'a
 <br>
 <a name="Reproduction"><div class=section>8. Reproduction, Copying, Scraping</div></a>
 <div class=content>
-We do not permit the scraping of our data, nor mass reproduction of entire books or collections on other websites. Our data is undergoing continuous refinement.
+We do not permit the scraping of our data, nor mass reproduction of entire books or collections on other websites. Our data is undergoing continuous refinement and this website is designed as a central and up-to-date resource. 
+If you would like a snapshot of hadith data, consider using our <a href="/developers">API</a>.
 Reproducing individual hadith or selections of hadith for a teaching/didactic/presentation purpose is permitted. 
 </div>
 </div>
