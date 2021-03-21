@@ -57,7 +57,7 @@
             echo "<div class=\"arabic_hadith_full arabic\">";
 
             if ($arabicEntry->shortcode_parsed) {
-				echo "<span class=\"arabic\">" . $arabicEntry->hadithText . "</span>";
+				echo $arabicEntry->hadithText;
 			}
             else {
 				echo "<span class=\"arabic_sanad arabic\">" . $arabicSanad1 . "</span>\n";

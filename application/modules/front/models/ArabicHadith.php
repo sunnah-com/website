@@ -44,7 +44,7 @@ class ArabicHadith extends Hadith
     }
 
     public function narratorHandler(ShortcodeInterface $s) {
-        return sprintf('<a href="/narrator/%s" title="%s">%s</a>',
+        return sprintf('<a href="/narrator/%s" title="%s" rel="nofollow">%s</a>',
             $s->getParameter("id"),
             addslashes($s->getParameter("tooltip")),
             $s->getContent());
