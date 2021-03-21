@@ -860,6 +860,7 @@ textarea {
 .hadith_container_hisn  .arabic_text_details {
     font-size: 27px;
 	text-align: right;
+    white-space: pre-line;
 }
 
 .hadith_container_hisn .translation {

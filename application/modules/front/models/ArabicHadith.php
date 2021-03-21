@@ -70,14 +70,13 @@ class ArabicHadith extends Hadith
 
         // Collection-specific processing of text
         if (strcmp($this->collection, "muslim")) {
-            $processed_text = preg_replace("/\n+/", "<br>\n", $processed_text);
+            //$processed_text = preg_replace("/\n+/", "<br>\n", $processed_text);
         }
         if (strcmp($this->collection, "riyadussalihin") == 0) {
         }
         if (strcmp($this->collection, "qudsi") == 0) {
         }
         $processed_text = preg_replace("/\n\n/", "<br><p>\n", $processed_text);
-
         $this->hadithText = $processed_text;
     }
 
