@@ -1,16 +1,13 @@
 {
-    "name": "yiisoft/yii2-app-basic",
-    "description": "Yii 2 Basic Project Template",
-    "keywords": ["yii2", "framework", "basic", "project template"],
-    "homepage": "http://www.yiiframework.com/",
+    "name": "sunnah-com/website",
+    "description": "Sunnah.com Website",
+    "keywords": ["sunnah", "hadith"],
+    "homepage": "https://sunnah.com/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/sunnah-com/website/issues?state=open",
+        "source": "https://github.com/sunnah-com/website"
     },
     "minimum-stability": "stable",
     "require": {
@@ -20,7 +17,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "yiisoft/yii2-debug": "^2.1",
         "ext-json": "*",
-        "kekaadrenalin/yii2-module-recaptcha-v3": "*"
+        "kekaadrenalin/yii2-module-recaptcha-v3": "*",
+        "thunderer/shortcode": "^0.7"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.1.0",
