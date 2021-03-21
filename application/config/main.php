@@ -143,6 +143,7 @@ $config = [
                 'socialmedia' => 'front/collection/socialmedia',
                 'captcha' => 'front/index/captcha',
                 'urn/<urn:\d+>' => 'front/collection/urn',
+                'narrator/<nid:\d+>' => 'front/narrator/index',
 
                 [ 'pattern' => 'nawawi40:<hadithNumbers:\d+>',
                   'route' => 'front/collection/dispbook', 
