@@ -55,9 +55,16 @@
             }
 
             echo "<div class=\"arabic_hadith_full arabic\">";
-            echo "<span class=\"arabic_sanad arabic\">".$arabicSanad1."</span>\n";
-            echo "<span class=\"arabic_text_details arabic\">".$arabicText."</span>";
-            echo "<span class=\"arabic_sanad arabic\">".$arabicSanad2."</span>";
+
+            if ($arabicEntry->shortcode_parsed) {
+				echo "<span class=\"arabic\">" . $arabicEntry->hadithText . "</span>";
+			}
+            else {
+				echo "<span class=\"arabic_sanad arabic\">" . $arabicSanad1 . "</span>\n";
+				echo "<span class=\"arabic_text_details arabic\">" . $arabicText . "</span>";
+				echo "<span class=\"arabic_sanad arabic\">" . $arabicSanad2 . "</span>";
+			}
+
 			if (isset($annotation)) echo "<p><span class=\"arabic arabic_annotation\">$annotation</span>";
 			echo "</div>\n";
 			if (!is_null($otherlangs)) {

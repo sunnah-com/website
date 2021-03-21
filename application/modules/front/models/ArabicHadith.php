@@ -3,6 +3,8 @@
 namespace app\modules\front\models;
 
 use Yii;
+use Thunder\Shortcode\ShortcodeFacade;
+use Thunder\Shortcode\Shortcode\ShortcodeInterface;
 
 /**
  * This is the model class for table "EnglishHadithTable".
@@ -25,11 +27,46 @@ class ArabicHadith extends Hadith
 {
     private $util = null;
     public $arabicReference = null; // For non-verified ahadith
+    private $facade;
+    public $shortcode_parsed = false;
+
+    function __construct() {
+        parent::__construct();
+        $this->makeShortcodeParser();
+    }
+
+    public function sanadizer(ShortcodeInterface $s) {
+        return sprintf('<span class="arabic_sanad">%s</span>', $s->getContent());
+    }
+
+    public function matnizer(ShortcodeInterface $s) {
+        return sprintf('<span class="arabic_text_details">%s</span>', $s->getContent());
+    }
+
+    public function narratorHandler(ShortcodeInterface $s) {
+        return sprintf('<a href="/narrator/%s" title="%s">%s</a>',
+            $s->getParameter("id"),
+            addslashes($s->getParameter("tooltip")),
+            $s->getContent());
+    }
+
+    private function makeShortcodeParser() {
+        $this->facade = new ShortcodeFacade();
+        $this->facade->addHandler('prematn', array($this, 'sanadizer'));
+        $this->facade->addHandler('postmatn', array($this, 'sanadizer'));
+        $this->facade->addHandler('matn', array($this, 'matnizer'));
+        $this->facade->addHandler('narrator', array($this, 'narratorHandler'));
+    }
 
     public function process_text()
     {
         $processed_text = trim($this->hadithText);
         $processed_text = preg_replace("/^- /", "", $processed_text);
+
+        if (strpos($processed_text, "]")) {
+            $processed_text = $this->facade->process($processed_text);
+            $this->shortcode_parsed = true;
+        }
 
         // Collection-specific processing of text
         if (strcmp($this->collection, "muslim")) {
