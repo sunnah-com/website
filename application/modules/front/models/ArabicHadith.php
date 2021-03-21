@@ -30,11 +30,6 @@ class ArabicHadith extends Hadith
     private $facade;
     public $shortcode_parsed = false;
 
-    function __construct() {
-        parent::__construct();
-        $this->makeShortcodeParser();
-    }
-
     public function sanadizer(ShortcodeInterface $s) {
         return sprintf('<span class="arabic_sanad">%s</span>', $s->getContent());
     }
@@ -64,6 +59,7 @@ class ArabicHadith extends Hadith
         $processed_text = preg_replace("/^- /", "", $processed_text);
 
         if (strpos($processed_text, "]")) {
+            $this->makeShortcodeParser();
             $processed_text = $this->facade->process($processed_text);
             $this->shortcode_parsed = true;
         }

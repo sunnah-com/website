@@ -56,7 +56,7 @@
 
             echo "<div class=\"arabic_hadith_full arabic\">";
 
-            if ($arabicEntry->shortcode_parsed) {
+            if (!is_null($arabicEntry) && $arabicEntry->shortcode_parsed) {
 				echo $arabicEntry->hadithText;
 			}
             else {
