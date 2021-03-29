@@ -117,7 +117,7 @@ if (isset($errorMsg)) {
             echo "<div class=collection_sep style=\"width: 98%;\"></div>";
 
             echo "<div class=\"actualHadithContainer\" style=\"position: relative; border-radius: 0 0 10px 10px; margin-bottom: 0px; padding-bottom: 10px; background-color: rgba(255, 255, 255, 0);\">";
-            echo "<a style=\"display: block;\" href=\"$permalink\"><span class=searchlink>\"$permalink\"</span></a>";
+            echo "<a style=\"display: block;\" href=\"$permalink\"><span class=searchlink></span></a>";
             echo $this->render(
                 '/collection/printhadith',
                 array(
