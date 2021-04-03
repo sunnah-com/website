@@ -36,7 +36,7 @@ abstract class SearchEngine
         $resultset = $this->doSearchInternal();
         if ($resultset === null) {
             $this->doNotifyOutage();
-        } else {
+        } else if (YII_ENV != 'dev') {
             $this->logQuery($resultset->getCount());
         }
         return $resultset;
