@@ -547,29 +547,29 @@
 	$("#cb_flyout").on("click", function(e) { e.stopPropagation() });
 
 	$(".copycbcaret").on("click", function(e) {
-		var offset = $(e.currentTarget).offset(),
-			settings = getCbSettings(),
-			$cbFlyout = jQuery("#cb_flyout");
+		var $cbFlyout = jQuery("#cb_flyout");
+		if ($cbFlyout.is(':hidden')) {
+			var offset 	 = $(e.currentTarget).offset(),
+			settings = getCbSettings();
 
-		for (option in settings) {
-			$cbFlyout.find("[type=checkbox][name="+option+"]").prop("checked", settings[option])
-			$cbFlyout.find("[type=radio][value="+settings[option]+"]").prop("checked", true)
+			for (option in settings) {
+				$cbFlyout.find("[type=checkbox][name="+option+"]").prop("checked", settings[option])
+				$cbFlyout.find("[type=radio][value="+settings[option]+"]").prop("checked", true)
+			}
+
+			$("#cb_flyout")
+				.css("top", offset.top)
+				.css("left", offset.left)
+				.show(400);
+		
+			// Avoid immediate trigger
+			setTimeout( function() {
+				$("body").one("click.flyout", function(e) {
+					$("#cb_flyout").hide(400)
+				});
+			}, 500);
 		}
-
-		$("#cb_flyout")
-			.css("top", offset.top)
-			.css("left", offset.left)
-			.show(400);
-	
-		// Avoid immediate trigger
-		setTimeout( function() {
-			$("body").one("click.flyout", function(e) {
-				$("#cb_flyout").hide(400)
-			});
-		}, 500);
 	});
-
-
   });
 
     var langLoaded = new Object();
