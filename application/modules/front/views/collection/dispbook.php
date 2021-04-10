@@ -28,15 +28,15 @@ function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
 			$eprefix = "";
 		}
 
-		echo "<div class=echapno>";
-		if (strlen($babNum) > 0) echo "($babNum)"; 
-		echo "</div>";
-		echo "<div class=englishchapter>".$eprefix.$englishBabName."</div>\n";
+		echo "<div class=\"english_chapter_container\"><div class=\"english_chapter_text\">";
+		if(strlen($babNum) > 0) echo "<span class=\"echapno\">($babNum)</span> "; 
+		echo "<span class=englishchapter>".$eprefix.$englishBabName."</span></div></div>\n";
 	}
-	echo "<div class=achapno>"; if (strlen($arabicBabNumber) > 0) echo "($arabicBabNumber)"; echo "</div>\n";
-	echo "<div class=\"arabicchapter arabic\">$arabicBabName</div>";
-	echo "<div class=clear></div>\n";
-	echo "</div>\n";
+	echo "<div class=\"arabic_chapter_container\"><div class=\"arabic_chapter_text arabic\">"; 
+	if (strlen($arabicBabNumber) > 0) echo "<span class=\"achapno\">($arabicBabNumber)</span> "; 
+	echo "<span class=\"arabicchapter\">".$arabicBabName."</span></div></div>";
+	echo "<div class=clear></div></div>\n";
+	
 
     if ($showIntro) {
     	$acOnlyClass = "";
@@ -77,20 +77,22 @@ else {
 
     <div class="book_info">
     	<div class="book_page_colindextitle">
-    		<div class="book_page_arabic_name arabic<?php echo $book_name_center_style; ?>"><?php echo $book->arabicBookName; ?></div>
-			<?php if (strcmp($collectionHasBooks, "yes") == 0) {
-			        $book_number_to_display = (string) $ourBookID;
-                    if (!is_null($book->ourBookNum)) { $book_number_to_display = $book->ourBookNum; }
-                    if (strlen($book_number_to_display) > 0) {
-        				echo "<div class=\"book_page_number\">";
-	    				echo $book_number_to_display."&nbsp;&nbsp;";
-		    		  	echo "</div>";
-                    }
-				  }
-			?>
-    		<div class="book_page_english_name<?php echo $book_name_center_style; ?>">
-				<?php echo $book->englishBookName; ?>
+			<div class="book_title_english_container">
+				<div class="book_page_english_text">
+					<?php if (strcmp($collectionHasBooks, "yes") == 0) {
+							$book_number_to_display = (string) $ourBookID;
+							if (!is_null($book->ourBookNum)) { $book_number_to_display = $book->ourBookNum; }
+							if (strlen($book_number_to_display) > 0) {        				
+								echo "(<span class=\"book_page_number\">".$book_number_to_display."</span>) ";		    		  	
+							}
+						}
+					?>
+					<span class="book_page_english_name<?php echo $book_name_center_style; ?>">			
+						<?php echo $book->englishBookName; ?>
+					</span>
+				</div>
 			</div>
+    		<div class="book_title_arabic_container"><div class="book_page_arabic_name arabic<?php echo $book_name_center_style; ?>"><?php echo $book->arabicBookName; ?></div></div>
     		<div class=clear></div>
 		</div>
     	<div class=clear></div>

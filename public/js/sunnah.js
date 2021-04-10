@@ -363,7 +363,7 @@
 			var $bookInfo = $('.book_info');
 			if ($bookInfo.length) {
 				var bookEn	= $bookInfo.find('.book_page_english_name').text();
-				var bookNo		= $bookInfo.find('.book_page_number').text();
+				var bookNo	= $bookInfo.find('.book_page_number').text();
 
 				bookEn = bookEn !== "" ? cleanText(bookEn) : "";
 				bookNo = bookNo !== "" ? cleanText(bookNo) : "";
@@ -401,6 +401,7 @@
 		hadithStr += !grade		?	"" :  '\n' + 'Grade: ' + grade;
 		hadithStr += !hadithUrl	?	"" :  '\n' + hadithUrl;
 
+		console.log(hadithStr.trim());
 		return hadithStr.trim();
 	}
 
@@ -470,8 +471,11 @@
 			$("#header").css('top', '0');
 			$("#topspace").css('display', 'block');
 			$("#toolbar").css('display', 'none');
-			$("#search").css('bottom', '31px'); // crumbs height + 12 bottom padding
-			$("#sidePanel").css({'position': 'fixed', 'top': '65px', 'left': $(".mainContainer").position().left - $("#sidePanel").width() - 55}); // last number is sidePanelContainer padding
+			$("#search").css('top', '2px'); // crumbs height + 12 bottom padding
+			if (screen.width > 768)
+				$("#sidePanel").css({'position': 'fixed', 'top': '65px'});
+			else
+				$("#sidePanel").css({'position': 'static'});
 		}
 		else {
 			$("#banner").removeClass('bannerMiddle');
@@ -479,8 +483,11 @@
 			$("#header").css('position', 'relative');
 			$("#topspace").css('display', 'none');
 			$("#toolbar").css('display', 'block');
-			$("#search").css('bottom', '45px'); // crumbs height + 20 bottom padding
-			$("#sidePanel").css('position', 'static');
+			$("#search").css('top', '46px'); // crumbs height + 20 bottom padding
+			if (screen.width > 768)
+				$("#sidePanel").css({'position': 'static', 'top': '124px'});
+			else
+				$("#sidePanel").css({'position': 'static'});
 		}
 	});
 
