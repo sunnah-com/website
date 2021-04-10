@@ -36,8 +36,6 @@ abstract class SearchEngine
         $resultset = $this->doSearchInternal();
         if ($resultset === null) {
             $this->doNotifyOutage();
-        } elseif (defined("YII_ENV") && YII_ENV !== "dev") {
-            $this->logQuery($resultset->getCount());
         }
         return $resultset;
     }
@@ -57,14 +55,16 @@ abstract class SearchEngine
 
     public function logQuery($numResults)
     {
-        $searchdb = Yii::$app->searchdb;
-        $searchdb->createCommand(
-            'INSERT INTO `search_queries` (query, IP, numResults) VALUES (:query, :IP, :numResults)',
-            [
-                ':query' => $this->query,
-                ':IP' => Yii::$app->getRequest()->getUserIP(),
-                ':numResults' => $numResults
-            ]
-        )->execute();
+        if (defined("YII_ENV") && YII_ENV !== "dev") {
+            $searchdb = Yii::$app->searchdb;
+            $searchdb->createCommand(
+                'INSERT INTO `search_queries` (query, IP, numResults) VALUES (:query, :IP, :numResults)',
+                [
+                    ':query' => $this->query,
+                    ':IP' => Yii::$app->getRequest()->getUserIP(),
+                    ':numResults' => $numResults
+                ]
+            )->execute();
+        }
     }
 }

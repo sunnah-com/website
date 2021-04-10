@@ -45,6 +45,9 @@ class KeywordSearchEngine extends SearchEngine
         if ($resultset !== null) {
             // Only English engine supports suggestions
             $resultset->setSuggestions($enSuggestions);
+
+            // Log the query and result set size
+            $this->logQuery($resultset->getCount());
         }
 
         return $resultset;
