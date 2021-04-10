@@ -4,7 +4,7 @@
 	<a href="/news">News</a> |
 	<a href="/support">Support</a> |
 	<a href="/developers">Developers</a> |
-    <a href="/contact">Contact</a>
+    <a href="/contact">Contact</a> |
 	<div class="sm_links">
 		<a href="https://www.facebook.com/Sunnahcom-104172848076350" target="_blank"><i class="icn-fb"></i></a>
 		<a href="https://www.instagram.com/_sunnahcom/" target="_blank"><i class="icn-ig"></i></a>

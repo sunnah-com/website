@@ -1,28 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-
-@font-face {
-	font-family: "Akzidenz";
-	src: local("Akzidenz"), url("/css/fonts/akzidenz-grotesk-light.ttf"); 
-}
-
-@font-face {
-	font-family: "Akzidenz Roman";
-	src: url("/css/fonts/akzidenz-grotesk-roman.eot"); 
-	src: local("Akzidenz Roman"),
-			 url("/css/fonts/akzidenz-grotesk-roman.eot?#iefix") format('embedded-opentype'),
-			 url("/css/fonts/akzidenz-grotesk-roman.woff2") format('woff2'),
-			 url("/css/fonts/akzidenz-grotesk-roman.woff") format('woff'),
-			 url("/css/fonts/akzidenz-grotesk-roman.ttf") format('truetype');
-			 font-display: swap;
-}
-
-@font-face {
-	font-family: "Akzidenz";
-	font-weight: bold;
-	src: local("Akzidenz"), url("/css/fonts/akzidenz-grotesk-bold.ttf"); 
-}
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,800&family=Libre+Baskerville&family=Raleway:wght@400;700&display=swap');
 
 @font-face {
   font-family: 'Noto Nastaliq Urdu';
@@ -69,14 +48,14 @@ html,body{
     margin:0;
     padding:0;
     height: 100%;
-    font-family: "Akzidenz Roman", Helvetica, Arial, sans-serif;
+	font-family: 'Raleway', sans-serif;
     font-size: 14px;
     line-height:1.5;
 }
 
 a {
 	text-decoration: none;
-	color: #5F9999;
+	color: #037d7d;
 }
 
 a:hover {
@@ -97,8 +76,7 @@ textarea {
 .arabic {
     direction: rtl;
     font-family: KFGQPC Uthman Taha Naskh, KFGQPC Uthmanic Script HAFS, Scheherazade, /* Traditional Arabic,*/ Trebuchet MS, Arial, Helvetica;
-    font-size: 19px;
-	text-align: justify;
+	/* text-align: justify; */
 }
 
 .urdu {
@@ -107,7 +85,7 @@ textarea {
 	font-size: 20px;
 	text-align: justify;
 	line-height: 2.35;
-	font-size: 13px;
+	font-size: 17px;
 }
 
 .saws {
@@ -153,25 +131,23 @@ textarea {
 
 #toolbar {
 	z-index: 5;
-	height: 18px;
-	font-size: 12px;
-	font-family: Arial;
-	padding-top: 3px;
+	height: 25px;
+	font-size: 13px;
 	width: 100%;
-	line-height: normal;
+	line-height: 25px;
 	background-color: rgba(251, 250, 248, 0.2);
 }
 
 #toolbarRight {
 	color: #fff;
 	float: right;
-	padding-right: 8px;
+	padding-right: 10px;
 }
 
 #toolbarRight a {
 	color: #fff;
 	text-decoration: none;
-	padding:0 2px;
+	padding:0 5px;
 }
 
 #toolbarRight a:hover {
@@ -185,10 +161,11 @@ textarea {
 }
 
 .bannerTop {
+	margin-left: 15%;
 	height: 70px;
 	background-image: url(../images/logo-small.png);
 	background-repeat: no-repeat;
-	background-position: 64%;
+	background-position: 0 10px;
 	background-size: auto 70%;
 }
 
@@ -201,10 +178,11 @@ textarea {
 }
 
 .bannerMiddle {
+	margin-left: 15%;
 	height: 36px;
 	background-image: url(../images/logo-small.png);
 	background-repeat: no-repeat;
-	background-position: 48%;
+	background-position: 0%;
 	background-size: auto 67%;
 }
 
@@ -251,39 +229,41 @@ textarea {
 	float: left;
 	overflow: auto;
 	height: 100%;
-	margin-right: 15px;
+	/* margin-right: 15px; */
 	top: 0;
 	left: 0;
 }
 
 #sidePanel { 
 	float: right;  
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 30px;
+    margin-right: 50px;
+    margin-top: 30px;
 	background-image: url(../images/banner_small.png);
 	background-repeat: repeat;
-    margin-top: 20px;
-    border-radius:10px;
+    border-radius: 4px;
 }
 
 #languagePanel {
-    border-radius:10px;
-    padding: 15px;
-    padding-top: 15px;
+    border-radius:4px;
+    padding: 3px 6px 8px 6px;
     color: #fff;
-    padding-bottom: 15px;
     /* height: 100px; */
     /*position: fixed;*/
     text-align: left;
     background-color: rgba(251, 250, 248, 0.2);
-    font-size: 12px;
-    font-family: Arial, Verdana;
-    font-weight: bold;
-    width: 127px;
+    font-size: 13px;
+    /* font-family: Arial, Verdana; */
+    /* font-weight: bold; */
 }
 
-#languagePanel input {
+/* #languagePanel input {
 	vertical-align: sub;
+} */
+
+fieldset#translation_panel {
+	border: 1px dashed #c0d7d7;
+	border-radius: 3px;
 }
 
 .home .mainContainer {
@@ -308,11 +288,11 @@ textarea {
 #main {
 	margin: auto;
 	background-repeat: repeat;
-	padding-left:0px;
+	/* padding-left:0px;
 	padding-right:0px;
 	padding-top: 10px;
 	border: 0px solid;
-	float: center;
+	float: center; */
 }
 
 #rightPanel {
@@ -414,14 +394,13 @@ textarea {
     background-repeat: repeat;
     width: 100%;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 15px;
     border: 0px solid;
-    font-size: 16px;
-    padding-top: 4px;
+    font-size: 13px;
+    padding: 15px 0;
 	color: #fff;
 	position: absolute;
 	bottom: 0;
-	height: 30px;
 }
 
 .footer a{
@@ -448,8 +427,8 @@ textarea {
 }
 #search {
 	position: absolute;
-	bottom: 45px;
-	right: 150px;
+	bottom: 47px;
+	right: 15%;
 	float: right;
 }
 
@@ -479,11 +458,12 @@ textarea {
     box-shadow: 0px 0px 11pt 3pt #75a1a1;
 }
 .searchquery {
+	font-family: 'Raleway', sans-serif;
+	font-size: 13px;
 	border:0;
 	width: 100%;
 	height: 29px;
 	padding: 0 2em 0 .75em;
-	font-size: 14px;
 	background-color: rgba(255, 255, 255, 0.85);
 	border-radius: 5px;
 	box-shadow: 0px 0px 9pt 2pt #75a1a1;
@@ -531,9 +511,9 @@ textarea {
 
 .searchtipslink {
 	float: right;
-	font-size: 12px;
+	font-size: 13px;
 	padding-left: 10px;
-	padding-top: 8px;
+	padding-top: 6px;
 	cursor: pointer;
 }
 
@@ -652,7 +632,7 @@ textarea {
     color: #fff;
 	background-color: rgba(251, 250, 248, 0.2);
 	padding: 3px 0px 5px 5px;
-	padding-left: 17.5%;
+	padding-left: 15%;
 }
 
 .crumbs a {color: #fff; }
@@ -802,39 +782,45 @@ textarea {
 }
 
 .book_info {
-	width: 94%;
-	padding-left: 10px;
+	width: 100%;
+	/* padding-left: 10px; */
 }
 
 .book_page_colindextitle {
-	float: left;
-	width: 100%;
-	padding: 5px 20px 5px 5px;
+	/* float: left; 
+	 width: 100%;
+	padding: 5px 20px 5px 5px; */
 	margin-left: 0px;
 	text-align: justify;
 }
 
 .book_page_number {
-	float: left;
-	font-size: 24px;
-	padding-top: 5px;
-	width: 5%;
+	font-family: "Libre Baskerville";
+	font-size: 25px;
 }
 
-.book_page_english_name {
+.book_title_arabic_container {
+	width: 50%;
+	float: right;
+}
+
+.book_title_english_container {
+	width: 50%;
 	float: left;
-	font-size: 24px;
-	padding-top: 5px;
-	width: 47%;
+}
+
+.book_page_english_text {
+	font-family: "Libre Baskerville";
+	font-size: 25px;
 	text-align: left;
+	padding: 30px 30px 30px 40px;
 }
 
 .book_page_arabic_name {
-	float: right;
-	font-size: 30px;
-	/* padding-right: 10px; */
-	width: 47%;
+	font-size: 35px;
+	padding: 30px 40px 30px 30px;
 }
+
 /* Hisn al-Muslim */
 .chapter_index_container {
     width: 80%;
@@ -850,11 +836,12 @@ textarea {
 .transliteration {
     white-space: pre-line;
     display: block;
-    font-size: 16px;
+    font-size: 19px;
     margin-bottom: 1em;
     line-height: 2.55;
 	text-align: left;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: 'EB Garamond', serif;
+	/* font-family: Helvetica, Arial, sans-serif; */
 }
 
 .hadith_container_hisn .arabic_hadith_full {
@@ -966,41 +953,39 @@ textarea {
     background-color: rgba(255, 255, 255, 0.5);
     color: #666;
     width: 100%;
-    padding: 5px 15px 10px 15px;
-    border-radius: 10px;
-    margin-top: 24px;
+    /* padding: 30px; */
+    border-radius: 4px;
+    margin-top: 45px;
     box-sizing: border-box;
-}
-.chapter:first-child {
-	margin-top: 20px;
-}
-.englishchapter {
-    float: left;
-    max-width: 43%;
-    font-size: 13pt;
-    border: 0px solid;
-	padding-top: 3px;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
 }
 
-.echapno {
-    float: left;
-    padding-right: 10px;
-    font-size: 20px;
-    border: 0px solid;
+.chapter:first-of-type {
+	margin-top: 0;
 }
 
-.arabicchapter {
-    float: right;
-    padding-left: 10px;
-    max-width: 42%;
-    font-size: 22px;
-    border: 0px solid;
+.english_chapter_container {
+	width: 50%;
+	float: left;
 }
 
-.achapno {
-    float: right;
-    padding-left: 8px;
-    font-size: 20px;
+.arabic_chapter_container {
+	width: 50%;
+	float: right;
+}
+
+
+.english_chapter_text {
+	font-family: "Libre Baskerville";
+	padding: 30px 30px 30px 40px;
+	font-size: 18px;
+	margin-top: 5px;
+}
+
+.arabic_chapter_text {
+	font-family: 'KFGQPC Uthman Taha Naskh';
+	padding: 30px 40px 30px 30px;
+    font-size: 25px;
     border: 0px solid;
 }
 
@@ -1042,59 +1027,59 @@ textarea {
 .bookintro p { margin:1em; text-align: justify;}
 
 .AllHadith {
-    padding-left:10px;
-    padding-top: 20px;
+    /* padding-left:10px;
+    padding-top: 20px; */
     margin:0;
-    width: 94%;
+    width: 100%;
 }
 
 .actualHadithContainer {
 	background-color: rgba(255, 255, 255, 0.5);
-	border-radius: 10px;
+	border-radius: 4px;
 	float: left;
-	margin: 10px 3px 10px 3px;
+	margin: 15px 0;
 	width: 100%; /* for <1line hadith */
-	box-shadow: 0 21px 28px -21px rgba(0,0,0,.09), 0 22px 29px rgba(0,0,0,.02);
+	box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
 }
 
 .hadith_narrated {
-    font-size:14px;
-    font-weight:bold;
+    font-weight:500;
     color:#5d8080;
     text-decoration:none;
     padding-bottom:8px;
 }
 
 .text_details{
-    font-size:14px;
     color:#08081a;
     text-decoration:none;
     text-align: justify;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
 }
 
 .englishcontainer {
-    width: 47%;
+    width: 50%;
     float: left;
-    text-align:justify;
+    text-align: justify;
+}
+
+.arabiccontainer {
+    width: 50%;
+    float: right;
+    text-align: justify;
 }
 
 .english_hadith_full {
-    padding-left:15px;
-	padding-top: 10px;
-    font-size: 24px;
+	font-family: 'EB Garamond', serif;
+	font-size: 19px;
+    padding:40px 30px 30px 40px;
 }
 
 .english_hadith_full p{ padding:0; margin:0}
 
 .arabic_hadith_full {
-    padding-right: 15px;
-	padding-top: 7px;
-    text-align:justify;
-    font-size: 19px;
-	width: 47%;
-	float: right;
-    line-height: 1.8;
+    padding: 40px 40px 30px 30px;
+    font-size: 22px;
+    line-height: 1.6;
 }
 
 .englishcontainer,
@@ -1113,7 +1098,7 @@ textarea {
     height: 20px;
     position: absolute;
     left: -31px;
-    top: 8px;
+    top: 45px;
 }
 
 .arabic_hadith_full:before {
@@ -1122,8 +1107,7 @@ textarea {
 }
 
 .urdu_hadith_full {
-    padding-left:15px;
-    padding-top: 9px;
+    padding: 40px 30px 30px 40px;
     text-decoration:none;
     padding-bottom: 10px;
     color:#08081a;
@@ -1168,20 +1152,16 @@ textarea {
 }
 
 .hadith_permalink {
-    font-size: 11px;
+    font-size: 13px;
     text-decoration: none;
-    line-height: 11px;
+    /* line-height: 11px; */
     text-align: left;
-    font-family: Verdana, sans-serif;
     border-width: 0px;
     border-style: solid;
-    padding-left: 15px;
-    padding-top: 15px;
-    padding-right: 15px;
+	padding: 30px 40px 40px 10px;
     float: right;
-    padding-bottom: 10px;
     border: 0px solid;
-	color: #5F9999;
+	color: #037d7d;
 	user-select: none;
 }
 
@@ -1189,7 +1169,7 @@ textarea {
     text-decoration: none;
     line-height: 11px;
     text-align: left;
-    font-family: Verdana, sans-serif;
+    /* font-family: Verdana, sans-serif; */
     border-width: 0px;
     border-style: solid;
 }
@@ -1201,20 +1181,16 @@ textarea {
     color: #037d7d;
 }
 .hadith_reference {
-    font-size: 11px;
+    font-size: 13px;
     text-decoration: none;
     line-height: 15px;
     text-align: left;
-    font-family: Verdana, sans-serif;
-    padding-left: 15px;
-    padding-top: 15px;
-    padding-right: 5px;
-    padding-bottom: 10px;
+    padding: 30px 10px 40px 40px;
     /* color: #96691e; */
     float: left;
     /* width: 50%; */
     overflow: auto;
-    border: 0px solid;
+    /* border: 0px solid; */
 }
 
 .reference_value {
@@ -1235,24 +1211,24 @@ textarea {
 .bottomItems {
     width: 100%;
     overflow: visible;
-	padding-top: 17px;
 }
 
 .gradetable {
 	width: 100%;
-	padding: 0 25px 0 15px;
+	padding: 0 40px;
 }
 
 .english_grade {
     vertical-align: top;
-    font-size: 14px;
-    font-family: Verdana;
+    font-size: 15px;
+    /* font-family: Verdana; */
     padding-top: 10px;
     text-align: left;
 	height: 100%;
 }
 
 .arabic_grade {
+	font-size: 19px;
     vertical-align: top;
     direction: rtl;
     text-align: right;
@@ -1397,22 +1373,52 @@ textarea {
 .sharelink, .copycbcaret, .reportlink, .copylink {
 	cursor: pointer;
 	position: relative;
+	vertical-align: middle;
+	border: 1px solid transparent;
 }
 
-.copycbcaret:hover, .reportlink:hover, .sharelink:hover, .copylink:hover {
-	color: #426a6a;
+.sharelink, .copylink, .reportlink {
+	padding: 4px 12px;
 }
+
+.copycbcaret {
+	padding: 4.5px 2px;
+	margin-left: -5px;
+}
+
+.sharelink {
+	margin: 0 -1px;
+}
+
+.reportlink {
+	border-right: 1px solid;
+}
+
+.copylink {
+	border-left: 1px solid;
+}
+
+
+.copycbcaret:hover, .reportlink:hover, .sharelink:hover, .copylink:hover {
+	border: 1px solid #5f9999;
+	/* color: #2a4444; */
+}
+
+.copycbcaret {
+	font-size: 12px;
+}
+
 #cb_flyout {
 	position: absolute;
 	display: flex;
 	gap: 15px;
-    margin-top: 17px;
+    margin-top: 25px;
 	margin-left: -251px;
 	background:url(../images/bg_small.png);
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
 	border-radius: 4px;
-	font-size: 12px;
+	font-size: 13px;
 	padding: 15px;
 	border: 1px solid rgba(0,0,0,.20);
 	box-shadow: 0 2px 4px rgba(0,0,0,.25);
@@ -1435,7 +1441,7 @@ textarea {
 	vertical-align: text-top;
 }
 .copylink {
-	transition: 1s all;
+	transition: 1s text-shadow;
 }
 .copylink.success {
 	color: #07ad07;
@@ -1445,14 +1451,14 @@ textarea {
     content:"\2714\0020";
     position: absolute;
     font-size: 20px;
-    margin-left: -20px;
+    margin-left: -23px;
     opacity: 0;
     animation: checkmark 2.5s ease;
 }
 @keyframes checkmark {
   0%   { opacity: 0; top:-5px;}
-  20%  { opacity: .8; top:-16px;}
-  80%  { opacity: .8; top:-16px;}
+  20%  { opacity: 1; top:-26px;}
+  80%  { opacity: 1; top:-26px;}
   100% { opacity: 0; top:-5px;}
 }
 
@@ -1511,17 +1517,24 @@ textarea {
 /* Hadith Navigation */
 .button {
     display: inline-block;
-    padding: 7px 20px;
+	padding: 10px 15px;
+	font-size: 16px;
+	font-family: 'Libre Baskerville';
     background: #f9f7f2;
-    color: #75a7a8;
-    border-radius: 5px;
-    box-shadow: 0 1px 24px -7px rgba(0,0,0,.15), 0 15px 24px rgba(0,0,0,.16);
-    transition: .3s all ease;
-    line-height: 1.3;
+    color: #037d7d;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
 }
 
 .button:hover {
-	box-shadow: 0 11px 8px -11px rgba(0,0,0,.15), 0 22px 19px rgba(0,0,0,.16);
+	box-shadow: 0 2px 4px rgb(0 0 0 / 40%);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.button:active {
+	box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
+	transform: translateY(1px);
 }
 
 .button[disabled] {
@@ -1531,7 +1544,6 @@ textarea {
 }
 
 .hadith_nav_wrapper {
-	margin: 20px 3px;
 	float: left;
 	width: 100%;
 }
@@ -1548,16 +1560,13 @@ textarea {
 
 .footer .sm_links {
 	display: inline;
-    font-size: .75em;
-    line-height: 16px;
+	vertical-align: middle;
+    /* font-size: .75em;
+    line-height: 16px; */
 }
 .sm_links a {
     margin: 0 .1em;
     vertical-align: text-bottom;
-}
-.sm_links:before {
-    content: " | ";
-    font-size: 16px;
 }
 
 /* Smaller Screens */
@@ -1585,18 +1594,14 @@ textarea {
 		line-height: 27px;
 	}
 	
-    .text_details {
+    /* .text_details {
         font-size: 16px;
-	}
+	} */
 	
-    .AllHadith .arabic {
+    /* .AllHadith .arabic {
         font-size: 25px;
-	}
-	
-    .urdu {
-        font-size: 17px;
-    }
-    
+	} */
+	    
     #site{
 	   min-width: auto;
     }
@@ -1611,17 +1616,18 @@ textarea {
 		padding: 0 1.5em;
 	}
 
-	#toolbar {
-		font-size: 15px;
-		height: 1.7em;
-		line-height: 1.7;
+    .bannerTop {
+        height: 60px;
+        background-position: 50%;
+		margin-left: 0;
 	}
 
-    .bannerTop {
-        height: 40px;
+	.bannerMiddle {
+		margin-left: 0;
         background-position: 50%;
-        background-size: auto 50%;
+		height: 36px;
 	}
+	
 	
     #search {
         position: initial;
@@ -1691,21 +1697,28 @@ textarea {
         margin-bottom: 0px;
 	}
 	
-    .englishchapter,
-    .arabicchapter {
-        max-width: calc(100% - 50px);
-        padding-left: 0;
+	.english_chapter_container, .arabic_chapter_container {
+		float: none;
+		width: auto;
+	}
+
+	.english_chapter_text {
+		padding: 20px 20px 5px 20px;
+		margin-top: 0;
+	}
+
+	.arabic_chapter_text {
+		padding: 5px 20px 20px 20px;
 	}
 	
-    .englishchapter {
-        margin-bottom: 1em;
+    .actualHadithContainer {
+        border-radius: 0;
+        margin: 15px 0;
 	}
 	
-    .actualHadithContainer,
     .chapter {
         border-radius: 0;
-        box-shadow: 0 0 15px #00000012;
-        margin: 0px 0 10px 0;
+        margin: 45px 0 0 0;	
 	}
 	
     .sidePanelContainer,
@@ -1725,12 +1738,23 @@ textarea {
 	
     #languagePanel {
         width: auto;
+		border-radius: 0;
+	}
+
+	.language_option {
+		float: left;
+		margin-right: 20px;
 	}
 	
     #languagePanel > div {
         display: inline;
         margin-left: 8px;
 	}
+	
+	fieldset#translation_panel {
+		border-radius: 4px;
+	}
+
 	
 	.colindextitle.incomplete,
 	.col_progress {
@@ -1743,26 +1767,29 @@ textarea {
 	}
 
     .book_page_colindextitle {
-        padding: 0px 1em;
+        padding: 20px;
         width: 100%;
         float: none;
         box-sizing: border-box;
-        margin: 1.5em 0;
 	}
 
-	.book_page_number {
-		display: inline;
-		float: none;
-	}
-
-	.book_page_english_name {
-		display: inline;
+	.book_title_arabic_container {
+		width: 100%;
 		float: none;
 	}
 
     .book_page_arabic_name {
-        padding: 0;
+        padding: 5px 0 0 0;
         text-align: right;
+	}
+
+	.book_title_english_container {
+		width: 100%;
+		float: none;
+	}
+
+	.book_page_english_name {
+		padding: 0 0 5px 0;
 	}
 	
     .englishcontainer,
@@ -1775,16 +1802,21 @@ textarea {
         float: none;
 	}
 	
+	.arabiccontainer {
+		width: auto;
+        padding: 0;
+        float: none;
+	}	
+	
     .actualHadithContainer {
         padding: 20px;
         float: initial;
         width: 100%;
         box-sizing: border-box;
-        margin: 0 0 65px 0;
 	}
 		
-    .single_hadith .actualHadithContainer {
-        margin-bottom: 10px;
+    .single_hadith {
+        margin-bottom: 15px;
 	}
 	
 	.english_hadith_full:before,
@@ -1812,18 +1844,50 @@ textarea {
 		top: 9px;
 	}
 	
-    .arabic_hadith_full {
-        margin-top: 1em;
+    .arabic_hadith_full, .hadith_annotation, .hadith_reference, .hadith_permalink {
+        margin-top: 20px;
 	}
+
+	.hadith_permalink {
+        margin-bottom: 10px;
+	}
+
+	.gradetable {
+		width: 100%;
+		padding: 0;
+	}	
 	
     .hadith_reference {
-        padding: 1em 0 0 0;
+        padding: 0;
         width: 100%;
-	}
-	
+	}	
+
     .hadith_permalink {
         float: left;
-        padding: 20px 0px 10px ;
+		padding: 0;
+	}
+
+	.copycbcaret:hover, .sharelink:hover {
+		border: 1px solid transparent;
+	}	
+
+	.reportlink:hover {
+		border: 1px solid transparent;
+		border-right: 1px solid;
+	}	
+
+	.copylink:hover {
+		border: 1px solid transparent;
+		border-left: 1px solid;
+	}	
+
+	.reportlink {
+		padding-left: 0;
+		border-right: 1px solid;
+	}	
+
+	.copylink {
+		border-left: 1px solid;
 	}
 	
     #site {
@@ -1845,8 +1909,7 @@ textarea {
 		box-sizing: border-box;
 		width: calc(100% + 40px);
 		z-index: 1;
-		border-top: 2px solid #75a7a8;
-		margin: 0 0 1em -20px;
+		margin: -20px 0 1em -20px;
 	}
 
     .collection_titles,
@@ -1926,16 +1989,15 @@ textarea {
 	}
 
 	.hadith_nav_wrapper {
-		margin: 20px 10px;
+		margin-bottom: 15px;
 		float: none;
 		width: auto;
 	}
+
 	#cb_flyout {
 		margin-left: -150px
 	}
-    .footer {
-	    height: 70px;
-	   }
+
 	.footer .sm_links {
 		display: block;
 		font-size: .8em;
@@ -1984,10 +2046,11 @@ only screen and (        min-device-pixel-ratio: 2)      and (min-width: 700px),
 only screen and (                min-resolution: 192dpi) and (min-width: 700px),
 only screen and (                min-resolution: 2dppx)  and (min-width: 700px) {
 	  .bannerTop {
+			  margin-left: 15%;
 			  height: 70px;
 			  background-image: url(../images/equal-logo_small.png);
 			  background-repeat: no-repeat;
-			  background-position: 64%;
+			  background-position: 0%;
 			  background-size: auto 70%;
   	}
 }

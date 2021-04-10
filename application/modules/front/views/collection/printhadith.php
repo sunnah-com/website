@@ -54,6 +54,7 @@
                 $arabicText = "\"".strstr($arabicText, "\"", true)."\"";
             }
 
+			echo "<div class=\"arabiccontainer\">";
             echo "<div class=\"arabic_hadith_full arabic\">";
 
             if (!is_null($arabicEntry) && $arabicEntry->shortcode_parsed) {
@@ -66,7 +67,7 @@
 			}
 
 			if (isset($annotation)) echo "<p><span class=\"arabic arabic_annotation\">$annotation</span>";
-			echo "</div>\n";
+			echo "</div></div>\n";
 			if (!is_null($otherlangs)) {
 				foreach ($otherlangs as $langname => $hadith) echo "<div class=$langname>".$hadith."</div>\n<br>\n";
 			}
