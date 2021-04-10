@@ -857,6 +857,10 @@ textarea {
 	font-family: Helvetica, Arial, sans-serif;
 }
 
+.hadith_container_hisn .arabic_hadith_full {
+    line-height: 1.5;
+}
+
 .hadith_container_hisn  .arabic_text_details {
     font-size: 27px;
 	text-align: right;
