@@ -42,9 +42,9 @@
                     $grade = $english_grades[$i]['grade'];
                     $graded_by = $english_grades[$i]['graded_by'];
                     echo "<td class=english_grade width=\"50px\">";
-					if (!$firstGradePrinted) echo "<b>Grade</b>:";
+					if (!$firstGradePrinted) echo "<b>Grade&#8239;:</b>";
 					echo "</td>";
-                    echo "<td class=english_grade width=\"36%\">&nbsp;<b>".$grade."</b>";
+                    echo "<td class=english_grade>&nbsp; ".$grade;
                     echo " (".$graded_by.")</td>";
                 } else {
                     echo "<td height=100% class=english_grade></td>";
@@ -54,10 +54,10 @@
                 if (array_key_exists($i, $arabic_grades)) {
                     $grade = $arabic_grades[$i]['grade'];
                     $graded_by = $arabic_grades[$i]['graded_by'];
-    				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$grade."</b>";
-	    			echo "&nbsp;&nbsp; (".$graded_by.") </td>";
+    				echo "<td class=\"arabic_grade arabic\">&nbsp;".$grade;
+	    			echo "&nbsp; (".$graded_by.")</td>";
 		    		echo "<td class=\"arabic_grade arabic\" width=\"50px\">";
-					if (!$firstGradePrinted) echo "<b>حكم</b>&nbsp;&nbsp;&nbsp;:";
+					if (!$firstGradePrinted) echo "<b>حكم</b><b>&#8239;:</b>";
 					echo "</td>";
                 } else {
                     echo "<td height=100% width=60% class=arabic_grade></td>";
@@ -148,11 +148,9 @@
 				//echo "<a href=\"javascript:sharethis()\">Share</a>";
 				//echo "<a href=\"javascript:permalink('$permalink');\">Permalink</a>";
 				//echo "<a href=\"$permalink\">Permalink</a>";
-			if (!isset($hideReportError) or !$hideReportError) echo "<span class=reportlink href=\"javascript: void(0);\" onclick=\"reportHadith(".$urn.", '".$divName."')\">Report Error</span> | ";
-			if (!$hideShare) {
-                echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span> | "; 
-			    echo "<span class=copylink title=\"Copy hadith to clipboard\">Copy</span> "; 
-			    echo "<span class=copycbcaret title=\"Change copy options\">▼</span>";
-            }
+			if (!isset($hideReportError) or !$hideReportError) 
+				echo "<span class=reportlink href=\"javascript: void(0);\" onclick=\"reportHadith(".$urn.", '".$divName."')\">Report Error</span>";
+			if (!$hideShare) 
+				echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span><span class=copylink title=\"Copy hadith to clipboard\">Copy</span><span class=copycbcaret title=\"Change copy options\">▼</span>";
 			echo "</div></div>";
 ?>

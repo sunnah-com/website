@@ -1,8 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
 
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,800&family=Libre+Baskerville&family=Raleway:wght@400;700&display=swap');
-
 @font-face {
   font-family: 'Noto Nastaliq Urdu';
   font-style: normal;
@@ -49,7 +47,7 @@ html,body{
     padding:0;
     height: 100%;
 	font-family: 'Raleway', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     line-height:1.5;
 }
 
@@ -235,31 +233,22 @@ textarea {
 }
 
 #sidePanel { 
-	float: right;  
-    margin-left: 30px;
-    margin-right: 50px;
+	width: 132px;
     margin-top: 30px;
 	background-image: url(../images/banner_small.png);
 	background-repeat: repeat;
-    border-radius: 4px;
+    border-radius: 0 3px 3px 0;
+	position: fixed;
 }
 
 #languagePanel {
-    border-radius:4px;
-    padding: 3px 6px 8px 6px;
+    border-radius: 4px;
+    padding: 3px 10px 12px 7px;
     color: #fff;
-    /* height: 100px; */
-    /*position: fixed;*/
     text-align: left;
     background-color: rgba(251, 250, 248, 0.2);
     font-size: 13px;
-    /* font-family: Arial, Verdana; */
-    /* font-weight: bold; */
 }
-
-/* #languagePanel input {
-	vertical-align: sub;
-} */
 
 fieldset#translation_panel {
 	border: 1px dashed #c0d7d7;
@@ -406,6 +395,7 @@ fieldset#translation_panel {
 .footer a{
 	color: #fff;
 	text-decoration: none;
+	padding: 0 2px;
 }
 
 #indextag {
@@ -560,6 +550,13 @@ fieldset#translation_panel {
 	margin-bottom: 0;
 }
 
+.search_page_result_count {
+	font-size: 13px;
+	font-weight: bold;
+	color: #037d7d;
+	padding: 20px 40px 5px 40px;
+}
+
 .collections {
 	width: 100%;
 	margin: auto;
@@ -619,12 +616,8 @@ fieldset#translation_panel {
 .collection_sep {
 	background-color: #ccc;
 	height: 1px;
-	opacity: 0.3;
-	width: 85%;
-	margin: auto;
-	box-shadow: 0px 1px 2px 1px rgba(204, 204, 204, 0.5);
-	-webkit-box-shadow: 0px 1px 2px 1px rgba(204, 204, 204, 0.5);
-	-moz-box-shadow: 0px 1px 2px 1px rgba(204, 204, 204, 0.5);
+	opacity: 0.5;
+	width: 100%;
 }
 
 .crumbs{
@@ -787,15 +780,11 @@ fieldset#translation_panel {
 }
 
 .book_page_colindextitle {
-	/* float: left; 
-	 width: 100%;
-	padding: 5px 20px 5px 5px; */
 	margin-left: 0px;
-	text-align: justify;
 }
 
 .book_page_number {
-	font-family: "Libre Baskerville";
+	font-family: 'Libre Baskerville', serif;
 	font-size: 25px;
 }
 
@@ -810,15 +799,18 @@ fieldset#translation_panel {
 }
 
 .book_page_english_text {
-	font-family: "Libre Baskerville";
+	font-family: 'Libre Baskerville', serif;
 	font-size: 25px;
 	text-align: left;
 	padding: 30px 30px 30px 40px;
+	color:#202124;
 }
 
 .book_page_arabic_name {
-	font-size: 35px;
+	font-size: 33px;
 	padding: 30px 40px 30px 30px;
+	line-height: 38px;
+	color:#202124;
 }
 
 /* Hisn al-Muslim */
@@ -841,7 +833,6 @@ fieldset#translation_panel {
     line-height: 2.55;
 	text-align: left;
 	font-family: 'EB Garamond', serif;
-	/* font-family: Helvetica, Arial, sans-serif; */
 }
 
 .hadith_container_hisn .arabic_hadith_full {
@@ -976,7 +967,7 @@ fieldset#translation_panel {
 
 
 .english_chapter_text {
-	font-family: "Libre Baskerville";
+	font-family: 'Libre Baskerville', serif;
 	padding: 30px 30px 30px 40px;
 	font-size: 18px;
 	margin-top: 5px;
@@ -990,22 +981,15 @@ fieldset#translation_panel {
 }
 
 .achapintro {
-	padding: 15px 45px 10px 20px;
-	font-size: 20px;
+	padding: 0 40px 30px 30px;
+	font-size: 21px;
 	text-align: justify;
-	width: 42%;
-	float: right;
 }
-.achapintro.aconly {
-    width: 80%;
-    margin-right: 4%;
-}
+
 .echapintro {
-	padding: 15px 0 10px 45px;
+	padding: 0 30px 30px 40px;
     text-align: justify;
-    font-size: 13px;
-	width: 42%;
-	float: left;
+    font-size: 16px;
 }
 
 .bookintro {
@@ -1043,14 +1027,14 @@ fieldset#translation_panel {
 }
 
 .hadith_narrated {
-    font-weight:500;
+    /* font-weight:bold; */
     color:#5d8080;
     text-decoration:none;
     padding-bottom:8px;
 }
 
 .text_details{
-    color:#08081a;
+    color:#202124;
     text-decoration:none;
     text-align: justify;
     /* padding-bottom: 10px; */
@@ -1071,7 +1055,7 @@ fieldset#translation_panel {
 .english_hadith_full {
 	font-family: 'EB Garamond', serif;
 	font-size: 19px;
-    padding:40px 30px 30px 40px;
+    padding: 40px 30px 15px 40px;
 }
 
 .english_hadith_full p{ padding:0; margin:0}
@@ -1097,25 +1081,25 @@ fieldset#translation_panel {
     width: 20px;
     height: 20px;
     position: absolute;
-    left: -31px;
+    left: -30px;
     top: 45px;
 }
 
 .arabic_hadith_full:before {
     left: auto;
-    right: -31px;
+    right: -30px;
 }
 
 .urdu_hadith_full {
     padding: 40px 30px 30px 40px;
     text-decoration:none;
     padding-bottom: 10px;
-    color:#08081a;
+    color:#202124;
 }
 
 .indonesian_hadith_full{
     font-size:13px;
-    color:#08081a;
+    color:#202124;
     text-decoration:none;
 	padding: 10px 0 10px 15px;
 }
@@ -1130,10 +1114,11 @@ fieldset#translation_panel {
 .arabic_sanad {
     text-align:justify;
     direction:rtl;
-    color: gray;
+    color: #5d8080;
 }
 
 .arabic_text_details {
+	color:#202124;
      text-align:justify;
      direction:rtl;
 }
@@ -1145,7 +1130,7 @@ fieldset#translation_panel {
 .hadith_annotation {
     width: 100%;
     font-size: 13px;
-    color:#08081a;
+    color:#202124;
     text-decoration:none;
     text-align: justify;
     border: 0px solid;
@@ -1169,7 +1154,6 @@ fieldset#translation_panel {
     text-decoration: none;
     line-height: 11px;
     text-align: left;
-    /* font-family: Verdana, sans-serif; */
     border-width: 0px;
     border-style: solid;
 }
@@ -1180,12 +1164,14 @@ fieldset#translation_panel {
 .hadith_reference a {
     color: #037d7d;
 }
+
 .hadith_reference {
+	color: #202124;
     font-size: 13px;
     text-decoration: none;
     line-height: 15px;
     text-align: left;
-    padding: 30px 10px 40px 40px;
+    padding: 15px 15px 40px 40px;
     /* color: #96691e; */
     float: left;
     /* width: 50%; */
@@ -1210,19 +1196,18 @@ fieldset#translation_panel {
 
 .bottomItems {
     width: 100%;
-    overflow: visible;
+    overflow: auto;
 }
 
 .gradetable {
 	width: 100%;
-	padding: 0 40px;
+	padding: 15px 40px;
 }
 
 .english_grade {
     vertical-align: top;
     font-size: 15px;
-    /* font-family: Verdana; */
-    padding-top: 10px;
+    padding-top: 4px;
     text-align: left;
 	height: 100%;
 }
@@ -1235,12 +1220,9 @@ fieldset#translation_panel {
 }
 
 .bc_search {
-	border-radius: 10px 10px 0 0;
-	padding: 5px 0 0px 15px;
-	margin: 0 3px 0px 3px;
-	font-size: 15px;
-	font-weight: bold;
-	color: rgb(93, 128, 128);
+	padding: 12px 40px 11px 40px;
+	font-size: 14px;
+	font-family: 'Libre Baskerville', serif;
 }
 
 .bc_search .a {
@@ -1248,17 +1230,33 @@ fieldset#translation_panel {
 }
 
 .boh {
-	border-radius: 10px;
+	border-radius: 4px;
 	background-color: rgba(255, 255, 255, 0.4);
-	box-shadow: 0 21px 28px -21px rgba(0,0,0,.09), 0 22px 29px rgba(0,0,0,.02);
-	margin-bottom: 20px;
+	box-shadow: 0 2px 4px rgba(0,0,0,.25);
+	margin: 15px 0;
 }
-.boh .actualHadithContainer {
+
+.boh .searchHadithContainer {
 	box-shadow: none;
-	margin-bottom: 5em;
+	position: relative;
+	background-color: rgba(255, 255, 255, 0);
 }
+
 .boh:hover {
 	background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 40%);
+}
+
+.boh .english_hadith_full {
+	padding: 30px 30px 15px 40px
+}
+
+.boh .arabic_hadith_full {
+	padding: 30px 40px 15px 30px
+}
+
+.boh .english_hadith_full:before, .boh .arabic_hadith_full:before, .boh .urdu_hadith_full:before {
+	top: 35px;
 }
 
 .searchlink {
@@ -1274,6 +1272,7 @@ fieldset#translation_panel {
 .searchmore {
 	float: right;
 	padding: 0 10px 8px 0;
+	color: #037d7d;
 }
 
 .about {
@@ -1383,7 +1382,6 @@ fieldset#translation_panel {
 
 .copycbcaret {
 	padding: 4.5px 2px;
-	margin-left: -5px;
 }
 
 .sharelink {
@@ -1519,8 +1517,8 @@ fieldset#translation_panel {
     display: inline-block;
 	padding: 10px 15px;
 	font-size: 16px;
-	font-family: 'Libre Baskerville';
-    background: #f9f7f2;
+	font-family: 'Libre Baskerville', serif;
+	background: #f9f7f2;
     color: #037d7d;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
@@ -1570,7 +1568,7 @@ fieldset#translation_panel {
 }
 
 /* Smaller Screens */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
 
     body {
         font-size: 16px;
@@ -1673,8 +1671,7 @@ fieldset#translation_panel {
         padding: 3px .5em 5px;
         white-space: nowrap;
         position: relative;
-        overflow-x: auto;
-        overflow-y: hidden;
+        overflow: hidden;        
 	}
 	
 	.ebookintro { width: 95%; }
@@ -1691,10 +1688,8 @@ fieldset#translation_panel {
     .achapintro,
     .echapintro {
         width: 100%;
-        margin-right: 0;
-        padding: 15px;
+        padding: 0px 20px 20px 20px;
         box-sizing: border-box;
-        margin-bottom: 0px;
 	}
 	
 	.english_chapter_container, .arabic_chapter_container {
@@ -1734,6 +1729,8 @@ fieldset#translation_panel {
         margin: 20px 1em 0;
         margin: 0;
         border-radius: 0;
+		position: static;
+		width: 100%;
 	}
 	
     #languagePanel {
@@ -1788,8 +1785,9 @@ fieldset#translation_panel {
 		float: none;
 	}
 
-	.book_page_english_name {
+	.book_page_english_text {
 		padding: 0 0 5px 0;
+		margin: 0;
 	}
 	
     .englishcontainer,
@@ -1801,6 +1799,11 @@ fieldset#translation_panel {
         padding: 0;
         float: none;
 	}
+
+	.boh .arabic_hadith_full, .boh .english_hadith_full {
+		padding: 0;
+	}
+	
 	
 	.arabiccontainer {
 		width: auto;
@@ -1810,7 +1813,6 @@ fieldset#translation_panel {
 	
     .actualHadithContainer {
         padding: 20px;
-        float: initial;
         width: 100%;
         box-sizing: border-box;
 	}
@@ -1840,11 +1842,19 @@ fieldset#translation_panel {
 		top: 4px;
 	}
 
+	.boh .english_hadith_full:before, .boh .arabic_hadith_full:before, .boh .urdu_hadith_full:before {
+		top: 2px;
+	}	
+
+	.boh .arabic_hadith_full:before {
+		top: 4px;
+	}
+
 	.urdu_hadith_full:before {
 		top: 9px;
 	}
 	
-    .arabic_hadith_full, .hadith_annotation, .hadith_reference, .hadith_permalink {
+    .english_hadith_full, .arabic_hadith_full, .hadith_annotation, .hadith_reference, .hadith_permalink {
         margin-top: 20px;
 	}
 
@@ -1893,7 +1903,7 @@ fieldset#translation_panel {
     #site {
         min-width: auto;
 		position: relative;
-		overflow: initial;
+		/* overflow: initial; */
 		padding-bottom: 5em;
 	}
 
@@ -1909,7 +1919,12 @@ fieldset#translation_panel {
 		box-sizing: border-box;
 		width: calc(100% + 40px);
 		z-index: 1;
-		margin: -20px 0 1em -20px;
+		margin: -20px 0 0 -20px;
+	}
+
+	.boh .searchHadithContainer {
+		padding: 20px;
+		background-color: rgba(255, 255, 255, 0.5);
 	}
 
     .collection_titles,
@@ -1981,12 +1996,21 @@ fieldset#translation_panel {
 	}
 
     .bc_search {
-    	margin-top: 1em;
+		display: none;
+	}
+
+	.collection_sep {
+		display: none;
 	}
 
 	.indexsearchcontainer {
 		width: 98%
 	}
+
+	.search_page_result_count {
+		padding: 20px 20px 5px 20px;
+	}
+	
 
 	.hadith_nav_wrapper {
 		margin-bottom: 15px;
@@ -2034,23 +2058,4 @@ fieldset#translation_panel {
 
 .centertext {
 	text-align: center;
-}
-
-
-/* Medium screen, retina, stuff to override above media query */
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 700px),
-only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 700px),
-only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 700px),
-only screen and (        min-device-pixel-ratio: 2)      and (min-width: 700px),
-only screen and (                min-resolution: 192dpi) and (min-width: 700px),
-only screen and (                min-resolution: 2dppx)  and (min-width: 700px) {
-	  .bannerTop {
-			  margin-left: 15%;
-			  height: 70px;
-			  background-image: url(../images/equal-logo_small.png);
-			  background-repeat: no-repeat;
-			  background-position: 0%;
-			  background-size: auto 70%;
-  	}
 }

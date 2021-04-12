@@ -401,7 +401,6 @@
 		hadithStr += !grade		?	"" :  '\n' + 'Grade: ' + grade;
 		hadithStr += !hadithUrl	?	"" :  '\n' + hadithUrl;
 
-		console.log(hadithStr.trim());
 		return hadithStr.trim();
 	}
 
@@ -471,8 +470,8 @@
 			$("#header").css('top', '0');
 			$("#topspace").css('display', 'block');
 			$("#toolbar").css('display', 'none');
-			$("#search").css('top', '2px'); // crumbs height + 12 bottom padding
-			if (screen.width > 768)
+			$("#search").css('top', '2px');
+			if (window.innerWidth > 992)
 				$("#sidePanel").css({'position': 'fixed', 'top': '65px'});
 			else
 				$("#sidePanel").css({'position': 'static'});
@@ -483,9 +482,9 @@
 			$("#header").css('position', 'relative');
 			$("#topspace").css('display', 'none');
 			$("#toolbar").css('display', 'block');
-			$("#search").css('top', '46px'); // crumbs height + 20 bottom padding
-			if (screen.width > 768)
-				$("#sidePanel").css({'position': 'static', 'top': '124px'});
+			$("#search").css('top', '46px');
+			if (window.innerWidth > 992)
+				$("#sidePanel").css({'position': 'fixed', 'top': '124px'});
 			else
 				$("#sidePanel").css({'position': 'static'});
 		}
