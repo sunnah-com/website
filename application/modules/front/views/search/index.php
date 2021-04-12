@@ -44,7 +44,7 @@ if (isset($errorMsg)) {
         $beginResult = ($pageNumber-1)*$resultsPerPage+1;
         $endResult = min($pageNumber*$resultsPerPage, $resultset->getCount());
         echo "<div class=\"AllHadith\">\n";
-        echo "<span style=\"color: #75A1A1;\">&nbsp;Showing $beginResult-$endResult of ".$resultset->getCount()."</span>";
+        echo "<div class=search_page_result_count>Showing $beginResult-$endResult of ".$resultset->getCount()."</div>";
         //echo $this->paginationControl($this->paginator, 'Sliding', 'index/pagination.phtml');
         echo "<div align=right style=\"float: right;\">";
         echo LinkPager::widget(array(
@@ -63,7 +63,6 @@ if (isset($errorMsg)) {
         ));
         echo "</div>";
 
-        echo "<div style=\"height: 20px;\"></div>";
 
         $util = new Util();
         foreach ($resultset->getResults() as $result) {
@@ -110,13 +109,14 @@ if (isset($errorMsg)) {
 
             // Print the path of the hadith
             echo "<div class=\"bc_search\">\n";
-            echo "<a class=nounderline href=\"/".$collection['name']."\">".$collection['englishTitle']."</a> » ";
-            echo "<a class=nounderline href=\"/".$collection['name']."/".$ourBookID."\">".$book->englishBookName." - ".$book->arabicBookName."</a>";
+            echo "<a href=\"/".$collection['name']."\">".$collection['englishTitle']."</a> » ";
+            echo "<a href=\"/".$collection['name']."/".$ourBookID."\">".$book->englishBookName." - ".$book->arabicBookName."</a> » ";
+            echo "<a href=\"$permalink\"> Hadith ".$data['ar']['hadithNumber']."</a>";
             echo "</div>";
 
-            echo "<div class=collection_sep style=\"width: 98%;\"></div>";
+            echo "<div class=collection_sep></div>";
 
-            echo "<div class=\"actualHadithContainer\" style=\"position: relative; border-radius: 0 0 10px 10px; margin-bottom: 0px; padding-bottom: 10px; background-color: rgba(255, 255, 255, 0);\">";
+            echo "<div class=\"searchHadithContainer\">";
             echo "<a style=\"display: block;\" href=\"$permalink\"><span class=searchlink></span></a>";
             echo $this->render(
                 '/collection/printhadith',
@@ -149,11 +149,13 @@ if (isset($errorMsg)) {
                 'urn_language' => $urn_language,
             ));
 
+            if ($truncation) {
+                echo "<div class=clear></div>";
+                echo "<div class=searchmore><a href=\"$permalink\">Read more...</a></div>";
+            }
+
             echo "</div>"; // end actualHadithContainer
 
-            if ($truncation) {
-                echo "<div class=searchmore><a href=\"$permalink\">Read more &hellip;</a></div>";
-            }
             echo "<div class=clear></div>";
             echo "</div>"; // end boh
 
