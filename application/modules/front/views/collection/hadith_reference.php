@@ -60,8 +60,8 @@
 					if (!$firstGradePrinted) echo "<b>حكم</b><b>&#8239;:</b>";
 					echo "</td>";
                 } else {
-                    echo "<td height=100% width=60% class=arabic_grade></td>";
-                    echo "<td height=100% width=60% class=arabic_grade></td>";
+                    echo "<td height=100% class=arabic_grade></td>";
+                    echo "<td height=100% class=arabic_grade></td>";
                 }
 
                 echo "</tr>";
