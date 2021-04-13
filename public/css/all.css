@@ -1143,7 +1143,7 @@ fieldset#translation_panel {
     text-align: left;
     border-width: 0px;
     border-style: solid;
-	padding: 30px 40px 40px 10px;
+	padding: 11px 40px 40px 30px;
     float: right;
     border: 0px solid;
 	color: #037d7d;
@@ -1171,7 +1171,7 @@ fieldset#translation_panel {
     text-decoration: none;
     line-height: 15px;
     text-align: left;
-    padding: 15px 15px 40px 40px;
+    padding: 15px 30px 40px 40px;
     /* color: #96691e; */
     float: left;
     /* width: 50%; */
@@ -1220,13 +1220,16 @@ fieldset#translation_panel {
 }
 
 .bc_search {
+	border-radius: 4px 4px 0 0;
 	padding: 12px 40px 11px 40px;
 	font-size: 14px;
 	font-family: 'Libre Baskerville', serif;
+	background-color: #90b8b9;
+	color: #fff;
 }
 
-.bc_search .a {
-	color: rgb(93, 128, 128);
+.bc_search a {
+	color: #fff;
 }
 
 .boh {
@@ -1455,8 +1458,8 @@ fieldset#translation_panel {
 }
 @keyframes checkmark {
   0%   { opacity: 0; top:-5px;}
-  20%  { opacity: 1; top:-26px;}
-  80%  { opacity: 1; top:-26px;}
+  20%  { opacity: 0.8; top:-25px;}
+  80%  { opacity: 0.8; top:-25px;}
   100% { opacity: 0; top:-5px;}
 }
 
@@ -1698,12 +1701,12 @@ fieldset#translation_panel {
 	}
 
 	.english_chapter_text {
-		padding: 20px 20px 5px 20px;
+		padding: 20px 40px 5px 40px;
 		margin-top: 0;
 	}
 
 	.arabic_chapter_text {
-		padding: 5px 20px 20px 20px;
+		padding: 5px 40px 20px 40px;
 	}
 	
     .actualHadithContainer {
@@ -1812,7 +1815,7 @@ fieldset#translation_panel {
 	}	
 	
     .actualHadithContainer {
-        padding: 20px;
+        padding: 40px;
         width: 100%;
         box-sizing: border-box;
 	}
@@ -1829,7 +1832,7 @@ fieldset#translation_panel {
 		width: 14px;
 		right: auto;
 		top: auto;
-		left: -20px;
+		left: -40px;
 		background-position: right;
 		top: 0;
 	}
@@ -1837,7 +1840,7 @@ fieldset#translation_panel {
 	.arabic_hadith_full:before,
 	.urdu_hadith_full:before {
 		left: auto;
-		right: -20px;
+		right: -40px;
 		background-position: left;
 		top: 4px;
 	}
@@ -1854,29 +1857,20 @@ fieldset#translation_panel {
 		top: 9px;
 	}
 	
-    .english_hadith_full, .arabic_hadith_full, .hadith_annotation, .hadith_reference, .hadith_permalink {
-        margin-top: 20px;
-	}
-
-	.hadith_permalink {
-        margin-bottom: 10px;
+    .english_hadith_full, .arabic_hadith_full, .hadith_annotation, .hadith_reference, .hadith_permalink, .urdu_hadith_full {
+        margin-top: 30px;
 	}
 
 	.gradetable {
 		width: 100%;
 		padding: 0;
 	}	
-	
-    .hadith_reference {
-        padding: 0;
-        width: 100%;
-	}	
 
-    .hadith_permalink {
-        float: left;
+	.hadith_permalink {
 		padding: 0;
+		margin-top: 27px;
 	}
-
+	
 	.copycbcaret:hover, .sharelink:hover {
 		border: 1px solid transparent;
 	}	
@@ -1907,23 +1901,27 @@ fieldset#translation_panel {
 		padding-bottom: 5em;
 	}
 
+	.hadith_reference {
+        padding: 0;
+	}
+
 	.hadith_reference_sticky {
 		display: block;
 		background-color: #90b8b9;
 		color: white;
 		text-align: right;
-		padding: 5px 20px 7px;
+		padding: 5px 40px 7px;
 		position: sticky;
 		left: 0;
 		top: 100px;
 		box-sizing: border-box;
-		width: calc(100% + 40px);
+		width: calc(100% + 80px);
 		z-index: 1;
-		margin: -20px 0 0 -20px;
+		margin: -40px 0 0 -40px;
 	}
 
 	.boh .searchHadithContainer {
-		padding: 20px;
+		padding: 40px;
 		background-color: rgba(255, 255, 255, 0.5);
 	}
 
@@ -2058,4 +2056,54 @@ fieldset#translation_panel {
 
 .centertext {
 	text-align: center;
+}
+
+
+@media (max-width: 768px) {
+	.hadith_permalink {
+        float: none;
+		margin-top: 17px;
+		padding: 3px 0;
+	}
+
+	.hadith_reference {
+        padding: 0;
+        float: none;
+	}	
+
+	.hadith_reference_sticky {
+		width: calc(100% + 40px);
+		margin: -20px 0 0 -20px;
+		padding: 5px 20px 7px;
+	}
+
+	.actualHadithContainer {
+        padding: 20px;
+	}
+
+	.english_hadith_full, .arabic_hadith_full, .hadith_annotation, .hadith_reference, .hadith_permalink, .urdu_hadith_full {
+        margin-top: 20px;
+	}
+
+	.english_hadith_full:before,
+	.arabic_hadith_full:before {
+		left: -20px;
+	}
+
+	.arabic_hadith_full:before,
+	.urdu_hadith_full:before {
+		right: -20px;
+	}
+
+	.english_chapter_text {
+		padding: 20px 20px 5px 20px;
+	}
+
+	.arabic_chapter_text {
+		padding: 5px 20px 20px 20px;
+	}
+
+	.boh .searchHadithContainer {
+		padding: 20px;
+	}
 }

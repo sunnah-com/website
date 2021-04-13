@@ -18,8 +18,8 @@
 	echo "<!-- Begin hadith -->\n\n";
 	echo "<a name=$linknum></a>\n";
 	
+			echo "<div class=\"hadith_reference_sticky\">";
 			if ( isset($book->status) and $book->status == 4 ) {
-				echo "<div class=\"hadith_reference_sticky\">";
 				if (!is_null($book->reference_template)) {
                     	$reference_string = $book->reference_template;
                     	$reference_string = str_replace("{hadithNumber}", $hadithNumber, $reference_string);
@@ -28,8 +28,10 @@
 				else {
 					echo "$collection->englishTitle $hadithNumber";
 				}
-				echo "</div>";
 			}
+			else
+				echo "$collection->englishTitle $hadithNumber";
+			echo "&nbsp;</div>";
 			echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
 			echo "<div class=\"english_hadith_full\">";
 

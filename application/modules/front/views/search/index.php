@@ -110,11 +110,10 @@ if (isset($errorMsg)) {
             // Print the path of the hadith
             echo "<div class=\"bc_search\">\n";
             echo "<a href=\"/".$collection['name']."\">".$collection['englishTitle']."</a> » ";
-            echo "<a href=\"/".$collection['name']."/".$ourBookID."\">".$book->englishBookName." - ".$book->arabicBookName."</a> » ";
-            echo "<a href=\"$permalink\"> Hadith ".$data['ar']['hadithNumber']."</a>";
+            echo "<a href=\"/".$collection['name']."/".$ourBookID."\">".$book->englishBookName." - ".$book->arabicBookName."</a>";
+            if (!is_null($data['ar']))
+                echo " » <a href=\"$permalink\"> Hadith ".$data['ar']['hadithNumber']."</a>";
             echo "</div>";
-
-            echo "<div class=collection_sep></div>";
 
             echo "<div class=\"searchHadithContainer\">";
             echo "<a style=\"display: block;\" href=\"$permalink\"><span class=searchlink></span></a>";
