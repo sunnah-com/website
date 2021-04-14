@@ -42,6 +42,10 @@
 
 .clear{ clear:both; }
 
+.centertext {
+	text-align: center;	
+}
+
 html,body{
     margin:0;
     padding:0;
@@ -455,7 +459,7 @@ fieldset#translation_panel {
 	height: 29px;
 	padding: 0 2em 0 .75em;
 	background-color: rgba(255, 255, 255, 0.85);
-	border-radius: 5px;
+	border-radius: 4px;
 	box-shadow: 0px 0px 9pt 2pt #75a1a1;
 	box-sizing: border-box;
 }
@@ -982,14 +986,15 @@ fieldset#translation_panel {
 
 .achapintro {
 	padding: 0 40px 30px 30px;
-	font-size: 21px;
+	font-size: 20px;
 	text-align: justify;
 }
 
 .echapintro {
 	padding: 0 30px 30px 40px;
     text-align: justify;
-    font-size: 16px;
+    font-size: 13px;
+	font-family: 'Libre Baskerville', serif;
 }
 
 .bookintro {
@@ -1307,29 +1312,82 @@ fieldset#translation_panel {
 }
 
 .reporterrorbox {
-	padding-top: 10px;
-	padding-left: 20px;
-	padding-bottom: 15px;
 	display: none;
-	/*width: 100%;*/
+	padding: 0 40px 40px 40px;
+}
+
+.reporterrorbox input[type=radio] {
+	margin: 11px 5px;
+}
+
+.leftre .othererror {
+	height: 25px;
+    padding: 0 2em 0 .75em;
 }
 
 .leftre {
 	float: left;
-	padding-right: 30px;
+	padding: 0 30px 30px 0;
+}
+
+.leftre textarea {
+	width: 100%;
+}
+
+.leftre input[name=email] {
+	width: 100%;
+	height: 25px;
+	padding: 0 2em 0 .75em;
+	font-family: 'Raleway', sans-serif;
+}
+
+.leftre fieldset {
+	border: 1px dashed #aaa;
+    border-radius: 3px;
+    padding: 0 20px 20px 20px;
+}
+
+.leftre fieldset label {
+	cursor: pointer;
+	display: block;
+}
+
+.leftre .cbemail {
+	padding: 15px 0 5px 0;
+	display: block;
+	cursor: pointer;	
+}
+
+.leftre .cbemail input {
+	margin-right: 5px;
+	margin-top: -1px;
+	vertical-align: middle;
+}
+
+.red_asterisk {
+	color: red;
+    font-family: 'Libre Baskerville';
 }
 
 .resubmit {
 	background-color: rgb(117, 161, 161);
-	width: 150px;
-	height: 35px;
-	margin: auto;
-	border-radius: 8px;
+	border-radius: 3px;
 	color: white;
-	font-size: 20px;
 	text-align: center;
 	cursor: pointer;
-	outline: none;
+	font-family: 'Raleway', sans-serif;
+	font-size: 15px;
+	border: none;
+	padding: 15px 40px;
+}
+
+.resubmit:hover {
+	background-color: #037d7d;
+}
+
+input[type="radio"] {
+	margin-top: -1px;
+	vertical-align: middle;
 }
 
 .reresp {
@@ -1360,16 +1418,16 @@ fieldset#translation_panel {
 	left: 30%;
 	top: 20%;
 	display: none;
-	height: 130px;
-	border: 1px solid #fff;
 	box-shadow: 0px 2px 7px #292929;
-	border-radius: 6px;
+	border-radius: 3px;
 	background:url(../images/bg_small.png);
 	z-index: 50;
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-top: 9px;
-	padding-bottom: 5px;
+	padding: 10px 25px 25px;
+}
+
+.share_mb h2 {
+	margin: 5px;
+	float: left;
 }
 
 .sharelink, .copycbcaret, .reportlink, .copylink {
@@ -1477,23 +1535,23 @@ fieldset#translation_panel {
 
 .permalink_box {
 	padding: 4px;
-	padding-top: 5px;
 	font-size: 14px;
-	border-radius: 4px;
+	border-radius: 3px;
 	text-align: center;
+	border: 1px solid;
 }
 
 .permalink_box:focus {
 	box-shadow: 0px 1px 6pt 1pt #bdf4fc;
 	outline: none;
 }
-.share_buttons {
-	margin: auto;
-}
+
 .share_button {
 	padding-top: 10px;
 	margin-left: 5px;
+	float: right;
 }
+
 .share_button a {
 	text-decoration: none;
 	border-radius: 50%;
@@ -1518,7 +1576,7 @@ fieldset#translation_panel {
 /* Hadith Navigation */
 .button {
     display: inline-block;
-	padding: 10px 15px;
+	padding: 13px 20px;
 	font-size: 16px;
 	font-family: 'Libre Baskerville', serif;
 	background: #f9f7f2;
@@ -1569,6 +1627,12 @@ fieldset#translation_panel {
     margin: 0 .1em;
     vertical-align: text-bottom;
 }
+
+
+
+
+
+
 
 /* Smaller Screens */
 @media (max-width: 992px) {
@@ -1687,11 +1751,15 @@ fieldset#translation_panel {
         padding: 0;
 	}
 	
-/*     .arabic, */
-    .achapintro,
-    .echapintro {
+	.achapintro {
         width: 100%;
-        padding: 0px 20px 20px 20px;
+        padding: 5px 40px 20px 40px;
+        box-sizing: border-box;
+	}
+
+	.echapintro {
+        width: 100%;
+        padding: 10px 40px 5px 40px;
         box-sizing: border-box;
 	}
 	
@@ -2052,11 +2120,36 @@ fieldset#translation_panel {
 		width: 100%;
 		margin: 0 0 70px;
 	}
+
+	.hadith_nav_wrapper .prev {
+		border-radius: 0 4px 4px 0;
+	}
+
+	.hadith_nav_wrapper .next {
+		border-radius: 4px 0 0 4px;
+	}
+	
+	.reporterrorbox {
+		padding: 0;
+	}
+
+	.reporterrorbox input[type=radio] {
+		margin: 11px 5px;
+	}
+
+	.leftre {
+		padding: 0 30px 30px 0;
+	}
+
+	.leftre textarea {
+		width: 100%;
+	}
+
+	.leftre input[name=email] {
+		width: 100%;
+	}
 }
 
-.centertext {
-	text-align: center;
-}
 
 
 @media (max-width: 768px) {
@@ -2105,5 +2198,14 @@ fieldset#translation_panel {
 
 	.boh .searchHadithContainer {
 		padding: 20px;
+	}	
+
+	.achapintro {
+        padding: 5px 20px 20px 20px;
 	}
+
+	.echapintro {
+        padding: 0px 20px 5px 20px;
+	}
+
 }
