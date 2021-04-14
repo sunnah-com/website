@@ -33,23 +33,25 @@ function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
 		if(strlen($babNum) > 0) echo "<span class=\"echapno\">($babNum)</span> "; 
 		echo "<span class=englishchapter>".$eprefix.$englishBabName."</span></div>";
 		
-		if ($showIntro) {
-			if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"echapintro\">$englishIntro</div>\n";
-			else $acOnlyClass = " aconly";
-			echo "<div class=clear></div>\n";
-		}		
 		echo "</div>\n";
 	}
 	echo "<div class=\"arabic_chapter_container\"><div class=\"arabic_chapter_text arabic\">"; 
 	if (strlen($arabicBabNumber) > 0) echo "<span class=\"achapno\">($arabicBabNumber)</span> "; 
 	echo "<span class=\"arabicchapter\">".$arabicBabName."</span></div>";
 
+	echo "</div><div class=clear></div>";
+
 	if ($showIntro) {
-	    if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic achapintro$acOnlyClass\">$arabicIntro</div>\n";
-	    echo "<div class=clear></div>\n";
+		if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"english_chapter_container\"><div class=\"echapintro\">$englishIntro</div></div>\n";
+		else $acOnlyClass = " aconly";
+	}		
+
+	if ($showIntro) {
+	    if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic_chapter_container\"><div class=\"arabic achapintro$acOnlyClass\">$arabicIntro</div></div>\n";
     }
 
-	echo "</div><div class=clear></div></div>\n";
+	echo "<div class=clear></div>";
+	echo "</div>\n";
 }
 
 if (isset($errorMsg)) echo $errorMsg;
