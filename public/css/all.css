@@ -1320,45 +1320,64 @@ fieldset#translation_panel {
 	margin: 11px 5px;
 }
 
-.leftre .othererror {
+.report_left_column .othererror {
 	height: 25px;
-    padding: 0 2em 0 .75em;
-}
-
-.leftre {
-	float: left;
-	padding: 0 30px 30px 0;
-}
-
-.leftre textarea {
-	width: 100%;
-}
-
-.leftre input[name=email] {
-	width: 100%;
-	height: 25px;
-	padding: 0 2em 0 .75em;
+    padding: 0 10px;
 	font-family: 'Raleway', sans-serif;
+	width: 244px;
+	max-width: 244px;
 }
 
-.leftre fieldset {
+.report_left_column, .report_right_column {
+	float: left;
+	padding: 0;
+}
+
+.report_left_column {
+	margin: 0 30px 30px 0;
+}
+
+.report_right_column {
+	margin: 0 0 30px 0;
+}
+
+.report_right_column textarea {
+	width: 284px;
+	max-width: 284px;
+	padding: 10px;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 5px;
+}
+
+.report_right_column input[name=email] {
+	width: 284px;
+	max-width: 284px;
+	height: 25px;
+	padding: 0 10px;
+	font-family: 'Raleway', sans-serif;
+	margin-bottom: 30px;
+}
+
+.report_left_column fieldset {
 	border: 1px dashed #aaa;
     border-radius: 3px;
     padding: 0 20px 20px 20px;
+	max-width: 264px;
+	margin: 0;
 }
 
-.leftre fieldset label {
+.report_left_column fieldset label {
 	cursor: pointer;
 	display: block;
 }
 
-.leftre .cbemail {
-	padding: 15px 0 5px 0;
+.report_right_column .cbemail {
+	padding: 30px 0 5px 0;
 	display: block;
 	cursor: pointer;	
 }
 
-.leftre .cbemail input {
+.report_right_column .cbemail input {
 	margin-right: 5px;
 	margin-top: -1px;
 	vertical-align: middle;
@@ -1370,19 +1389,20 @@ fieldset#translation_panel {
 }
 
 .resubmit {
-	background-color: rgb(117, 161, 161);
+	background-color: transparent;
 	border-radius: 3px;
-	color: white;
+	color: #037d7d;
 	text-align: center;
 	cursor: pointer;
 	font-family: 'Raleway', sans-serif;
-	font-size: 15px;
-	border: none;
+	font-size: 16px;
+	border: 1px solid #037d7d;
 	padding: 15px 40px;
 }
 
 .resubmit:hover {
 	background-color: #037d7d;
+	color: white;
 }
 
 input[type="radio"] {
@@ -1392,7 +1412,7 @@ input[type="radio"] {
 
 .reresp {
 	width: auto;
-	height: 20px;
+	/* height: 20px; */
 	padding-top: 5px;
 	margin: auto;
 	text-align: center;
@@ -1418,7 +1438,7 @@ input[type="radio"] {
 	left: 30%;
 	top: 20%;
 	display: none;
-	box-shadow: 0px 2px 7px #292929;
+	box-shadow: 0 2px 6px rgb(0 0 0 / 75%);
 	border-radius: 3px;
 	background:url(../images/bg_small.png);
 	z-index: 50;
@@ -1637,9 +1657,9 @@ input[type="radio"] {
 /* Smaller Screens */
 @media (max-width: 992px) {
 
-    body {
+    /* body {
         font-size: 16px;
-	}
+	} */
 	#back-to-top {
 		top: 102px;
 		right: auto;
@@ -2134,19 +2154,15 @@ input[type="radio"] {
 	}
 
 	.reporterrorbox input[type=radio] {
-		margin: 11px 5px;
+		margin: 10px 5px;
 	}
 
-	.leftre {
-		padding: 0 30px 30px 0;
-	}
-
-	.leftre textarea {
+	.report_right_column textarea {
 		width: 100%;
 	}
 
-	.leftre input[name=email] {
-		width: 100%;
+	.report_right_column input[name=email] {
+		width: calc(100% - 2px);
 	}
 }
 
@@ -2206,6 +2222,18 @@ input[type="radio"] {
 
 	.echapintro {
         padding: 0px 20px 5px 20px;
+	}
+
+	.report_left_column, .report_right_column {
+		width: calc(100% - 22px);
+	}
+
+	.report_left_column fieldset {
+		width: calc(100% - 20px);
+	}
+
+	.report_left_column .othererror {
+		width: calc(100% - 25px);
 	}
 
 }

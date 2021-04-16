@@ -12,7 +12,7 @@ if (!is_numeric($eurn) || !is_numeric(substr($hid, 1))) {echo "An error occurred
 <div id="re<?php echo $hid; ?>" class=reporterrorbox>
 	<h1>Report Error</h1>
 	<form class="reform" action="" id="reform<?php echo $hid; ?>">
-	<div class="leftre">
+	<div class="report_left_column">
 		<fieldset>
 			<legend>Type of error <span class="red_asterisk">*</span></legend>	
 			<input type=hidden name=urn value=<?php echo $eurn; ?>>
@@ -25,20 +25,17 @@ if (!is_numeric($eurn) || !is_numeric(substr($hid, 1))) {echo "An error occurred
 			<input class="othererror" name="othererror" type="text"/>
 		</fieldset>
 	</div>
-	<div class="leftre">
+	<div class="report_right_column">
 		Additional details<br>
 		<textarea rows="5" cols="32" name="re_additional" /></textarea><br>
 		<label class="cbemail"><input name="emailme" type="checkbox" value=true />Yes, email me when the error is corrected</label>
 		<div><input name="email" type="text" placeholder="Email address"/></div>
-	</div>
-	
-	<div class="leftre"">
 		<div id="rerec<?php echo $hid; ?>"> </div>
 	</div>
 	
 	<div class="clear"></div>
 	<div class="reresp" id="reresp<?php echo $hid; ?>"></div>
-	<div align="center"><input type="submit" class="resubmit" value="Submit"></div>
+	<div style="text-align:center;"><input type="submit" class="resubmit" value="Submit"></div>
 	</form>
 	<div class="clear"></div>
 </div>

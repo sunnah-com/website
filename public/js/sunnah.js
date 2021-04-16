@@ -148,8 +148,8 @@
 			if (!$(".share_mb").length) $("body").append('<div class="share_mb"></div>');
 			$(".share_mb").html(data); 
 			
-			$(".share_mb").css("left", ($(window).width() - $(".share_mb").width())/2+"px");
-			$(".share_mb").css("top", ($(window).height() - $(".share_mb").height())/2.8+"px");
+			$(".share_mb").css("left", ($(window).width() - $(".share_mb").outerWidth())/2+"px");
+			$(".share_mb").css("top", ($(window).height() - $(".share_mb").outerHeight())/2+"px");
 		
 			$('#sharefuzz, .share_mb').animate({'opacity':'.25'}, 200, 'linear');
 			$('.share_mb').animate({'opacity':'1.00'}, 200, 'linear');
