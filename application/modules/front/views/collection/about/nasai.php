@@ -1,11 +1,11 @@
-<div class=about style="font-size: 14px; width: 70%;">
+<div class=about>
 Sunan an-Nasā'ī is a collection of hadīth compiled by Imām Aḥmad an-Nasā'ī (rahimahullāh). 
 His collection is unanimously considered to be one of the six canonical collections of hadith (Kutub as-Sittah) 
 of the Sunnah of the Prophet (<img src="/images/sallallahu_alaihi_wa_sallam.png" height="18px">).
 It contains roughly 5700 hadīth (with repetitions) in 52 books.
 
 <br><br>
-<p><div class=section>Author bio:</div>
+<p><h2 class=section_header>Author's Biography</h2><hr>
 Aḥmad ibn Shu`ayb ibn `Alī ibn Sīnān Abū `Abd ar-Raḥmān al-Nasā'ī (214 -
 303 AH/ ca. 829 - 915 AD/CE), was born in the year 214 A.H in the famous city
 of Nasa, situated in Western Asia known at that time as Khurasan which was a
@@ -18,7 +18,7 @@ and Muhadditheen of Iraq, Kufa, Hijaz, Syria and Egypt . Finally he decided to
 settle in Egypt.
 <br>
 
-<br><div class=section>Memory, Piety, and other qualities:</div>
+<br><h2 class=section_header>Memory, Piety, and other qualities</h2><hr>
 He was a man full of taqwa and he possessed a photographic memory too.
 The famous scholar and commentator of the Holy Qur'an Al-Dhahabi would say
 narrating from his teachers that this Great Imam was the most knowledgeable in
@@ -33,7 +33,7 @@ also perform Hajj nearly every year and would also take part in Jihad. He was a
 truthful man.
 <br>
 
-<br><div class=section>Teachers and Students:</div>
+<br><h2 class=section_header>Teachers and Students</h2><hr>
 Imam an-Nasa'i studied from many teachers, the famous ones are: Ishaq ibn
 Rahweh, Imam Abu Dawud Al-Sijistani (author of Sunan Abu Dawud) and 
 Qutaibah ibn Saeed.
@@ -42,13 +42,15 @@ narrating ahadith to the extent that he became famous by the title Hafidhul
 Hadeeth.
 Many people would attend his gatherings and many famous Great Scholars
 became his students and notably the most famous ones are:<br>
-• Imam Abul Qasim Tabarani<br>
-• Imam Abu Bakr Ahmed ibn Muhammad also known as Ibn as-Sunni.<br>
-• Sheikh Ali, the son of the famous Muhaddith, Imam Tahawi.<br>
-It is also narrated that Imam Tahawi personally narrated from this Imam.
-<br>
+<ul>
+    <li>Imam Abul Qasim Tabarani</li>
+    <li>Imam Abu Bakr Ahmed ibn Muhammad also known as Ibn as-Sunni.</li>
+    <li>Sheikh Ali, the son of the famous Muhaddith, Imam Tahawi.</li>
+</ul>
 
-<br><div class=section>Muqallid or Mujtahid</div>
+It is also narrated that Imam Tahawi personally narrated from this Imam.
+
+<br><h2 class=section_header>Muqallid or Mujtahid</h2><hr>
 Imam an-Nasa'i was a follower of the Shafi'i Fiqh according to many scholars.
 Some other scholars consider him to be a Hanbali and Sheikhul Islam ibn
 Taymiyyah has also stated this. It is likely that he was a Mujtahid more
@@ -56,22 +58,21 @@ inclined towards the Hanbali Fiqh but many a time would differ from the Hanbali
 scholars.
 <br>
 
-<br><div class=section>His Works</div>
+<br><h2 class=section_header>His Works</h2><hr>
 The great Imam also left behind many beneficial works, many of which
 unfortunately are not published but we can without any doubt conclude from what
 we have understood that his knowledge and excellence is no less than that of
 Imam Bukhari and ibn Hazm.<br>
 
-These are a few of his famous works:
-<ol>
-<li>Sunan Al-Kubra</li>
-<li>Sunan Al-Sughra/Mujtana/Al-Mujtaba <i>(popular today as Sunan an-Nasa'i)</i></li>
-<li>Amul Yawmi Wallaylah</li>
-<li>Kitaby Dufai wal Matrookeen</li>
-<li>Khasais Ali</li>
-<li>Al-Jarhu wa Ta'adeel</li>
+<br>These are a few of his famous works:
+<ol class="list">
+    <li>Sunan Al-Kubra</li>
+    <li>Sunan Al-Sughra/Mujtana/Al-Mujtaba <i>(popular today as Sunan an-Nasa'i)</i></li>
+    <li>Amul Yawmi Wallaylah</li>
+    <li>Kitaby Dufai wal Matrookeen</li>
+    <li>Khasais Ali</li>
+    <li>Al-Jarhu wa Ta'adeel</li>
 </ol>
-<br><br>
 
 His famous book known as Sunan al-Nasa'i which is taught around the world in
 every Islamic institute and which possesses a virtue of being one of the Kutub
@@ -90,7 +91,7 @@ after Bukhari and Muslim according to some Ulama' because of its Sahih
 narrations. He clearly clarifies the hard words and brings different narrations for
 particular ahadith as Imam Muslim does.
 <br><br>
-<div class=section>His Death:</div>
+<h2 class=section_header>His Death</h2><hr>
 Controversies arose between the Khawarij (who cursed Ali and revered
 Muawiya) and the khutbas of Imam an-Nasa'i, he was tortured and forced to move
 from Palestine to Egypt. In Egypt his trials did not stop and he was persecuted
@@ -100,7 +101,5 @@ city near the Ka'ba and he was buried between Safa and Marwa. Ibn Hajr and
 adh-Dhahabi state that he passed away in Ramalah, Palestine during the journey
 to Makkah and the body was sent to Makkah and buried between Safaa and
 Marwa.
-
-<br><br>
 
 </div>

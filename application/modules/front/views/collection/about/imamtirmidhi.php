@@ -1,5 +1,5 @@
-<br><br>
-<p><div class=section>Author bio:</div>
+<br>
+<p><h2 class=section_header>Author's Biography</h2><hr>
 He is Abū ‛Īsa Muḥammad ibn ‛Īsa ibn Sawrah ibn Mūsa ibn al Ḍaḥḥāk al-Sulamī
 at-Tirmidhī (209-279 AH/824–892 AD). Imam at-Tirmidhi was born in
 the year 209 A.H. during the reign of the Abbasid Khalifa Ma'mun al-Rashid. The
@@ -35,7 +35,7 @@ of Hijaz, Iraq and Khurasan and they were pleased with it.
 
 <br>
 
-<br><div class=section>His Memory:</div>
+<br><h2 class=section_header>His Memory</h2><hr>
 Imam Tirmidhi had an exceptionally remarkable memory. If he heard something
 once he never forgot it. Once on his way to Makkah, Imam Tirmidhi met a scholar
 of hadith (muhaddith) from whom he had previously copied two chapters of
@@ -52,7 +52,7 @@ ahadith, which Imam Tirmidhi then repeated without making a single error, thus
 showing his remarkable power of committing hadith to memory.
 <br>
 
-<br><div class=section>His Works:</div>
+<br><h2 class=section_header>His Works</h2><hr>
 Many books of hadith were compiled before Imam Tirmidhi decided to compile
 his Jami`. Dawud Tayalisi and Ahmed ibn Hanbal had compiled books
 consisting of both authentic and weak hadith. Later Imam al-Bukhari compiled
@@ -68,7 +68,7 @@ basis for jurists.
 
 
 
-<br><div class=section>His Students:</div>
+<br><h2 class=section_header>His Students</h2><hr>
 Imam Tirmidhi had a large number of students from all over the world. The most
 famous amongst them were Haytham ibn Kulaib, Abul Abbaas and Muhammad
 ibn Ahmad Shah Abdul `Aziz, who describes Imam Tirmidhi in the following
@@ -79,7 +79,7 @@ According to Ibn Taymiyya and Shah Waliullah, Imam Tirmidhi was an
 independent jurist (<i>mujtahid</i>).
 
 <br><br>
-<div class=section>His Death:</div>
+<h2 class=section_header>His Death</h2><hr>
 In the year 279 A.H. in a village called Bawag at the age of 70 , Imam Tirmidhi
 passed away.
 

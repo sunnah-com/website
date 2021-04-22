@@ -51,7 +51,7 @@ html,body{
     padding:0;
     height: 100%;
 	font-family: 'Raleway', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     line-height:1.5;
 }
 
@@ -69,9 +69,10 @@ textarea {
 	color:#2d2d2d;
 }
 
-:-ms-input-placeholder { color:#ccc }
-::-ms-input-placeholder { color:#ccc }
-::placeholder { color:#ccc;opacity: 1 }
+
+:-ms-input-placeholder { color:#bbb }
+::-ms-input-placeholder { color:#bbb }
+::placeholder { color:#bbb; opacity: 1 }
 
 .nounderline:hover { text-decoration: none; }
 
@@ -231,7 +232,6 @@ textarea {
 	float: left;
 	overflow: auto;
 	height: 100%;
-	/* margin-right: 15px; */
 	top: 0;
 	left: 0;
 }
@@ -437,6 +437,7 @@ fieldset#translation_panel {
 }
 
 .indexsearchquery {
+	font-family: 'Raleway', sans-serif;
 	font-size: 18px;
 	width: 100%;
 	height: 40px;
@@ -451,9 +452,10 @@ fieldset#translation_panel {
 .indexsearchquery:focus {
     box-shadow: 0px 0px 11pt 3pt #75a1a1;
 }
+
 .searchquery {
 	font-family: 'Raleway', sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 	border:0;
 	width: 100%;
 	height: 29px;
@@ -463,6 +465,7 @@ fieldset#translation_panel {
 	box-shadow: 0px 0px 9pt 2pt #75a1a1;
 	box-sizing: border-box;
 }
+
 
 .indexsearchquery:focus { outline: none; }
 .searchquery:focus {
@@ -525,7 +528,6 @@ fieldset#translation_panel {
 	float: right;
 	margin-bottom: 10px;
 	display: none;
-	font-size: 12px;
 	padding: 15px;
 	position: absolute;
 	top: 30px;	
@@ -547,11 +549,6 @@ fieldset#translation_panel {
     padding: 5px;
     width: 98%;
     height: 315px;
-}
-
-#searchtips p {
-	margin-top: 5px;
-	margin-bottom: 0;
 }
 
 .search_page_result_count {
@@ -625,7 +622,6 @@ fieldset#translation_panel {
 }
 
 .crumbs{
-    font-size: 13px;
     color: #fff;
 	background-color: rgba(251, 250, 248, 0.2);
 	padding: 3px 0px 5px 5px;
@@ -636,21 +632,20 @@ fieldset#translation_panel {
 .crumbs a:visited { color: #eee; }
 
 .collection_info {
-	width: 95%;
 	background-color: rgba(255, 255, 255, 0.5);
-	border-radius: 5px;
-	color: #666;
-	margin-top: 7px;
-	padding: 10px;
+	border-radius: 0 0 4px 4px;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
+	color: #202124;
+	padding: 40px;
 	box-sizing: border-box;
 }
 
 .colindextitle {
 	float: left;
-	padding: 5px 10px 5px 10px;
 	text-align: justify;
 	width: 100%;
 	box-sizing: border-box;
+	font-size: 16px;
 }
 
 .colindextitle.incomplete {
@@ -670,7 +665,8 @@ fieldset#translation_panel {
 .colindextitle .english {
     float: left;
     font-size: 22px;
-    padding-top: 5px;
+	font-family: 'Libre Baskerville', serif;
+    padding: 5px 0 10px 0;
 }
 .col_progress {
 	width: 32%;
@@ -696,21 +692,18 @@ fieldset#translation_panel {
 }
 
 .titles {
-	margin-top: 25px;
-	border-radius: 8px;
-	font-size: 17px;
+	margin: 30px 0;
+	font-size: 16px;
+	font-family: 'Libre Baskerville', serif;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
 }
-.book_titles {
-	width: 95%;
-}
-
 
 .title:first-child {
-	border-radius: 8px 8px 0 0;
+	border-radius: 4px 4px 0 0;
 }
 
 .title:last-child {
-	border-radius: 0 0 8px 8px;
+	border-radius: 0 0 4px 4px;
 }
 
 .title:nth-child(odd) {
@@ -722,7 +715,7 @@ fieldset#translation_panel {
 }
 
 .title {
-	padding: 5px 0 0 20px;
+	padding: 15px 40px;
 }
 
 .title a:hover {
@@ -730,28 +723,38 @@ fieldset#translation_panel {
 }
 
 .title_number {
-	float: left;
-	min-width: 27px;
-	height: 30px;
-	padding-top: 6px;
-	padding-right: 8px;
+	padding-right: 5px;
+	width: 37px;
 }
 
-.title .english {
-	width: 30%;
-	float: left;
-	min-height: 30px;
-	padding-top: 6px;
-}
-.title .arabic {
-	width: 37%;
-	float: left;
-	font-size: 24px;
+.arabic_title_number {
+	padding-left: 5px;
+	width: 37px;
 	text-align: right;
 }
+
+.english_book_name {
+	width: calc(50% - 152px);
+}
+
+.arabic_book_name {
+	font-size: 27px;
+	width: calc(50% - 153px);
+}
+
+.book_hyperlink:hover {
+	text-decoration: none;
+}
+
+.book_hyperlink div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .title .english_chapter_name {
 	width: 47%;	
 }
+
 .title .arabic_chapter_name {
 	width: 47%;
 	font-size: 20px;
@@ -760,22 +763,22 @@ fieldset#translation_panel {
 }
 
 .book_range {
-	float: left;
 	color: #666;
-	padding: 6px 0 0 55px;
-	vertical-align: middle;
-	margin: auto;
-	margin-right: 25px;
+	padding: 0 40px;
+    width: 141px;
 }
 
-.book_range > div {
-	width: 40px;
-	float: left;
+.book_range > div:first-child {
+	text-align: right;
+	width: 61px;
+}
+.book_range > div:nth-child(2) {
+	/* width: 20%; */
 	text-align: center;
 }
-.book_range > div:first-child + div {
-	padding: 0 20px;
-	width: auto;
+.book_range > div:nth-child(3) {
+	text-align: left;
+	width: 61px;
 }
 
 .book_info {
@@ -1284,31 +1287,174 @@ fieldset#translation_panel {
 }
 
 .about {
-    width: 60%;
-    padding-left: 10%;
     text-align: justify;
-    padding-top: 10px;
-    font-size: 16px;
-    margin-bottom: 50px;
+	font-size: 17px;	
+	padding: 50px;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 4px;
+	margin-bottom: 35px;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 25%)
 }
 
 .about a {
-    color: #178f92;
-    font-weight: bold;
+    color: #037d7d;
+	cursor: pointer;
 }
+
+.changelog dl {
+	margin: 0;
+	border-left: 1px solid #95bcbc;
+}
+
+.changelog dt,
+.changelog dd {
+    box-sizing: border-box;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.changelog dt {
+    margin-top: 15px;
+    padding-left: 35px;
+    overflow: hidden;
+    position: relative;
+    border-right: 5px solid #F9F7F2;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.changelog dt::before {
+	content: "";
+	position: absolute;
+	width: 30px;
+	height: 1px;
+	margin-left: -35px;
+	margin-top: 12px;
+	background-color: #95bcbc;
+}
+
+.changelog dt::after {
+    width: 100%;
+	content: "";
+	position: absolute;
+	height: 1px;
+	margin-left: 5px;
+	margin-top: 12px;
+	background-color: #95bcbc;
+}
+
+.changelog dt:first-of-type {
+	margin-top: 0;
+}
+
+.changelog dd {
+	margin-left: 70px;
+    border-left: 1px solid #95bcbc;
+    padding-left: 35px;
+    padding-right: 20px;
+}
+
+.changelog dd::before {
+	content: "";
+	position: absolute;
+	width: 30px;
+	height: 1px;
+	margin-left: -35px;
+	margin-top: 12px;
+	background-color: #95bcbc;
+}
+
+.changelog dd:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
 
 .abouttitle {
 	text-align: center;
-	font-weight: bold;
-	font-size: 18px;
-	padding-left: 10%;
-	padding-top: 10px;
-	width: 70%;
+    font-family: 'Libre Baskerville', serif;
+    padding: 10px 20px;
+    margin: 0px auto;
+    font-size: 2.5em;
+    color: #343434;
 }
 
-.section {
-	font-size: 18px;
-	font-weight: bold;
+.section_header {
+	font-family: 'Libre Baskerville', serif;
+	margin-bottom: -3px;
+    margin-left: 5px;
+	text-align: left;
+    color: #343434;
+}
+
+.footnotes li {
+	margin: 15px 0;
+}
+
+.footnotes li::marker {
+	margin-right: 5px;
+}
+
+.footnotes sup {
+	user-select: none;
+}
+
+.menu {
+	border: 1px dashed #aaa;
+	padding: 20px 40px;
+	float: left;
+	margin-right: 40px;
+}
+
+
+.square-brackets-quote {
+	display: inline-block;
+	margin: 0 50px;
+}
+
+.square-brackets-quote blockquote {
+	border: solid 1em #95BCBC;
+	background-color: #F9F7F2;
+	display: inline-block;
+	margin: 0;
+	padding: 20px;
+	position: relative;
+}
+
+.square-brackets-quote blockquote:before {
+	background-color: #F9F7F2;
+	bottom: calc(-1em - 2px);
+	content: "";
+	left: 2em;
+	position: absolute;
+	right: 2em;
+	top: calc(-1em - 2px);
+}
+
+.square-brackets-quote blockquote cite {
+	display: block;
+	font-size: small;
+	font-style: normal;
+	text-align: right;
+	text-transform: uppercase;
+}
+
+.square-brackets-quote blockquote > * {
+	position: relative;
+	z-index: 1;
+}
+
+blockquote .emphasized {
+	font-weight: bold; 
+	font-style: italic; 
+	font-size: 19px; 
+	text-align: center;
+	padding: 0 20px;
+}
+
+.list li {
+	padding-left: 0.5em;
 }
 
 .reporterrorbox {
@@ -2017,6 +2163,10 @@ input[type="radio"] {
 	.collection_info {
         width: 100%;
 	}
+
+	.collection_info {
+		padding: 30px;
+	}
 	
     .english_collection_title {
         box-sizing: border-box;
@@ -2028,50 +2178,7 @@ input[type="radio"] {
     #banner {
     	width: 100%;
 	}
-	
-    /* Books */
-    .book_titles {
-        width: 100%;
-	}
-	
-    .title {
-        padding: 5px 20px 20px 20px;
-	}
-	
-    .title_number {
-        width: 2.1em;
-		padding-right: 0;
-	}
-
-    .title .english {
-        min-width: 40%;
-		width: calc(55% - 2.1em);
-	}
-	
-    .title .arabic {
-        width: 45%;
-        padding-left: 3%;
-        box-sizing: border-box;
-		float: right;
-	}
-	
-    .book_range {
-		width: 100%;
-		padding: 0;
-		margin-top: .5em;
-		padding-left: 2.1em;
-		box-sizing: border-box;
-	}
-	
-    .book_range > div {
-        width:auto;
-        margin: auto;
-        float: none;
-	}
-	
-	.book_range > div {
-        display: inline-block;
-    }
+		
     /* Book: Hisn */
     .chapter_index_container {
 		width: 100%;
@@ -2164,6 +2271,15 @@ input[type="radio"] {
 	.report_right_column input[name=email] {
 		width: calc(100% - 2px);
 	}
+
+	.title {
+		padding: 15px 30px;
+	}	
+
+	.about {
+		padding: 40px;
+	}
+
 }
 
 
@@ -2236,4 +2352,45 @@ input[type="radio"] {
 		width: calc(100% - 25px);
 	}
 
+	.book_range {
+		width: 100%;
+		padding: 0;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	
+    .book_range > div {
+        width:auto;
+        margin: auto;
+        float: none;
+	}
+	
+	.book_range > div {
+        display: inline-block;
+    }
+
+	.english_book_name {
+		width: calc(100% - 42px);
+	}
+
+	.arabic_book_name {
+		width: calc(100% - 42px);
+	}
+
+	/* Books */
+	.book_titles {
+		width: 100%;
+	}
+		
+	.about {
+		padding: 20px;
+	}
+
+	.changelog dd {
+		text-align: left;
+	}
+
+	.square-brackets-quote {
+		margin: 0 30px;
+	}	
 }

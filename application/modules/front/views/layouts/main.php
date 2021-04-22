@@ -17,7 +17,7 @@
  
   <meta property="og:image" content="https://sunnah.com/images/hadith_icon2_huge.png" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400;1,800&family=Libre+Baskerville&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400;1,800&family=Libre+Baskerville:wght@400;700&family=Raleway:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <?php if (isset($this->params['_ogDesc'])) echo "<meta property=\"og:description\" content=\"".htmlspecialchars($this->params['_ogDesc'])."\" />"; ?>
 
   <?= yii\helpers\Html::csrfMetaTags() ?>
