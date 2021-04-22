@@ -457,6 +457,7 @@
 	}
 
 	
+	
    $(document).ready(function () {  
 
 	$(window).scroll(function() {
@@ -512,6 +513,23 @@
         else $("#indexsearchtips").hide(400);
     });
 
+	$('.scrolling_link').click(function(e) {
+		var anchor = $("#" + e.target.dataset.scrollTo);
+		var scrollMargin = e.target.dataset.scrollMargin;
+		var headerHeight = $('#header').height();
+		if (scrollMargin)
+			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight - scrollMargin}, 'fast', function() {
+				var newHeaderHeight = $('#header').height();
+				if (headerHeight != newHeaderHeight)
+					$('html,body').scrollTop(anchor.offset().top - newHeaderHeight - scrollMargin);
+			}); 
+		else
+			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight}, 'fast', function() {
+				var newHeaderHeight = $('#header').height();
+				if (headerHeight != newHeaderHeight)
+					$('html,body').scrollTop(anchor.offset().top - newHeaderHeight);
+			}); 
+	});
 
    // tell the autocomplete function to get its data from our php script
   

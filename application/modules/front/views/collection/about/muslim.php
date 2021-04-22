@@ -1,13 +1,13 @@
-<div class=about style="font-size: 14px; width: 70%;">
+<div class=about>
 Ṣaḥīḥ Muslim is a collection of hadīth compiled by Imām Muslim ibn al-Hajjāj al-Naysāburi(rahimahullāh). 
 His collection is considered to be one of the most authentic 
 collections of the Sunnah of the Prophet (<img src="/images/sallallahu_alaihi_wa_sallam.png" height="18px">), and along with
 Ṣaḥīḥ al-Bukhārī forms the "Sahihain," or the "Two Sahihs."
 It contains roughly 7500 hadīth (with repetitions) in 57 books.
-<br>
+<br><br>
 The translation provided here is by Abdul Hamid Siddiqui.
 <br><br>
-<p><div class=section>Author bio:</div>
+<p><h2 class=section_header>Author's Biography</h2><hr>
 Imām Muslim's full name is Abu al-Husayn Muslim ibn al-Hajjāj ibn Muslim ibn Warat al-Qushayri al-
 Naysaburi (206-261 AH/821-875 AD). Imām "Muslim," as his nasba shows,
 belonged to the Qushayr tribe of the Arabs, an offshoot of the great clan of
@@ -47,7 +47,7 @@ present day. Amongst these Kitab al-Musnad al-Kabir 'Ala al-Rijal, Jami' Kabir,
 Kitab, al-Asma' wa'l-Kuna, Kitab al-Ilal, Kitab al- Wijdan are very important.
 <br>
 
-<br><div class=section>Methods of Classification and Annotation:</div>
+<br><h2 class=section_header>Methods of Classification and Annotation</h2><hr>
 Imam Muslim strictly observed many principles of the science of Hadith, which
 had been slightly ignored by his great teacher Imam Bukhari (may Allah have
 mercy on both of them). 
@@ -58,14 +58,16 @@ reliable authorities up to the Prophet (<img src="/images/sallallahu_alaihi_wa_s
 and were in perfect harmony with what had been related by
 other narrators whose trustworthiness was unanimously accepted and who were
 free from all defects. He divided narrators and sub-narrators into 3 levels: <br>
-1. Those people who are completely authentic in their memory and character with no deficiency whatsoever. They were
-known to be honest and trustworthy.<br>
-2. People of slightly lesser memory and perfection than the previous category, yet still trustworthy and
-knowledgeable, not liars by any measure. Examples of people in this category include `Ata ibn Said and 
-Layth ibn Abi Sulaim.<br>
-3. People whose honesty was a subject of dispute or even discussion. Imam Muslim did not concern
-himself with such people. Examples in this category include Abdullah ibn Maswar and Muhammad ibn Said al-Maslub.
-<br><br>
+
+<ol class="list">
+    <li>Those people who are completely authentic in their memory and character with no deficiency whatsoever. They were
+    known to be honest and trustworthy.
+    <li>People of slightly lesser memory and perfection than the previous category, yet still trustworthy and
+    knowledgeable, not liars by any measure. Examples of people in this category include `Ata ibn Said and 
+    Layth ibn Abi Sulaim.
+    <li>People whose honesty was a subject of dispute or even discussion. Imam Muslim did not concern
+    himself with such people. Examples in this category include Abdullah ibn Maswar and Muhammad ibn Said al-Maslub.</li>
+</ol>
 
 Moreover, Imam Bukhari, while describing the chain of narrators, sometimes
 mentions their kunya and sometimes gives their names. This is particularly true
@@ -90,20 +92,16 @@ Sahih Muslim has been explained by Imam an-Nawawi and one of his teachers Abu `A
 <br>
 
 <br>
-<div class=section>His Students:</div>
-His Students
+<h2 class=section_header>His Students</h2><hr>
 Imam Muslim had a very wide circle of students, who learnt Hadith from him.
 Some of them occupy a very prominent position in Islamic history, e.g. Abu
 Hatim Razi, Musa ibn Harun, Ahmad ibn Salama, Abu 'Isa Tirmidhi, Abu Bakr ibn
 Khusaima, Abu ‘Awana and Al-Dhahabi.
 
 <br><br>
-<div class=section>His Death:</div>
+<h2 class=section_header>His Death</h2><hr>
 Imam Muslim lived for fifty-five years. He spent most of his time in learning
 Hadith, in its compilation, in its teaching and transmission. He always remained
 absorbed in this single pursuit and nothing could distract his attention from this
 pious task. He died in 261/875, and was buried in the suburbs of Nishapur.
-
-<br><br>
-
 </div>

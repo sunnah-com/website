@@ -28,7 +28,7 @@
 			echo '<li><a href="/about">The Website</a>'."\n";
             echo '<li><a href="/support">Support Us</a></li>'."\n"; 
 			echo '<li><a href="/news">News</a></li>'."\n";
-			echo '<li><a href="/changelog">Change Log</a></li>'."\n";
+			echo '<li><a href="/changelog">Changelog</a></li>'."\n";
 			echo '</ul></li>';
 			if (strcmp($pageType, "contact") == 0) echo '<li><span class="selectedMenuItem"><a href="/contact">Contact</a></span></li>'."\n";
 			else echo '<li><a href="/contact">Contact</a></li>'."\n";

@@ -1,35 +1,31 @@
-
+<h1 class=abouttitle>Sunnah.com</h1>
 <div class="about">
-
-<br>
-<div class=section>About Us</div><br>
-<div class=content>
-1. <a href="#Mission">Sunnah.com Mission</a><br>
-2. <a href="#AboutHadith">About Hadith</a><br>
-3. <a href="#AboutTheWebsite">About The Website</a><br>
-4. <a href="#Fonts">Fonts</a><br>
-5. <a href="#ImportantNote">Important Note</a><br>
-6. <a href="#SourcesNumbering">Sources, Numbering, and Grading</a><br>
-7. <a href="#Misc">Miscellaneous</a><br>
-8. <a href="#Reproduction">Reproduction, Copying, Scraping</a><br>
-</div>
-
-<br><hr><br>
-<a name="Mission"><div class=section>1. Sunnah.com Mission</div></a>
+<ol class="list menu" style="margin-top:0;">
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_mission">Our Mission</a></li>
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_abouthadith">About Hadith</a></li>
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_aboutwebsite">About The Website</a></li>
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_fonts">Fonts</a></li>
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_impnote">Important Note</a></li>
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_srcnumbering">Sources, Numbering, and Grading</a></li>
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_misc">Miscellaneous</a></li>
+    <li><a class="scrolling_link" data-scroll-margin="9" data-scroll-to="sec_reproduction">Reproduction, Copying, Scraping</a></li>
+</ol>
+<h2 id="sec_mission" class=section_header>Our  Mission</h2><hr>
 <div class=content>
 Our goal is to make authentic, comprehensive, and beneficial information pertaining to the sunnah of the Prophet Muhammad (saws) accessible to as many people around the world as possible in order to facilitate research and promote its mainstream and broadly accepted understanding.
 <p>
+<div class="clear"></div>
 Our work is guided by the following core values:
 <ul>
-<li><b>Authenticity:</b> We strive to stay true to the text by checking and verifying our data and numbering with well-known printed editions. 
-<li><b>Comprehensiveness:</b> We aim to provide complete collections of hadith, their scholarly translations in as many languages as possible, explanations of hadith, information about hadith collectors and narrators, and resources on the sciences of hadith.
-<li><b>Usability and accessibility:</b> We are committed to providing a simple and uncluttered user interface to view and search our data on a variety of devices. We will develop and provide tools and organizational aids to facilitate research and analysis of hadith, narrators, and chains of narration by specialists and students of knowledge. It is important to us to reduce connectivity barriers to accessing knowledge.
-<li><b>Open:</b> We provide an open platform &ndash; including data and software &ndash; so that others can build on top of hadith data.
+    <li><b>Authenticity:</b> We strive to stay true to the text by checking and verifying our data and numbering with well-known printed editions.</li>
+    <li><b>Comprehensiveness:</b> We aim to provide complete collections of hadith, their scholarly translations in as many languages as possible, explanations of hadith, information about hadith collectors and narrators, and resources on the sciences of hadith.</li>
+    <li><b>Usability and accessibility:</b> We are committed to providing a simple and uncluttered user interface to view and search our data on a variety of devices. We will develop and provide tools and organizational aids to facilitate research and analysis of hadith, narrators, and chains of narration by specialists and students of knowledge. It is important to us to reduce connectivity barriers to accessing knowledge.</li>
+    <li><b>Open:</b> We provide an open platform &ndash; including data and software &ndash; so that others can build on top of hadith data.</li>
 </ul>
 </div>
 <br>
 
-<a name="AboutHadith"><div class=section>2. About Hadith</div></a>
+<h2 id="sec_abouthadith" class=section_header>About Hadith</h2><hr>
 <div class=content>
 Hadith are the transmitted narrations concerning the speech, actions, appearance, and approvals of
 the Messenger of Allah, the Prophet Muhammad (peace and blessings be upon him). 
@@ -42,7 +38,7 @@ Hadith specialists have compiled hadith in various collections with differing cr
 and not all hadith in all collections are necessarily authentic.
 </div><br>
 
-<a name="AboutTheWebsite"><div class=section>3. About the Website</div></a>
+<h2 id="sec_aboutwebsite" class=section_header>About the Website</h2><hr>
 <div class=content>
 The hadith collections currently available can be seen on the <a href="/">homepage</a>.
 We are working on importing hadith from other major collections as well. 
@@ -55,7 +51,7 @@ to create custom and accurate search queries.
 <br><br>
 </div>
 
-<a name="ImportantNote"><div class=section>4. Important Note</div></a>
+<h2 id="sec_impnote" class=section_header>Important Note</h2><hr>
 <div class=content>
 We feel compelled to make an observation here: this is not a fiqh or fatwa website.
 Hadith are made available on this website as a resource for research, personal study
@@ -66,7 +62,7 @@ fiqh using these hadith for those who are untrained in these principles.
 If you have a question on a specific ruling, please ask your local scholar.
 </div><br>
 
-<a name="Fonts"><div class=section>4. Fonts</div></a>
+<h2 id="sec_fonts" class=section_header>Fonts</h2><hr>
 <div class=content>
 In order to best view the content on our website, we recommend
 downloading and installing the <a href="http://fonts.qurancomplex.gov.sa/?page_id=608">
@@ -76,7 +72,7 @@ If you do not see the character in the previous sentence, your font does not ful
 For Urdu we recommend any Nastaliq font (such as <a href="https://urdufonts.net/fonts/fajer-noori-nastalique-regular">Fajer Noori</a>).
 </div></br>
 
-<a name="SourcesNumbering"><div class=section>6. Sources, numbering, and grading</div></a>
+<h2 id="sec_srcnumbering" class=section_header>Sources, numbering, and grading</h2><hr>
 <div class=content>
 The Arabic text on our website is sourced from <a href="http://www.al-eman.com">al-eman.com</a>
 and hadith.al-islam.com (now defunct). For the English
@@ -124,16 +120,17 @@ al-Arna'ut, Ahmad Shakir, and Abu Ghuddah wherever applicable.<br>
 
 
 <br>
-<a name="Misc"><div class=section>7. Misc</div></a>
+<h2 id="sec_misc" class=section_header>Miscellaneous</h2><hr>
 <div class=content>
 We ask that you to keep all those people who worked on this website in your du'a and help by <a href="/support">supporting us</a>.
 </div>
 
 <br>
-<a name="Reproduction"><div class=section>8. Reproduction, Copying, Scraping</div></a>
+<h2 id="sec_reproduction" class=section_header>Reproduction, Copying, Scraping</h2><hr>
 <div class=content>
 We do not permit the scraping of our data, nor mass reproduction of entire books or collections on other websites. Our data is undergoing continuous refinement and this website is designed as a central and up-to-date resource. 
 If you would like a snapshot of hadith data, consider using our <a href="/developers">API</a>.
 Reproducing individual hadith or selections of hadith for a teaching/didactic/presentation purpose is permitted. 
+<br>
 </div>
 </div>

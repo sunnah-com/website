@@ -30,7 +30,7 @@ else {
                 $aboutpath = "about/".$collectionName.".php";
                 $path = __DIR__ ."/".$aboutpath;
                 if (realpath($path)) {
-                    echo "<br><div align=right style=\"padding-top: 7px;\"><a href=\"/$collectionName/about\">More information ...</a></div>\n\n";
+                    echo "<br><div align=right style=\"padding-top: 7px;\"><a href=\"/$collectionName/about\">Read more...</a></div>\n\n";
                 }
 
 				echo "</div>\n";
@@ -47,31 +47,39 @@ else {
 
                         echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
 
-                        if (!is_null($entry->linkpath)) echo "<a href=\"/".$entry->linkpath."\">\n";
+                        if (!is_null($entry->linkpath)) echo "<a class=book_hyperlink href=\"/".$entry->linkpath."\">\n";
                         else {
                             if (!is_null($entry->ourBookNum)) $booklinkpath = $entry->ourBookNum;
                             else $booklinkpath = (string) $entry->ourBookID;
-						    echo "<a href=\"/".$entry->collection."/".$booklinkpath."\">\n";
+						    echo "<a class=book_hyperlink href=\"/".$entry->collection."/".$booklinkpath."\">\n";
                         }
 
-                        echo "<div class=\"book_number title_number\">";
-                        $book_number_to_display = (string) $entry->ourBookID;
-                        if (!is_null($entry->ourBookNum)) $book_number_to_display = $entry->ourBookNum;
+						echo "<div class=\"book_number title_number\">";
+						$book_number_to_display = (string) $entry->ourBookID;
+						if (!is_null($entry->ourBookNum)) $book_number_to_display = $entry->ourBookNum;
 						echo $book_number_to_display;
-						echo "</div>";
-
-						echo "<div class=\"english english_book_name\">";
+						echo "</div>";						
+						echo "<div class=\"english english_book_name\">";						
 						echo $entry->englishBookName."</div>";
 
-						echo "<div class=\"arabic arabic_book_name\">".$entry->arabicBookName."</div>";
-						echo '</a>';
 						if ($entry->firstNumber > 0) {
-							echo "<div class=book_range>";
+							echo "<div class=book_range title=\"Read Hadith $entry->firstNumber to $entry->lastNumber\">";
 							echo "<div>".$entry->firstNumber."</div>";
-							echo "<div> to </div>";
+							echo "<div>—</div>";
 							echo "<div>".$entry->lastNumber."</div>";
 							echo "</div>";
 						}
+						
+						echo "<div class=\"arabic arabic_book_name\">";
+						echo $entry->arabicBookName."</div>";
+						echo "<div class=\"book_number arabic_title_number\">";
+						$book_number_to_display = (string) $entry->ourBookID;
+						if (!is_null($entry->ourBookNum)) $book_number_to_display = $entry->ourBookNum;
+						echo $book_number_to_display;
+						echo "</div>";
+						
+						echo '</a>';
+
 						echo "<div class=clear></div>";
 						echo "</div><!-- end book_title div -->\n";
     				}

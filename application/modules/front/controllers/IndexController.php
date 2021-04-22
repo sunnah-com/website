@@ -93,7 +93,7 @@ class IndexController extends SController
     }
 
     public function actionChangeLog() {
-        $this->pathCrumbs('Change Log', "/changelog");
+        $this->pathCrumbs('Changelog', "/changelog");
         $this->view->params['_pageType'] = "about";
 		return $this->render('changelog');
     }
