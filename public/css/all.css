@@ -51,7 +51,7 @@ html,body{
     padding:0;
     height: 100%;
 	font-family: 'Raleway', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     line-height:1.5;
 }
 
@@ -159,8 +159,8 @@ textarea {
 
 
 #banner {
-	width: 50%;
-	float: left;
+	width: 353px;
+    float: left;
 }
 
 .bannerTop {
@@ -272,10 +272,6 @@ fieldset#translation_panel {
 
 #nonheader {
 	position: relative;
-}
-
-.home #nonheader {
-    margin: 0 10px 0 30px;
 }
 
 #main {
@@ -402,21 +398,56 @@ fieldset#translation_panel {
 	padding: 0 2px;
 }
 
+.hero {
+	width: 100%;
+	height: 200px;
+	display: table;
+}
+
+.taglinecontainer {
+	float: left;
+	display: table; 	
+	width: 50%;
+	padding: 20px;
+    box-sizing: border-box;
+}
+
+.searchcontainer {
+	float: right;
+	display: table; 	
+	height: 100%;
+	width: calc(50% - 8px);
+	padding: 0 30px;
+    box-sizing: border-box;
+}
+
 #indextag {
-	font-size: 20px; 
+	font-size: 27px; 
 	font-variant: small-caps;
-	font-weight: bold;
+	font-family: 'Libre Baskerville', serif;
 	color: #75A1A1;
+	text-align: center;
+	display: table-cell;  
+	vertical-align: middle; 
+}
+
+#indextag p {
+	margin: 0;
+	line-height: 40px;
+}
+
+#indextag p:nth-child(2), #indextag p:nth-child(3) {
+	font-size: 40px;
+	font-weight: bold;
 }
 
 .indexsearchcontainer {
-    width: 380px;
-	margin: auto;
+	display: table-cell;  
+	vertical-align: middle; 
 }
 
 #indexsearch {
 	margin:auto;
-	margin-top: 15px;
 	position:relative;
 }
 #search {
@@ -427,30 +458,42 @@ fieldset#translation_panel {
 }
 
 #searchbar {
-	height:29px;
-	position:relative;
-	float: right;
-	width: 280px;
+	height: 30px;
+    position: relative;
+    float: right;
+    width: 350px;
 }
+
+#indexsearchform {
+	float: left;
+	width: calc(100% - 28px);
+}
+
 #searchform {
-    margin-top: 1px;
+	float: left;
+	width: calc(100% - 25px);
 }
 
 .indexsearchquery {
 	font-family: 'Raleway', sans-serif;
-	font-size: 18px;
+	font-size: 17px;
 	width: 100%;
 	height: 40px;
 	border:0px;
-	border-radius: 8px;
-	padding: 0 2.25em 0 .8em;
+	border-radius: 4px;
+	padding: 0 15px;
 	box-sizing: border-box;
 	background-color: rgba(255, 255, 255, 0.65);
-	box-shadow: 0px 0px 9pt 2pt #ccc;
+	box-shadow: 0 2px 4px rgba(0,0,0,25%);
 }
 
+.indexsearchquery:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,40%);
+}
+	
 .indexsearchquery:focus {
-    box-shadow: 0px 0px 11pt 3pt #75a1a1;
+    box-shadow: 0 1px 2px rgba(0,0,0,15%);
+	outline: none;
 }
 
 .searchquery {
@@ -458,16 +501,14 @@ fieldset#translation_panel {
 	font-size: 14px;
 	border:0;
 	width: 100%;
-	height: 29px;
-	padding: 0 2em 0 .75em;
+	height: 30px;
+	padding: 0 15px;
 	background-color: rgba(255, 255, 255, 0.85);
 	border-radius: 4px;
 	box-shadow: 0px 0px 9pt 2pt #75a1a1;
 	box-sizing: border-box;
 }
 
-
-.indexsearchquery:focus { outline: none; }
 .searchquery:focus {
 	box-shadow: 0px 0px 9pt 2pt #ccc;
     outline: none;
@@ -479,7 +520,7 @@ fieldset#translation_panel {
 	cursor: pointer;
 	position:absolute;
 	top: 0px;
-	right: 0;
+	right: 30px;
 	width:17px;
 	font-family: "icn-font";
 	font-size: 17px;
@@ -496,59 +537,72 @@ fieldset#translation_panel {
 
 .indexsearchtipslink {
 	float: right;
-	font-size: 12px;
-	padding-right: 10px;
-	padding-top: 5px;
-	cursor: pointer
+	font-size: 24px;
+	cursor: pointer;
+	padding-top: 3px;
+	padding-left: 2px;
 }
 
 .indexsearchtipslink:hover {
     color:#84B8B8;
 }
 
-.searchtipslink {
+.searchtipscontainer {
 	float: right;
-	font-size: 13px;
-	padding-left: 10px;
-	padding-top: 6px;
-	cursor: pointer;
 }
 
-#search a {color: #fff;}
+.searchtipslink {
+    font-size: 18px;
+    cursor: pointer;
+	padding-right: 1px;
+}
+
+.icn-lightbulb:before {
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+	width: auto !important;
+}
+
+#search a {	
+	color: rgba(255, 255, 255, 0.85);
+}
+
 #searchtips a { color: #5d8080; }
 
 #searchtips {
-	width: 300px;
-	background:url(../images/bg_small.png);
-	background-repeat: repeat-x repeat-y;
-	background-color: rgba(255, 255, 255, 0.5);
-	z-index: 10;
-	border-radius: 4px;
-	color: #666;
-	float: right;
-	margin-bottom: 10px;
-	display: none;
-	padding: 15px;
+	width: calc(15vw - 20px);
+	max-height: 60vh;
 	position: absolute;
-	top: 30px;	
-	border: 1px solid rgba(0,0,0,.20);
+	left: calc(100% + 10px);
+	top: 0;
+	background:url(../images/bg_small.png);
+	background-color: rgba(255, 255, 255, 0.5);
+	color: #666;
 	box-shadow: 0 2px 4px rgba(0,0,0,.25);
-	right: 30px;
+	border-radius: 3px;
+	overflow-y: scroll;
+	padding: 15px;
+	z-index: 10;
+	display: none;
+	box-sizing: border-box;
 }
 
 
 #indexsearchtips {
-    width: 45%;
     background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
+    border-radius: 3px;
     color: #666;
     float: right;
-    margin-bottom: 10px;
     display: none;
-    font-size: 12px;
-    padding: 5px;
-    width: 98%;
-    height: 315px;
+    font-size: 13px;
+    padding: 10px;
+    margin-top: -68px;
+    width: 46%;
+    height: 170px;
+    overflow-y: scroll;
+    position: absolute;
+    left: calc(100% + 10px);
 }
 
 .search_page_result_count {
@@ -560,59 +614,63 @@ fieldset#translation_panel {
 
 .collections {
 	width: 100%;
-	margin: auto;
-	margin-top: 15px;
 }
 
 .collection_titles {
-    width: 49%;
+    width: calc(50% - 8px);
     float: left;
-    border: 0px solid;
 }
 
 .collection_title {
 	background-color: rgba(255, 255, 255, 0.55);
-	width: 90%;
-	margin: auto;
-	border-radius: 5px;
+	color: #75a1a1;
+	margin: 16px 0;
+	box-shadow: 0 2px 4px rgba(0,0,0,25%);
+	border-radius: 3px;
+	padding: 0 20px;
 }
 
+.collection_title:hover {
+	box-shadow: 0 2px 4px rgba(0,0,0,40%);
+	transform: translateY(-1px);
+	color: #037d7d;
+}
+
+.collection_title:active {
+	box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
+	transform: translateY(1px);
+	color: #037d7d;
+}
+
+
+
 .english_collection_title {
-    font-size: 16px;
+    font-size: 19px;
+	font-family: 'Libre Baskerville', serif;
     display: inline-block;
     direction: ltr;
-    padding-top: 5px;
-    margin-top: auto;
-    width: 50%;
-    text-align: right;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 5px;
-    border: 0px solid;
-    box-sizing: border-box;
+    padding: 10px;
     vertical-align: middle;
+	width: 50%;
+	box-sizing: border-box;
 }
+
 .arabic_collection_title {
-	vertical-align: top;
-    font-size: 26px;
+	font-size: 32px;
 	display: inline-block;
-	width: 42%;
-    text-align: left;
-    padding-left: 10px;
-    padding-top: 3px;
-    border: 0px solid;
+    vertical-align: middle;
+	width: 49%;
+	box-sizing: border-box;
+    padding: 7px 10px 13px 10px;
 }
 
 .collection_titles a {
     text-decoration: none;
-    color:#75A1A1;
-    line-height: 30px;
+	color: inherit;
 }
 
-.collection_titles a:hover {
-    text-decoration: none;
-    color:#84B8B8;
-}
+
+
 
 .collection_sep {
 	background-color: #ccc;
@@ -695,22 +753,23 @@ fieldset#translation_panel {
 	margin: 30px 0;
 	font-size: 16px;
 	font-family: 'Libre Baskerville', serif;
+	border-radius: 4px;
 	box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
 }
 
-.title:first-child {
+.titles .book_hyperlink:first-child .book_title {
 	border-radius: 4px 4px 0 0;
 }
 
-.title:last-child {
+.titles .book_hyperlink:last-child .book_title {
 	border-radius: 0 0 4px 4px;
 }
 
-.title:nth-child(odd) {
+.titles .book_hyperlink:nth-child(odd) .book_title {
 	background-color: rgba(255, 255, 255, 0.6);
 }
 
-.title:nth-child(even) {
+.titles .book_hyperlink:nth-child(even) .book_title {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -742,11 +801,32 @@ fieldset#translation_panel {
 	width: calc(50% - 153px);
 }
 
-.book_hyperlink:hover {
-	text-decoration: none;
+.book_hyperlink {
+	color: #75a1a1;
 }
 
-.book_hyperlink div {
+.book_title:hover {
+	text-decoration: none;
+	color: #037d7d;
+}
+
+.titles .book_hyperlink:nth-child(odd) .book_title:hover {
+	box-shadow: 0 2px 3px rgb(0 0 0 / 60%), 0 -1px 1px rgb(0 0 0 / 5%);
+}
+
+.titles .book_hyperlink:nth-child(even) .book_title:hover {
+	box-shadow: 0 2px 3px rgb(0 0 0 / 90%), 0 -1px 1px rgb(0 0 0 / 7%);
+}
+
+.titles .book_hyperlink:nth-child(odd) .book_title:active {
+	box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%), inset 0 -1px 1px rgb(0 0 0 / 5%);
+}
+
+.titles .book_hyperlink:nth-child(even) .book_title:active {
+	box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%), inset 0 -1px 1px rgb(0 0 0 / 5%);
+}
+
+.book_title div {
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -1301,6 +1381,14 @@ fieldset#translation_panel {
 	cursor: pointer;
 }
 
+.about pre.textboxlook {
+	background-color: #fff;
+    padding: 10px 20px;
+    margin: 20px 30px;
+	border-radius: 4px; 	
+	box-shadow: 0 2px 4px rgb(0 0 0 / 25%)
+}
+
 .changelog dl {
 	margin: 0;
 	border-left: 1px solid #95bcbc;
@@ -1755,6 +1843,7 @@ input[type="radio"] {
 	box-shadow: 0 2px 4px rgb(0 0 0 / 40%);
 	text-decoration: none;
 	cursor: pointer;
+	transform: translateY(-1px);
 }
 
 .button:active {
@@ -1861,45 +1950,40 @@ input[type="radio"] {
 	
 	
     #search {
-        position: initial;
-        float: unset;
-        padding: 0 .5em .5em .5em;
-        width: 100%;
-        max-width: 410px;
-        box-sizing: border-box;
-        margin: 0 auto;
-        display: grid;
-        grid-area: auto;
-        grid-template-columns: 70px auto;
-        grid-gap: 10px;
-        align-content: space-evenly;
-        align-items: center;
-	}
-	.indexsearchquery {
-        font-size: 16px;
-        padding-right: 2.7em;
-	}
-    .searchtipslink {
-        position: initial;
-        float: none;
-        display: inline-block;
-        padding-top: 0;
-        vertical-align: middle;
-        padding-left: 0;
+		padding: 0 .5em .5em .5em;
+		position: static;
+		float: none;
 	}
 
 	#indexsearchtips {
-		font-size: 16px;
-		height: 555px;
+		margin-top: 10px;
+		width: calc(100% - 20px);
+		height: 145px;
+		overflow-y: scroll;
+		position: static;
 	}
+
 	#searchtips {
-		left: 0;
-		top: 90px;
-		position: absolute;
+		top: 0;
+		width: calc(50vw - 50% - 20px);
 	}
+	
     #searchbar {
-        width: auto;
+        float: none;
+		margin: 0 auto;
+		width: 300px;
     }
+
+	#searchform {
+		float: none;
+		display: inline-block;
+		position: relative;
+	}
+
+	.searchsubmit {
+		right: 3px;
+	}	
+
     .crumbs {
         padding: 3px .5em 5px;
         white-space: nowrap;
@@ -2170,13 +2254,14 @@ input[type="radio"] {
 	
     .english_collection_title {
         box-sizing: border-box;
-        width: 48%;
-        margin-right: 4%;
+        width: 49%;
         padding-right: 0;
+		overflow-wrap: break-word;
 	}
 	
     #banner {
     	width: 100%;
+		float: none;
 	}
 		
     /* Book: Hisn */
@@ -2393,4 +2478,33 @@ input[type="radio"] {
 	.square-brackets-quote {
 		margin: 0 30px;
 	}	
+
+	.taglinecontainer {
+		width: 100%;
+		height: auto;
+		box-sizing: border-box;
+		padding-left: 0;
+		padding-right: 0; 
+	}
+	
+	.searchcontainer {
+		width: 100%;
+		height: auto;
+		box-sizing: border-box;
+		padding: 0 20px;
+	}	
+}
+
+
+@media (max-width: 600px) {
+	#searchbar {
+		width: calc(100% - 40px);
+		max-width: 300px;
+    }
+
+	#searchtips {
+		top: 34px;
+		width: calc(100% + 10px);
+		left: 0;
+	}
 }

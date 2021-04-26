@@ -45,14 +45,14 @@ else {
 					for ($i = 0; $i < $totalCount; $i++) {
 						$entry = $entries[$entries_keys[$i]];
 
-                        echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
-
                         if (!is_null($entry->linkpath)) echo "<a class=book_hyperlink href=\"/".$entry->linkpath."\">\n";
                         else {
                             if (!is_null($entry->ourBookNum)) $booklinkpath = $entry->ourBookNum;
                             else $booklinkpath = (string) $entry->ourBookID;
 						    echo "<a class=book_hyperlink href=\"/".$entry->collection."/".$booklinkpath."\">\n";
                         }
+
+						echo "<div class=\"book_title title\" id=\"obi".$entry->ourBookID."\">\n";
 
 						echo "<div class=\"book_number title_number\">";
 						$book_number_to_display = (string) $entry->ourBookID;
@@ -78,10 +78,10 @@ else {
 						echo $book_number_to_display;
 						echo "</div>";
 						
-						echo '</a>';
-
 						echo "<div class=clear></div>";
 						echo "</div><!-- end book_title div -->\n";
+						echo '</a>';
+
     				}
 				?>
 		</div>
