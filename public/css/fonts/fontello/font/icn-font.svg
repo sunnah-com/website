@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>Copyright (C) 2020 by original authors @ fontello.com</metadata>
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
 <defs>
 <font id="icn-font" horiz-adv-x="1000" >
 <font-face font-family="icn-font" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
@@ -27,6 +27,10 @@
 <glyph glyph-name="twitter" unicode="&#x74;" d="M904 622q-37-54-90-93 0-8 0-23 0-73-21-145t-64-139-103-117-144-82-181-30q-151 0-276 81 19-2 43-2 126 0 224 77-59 1-105 36t-64 89q19-3 34-3 24 0 48 6-63 13-104 62t-41 115v2q38-21 82-23-37 25-59 64t-22 86q0 49 25 91 68-83 164-133t208-55q-5 21-5 41 0 75 53 127t127 53q79 0 132-57 61 12 115 44-21-64-80-100 52 6 104 28z" horiz-adv-x="928.6" />
 
 <glyph glyph-name="up" unicode="&#x75;" d="M213 366l-213 0 308 307 310-309-213 0 3-336-195 0 0 338z" horiz-adv-x="618" />
+
+<glyph glyph-name="lightbulb" unicode="&#xe802;" d="M0 506q0 143 101 243t243 101 243-101 101-243q0-54-30-121t-71-140-56-116q-15-39-31-94t-24-82-27-53-42-39-63-11-64 11-41 39-26 53-25 82-32 94q-13 43-55 117t-72 139-29 121z m63 0q0-64 82-213 37-64 52-99l293 0q16 35 53 99 82 151 82 213 0 117-82 199t-199 82-199-82-82-199z m93 0q0 78 55 133t133 55q15 0 15-16t-15-16q-65 0-111-45t-45-111q0-15-16-15t-16 15z m67-375q11-33 19-60l213 27q2 12 10 33l-242 0z m29-90q10-35 18-60l154 19q6 16 12 38 2 5 4 15t3 12z m29-89q12-26 25-33t38-7q29 0 43 10t27 45z" horiz-adv-x="687" />
+
+<glyph glyph-name="home" unicode="&#xe803;" d="M786 296v-267q0-15-11-25t-25-11h-214v214h-143v-214h-214q-15 0-25 11t-11 25v267q0 1 0 2t0 2l321 264 321-264q1-1 1-4z m124 39l-34-41q-5-5-12-6h-2q-7 0-12 3l-386 322-386-322q-7-4-13-3-7 1-12 6l-35 41q-4 6-3 13t6 12l401 334q18 15 42 15t43-15l136-113v108q0 8 5 13t13 5h107q8 0 13-5t5-13v-227l122-102q6-4 6-12t-4-13z" horiz-adv-x="928.6" />
 </font>
 </defs>
 </svg>

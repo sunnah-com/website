@@ -501,16 +501,30 @@
 
 	$(".searchtipslink").click(function() {
 		if ($("#searchtips").css('display') == 'none') {
-			$("#searchtips").show(400);
+			$("#searchtips").fadeIn('fast');
+
+			// Avoid immediate trigger
+			setTimeout( function() {
+				$("body").one("click", function(e) {
+					$("#searchtips").fadeOut('fast')
+				});
+			}, 500);
 		}
-		else $("#searchtips").hide(400);
+		else $("#searchtips").fadeOut('fast');
 	});
 
     $(".indexsearchtipslink").click(function() {
         if ($("#indexsearchtips").css('display') == 'none') {
-            $("#indexsearchtips").show(400);
+            $("#indexsearchtips").fadeIn('fast');
+
+			// Avoid immediate trigger
+			setTimeout( function() {
+				$("body").one("click", function(e) {
+					$("#indexsearchtips").fadeOut('fast');
+				});
+			}, 500);
         }
-        else $("#indexsearchtips").hide(400);
+        else $("#indexsearchtips").fadeOut('fast');
     });
 
 	$('.scrolling_link').click(function(e) {
@@ -569,12 +583,14 @@
 	$(document).on("click", ".copylink", cbCopy);
 	
 	$("#cb_flyout").on("click", function(e) { e.stopPropagation() });
+	$("#indexsearchtips").on("click", function(e) { e.stopPropagation() });
+	$("#searchtips").on("click", function(e) { e.stopPropagation() });
 
 	$(".copycbcaret").on("click", function(e) {
 		var $cbFlyout = jQuery("#cb_flyout");
 		if ($cbFlyout.is(':hidden')) {
-			var offset 	 = $(e.currentTarget).offset(),
-			settings = getCbSettings();
+			var offset	= $(e.currentTarget).offset(),
+			settings 	= getCbSettings();
 
 			for (option in settings) {
 				$cbFlyout.find("[type=checkbox][name="+option+"]").prop("checked", settings[option])
@@ -584,12 +600,12 @@
 			$("#cb_flyout")
 				.css("top", offset.top)
 				.css("left", offset.left)
-				.show(400);
+				.fadeIn('fast');
 		
 			// Avoid immediate trigger
 			setTimeout( function() {
 				$("body").one("click.flyout", function(e) {
-					$("#cb_flyout").hide(400)
+					$("#cb_flyout").fadeOut('fast')
 				});
 			}, 500);
 		}

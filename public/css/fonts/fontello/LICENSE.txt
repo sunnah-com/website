@@ -55,3 +55,12 @@ Font license info
    Homepage:  http://thedesignoffice.org/project/modern-pictograms/
 
 
+## Linecons
+
+   Copyright (C) 2013 by Designmodo
+
+   Author:    Designmodo for Smashing Magazine
+   License:   CC BY ()
+   Homepage:  http://designmodo.com/linecons-free/
+
+
