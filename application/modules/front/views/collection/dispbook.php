@@ -189,8 +189,8 @@ else {
 
 						if (isset($ebooknum) and $i > 0 and $ebooknum == $oldebooknum+1) {
 							//echo "</div><div class=bookheading><div class=englishbookheading>".$englishEntry->bookName."</div><div class=arabicbookheading>".$arabicEntry->bookName."</div></div>";
-							// Skip the above line for now. Unsure whether we should display the change in book on the translation side.
-							echo "<div class=\"hline\" style=\"width: 71%; margin-left: 6%; height: 4px;\"></div><div class=AllHadith>";
+							//echo "<div class=\"hline\" style=\"width: 71%; margin-left: 6%; height: 4px;\"></div><div class=AllHadith>";
+							// Skip the above lines for now. Unsure whether we should display the change in book on the translation side.
 						}
 
 						if (isset($babID) and $babID != $oldChapNo) {
