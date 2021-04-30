@@ -84,7 +84,7 @@
 		<div class=clear></div>
 		<?php
 			  if (strcmp($this->params['_pageType'], "home")) {
-					echo "<div class=crumbs>".$this->context->pathCrumbs("Home", "/")."</div>";
+					echo "<div class=crumbs>".$this->context->pathCrumbs("<i class=icn-home></i>", "/")."</div>";
 					echo "<div class=clear></div>";
 				}
 		?>

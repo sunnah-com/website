@@ -69,6 +69,9 @@ else {
 							echo "<div>".$entry->lastNumber."</div>";
 							echo "</div>";
 						}
+						else {
+							echo "<div class=book_range><div></div><div></div><div></div></div>";
+						}
 						
 						echo "<div class=\"arabic arabic_book_name\">";
 						echo $entry->arabicBookName."</div>";
