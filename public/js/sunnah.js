@@ -239,20 +239,38 @@
 			$copyLink = $hadithContainer.find(".copylink"),
 			copyText = getCopyText($hadithContainer);
 		
-		if ("permissions" in navigator && "clipboard" in navigator) 
-			navigator.permissions.query({name: "clipboard-write"})
-				.then(result => {
-					if (result.state === "granted" || result.state === "prompt")
-						copyToClipboard(copyText);
-					else
-						copyToClipboardFallback(copyText);
-				});				
-		else			
-			copyToClipboardFallback(copyText);
+		copyTextToClipboard(copyText);
 
 		$copyLink.addClass("success");
 		setTimeout(() => {
 			$copyLink.removeClass("success");
+		}, 2500);
+	}
+
+
+	function copyTextToClipboard(copyText) {
+		if ("permissions" in navigator && "clipboard" in navigator)
+			navigator.permissions.query({ name: "clipboard-write" })
+				.then(result => {
+					if (result.state === "granted" || result.state === "prompt")
+						navigator.clipboard.writeText(copyText)
+										   .then(null, () => copyToClipboardFallback(copyText)); // In case of failure		
+					else
+						copyToClipboardFallback(copyText);
+				});
+
+		else
+			copyToClipboardFallback(copyText);
+	}
+
+
+	function shareLinkCopyBtnClickHandler() {
+		copyTextToClipboard($('.share_mb .permalink_box').val());
+
+		var $copyBtn = $('.share_mb .copy_btn');
+		$copyBtn.addClass("success");
+		setTimeout(() => {
+			$copyBtn.removeClass("success");
 		}, 2500);
 	}
 	
@@ -323,12 +341,9 @@
 			// Extract from the breadcrumbs
 			var $crumbs = $('.crumbs');
 			if ($crumbs.length) {
-				var crumbs = cleanText($crumbs.text());
-				if (crumbs !== "") {
-					var crumbsArray = crumbs.split('»');
-					if (crumbsArray.length > 1) {
-						ref = crumbsArray[1].trim();
-					}
+				var aEls = $crumbs.children('a');
+				if (aEls.length > 1) {
+					ref = aEls[1].innerText.trim();
 				}
 			}
 		}
@@ -430,19 +445,6 @@
 
 
 	/**
-	 * Writes text to clipboard
-	 * 
-	 * @param {string} text
-	 */
-	function copyToClipboard(text) {
-		navigator.clipboard.writeText(text)
-						   .then(
-								() => copyToClipboardFallback(text) // In case of failure, use fallback
-        					);		
-    }
-
-
-	/**
 	 * Fallback when clipboard not available 
 	 * @param {string} text 
 	 */
@@ -532,16 +534,16 @@
 		var scrollMargin = e.target.dataset.scrollMargin;
 		var headerHeight = $('#header').height();
 		if (scrollMargin)
-			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight - scrollMargin}, 'fast', function() {
+			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight - scrollMargin}, 'fast', 'linear', function() {
 				var newHeaderHeight = $('#header').height();
 				if (headerHeight != newHeaderHeight)
-					$('html,body').scrollTop(anchor.offset().top - newHeaderHeight - scrollMargin);
+					$('html,body').animate({scrollTop: anchor.offset().top - newHeaderHeight - scrollMargin}, 'fast', 'linear');
 			}); 
 		else
-			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight}, 'fast', function() {
+			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight}, 'fast', 'linear', function() {
 				var newHeaderHeight = $('#header').height();
 				if (headerHeight != newHeaderHeight)
-					$('html,body').scrollTop(anchor.offset().top - newHeaderHeight);
+				$('html,body').animate({scrollTop: anchor.offset().top - newHeaderHeight}, 'fast', 'linear');
 			}); 
 	});
 
@@ -581,6 +583,7 @@
 
 	// Listeners for Copy feature
 	$(document).on("click", ".copylink", cbCopy);
+	$(document).on("click", ".share_mb .copy_btn", shareLinkCopyBtnClickHandler);
 	
 	$("#cb_flyout").on("click", function(e) { e.stopPropagation() });
 	$("#indexsearchtips").on("click", function(e) { e.stopPropagation() });

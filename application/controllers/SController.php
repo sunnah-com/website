@@ -59,8 +59,8 @@ class SController extends Controller
         for ($i = 0; $i < count($this->_pageNames); $i++) {
             $link = $this->_pageLinks[$i];
             $name = $this->_pageNames[$i];
-            if ($i > 0) $crumbString .= "&#187; ";
-            if ($i == count($this->_pageNames)-1) $crumbString .= $name;
+            if ($i > 0) $crumbString .= "<i class=icn-right></i>";
+            if ($i == count($this->_pageNames)-1) $crumbString .= "<span class=currentpage>".$name."</span>";
             else $crumbString .= "<a href=\"".$link."\">".$name."</a> ";
         }
         return $crumbString;

@@ -126,6 +126,7 @@ else {
 			  and (strcmp($this->params['_pageType'], "book") == 0)
 			  and $ourBookID == 1) { ?>
     <div class=chapter_index_container><div class="chapter_index titles collapsible collapsed hisn_chapters_initial_height">
+	<h2 class="section_header">Contents</h2><hr>
     <?php
         $chapterCount = count($babIDs);
         foreach ($chapters as $chapter) {
@@ -134,8 +135,8 @@ else {
             echo "<div class=\"chapter_number title_number\">$chapter->englishBabNumber</div>\n";
             echo "<div class=\"english_chapter_name english\">$chapter->englishBabName</div>\n";
             echo "<div class=\"arabic_chapter_name arabic\">$chapter->arabicBabName</div>\n";
+            echo "<div class=\"chapter_number arabic_title_number\">$chapter->englishBabNumber</div>\n";
             echo "</a>";
-            echo "<div class=clear></div>";
             echo "</div> <!-- end chapter_link div-->\n";
         }
     ?>
@@ -230,15 +231,28 @@ else {
 						}
 						else $otherlangshadith = NULL;
 						echo "<div class=\"actualHadithContainer hadith_container_{$collection->name}\" id=h".$arabicEntry->arabicURN.">\n";
-						echo $this->render('/collection/printhadith', array(
-							'arabicEntry' => $arabicEntry,
-							'englishText' => $englishEntry->hadithText,
-							'arabicText' => $arabicEntry->hadithText,
-							'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
-							'hadithNumber' => $arabicEntry->hadithNumber,
-							'book'	=> $book,
-							'collection'	=> $collection,
+						if ($collection->name !== "hisn") {
+							echo $this->render('/collection/printhadith', array(
+								'arabicEntry' => $arabicEntry,
+								'englishText' => $englishEntry->hadithText,
+								'arabicText' => $arabicEntry->hadithText,
+								'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
+								'hadithNumber' => $arabicEntry->hadithNumber,
+								'book'	=> $book,
+								'collection'	=> $collection,
 							));
+						}
+						else {
+							echo $this->render('/collection/print_hisn_hadith', array(
+								'arabicEntry' => $arabicEntry,
+								'englishText' => $englishEntry->hadithText,
+								'arabicText' => $arabicEntry->hadithText,
+								'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
+								'hadithNumber' => $arabicEntry->hadithNumber,
+								'book'	=> $book,
+								'collection'	=> $collection,
+							));
+						}
 
 						echo $this->render('/collection/hadith_reference', array(
 							'englishExists' => $englishExists,

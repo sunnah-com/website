@@ -11,18 +11,21 @@ else {
 	
 
 	<div class="collection_info">
-		<div class="colindextitle <?php echo $complete ? "complete" : "incomplete";?>">
-			<div class="arabic"><?php echo $collection->arabicTitle; ?></div>
-			<div class="english"><?php echo $collection->englishTitle;?></div>
-			<div class=clear></div>
-		</div>
 		<?php if (isset($fullblocks)) { ?>
 		<div class="col_progress">
 			<div class="progress_full" style="width: <?php echo ceil($fullblocks*13); ?>px;"></div>
 			<div class="progress_half" style="width: <?php echo ceil((10-$fullblocks)*9); ?>px;"></div>
 			<div class="progress_text"><?php echo floor(100*($collection->numhadith)/($collection->totalhadith)); ?>% complete</div>
 		</div>
-		<?php }
+		<div class="clear"></div>
+		<?php } ?>
+
+		<div class="colindextitle">
+			<div class="arabic"><?php echo $collection->arabicTitle; ?></div>
+			<div class="english"><?php echo $collection->englishTitle;?></div>
+			<div class=clear></div>
+		</div>
+		<?php
 			if (strlen($collection->shortintro) > 0) {
 				echo "<div class=\"colindextitle\">\n";
 				echo $collection->shortintro;
@@ -68,6 +71,9 @@ else {
 							echo "<div>—</div>";
 							echo "<div>".$entry->lastNumber."</div>";
 							echo "</div>";
+						}
+						else {
+							echo "<div class=book_range><div></div><div></div><div></div></div>";
 						}
 						
 						echo "<div class=\"arabic arabic_book_name\">";

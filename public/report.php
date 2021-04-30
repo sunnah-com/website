@@ -34,8 +34,8 @@ if (!is_numeric($eurn) || !is_numeric(substr($hid, 1))) {echo "An error occurred
 	</div>
 	
 	<div class="clear"></div>
-	<div class="reresp" id="reresp<?php echo $hid; ?>"></div>
 	<div style="text-align:center;"><input type="submit" class="resubmit" value="Submit"></div>
+	<div class="reresp" id="reresp<?php echo $hid; ?>"></div>
 	</form>
 	<div class="clear"></div>
 </div>
