@@ -42,9 +42,9 @@
 
 .clear{ clear:both; }
 
-.centertext {
+/* .centertext {
 	text-align: center;	
-}
+} */
 
 html,body{
     margin:0;
@@ -746,8 +746,9 @@ fieldset#translation_panel {
 }
 
 .progress_text {
-    padding-top: 3px 4px 0 7px;
     float: left;
+	margin-left: 5px;
+	line-height: 30px;
 }
 
 .colindextitle .arabic {
@@ -761,11 +762,11 @@ fieldset#translation_panel {
 	font-family: 'Libre Baskerville', serif;
     padding: 5px 0 10px 0;
 }
+
 .col_progress {
-	width: 32%;
-	float: right;
 	font-size: 18px;
-	padding-top: 15px;
+	height: 30px;
+    margin-bottom: 10px;
 }
 
 .progress_full {
@@ -809,11 +810,12 @@ fieldset#translation_panel {
 }
 
 .title {
-	padding: 15px 40px;
+	padding: 10px 40px;
 }
 
 .title a:hover {
 	color:#84B8B8;
+	text-decoration: none;
 }
 
 .title_number {
@@ -832,7 +834,7 @@ fieldset#translation_panel {
 }
 
 .arabic_book_name {
-	font-size: 27px;
+	font-size: 24px;
 	width: calc(50% - 153px);
 }
 
@@ -845,14 +847,12 @@ fieldset#translation_panel {
 	color: #037d7d;
 }
 
-.titles .book_hyperlink:nth-child(odd) .book_title:hover,
-.titles .book_hyperlink:nth-child(even) .book_title:hover {
-	box-shadow: 0 2px 4px rgb(0 0 0 / 50%), 0 -1px 2px rgb(0 0 0 / 5%);
+.titles .book_hyperlink .book_title:hover {
+	box-shadow: 0 2px 4px rgb(0 0 0 / 40%), 0 -1px 2px rgb(0 0 0 / 5%);
 	transform: translateY(-1px);
 }
 
-.titles .book_hyperlink:nth-child(odd) .book_title:active,
-.titles .book_hyperlink:nth-child(even) .book_title:active {
+.titles .book_hyperlink .book_title:active {
 	box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%), inset 0 -1px 1px rgb(0 0 0 / 5%);
 	transform: translateY(0px);
 }
@@ -863,13 +863,14 @@ fieldset#translation_panel {
 }
 
 .title .english_chapter_name {
-	width: 47%;	
+	width: 54%;
+	padding-right: 20px;
+	box-sizing: border-box;	
 }
 
 .title .arabic_chapter_name {
-	width: 47%;
+	width: 34%;
 	font-size: 20px;
-	padding-right: 10px;
 	box-sizing: border-box;
 }
 
@@ -930,17 +931,64 @@ fieldset#translation_panel {
 }
 
 /* Hisn al-Muslim */
+.hadithLines {
+	padding: 15px 0;
+}
+
+.hadithLine {
+	display: flex;
+	align-items: center;
+	padding: 5px 15px;
+}
+
+.hadithLine:nth-child(even) {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.hadithLine span {
+	box-sizing: border-box;
+	padding: 0 15px;	
+    vertical-align: middle;
+}
+
+.translationLine {
+	width: 34%;
+	font-family: "EB Garamond", serif;
+	font-size: 17px;
+}
+
+.transliterationLine {
+	width: 33%;
+	text-align: center;
+	font-family: "EB Garamond", serif;
+	font-size: 17px;
+}
+
+.arabicLine {
+	width: 33%;
+	font-family: 'KFGQPC Uthman Taha Naskh';
+	font-size: 21px;
+}
+
 .chapter_index_container {
-    width: 80%;
     margin: 0 auto;
 }
+
 .chapter_index {
-	font-size: 15px;
-	margin-bottom: 1em;
+	font-size: 16px;
+	padding: 15px 40px;
+	background-color: rgba(255, 255, 255, 0.5);
 }
+
 .chapter_link {
-    padding: 0 0 0 20px;
+	padding: 0;
 }
+
+.chapter_link div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .transliteration {
     white-space: pre-line;
     display: block;
@@ -1010,38 +1058,45 @@ fieldset#translation_panel {
 .collapsed {
     overflow: hidden;
     position: relative;
-    border-radius: 8px;
-    margin-bottom: 3em;
 }
+
 .collapsible:not(.collapsed) .button_expand {
     display: none;
+}
+
+.collapsible:not(.collapsed) {
+	height: auto;
 }
 
 .button_expand {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 6em;
-    padding-bottom: .5em;
-    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 51%) 20% ,#faf9f6 100%);
-    display: flex;
+    height: 50%;
+    padding-bottom: 15px;
+    background: linear-gradient(rgba(255, 255, 255, 0), #faf9f6 70%);
+	    display: flex;
     justify-content: flex-end;
     align-items: center;
     flex-direction: column;
     text-decoration: none;
+	margin-left: -40px;
 }
+
 .button_expand:after {
     content: ">";
     transform: rotateZ(90deg);
     font-family: icn-font;
     text-decoration: none;
+	font-size: 18px;
 }
+
 .button_expand:hover {
-    text-shadow: 2px 0px 5px #75a7a842;
     text-decoration: none;
-    color: #84B8B8;
     cursor: pointer;
+	color: #84B8B8;
 }
+
 /* / Hisn al-Muslim */
 .surah {
     background-color: rgba(95, 153, 153, 0.3);
@@ -1111,25 +1166,49 @@ fieldset#translation_panel {
 
 .bookintro {
 	white-space: pre-line;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 4px;
+	margin: 0 0 15px 0;
+	text-align: justify;
 }
 
 .ebookintro {
 	font-size: 15px;
 	float: left;
-	width: 48%;
+	width: 50%;
+	padding: 40px 30px 40px 40px;
+	box-sizing: border-box;
+}
+
+.ebookintro div {
+	font-weight: bold;
+    line-height: 33px;
+	font-size: 18px;
+    font-family: 'Libre Baskerville';
 }
 
 .abookintro {
 	float: right;
-	width: 48%;
+	width: 50%;
 	font-size: 22px;
+	padding: 40px 40px 40px 30px;
+	box-sizing: border-box;
 }
 
-.bookintro p { margin:1em; text-align: justify;}
+
+.abookintro div {
+	font-weight: bold;
+	font-size: 25px;
+	margin-bottom: 13px;
+}
+
+.bookintro p {
+	margin: 0; 
+	text-align: justify;
+}
 
 .AllHadith {
-    /* padding-left:10px;
-    padding-top: 20px; */
     margin:0;
     width: 100%;
 }
@@ -1144,7 +1223,6 @@ fieldset#translation_panel {
 }
 
 .hadith_narrated {
-    /* font-weight:bold; */
     color:#5d8080;
     text-decoration:none;
     padding-bottom:8px;
@@ -1497,7 +1575,6 @@ fieldset#translation_panel {
 .section_header {
 	font-family: 'Libre Baskerville', serif;
 	margin-bottom: -3px;
-    margin-left: 5px;
 	text-align: left;
     color: #343434;
 }
@@ -2069,8 +2146,15 @@ input[type="radio"] {
 		padding-left: 0;
 	}
 	
-	.ebookintro { width: 95%; }
-	.abookintro { width: 95%; }
+	.ebookintro { 
+		width: 100%;
+		padding: 40px; 
+	}
+	
+	.abookintro { 
+		width: 100%; 
+		padding: 40px; 
+	}
     
 	.book_info,
     .AllHadith {
@@ -2163,7 +2247,7 @@ input[type="radio"] {
 	}
 
     .book_page_colindextitle {
-        padding: 20px;
+        padding: 40px;
         width: 100%;
         float: none;
         box-sizing: border-box;
@@ -2177,11 +2261,6 @@ input[type="radio"] {
     .book_page_arabic_name {
         padding: 5px 0 0 0;
         text-align: right;
-	}
-
-	.book_title_english_container {
-		width: 100%;
-		float: none;
 	}
 
 	.book_page_english_text {
@@ -2445,11 +2524,48 @@ input[type="radio"] {
 		padding: 40px;
 	}
 
+	.hadithLine {
+		margin: 0 -40px;
+		padding: 5px 25px;
+	}	
 }
 
 
 
 @media (max-width: 768px) {
+
+	.hadithLine {
+		flex-direction: column-reverse;
+		margin: 0 -20px;
+		padding: 5px 20px;
+	}	
+
+	.hadithLine span {
+		padding: 0;
+	}
+
+	.translationLine {
+		width: 100%;
+	}
+	
+	.transliterationLine {
+		width: 100%;
+	}
+	
+	.arabicLine {
+		width: 100%;
+	}
+	
+
+	.book_title_english_container {
+		width: 100%;
+		float: none;
+	}
+
+	.book_page_colindextitle {
+        padding: 20px;
+	}
+
 	.hadith_permalink {
         float: none;
 		margin-top: 17px;
@@ -2573,6 +2689,15 @@ input[type="radio"] {
 		box-sizing: border-box;
 		padding: 0 20px;
 	}	
+
+	.ebookintro { 
+		padding: 20px; 
+	}
+	
+	.abookintro { 
+		padding: 20px; 
+	}
+
 }
 
 

@@ -534,16 +534,16 @@
 		var scrollMargin = e.target.dataset.scrollMargin;
 		var headerHeight = $('#header').height();
 		if (scrollMargin)
-			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight - scrollMargin}, 'fast', function() {
+			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight - scrollMargin}, 'fast', 'linear', function() {
 				var newHeaderHeight = $('#header').height();
 				if (headerHeight != newHeaderHeight)
-					$('html,body').scrollTop(anchor.offset().top - newHeaderHeight - scrollMargin);
+					$('html,body').animate({scrollTop: anchor.offset().top - newHeaderHeight - scrollMargin}, 'fast', 'linear');
 			}); 
 		else
-			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight}, 'fast', function() {
+			$('html,body').animate({scrollTop: anchor.offset().top - headerHeight}, 'fast', 'linear', function() {
 				var newHeaderHeight = $('#header').height();
 				if (headerHeight != newHeaderHeight)
-					$('html,body').scrollTop(anchor.offset().top - newHeaderHeight);
+				$('html,body').animate({scrollTop: anchor.offset().top - newHeaderHeight}, 'fast', 'linear');
 			}); 
 	});
 
