@@ -61,8 +61,8 @@
 			?>
 				<a href="/<?php echo $collection['name']; ?>">
 					<div class=collection_title>
-						<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
 						<div class=english_collection_title><?php echo $collection['englishTitle']; ?></div>
+						<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
 						<div class="clear"></div>
 					</div>
 				</a>
@@ -75,8 +75,8 @@
 			?>
 				<a href="/<?php echo $collection['name']; ?>">
 					<div class=collection_title>			
-						<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
 						<div class=english_collection_title><?php echo $collection['englishTitle']; ?></div>
+						<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
 						<div class="clear"></div>
 					</div>
 				</a>

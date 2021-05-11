@@ -148,8 +148,8 @@ if (isset($errorMsg)) {
                 'urn_language' => $urn_language,
             ));
 
+            echo "<div class=clear></div>";
             if ($truncation) {
-                echo "<div class=clear></div>";
                 echo "<div class=searchmore><a href=\"$permalink\">Read more...</a></div>";
             }
 

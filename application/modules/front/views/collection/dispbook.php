@@ -231,28 +231,15 @@ else {
 						}
 						else $otherlangshadith = NULL;
 						echo "<div class=\"actualHadithContainer hadith_container_{$collection->name}\" id=h".$arabicEntry->arabicURN.">\n";
-						if ($collection->name !== "hisn") {
-							echo $this->render('/collection/printhadith', array(
-								'arabicEntry' => $arabicEntry,
-								'englishText' => $englishEntry->hadithText,
-								'arabicText' => $arabicEntry->hadithText,
-								'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
-								'hadithNumber' => $arabicEntry->hadithNumber,
-								'book'	=> $book,
-								'collection'	=> $collection,
-							));
-						}
-						else {
-							echo $this->render('/collection/print_hisn_hadith', array(
-								'arabicEntry' => $arabicEntry,
-								'englishText' => $englishEntry->hadithText,
-								'arabicText' => $arabicEntry->hadithText,
-								'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
-								'hadithNumber' => $arabicEntry->hadithNumber,
-								'book'	=> $book,
-								'collection'	=> $collection,
-							));
-						}
+						echo $this->render('/collection/printhadith', array(
+							'arabicEntry' => $arabicEntry,
+							'englishText' => $englishEntry->hadithText,
+							'arabicText' => $arabicEntry->hadithText,
+							'ourHadithNumber' => $ourHadithNumber, 'counter' => $i+1, 'otherlangs' => $otherlangshadith,
+							'hadithNumber' => $arabicEntry->hadithNumber,
+							'book'	=> $book,
+							'collection'	=> $collection,
+						));
 
 						echo $this->render('/collection/hadith_reference', array(
 							'englishExists' => $englishExists,
@@ -286,8 +273,9 @@ else {
                         	elseif ($status == 4) $newBabID = $arabicEntry->babNumber;
 
 						}
+						
  
-						if (isset($newBabID) and $newBabID != $oldChapNo) { // Chapter ended and new chapter follows
+						if (isset($newBabID) and $newBabID != $oldChapNo) { // Chapter ended and new chapter follows							
 							if (isset($chapters[$oldChapNo]->arabicEnding) and strcmp($this->params['_pageType'], "book") == 0) {
 								echo "<div class=\"echapintro\">".$chapters[$oldChapNo]->englishEnding."</div>";
                                 echo "<div class=\"arabic achapintro\">".$chapters[$oldChapNo]->arabicEnding."</div>";

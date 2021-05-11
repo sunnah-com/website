@@ -487,7 +487,7 @@
 			$("#toolbar").css('display', 'block');
 			$("#search").css('top', '46px');
 			if (window.innerWidth > 992)
-				$("#sidePanel").css({'position': 'fixed', 'top': '124px'});
+				$("#sidePanel").css({'position': 'fixed', 'top': '122px'});
 			else
 				$("#sidePanel").css({'position': 'static'});
 		}
