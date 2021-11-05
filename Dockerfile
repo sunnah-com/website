@@ -1,9 +1,11 @@
-FROM php:7.3-apache
+FROM php:7.3.1-apache
 
 WORKDIR /app
 
-RUN apt-get update
-RUN apt-get install -y git zip unzip
+RUN apt-get update && apt remove curl libc-bin -y
+RUN apt-get install -y git zip unzip wget
+RUN wget https://curl.haxx.se/download/curl-7.79.0.zip && unzip curl-7.79.0.zip && rm -R /usr/local/include/curl
+RUN cd curl-7.79.0 && ./configure --with-wolfssl && make install
 RUN docker-php-ext-install pdo pdo_mysql mysqli
 RUN a2enmod rewrite
 
