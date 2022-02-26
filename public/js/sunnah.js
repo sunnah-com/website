@@ -246,7 +246,8 @@
 						copyToClipboard(copyText);
 					else
 						copyToClipboardFallback(copyText);
-				});				
+				})
+				.catch(() => copyToClipboardFallback(copyText));				
 		else			
 			copyToClipboardFallback(copyText);
 
