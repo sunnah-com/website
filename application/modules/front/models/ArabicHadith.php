@@ -38,6 +38,13 @@ class ArabicHadith extends Hadith
         return sprintf('<span class="arabic_text_details">%s</span>', $s->getContent());
     }
 
+    public function commentaryizer(ShortcodeInterface $s) {
+        $type = $s->getParameter("type");
+        if (is_null($type)) { $type = ""; }
+        // return sprintf('<div class="'.$type.'commentary">%s</div>', $s->getContent());
+        return sprintf('<div class="arabic_sanad">%s</div>', $s->getContent());
+    }
+
     public function narratorHandler(ShortcodeInterface $s) {
         return sprintf('<a href="/narrator/%s" title="%s" rel="nofollow">%s</a>',
             $s->getParameter("id"),
@@ -50,6 +57,7 @@ class ArabicHadith extends Hadith
         $this->facade->addHandler('prematn', array($this, 'sanadizer'));
         $this->facade->addHandler('postmatn', array($this, 'sanadizer'));
         $this->facade->addHandler('matn', array($this, 'matnizer'));
+        $this->facade->addHandler('commentary', array($this, 'commentaryizer'));
         $this->facade->addHandler('narrator', array($this, 'narratorHandler'));
     }
 
