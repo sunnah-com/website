@@ -49,6 +49,9 @@ class Book extends ActiveRecord
         case "urdu":
             $query = UrduHadith::find();
             break;
+        case "bangla":
+            $query = BanglaHadith::find();
+            break;
         case "arabic":
             $query = ArabicHadith::find();
             break;

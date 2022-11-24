@@ -200,6 +200,11 @@ class CollectionController extends SController
                 $viewVars['otherlangs'] = $this->_otherlangs;
             }
             
+            if ($this->_book->banglaBookID > 0) {
+                $this->_otherlangs['bangla'] = $this->_book->fetchLangHadith("bangla");
+                $viewVars['otherlangs'] = $this->_otherlangs;
+            }
+            
             if (!is_null($this->_otherlangs) && count($this->_otherlangs) > 0) {
                 $viewVars['ajaxCrawler'] = true;
             }

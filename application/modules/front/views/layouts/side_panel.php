@@ -13,16 +13,26 @@ Language:
     <label for="ch_arabic">Arabic العربية</label>
 </div>            
 --> 
+
 <?php if (in_array("urdu", $langarray)) { ?>
 <div>
 	<input type="radio" name="sidelang" value="urdu" id="ch_urdu" onclick="toggleLanguageDisplay('urdu')"  />
     <label for="ch_urdu">Urdu &nbsp;<span style="font-family: Jameel Noori Nastaleeq; font-size: 16px;">اردو</span></label>
 </div>             
 <?php } ?>
+
+<?php if (in_array("bangla", $langarray)) { ?>
+<div>
+	<input type="radio" name="sidelang" value="bangla" id="ch_bangla" onclick="toggleLanguageDisplay('bangla')"  />
+    <label for="ch_bangla">Bangla &nbsp;<span style="font-size: 16px;">বাংলা</span></label>
+</div>             
+<?php } ?>
+
 <?php if (in_array("indonesian", $langarray)) { ?>
 <div>
 	<input type="radio" name="sidelang" value="indonesian" id="ch_indonesian" onclick="toggleLanguageDisplay('indonesian')"  />
     <label for="ch_indonesian">Bahasa Indonesia</label>
 </div>             
 <?php } ?>
+
 </div>

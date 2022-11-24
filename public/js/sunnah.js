@@ -613,6 +613,7 @@
     langLoaded['english'] = true;
     langLoaded['indonesian'] = false;
     langLoaded['urdu'] = false;
+    langLoaded['bangla'] = false;
 
 	if ($.cookie('langprefs13') == null) {
 		langDisplay = 'english';

@@ -110,6 +110,14 @@ textarea {
 	font-size: 13px;
 }
 
+.bangla {
+	font-family: 'Noto Sans Bengali', serif;
+	font-size: 20px;
+	text-align: justify;
+	line-height: 2.35;
+	font-size: 13px;
+}
+
 .saws {
 	background-image: url('/images/sallallahu_alaihi_wa_sallam.png');
 	background-size: 15px 15px;
@@ -348,7 +356,8 @@ textarea {
 }
 .carousel_item .english_hadith_full:before,
 .carousel_item .arabic_hadith_full:before,
-.carousel_item .urdu_hadith_full:before {
+.carousel_item .urdu_hadith_full:before,
+.carousel_item .bangla_hadith_full:before {
     display: none;
 }
 .carousel_item .english_hadith_full {
@@ -1104,7 +1113,8 @@ textarea {
 
 .english_hadith_full:before,
 .arabic_hadith_full:before,
-.urdu_hadith_full:before {
+.urdu_hadith_full:before,
+.bangla_hadith_full:before {
     content: " ";
     background-image: url(../images/hadith_icon2_huge.png);
     background-repeat: no-repeat;
@@ -1122,6 +1132,14 @@ textarea {
 }
 
 .urdu_hadith_full {
+    padding-left:15px;
+    padding-top: 9px;
+    text-decoration:none;
+    padding-bottom: 10px;
+    color:#08081a;
+}
+
+.bangla_hadith_full {
     padding-left:15px;
     padding-top: 9px;
     text-decoration:none;
@@ -1597,6 +1615,10 @@ textarea {
         font-size: 17px;
     }
     
+    .bangla {
+        font-size: 17px;
+    }
+    
     #site{
 	   min-width: auto;
     }
@@ -1769,7 +1791,7 @@ textarea {
     .urdu_hadith_full,
     .english_hadith_full,
     .arabic_hadith_full,
-    .urdu_hadith_full {
+    .bangla_hadith_full {
         width: auto;
         padding: 0;
         float: none;
@@ -1789,7 +1811,8 @@ textarea {
 	
 	.english_hadith_full:before,
 	.arabic_hadith_full:before,
-	.urdu_hadith_full:before {
+	.urdu_hadith_full:before,
+	.bangla_hadith_full:before {
 		position: absolute;
 		height: 24px;
 		width: 14px;
@@ -1809,6 +1832,10 @@ textarea {
 	}
 
 	.urdu_hadith_full:before {
+		top: 9px;
+	}
+	
+	.bangla_hadith_full:before {
 		top: 9px;
 	}
 	
