@@ -63,6 +63,22 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Hind Siliguri';
+    src: url('/css/fonts/hindsiliguri-bold-webfont.woff2') format('woff2'),
+         url('/css/fonts/hindsiliguri-bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hind Siliguri';
+    src: url('/css/fonts/hindsiliguri-regular-webfont.woff2') format('woff2'),
+         url('/css/fonts/hindsiliguri-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .clear{ clear:both; }
 
 html,body{
@@ -111,7 +127,7 @@ textarea {
 }
 
 .bangla {
-	font-family: 'Noto Sans Bengali', serif;
+	font-family: 'Hind Siliguri', 'Noto Sans Bengali', serif;
 	font-size: 20px;
 	text-align: justify;
 	line-height: 2.35;
