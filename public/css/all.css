@@ -1334,6 +1334,25 @@ textarea {
 	padding: 0 10px 8px 0;
 }
 
+.bc_search ~ .actualHadithContainer [class*=hadith_full] b {
+    --highlight-color: #deebea;
+    border-radius: 4px;
+    box-shadow: 5px 0px 0 0px var(--highlight-color), -5px 0px 0 0px var(--highlight-color);
+    background: var(--highlight-color);
+}
+
+.bc_search ~ .actualHadithContainer .english_hadith_full b > i {
+    font-style: normal;
+}
+
+.bc_search ~ .actualHadithContainer .hadith_narrated b {
+	color: black
+}
+
+.bc_search ~ .actualHadithContainer .english_hadith_full b {
+    margin: 0 .25em;
+}
+
 .about {
     width: 60%;
     padding-left: 10%;
