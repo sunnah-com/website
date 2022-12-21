@@ -29,7 +29,8 @@
 					echo "$collection->englishTitle $hadithNumber";
 				}
 				echo "</div>";
-			}
+            }
+            echo "<div class=\"hadithTextContainers\" id=htc".$arabicURN.">";
 			echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
 			echo "<div class=\"english_hadith_full\">";
 
@@ -66,7 +67,8 @@
 			}
 
 			if (isset($annotation)) echo "<p><span class=\"arabic arabic_annotation\">$annotation</span>";
-			echo "</div>\n";
+            echo "</div>\n";
+            echo "</div>\n"; // hadithTextContainers
 			if (!is_null($otherlangs)) {
 				foreach ($otherlangs as $langname => $hadith) echo "<div class=$langname>".$hadith."</div>\n<br>\n";
 			}
