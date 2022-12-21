@@ -1098,7 +1098,6 @@ textarea {
 
 .hadithTextContainers {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(max(197px,43vw), 1fr));
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 40px;
     padding: 10px 15px 0;
@@ -1861,9 +1860,6 @@ textarea {
 	
 	.bangla_hadith_full:before {
 		top: 9px;
-	}
-	
-    .arabic_hadith_full {
 	}
 	
     .hadith_reference {
