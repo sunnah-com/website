@@ -1069,14 +1069,17 @@ textarea {
 .AllHadith {
     padding-left:10px;
     padding-top: 20px;
-    margin:0;
+    margin:0 auto;
     width: 94%;
+}
+/* col1 is a sub class for AllHadith */
+.col1 {
+	width: 70%;
 }
 
 .actualHadithContainer {
 	background-color: rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
-	float: left;
 	margin: 10px 3px 10px 3px;
 	width: 100%; /* for <1line hadith */
 	box-shadow: 0 21px 28px -21px rgba(0,0,0,.09), 0 22px 29px rgba(0,0,0,.02);
@@ -1095,30 +1098,28 @@ textarea {
     color:#08081a;
     text-decoration:none;
     text-align: justify;
-    padding-bottom: 10px;
+}
+
+.hadithTextContainers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    padding: 10px 15px 0;
 }
 
 .englishcontainer {
-    width: 47%;
-    float: left;
     text-align:justify;
 }
 
 .english_hadith_full {
-    padding-left:15px;
-	padding-top: 10px;
     font-size: 24px;
 }
 
 .english_hadith_full p{ padding:0; margin:0}
 
 .arabic_hadith_full {
-    padding-right: 15px;
-	padding-top: 7px;
     text-align:justify;
     font-size: 19px;
-	width: 47%;
-	float: right;
     line-height: 1.8;
 }
 
@@ -1138,26 +1139,21 @@ textarea {
     width: 20px;
     height: 20px;
     position: absolute;
-    left: -31px;
-    top: 8px;
+    left: -44px;
 }
 
 .arabic_hadith_full:before {
     left: auto;
-    right: -31px;
+    right: -44px;
 }
 
 .urdu_hadith_full {
-    padding-left:15px;
-    padding-top: 9px;
     text-decoration:none;
     padding-bottom: 10px;
     color:#08081a;
 }
 
 .bangla_hadith_full {
-    padding-left:15px;
-    padding-top: 9px;
     text-decoration:none;
     padding-bottom: 10px;
     color:#08081a;
@@ -1638,6 +1634,10 @@ textarea {
 		line-height: 27px;
 	}
 	
+	.hadithTextContainers {
+	    overflow: hidden;	
+	}
+
     .text_details {
         font-size: 16px;
 	}
@@ -1828,14 +1828,9 @@ textarea {
     .arabic_hadith_full,
     .bangla_hadith_full {
         width: auto;
-        padding: 0;
-        float: none;
 	}
 	
     .actualHadithContainer {
-        padding: 20px;
-        float: initial;
-        width: 100%;
         box-sizing: border-box;
         margin: 0 0 65px 0;
 	}
@@ -1874,10 +1869,6 @@ textarea {
 		top: 9px;
 	}
 	
-    .arabic_hadith_full {
-        margin-top: 1em;
-	}
-	
     .hadith_reference {
         padding: 1em 0 0 0;
         width: 100%;
@@ -1905,10 +1896,8 @@ textarea {
 		left: 0;
 		top: 100px;
 		box-sizing: border-box;
-		width: calc(100% + 40px);
 		z-index: 1;
 		border-top: 2px solid #75a7a8;
-		margin: 0 0 1em -20px;
 	}
 
     .collection_titles,

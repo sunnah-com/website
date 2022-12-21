@@ -29,21 +29,24 @@
 					echo "$collection->englishTitle $hadithNumber";
 				}
 				echo "</div>";
-			}
-			echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
-			echo "<div class=\"english_hadith_full\">";
+            }
+            echo "<div class=\"hadithTextContainers\" id=htc".$arabicURN.">";
+			if ($book->status != 6) {
+				echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
+				echo "<div class=\"english_hadith_full\">";
 
-            $colon_match = preg_match("/[^0-9]:[^0-9]/", $englishText, $match, PREG_OFFSET_CAPTURE);
-            if (($colon_match === 1) and ($collection->name !== "hisn")) {
-                $narrated_part = substr($englishText, 0, $match[0][1] + 1);
-                $text_part = trim(substr($englishText, $match[0][1] + 2));
-                echo "<div class=hadith_narrated>".$narrated_part.":</div>";
-                echo "<div class=text_details>".$text_part."</div>\n";
-            }
-            else {
-                echo "<div class=text_details>".$englishText."</div>\n";
-            }
-            echo "<div class=clear></div></div></div>";
+				$colon_match = preg_match("/[^0-9]:[^0-9]/", $englishText, $match, PREG_OFFSET_CAPTURE);
+				if (($colon_match === 1) and ($collection->name !== "hisn")) {
+					$narrated_part = substr($englishText, 0, $match[0][1] + 1);
+					$text_part = trim(substr($englishText, $match[0][1] + 2));
+					echo "<div class=hadith_narrated>".$narrated_part.":</div>";
+					echo "<div class=text_details>".$text_part."</div>\n";
+				}
+				else {
+					echo "<div class=text_details>".$englishText."</div>\n";
+				}
+				echo "<div class=clear></div></div></div>";
+			}
 
             $arabicSanad1 = "";
             $arabicSanad2 = "";
@@ -66,7 +69,8 @@
 			}
 
 			if (isset($annotation)) echo "<p><span class=\"arabic arabic_annotation\">$annotation</span>";
-			echo "</div>\n";
+            echo "</div>\n";
+            echo "</div>\n"; // hadithTextContainers
 			if (!is_null($otherlangs)) {
 				foreach ($otherlangs as $langname => $hadith) echo "<div class=$langname>".$hadith."</div>\n<br>\n";
 			}
