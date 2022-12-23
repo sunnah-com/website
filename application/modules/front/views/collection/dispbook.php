@@ -135,8 +135,13 @@ else {
     <div class=clear></div>
     <?php } ?>
 
+	<?php
+		$allHadithClass = "AllHadith";
+		$allHadithClass .= ($totalCount === 1) ? " single_hadith" : "";
+		$allHadithClass .= ($status === 6) ? " col1" : "";
+	?>
     <a name="0"></a>
-	<div class="AllHadith<?php echo ($totalCount === 1) ? " single_hadith" : "" ?>">
+	<div class="<?php echo $allHadithClass ?>">
 	<?php
 
                     // Special case for the rare 0-hadith book with chapters 

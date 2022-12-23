@@ -1069,8 +1069,12 @@ textarea {
 .AllHadith {
     padding-left:10px;
     padding-top: 20px;
-    margin:0;
+    margin:0 auto;
     width: 94%;
+}
+/* col1 is a sub class for AllHadith */
+.col1 {
+	width: 70%;
 }
 
 .actualHadithContainer {
@@ -1101,7 +1105,6 @@ textarea {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 40px;
     padding: 10px 15px 0;
-    overflow: hidden;
 }
 
 .englishcontainer {
@@ -1631,6 +1634,10 @@ textarea {
 		line-height: 27px;
 	}
 	
+	.hadithTextContainers {
+	    overflow: hidden;	
+	}
+
     .text_details {
         font-size: 16px;
 	}
