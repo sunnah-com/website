@@ -11,12 +11,12 @@ else {
 	
 
 	<div class="collection_info">
-		<div class="colindextitle <?php echo $complete ? "complete" : "incomplete";?>">
+		<div class="colindextitle <?php echo (($complete) and ($collection->showTranslationProgress == 1)) ? "complete" : "incomplete";?>">
 			<div class="arabic"><?php echo $collection->arabicTitle; ?></div>
 			<div class="english"><?php echo $collection->englishTitle;?></div>
 			<div class=clear></div>
 		</div>
-		<?php if (isset($fullblocks)) { ?>
+		<?php if (isset($fullblocks) and ($collection->showTranslationProgress == 1)) { ?>
 		<div class="col_progress">
 			<div class="progress_full" style="width: <?php echo ceil($fullblocks*13); ?>px;"></div>
 			<div class="progress_half" style="width: <?php echo ceil((10-$fullblocks)*9); ?>px;"></div>
