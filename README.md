@@ -7,7 +7,7 @@ Your webserver should point to the public folder. The Yii framework code needs t
 
 Under the `application` folder, here are the important locations:
 
-* `config/main.php` : All the configuration options, including URL routes, database connections, etc.
+* `config/main.php`: All the configuration options, including URL routes, database connections, etc.
 * Yii divides its MVC code into "modules" that share code. Think of them as sections of a website. For example, an admin section vs. a public section. 
 * `modules/front/controllers`: All controller classes. There are three main controllers: the search page, the index and sitewide pages, and the collection controller which includes actions for displaying collections, books, and ahadith.
 * `modules/front/models`: All model classes. Each kind of object has a model class. E.g. hadith, book, collection.
