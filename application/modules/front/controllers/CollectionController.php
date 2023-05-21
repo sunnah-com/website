@@ -459,7 +459,7 @@ class CollectionController extends SController
         }
 		$this->pathCrumbs($this->_collection->englishTitle, "/$this->_collectionName");
 
-		if ($this->_book->status > 3) {
+		if ($this->_book->status == 4) {
 			$nextURN = $this->util->getNextURNInCollection($englishHadith->englishURN);
 			$previousURN = $this->util->getPreviousURNInCollection($englishHadith->englishURN);
 			
