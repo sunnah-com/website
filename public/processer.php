@@ -25,7 +25,7 @@ if (isset($_POST['ftype'])) {
 		$errortype = $_POST['type']." ".$_POST['othererror'];
 		$errortext = $_POST['re_additional'];
 		$email = $_POST['email'];
-		if (strlen($email) <= 3) $email = "sunnah@iman.net";
+		if (strlen($email) <= 3) $email = $parameters['adminEmail'];
 		
 		$resp = recaptcha_check_answer(
 				$privatekey,
@@ -47,7 +47,7 @@ if (isset($_POST['ftype'])) {
 			
 			$headers = array (
               'From' => 'report@sunnah.com',
-              'To' => 'sunnah@iman.net',
+              'To' => $parameters['adminEmail'],
               'Reply-To' => $email,
               'Subject' => $subject);
 
@@ -60,7 +60,7 @@ if (isset($_POST['ftype'])) {
             );
 
             $mail = Mail::factory('smtp', $smtpParams);
-            $result = $mail->send("sunnah@iman.net", $headers, $fullString);
+            $result = $mail->send($parameters['adminEmail'], $headers, $fullString);
 
 
 			echo json_encode(array('status' => 0, 'message' => "Report submitted, thank you!"));
