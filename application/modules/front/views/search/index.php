@@ -100,6 +100,10 @@ if (isset($errorMsg)) {
                     $arabicText = $result['highlighted'];
                     $arabicText = str_replace('<em>', '<b>', $arabicText);
                     $arabicText = str_replace('</em>', '</b>', $arabicText);
+                    $th = new ArabicHadith();
+                    $th->hadithText = $arabicText;
+                    $th->process_text();
+                    $arabicText = $th->hadithText;
                 } else {
                     $arabicText = "<div style='text-align: left; direction: ltr;'>Preview not available. Please click on the link to view the hadith.</div>";
                 }
