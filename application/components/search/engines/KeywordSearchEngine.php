@@ -77,12 +77,13 @@ class KeywordSearchEngine extends SearchEngine
         // }
 
         foreach ($docs as $doc) {
-            $urn = $doc->englishUrn;
+            $urn = $doc->_source->englishURN;
             $highlightedText = null;
             // if (isset($highlightings[$urn][$this->fieldName])) {
             //     $highlightedText = $highlightings[$urn][$this->fieldName][0];
             // }
-            $resultset->addResult($this->lang, intval($urn), $highlightedText);
+            error_log($doc->highlight->hadithText[0]);
+            $resultset->addResult($this->lang, intval($urn), $doc->highlight->hadithText[0]);
         }
 
         return $resultset;

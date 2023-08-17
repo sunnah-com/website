@@ -92,7 +92,6 @@ class SearchResultset
                 $hadithData['en'] += self::getHadithsByUrn('en', $matchingUrns[$lang]);
             }
         }
-
         $collectionData = $util->getCollectionsInfo('indexed');
         $newResults = array();
         foreach ($this->results as $result) {
