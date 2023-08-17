@@ -1,10 +1,10 @@
-<?php
+application/components/search/engines/EnglishKeywordSearchEngine.php<?php
 
 namespace app\components\search\engines;
 
 class ArabicKeywordSearchEngine extends KeywordSearchEngine
 {
-    protected $id = 'SolrArabic';
+    protected $id = 'ElasticArabic';
     protected $lang = 'ar';
     protected $fieldName = 'arabichadithText';
 
@@ -16,7 +16,7 @@ class ArabicKeywordSearchEngine extends KeywordSearchEngine
     protected function doQuery()
     {
         $fullquery = rawurlencode(self::replace_special_chars(stripslashes(trim($this->query))));
-        $resultscode = $this->solr->sendRequest('/solr/select/?q='.$fullquery.'&wt=php&rows='.$this->limit.'&start='.$this->getStartOffset().'&hl=true&hl.fl='.$this->fieldName.'&hl.snippets=5&hl.fragsize=2500&hl.mergeContiguous=true&defType=edismax&mm=3%3C-1%205%3C-2&qf='.$this->fieldName);
+        $resultscode = $this->elastic->sendRequest('/arabic/search?q='.$fullquery.'&size='.$this->limit.'&from='.$this->getStartOffset());
 
         if ($resultscode === false) {
             return null;

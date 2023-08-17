@@ -8,15 +8,15 @@ use Yii;
 
 class KeywordSearchEngine extends SearchEngine
 {
-    protected $solr;
+    protected $elastic;
 
-    protected $id = 'Solr';
+    protected $id = 'Elastic';
     protected $lang = 'en';
     protected $fieldName = 'hadithText';
 
     public function __construct()
     {
-        $this->solr = Yii::$app->solr;
+        $this->elastic = Yii::$app->elastic;
     }
 
     protected function getStartOffset()
@@ -61,28 +61,27 @@ class KeywordSearchEngine extends SearchEngine
         }
 
         // FIXME: Avoid use of eval
-        eval("\$resultsarray = ".$resultscode.";");
+        $resultsarray = json_decode($resultscode);
+        $response = $resultsarray->hits;
+        $docs = $response->hits;
+        // $highlightings = $resultsarray['highlighting'];
 
-        $response = $resultsarray['response'];
-        $docs = $resultsarray['response']['docs'];
-        $highlightings = $resultsarray['highlighting'];
+        $resultset = new SearchResultset($response->total->value);
 
-        $resultset = new SearchResultset($response['numFound']);
-
-        if ($this->hasSuggestionsSupport()) {
-            $suggestions = $resultsarray['spellcheck']['suggestions'] ?? null;
-            if ($suggestions && isset($suggestions['collation'])) {
-                $spellcheck = substr(strstr($suggestions['collation'], ':'), 1);
-                $resultset->setSuggestions($spellcheck);
-            }
-        }
+        // if ($this->hasSuggestionsSupport()) {
+        //     $suggestions = $resultsarray['spellcheck']['suggestions'] ?? null;
+        //     if ($suggestions && isset($suggestions['collation'])) {
+        //         $spellcheck = substr(strstr($suggestions['collation'], ':'), 1);
+        //         $resultset->setSuggestions($spellcheck);
+        //     }
+        // }
 
         foreach ($docs as $doc) {
-            $urn = $doc['URN'];
+            $urn = $doc->englishUrn;
             $highlightedText = null;
-            if (isset($highlightings[$urn][$this->fieldName])) {
-                $highlightedText = $highlightings[$urn][$this->fieldName][0];
-            }
+            // if (isset($highlightings[$urn][$this->fieldName])) {
+            //     $highlightedText = $highlightings[$urn][$this->fieldName][0];
+            // }
             $resultset->addResult($this->lang, intval($urn), $highlightedText);
         }
 

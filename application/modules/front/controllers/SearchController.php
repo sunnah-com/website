@@ -47,8 +47,9 @@ class SearchController extends SController
 		try {
         	$resultset = $searchEngine->doSearch($query);
 		} catch (\ErrorException $e) {
+            error_log($e);
 			$errorMsg = "Your search query cannot be performed. It may contain improper characters, be too long, or be malformed in another way.";
-			return $this->render('index', ['errorMsg' => $errorMsg]);
+			return $this->render('index', ['errorMsg' => $e]);
 		}
 		restore_error_handler();
 
