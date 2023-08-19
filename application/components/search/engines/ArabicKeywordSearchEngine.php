@@ -1,4 +1,4 @@
-application/components/search/engines/EnglishKeywordSearchEngine.php<?php
+<?php
 
 namespace app\components\search\engines;
 

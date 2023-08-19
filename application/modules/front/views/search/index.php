@@ -79,23 +79,20 @@ if (isset($errorMsg)) {
             if ((bool)$arabicEntry) $permalink = $arabicEntry->permalink;
             else $permalink = $englishEntry->permalink;
 
-            $truncation = false;
+            [$arabicText, $arabicTruncation] = truncateHadithText($data['ar']);
+            [$englishText, $englishTruncation] = truncateHadithText($data['en']);
+
+            $truncation = $englishTruncation || $arabicTruncation;
 
             if ($result['language'] === 'en') {
                 $urn_language = "english";
-                [$arabicText, $truncation] = truncateHadithText($data['ar']);
-
                 if ($result['highlighted'] !== null) {
                     $englishText = $result['highlighted'];
                     $englishText = str_replace('<em>', '<b><i>', $englishText);
                     $englishText = str_replace('</em>', '</i></b>', $englishText);
-                } else {
-                    $englishText = "Preview not available. Please click on the link to view the hadith.";
-                }
+                } 
             } elseif ($result['language'] === 'ar') {
                 $urn_language = "arabic";
-                [$englishText, $truncation] = truncateHadithText($data['en']);
-
                 if ($result['highlighted'] !== null) {
                     $arabicText = $result['highlighted'];
                     $arabicText = str_replace('<em>', '<b>', $arabicText);
@@ -104,8 +101,6 @@ if (isset($errorMsg)) {
                     $th->hadithText = $arabicText;
                     $th->process_text();
                     $arabicText = $th->hadithText;
-                } else {
-                    $arabicText = "<div style='text-align: left; direction: ltr;'>Preview not available. Please click on the link to view the hadith.</div>";
                 }
             }
 
