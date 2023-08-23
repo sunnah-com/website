@@ -24,7 +24,6 @@ class ElasticConnection extends BaseObject
 
     public function sendRequest($url)
     {
-        error_log("{$this->host}:{$this->port}{$url}");
         return file_get_contents("{$this->host}:{$this->port}{$url}", false, $this->context);
     }
 }

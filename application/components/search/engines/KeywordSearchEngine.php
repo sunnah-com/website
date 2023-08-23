@@ -64,8 +64,6 @@ class KeywordSearchEngine extends SearchEngine
         $resultsarray = json_decode($resultscode);
         $response = $resultsarray->hits;
         $docs = $response->hits;
-        // $highlightings = $resultsarray['highlighting'];
-
         $resultset = new SearchResultset($response->total->value);
 
         // if ($this->hasSuggestionsSupport()) {
@@ -78,11 +76,6 @@ class KeywordSearchEngine extends SearchEngine
 
         foreach ($docs as $doc) {
             $urn = $doc->_source->englishURN;
-            $highlightedText = null;
-            // if (isset($highlightings[$urn][$this->fieldName])) {
-            //     $highlightedText = $highlightings[$urn][$this->fieldName][0];
-            // }
-            error_log($doc->highlight->hadithText[0]);
             $resultset->addResult($this->lang, intval($urn), $doc->highlight->hadithText[0]);
         }
 
