@@ -33,7 +33,7 @@ class KeywordSearchEngine extends SearchEngine
         if ($resultset === null) {
             return null;
         }
-        $enSuggestions = $resultset->getSuggestions();
+        $suggestions = $resultset->getSuggestions();
 
         if ($resultset->getCount() === 0) {
             // If no English results were found, do Arabic search
@@ -44,7 +44,7 @@ class KeywordSearchEngine extends SearchEngine
 
         if ($resultset !== null) {
             // Only English engine supports suggestions
-            $resultset->setSuggestions($enSuggestions);
+            $resultset->setSuggestions($suggestions);
 
             // Log the query and result set size
             $this->logQuery($resultset->getCount());
@@ -62,17 +62,16 @@ class KeywordSearchEngine extends SearchEngine
 
         // FIXME: Avoid use of eval
         $resultsarray = json_decode($resultscode);
-        $response = $resultsarray->hits;
-        $docs = $response->hits;
-        $resultset = new SearchResultset($response->total->value);
+        $hits = $resultsarray->hits;
+        $docs = $hits->hits;
+        $resultset = new SearchResultset($hits->total->value);
 
-        // if ($this->hasSuggestionsSupport()) {
-        //     $suggestions = $resultsarray['spellcheck']['suggestions'] ?? null;
-        //     if ($suggestions && isset($suggestions['collation'])) {
-        //         $spellcheck = substr(strstr($suggestions['collation'], ':'), 1);
-        //         $resultset->setSuggestions($spellcheck);
-        //     }
-        // }
+        if ($this->hasSuggestionsSupport()) {
+            $suggestions = $resultsarray->suggest->query[0]->options ?? null;
+            if ($suggestions && count($suggestions) > 0) {
+                $resultset->setSuggestions($suggestions[0]->text);
+            }
+        }
 
         foreach ($docs as $doc) {
             $urn = $doc->_source->englishURN;
@@ -90,7 +89,7 @@ class KeywordSearchEngine extends SearchEngine
     protected function hasSuggestionsSupport()
     {
         // whether "did you mean" spellcheck suggestions are supported
-        return false;
+        return true;
     }
 
     protected static function replace_special_chars($str)
