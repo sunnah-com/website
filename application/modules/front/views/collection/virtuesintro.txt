@@ -1,11 +1,11 @@
-<div style="width: 75%; padding-top: 10px; margin: auto; text-align: justify;">
+<div style="width: 85%; padding-top: 15px; margin: auto; text-align: justify;">
 <i>
-This is a short, fully authentic collection of ahadith compiled by <a href="https://imamsuleiman.com/">Imam Suleiman Hani</a> on the special virtues of the Qur'an's Chapters & Verses. The purpose of this collection is to clarify confusion on the virtues and benefits of surahs in the Muslims world and to have the English/Arabic compiled in one place, in one text. Imam Suleiman has triple checked the authentication with 3 different hadith scholars' verdicts. His introduction to the compilation follows. This compilation is reproduced here with his generous permission.
+This is a short, fully authentic collection of ahadith compiled by <a href="https://imamsuleiman.com/">Imam Suleiman Hani</a> on the special virtues of the Qur'an's Chapters & Verses. The purpose of this collection is to clarify confusion on the virtues and benefits of surahs in the Muslim world and to have the English/Arabic compiled in one place, in one text. Imam Suleiman has triple checked the authentication with 3 different hadith scholars' verdicts. His introduction to the compilation follows. This compilation is reproduced here with his generous permission.
 </i>
 <p>
 <hr>
 
-<div style="width: 55%; padding-top: 15px; margin: auto; text-align: justify;">
+<div class="virtuesintro">
 One of the most practical, uplifting, and motivational branches of Ulūm al-Qur’an (Sciences of the Qur’an) is the <i>faḍā’il</i> (virtues) of specific suwar and āyāt. For example, many Muslims may know about the verses that should be recited for ruqyah (healing), or the sūrah that will serve as a protection in the grave, or the suwar that offer shade on the Day of Resurrection. The benefits of studying this topic are multi-faceted, but generally can be summarized as follows:
 <ol>
 <li>A greater connection to specific suwar and āyāt of the Qur’an, thereby increasing one’s connection to Allah ﷻ. </li>

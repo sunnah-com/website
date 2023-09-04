@@ -55,7 +55,7 @@
                     $grade = $arabic_grades[$i]['grade'];
                     $graded_by = $arabic_grades[$i]['graded_by'];
     				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$grade."</b>";
-	    			echo "&nbsp;&nbsp; (".$graded_by.") </td>";
+	    			if (strlen(trim($graded_by)) > 0) echo "&nbsp;&nbsp; (".$graded_by.") </td>";
 		    		echo "<td class=\"arabic_grade arabic\" width=\"50px\">";
 					if (!$firstGradePrinted) echo "<b>حكم</b>&nbsp;&nbsp;&nbsp;:";
 					echo "</td>";

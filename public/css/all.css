@@ -924,6 +924,15 @@ textarea {
 .reference_label {
     font-size: 13px
 }
+
+.virtuesintro {
+    width: 55%; 
+    padding-top: 15px; 
+    margin: auto; 
+    text-align: justify;
+}
+
+
 .AllHadith > a:not([href]) {
 	scroll-margin-top: 60px;
 	scroll-snap-margin-top: 60px;
@@ -2018,6 +2027,12 @@ textarea {
 		order: 1;
 	}
 	
+    .virtuesintro {
+        width: 100%;
+        padding-top: 15px; 
+        margin: auto; 
+        text-align: justify;
+    }
 	/* Ramadan Home */
 	#rightPanel {
 		min-width: auto;
