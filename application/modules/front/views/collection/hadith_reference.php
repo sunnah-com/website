@@ -45,7 +45,7 @@
 					if (!$firstGradePrinted) echo "<b>Grade</b>:";
 					echo "</td>";
                     echo "<td class=english_grade width=\"36%\">&nbsp;<b>".$grade."</b>";
-                    echo " (".$graded_by.")</td>";
+                    if (strlen(trim($graded_by)) > 0) echo " (".$graded_by.")</td>";
                 } else {
                     echo "<td height=100% class=english_grade></td>";
                     echo "<td height=100% class=english_grade></td>";

@@ -1040,12 +1040,17 @@ textarea {
     width: 80%;
     margin-right: 4%;
 }
+
 .echapintro {
 	padding: 15px 0 10px 45px;
     text-align: justify;
     font-size: 13px;
 	width: 42%;
 	float: left;
+}
+.echapintro.econly {
+    width: 80%;
+    margin-right: 4%;
 }
 
 .bookintro {

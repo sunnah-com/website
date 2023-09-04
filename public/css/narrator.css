@@ -1,0 +1,85 @@
+.narrator_heading {
+    width: 94%;
+    padding-left: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.narrator_heading_title {
+    float: left;
+    width: 100%;
+    padding: 5px 20px 5px 5px;
+    margin-left: 0px;
+    text-align: justify;
+}
+
+.narrator_details {
+    float: center;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.narrator_name_heading_arabic {
+    float: right;
+    font-size: 50px;
+    /* padding-right: 10px; */
+    width: 47%;
+}
+
+.narrator_name_heading_english {
+    float: left;
+    font-size: 40px;
+    padding-top: 5px;
+    width: 47%;
+    text-align: left;
+}
+
+.left_narrator_details_label {
+    float: left;
+    min-width: 27px;
+    height: 30px;
+    padding-top: 6px;
+    padding-right: 8px;
+    font-size: 20px;
+}
+
+.left_narrator_details_value {
+    width: 30%;
+    float: left;
+    min-height: 30px;
+    padding-top: 6px;
+}
+
+.right_narrator_details_value {
+    /* width: 40%; */
+    float: right;
+    font-size: 30px;
+    padding-top: 6px;
+    text-align: right;
+}
+
+.right_narrator_details_label {
+    float: right;
+    min-width: 27px;
+    font-size: 30px;
+    height: 30px;
+    padding-top: 6px;
+    padding-right: 8px;
+    padding-left: 30px;
+    text-align: left;
+}
+
+.narrator_year {
+    float: right;
+}
+
+.narrator_year.death {
+    padding-left: 30px;
+}
+
+.narrator_year.age {
+    text-align: center;
+}
+
+.narrator_year.hyphen {
+    padding: 0 10px 0 10px;

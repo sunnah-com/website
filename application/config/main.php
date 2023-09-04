@@ -199,6 +199,15 @@ $config = [
                   'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
                 ],
 
+                [ 'pattern' => '<collectionName:virtues>/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:virtues>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+
                 'search/<query>/<page:\d+>' => 'front/search/oldsearch',
                 'search/<query>' => 'front/search/oldsearch',
                 'search' => 'front/search/search',

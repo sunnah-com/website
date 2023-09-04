@@ -35,16 +35,20 @@
 				echo "<div class=\"englishcontainer\" id=t".$arabicURN.">";
 				echo "<div class=\"english_hadith_full\">";
 
+                $printed = false;
 				$colon_match = preg_match("/[^0-9]:[^0-9]/", $englishText, $match, PREG_OFFSET_CAPTURE);
-				if (($colon_match === 1) and ($collection->name !== "hisn")) {
+				if ($colon_match === 1) {
 					$narrated_part = substr($englishText, 0, $match[0][1] + 1);
-					$text_part = trim(substr($englishText, $match[0][1] + 2));
-					echo "<div class=hadith_narrated>".$narrated_part.":</div>";
-					echo "<div class=text_details>".$text_part."</div>\n";
+                    $text_part = trim(substr($englishText, $match[0][1] + 2));
+                    if (strcmp(substr($narrated_part, -8), "eference") != 0) {
+				    	echo "<div class=hadith_narrated>".$narrated_part.":</div>";
+                        echo "<div class=text_details>".$text_part."</div>\n";
+                        $printed = true;
+                    }
 				}
-				else {
-					echo "<div class=text_details>".$englishText."</div>\n";
-				}
+                
+                if (!$printed) echo "<div class=text_details>".$englishText."</div>\n";
+				
 				echo "<div class=clear></div></div></div>";
 			}
 

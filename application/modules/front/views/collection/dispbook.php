@@ -14,6 +14,7 @@ function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
 
 	echo "<a name=C$chapter->babID></a>\n";
 	if ((strcmp($collection->name, "bukhari") == 0) and ($ourBookID == 65) and (strcmp(substr($chapter->babID, -2), "00") == 0)) $chapterClassName = "surah";
+    elseif ((strcmp($collection->name, "virtues") == 0) and ($ourBookID == 1) and (strcmp(substr($chapter->babID, -2), "00") == 0)) $chapterClassName = "surah";
 	else $chapterClassName = "chapter";
     echo "<div class=$chapterClassName>\n";
 	if (!is_null($englishBabName)) {
@@ -29,18 +30,21 @@ function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
 		}
 
 		echo "<div class=echapno>";
-		if (strlen($babNum) > 0) echo "($babNum)"; 
+		if (strlen(trim($babNum)) > 0) echo "($babNum)"; 
 		echo "</div>";
 		echo "<div class=englishchapter>".$eprefix.$englishBabName."</div>\n";
 	}
-	echo "<div class=achapno>"; if (strlen($arabicBabNumber) > 0) echo "($arabicBabNumber)"; echo "</div>\n";
+	echo "<div class=achapno>"; if (strlen(trim($arabicBabNumber)) > 0) echo "($arabicBabNumber)"; echo "</div>\n";
 	echo "<div class=\"arabicchapter arabic\">$arabicBabName</div>";
 	echo "<div class=clear></div>\n";
 	echo "</div>\n";
 
     if ($showIntro) {
     	$acOnlyClass = "";
-	    if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"echapintro\">$englishIntro</div>\n";
+        $ecOnlyClass = "";
+
+	    if (!(isset($arabicIntro) && strlen($arabicIntro) > 0)) $ecOnlyClass = " econly";
+	    if (isset($englishIntro) && strlen($englishIntro) > 0) echo "<div class=\"echapintro$ecOnlyClass\">$englishIntro</div>\n";
 	    else $acOnlyClass = " aconly";
 	    if (isset($arabicIntro) && strlen($arabicIntro) > 0) echo "<div class=\"arabic achapintro$acOnlyClass\">$arabicIntro</div>\n";
 	    echo "<div class=clear></div>\n";
@@ -97,8 +101,9 @@ else {
 		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b><?php echo $totalCount; ?></b> hadith</div> -->
 
 	<?php
-		if (!is_null($book->arabicBookIntro) and strcmp($this->params['_pageType'], "book") == 0) {
+		if ((!is_null($book->arabicBookIntro) || !is_null($book->englishBookIntro)) and strcmp($this->params['_pageType'], "book") == 0) {
 					if (strcmp($collection->name, "muslim") == 0 and $ourBookID == -1) include("muslimintro.txt");
+					if (strcmp($collection->name, "virtues") == 0 and $ourBookID == 1) include("virtuesintro.txt");
 					echo "<div class=\"bookintro".$collapse_book_intro."\">";
 					echo "<div class=ebookintro>".$book->englishBookIntro."</div>";
 					echo "<div class=\"arabic abookintro\">".$book->arabicBookIntro."</div>";
