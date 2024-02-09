@@ -1344,13 +1344,6 @@ textarea {
 	padding: 0 10px 8px 0;
 }
 
-.bc_search ~ .actualHadithContainer [class*=hadith_full] b {
-    --highlight-color: #deebea;
-    border-radius: 4px;
-    box-shadow: 5px 0px 0 0px var(--highlight-color), -5px 0px 0 0px var(--highlight-color);
-    background: var(--highlight-color);
-}
-
 .bc_search ~ .actualHadithContainer .english_hadith_full b > i {
     font-style: normal;
 }
@@ -2045,6 +2038,12 @@ textarea {
 	text-align: center;
 }
 
+em {
+	--highlight-color: #deebea;
+    border-radius: 4px;
+    box-shadow: 1px 0px 0 0px var(--highlight-color), -1px 0px 0 0px var(--highlight-color);
+    background: var(--highlight-color);
+}
 
 /* Medium screen, retina, stuff to override above media query */
 @media

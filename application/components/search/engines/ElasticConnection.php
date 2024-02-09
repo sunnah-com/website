@@ -4,7 +4,7 @@ namespace app\components\search\engines;
 
 use yii\base\BaseObject;
 
-class SolrConnection extends BaseObject
+class ElasticConnection extends BaseObject
 {
     public $host;
     public $port;

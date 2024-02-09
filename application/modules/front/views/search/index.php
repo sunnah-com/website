@@ -5,6 +5,13 @@ use app\modules\front\models\Util;
 use app\modules\front\models\ArabicHadith;
 use app\modules\front\models\EnglishHadith;
 
+function formatHighlightIfExists($text, $highlight){
+    if ($highlight == null) return $text;
+    $highlightedText = str_replace('<em>', '<em><b><i>', $highlight);
+    $highlightedText = str_replace('</em>', '</i></b></em>',$highlightedText);
+    return $highlightedText;
+}
+
 function truncateHadithText($hadith)
 {
     $truncation = false;
@@ -67,9 +74,11 @@ if (isset($errorMsg)) {
 
         $util = new Util();
         foreach ($resultset->getResults() as $result) {
+            $highlights = $result['highlighted'];
             $data = $result['data'];
             $hadith = $data[$result['language']];
             $collection = $data['collection'];
+                               
             $book = $data['book'];
             $ourBookID = $book->ourBookID;
 
@@ -79,34 +88,24 @@ if (isset($errorMsg)) {
             if ((bool)$arabicEntry) $permalink = $arabicEntry->permalink;
             else $permalink = $englishEntry->permalink;
 
-            $truncation = false;
+            [$arabicText, $arabicTruncation] = truncateHadithText($data['ar']);
+            [$englishText, $englishTruncation] = truncateHadithText($data['en']);
+
+            $truncation = $englishTruncation || $arabicTruncation;
 
             if ($result['language'] === 'en') {
                 $urn_language = "english";
-                [$arabicText, $truncation] = truncateHadithText($data['ar']);
-
-                if ($result['highlighted'] !== null) {
-                    $englishText = $result['highlighted'];
-                    $englishText = str_replace('<em>', '<b><i>', $englishText);
-                    $englishText = str_replace('</em>', '</i></b>', $englishText);
-                } else {
-                    $englishText = "Preview not available. Please click on the link to view the hadith.";
-                }
             } elseif ($result['language'] === 'ar') {
                 $urn_language = "arabic";
-                [$englishText, $truncation] = truncateHadithText($data['en']);
+            }
+            $englishText = formatHighlightIfExists($englishText, $highlights->hadithText[0]);
+            $th = new ArabicHadith();
+            $th->hadithText = $arabicText;
+            $th->process_text();
+            $arabicText = formatHighlightIfExists($th->hadithText, $highlights->arabicText[0]);;
 
-                if ($result['highlighted'] !== null) {
-                    $arabicText = $result['highlighted'];
-                    $arabicText = str_replace('<em>', '<b>', $arabicText);
-                    $arabicText = str_replace('</em>', '</b>', $arabicText);
-                    $th = new ArabicHadith();
-                    $th->hadithText = $arabicText;
-                    $th->process_text();
-                    $arabicText = $th->hadithText;
-                } else {
-                    $arabicText = "<div style='text-align: left; direction: ltr;'>Preview not available. Please click on the link to view the hadith.</div>";
-                }
+            if ($highlights->collection[0] !== null){
+                $collection['englishTitle'] = "<em>".$collection['englishTitle']."</em>";
             }
 
             echo "<div class=\"boh\">\n";

@@ -8,15 +8,15 @@ use Yii;
 
 class KeywordSearchEngine extends SearchEngine
 {
-    protected $solr;
+    protected $elastic;
 
-    protected $id = 'Solr';
+    protected $id = 'Elastic';
     protected $lang = 'en';
     protected $fieldName = 'hadithText';
 
     public function __construct()
     {
-        $this->solr = Yii::$app->solr;
+        $this->elastic = Yii::$app->elastic;
     }
 
     protected function getStartOffset()
@@ -33,7 +33,7 @@ class KeywordSearchEngine extends SearchEngine
         if ($resultset === null) {
             return null;
         }
-        $enSuggestions = $resultset->getSuggestions();
+        $suggestions = $resultset->getSuggestions();
 
         if ($resultset->getCount() === 0) {
             // If no English results were found, do Arabic search
@@ -44,7 +44,7 @@ class KeywordSearchEngine extends SearchEngine
 
         if ($resultset !== null) {
             // Only English engine supports suggestions
-            $resultset->setSuggestions($enSuggestions);
+            $resultset->setSuggestions($suggestions);
 
             // Log the query and result set size
             $this->logQuery($resultset->getCount());
@@ -61,29 +61,21 @@ class KeywordSearchEngine extends SearchEngine
         }
 
         // FIXME: Avoid use of eval
-        eval("\$resultsarray = ".$resultscode.";");
-
-        $response = $resultsarray['response'];
-        $docs = $resultsarray['response']['docs'];
-        $highlightings = $resultsarray['highlighting'];
-
-        $resultset = new SearchResultset($response['numFound']);
+        $resultsarray = json_decode($resultscode);
+        $hits = $resultsarray->hits;
+        $docs = $hits->hits;
+        $resultset = new SearchResultset($hits->total->value);
 
         if ($this->hasSuggestionsSupport()) {
-            $suggestions = $resultsarray['spellcheck']['suggestions'] ?? null;
-            if ($suggestions && isset($suggestions['collation'])) {
-                $spellcheck = substr(strstr($suggestions['collation'], ':'), 1);
-                $resultset->setSuggestions($spellcheck);
+            $suggestions = $resultsarray->suggest->query[0]->options ?? null;
+            if ($suggestions && count($suggestions) > 0) {
+                $resultset->setSuggestions($suggestions[0]->text);
             }
         }
 
         foreach ($docs as $doc) {
-            $urn = $doc['URN'];
-            $highlightedText = null;
-            if (isset($highlightings[$urn][$this->fieldName])) {
-                $highlightedText = $highlightings[$urn][$this->fieldName][0];
-            }
-            $resultset->addResult($this->lang, intval($urn), $highlightedText);
+            $urn = $doc->_source->englishURN;
+            $resultset->addResult($this->lang, intval($urn), $doc->highlight);
         }
 
         return $resultset;
@@ -97,7 +89,7 @@ class KeywordSearchEngine extends SearchEngine
     protected function hasSuggestionsSupport()
     {
         // whether "did you mean" spellcheck suggestions are supported
-        return false;
+        return true;
     }
 
     protected static function replace_special_chars($str)
