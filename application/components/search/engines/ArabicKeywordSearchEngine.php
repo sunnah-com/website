@@ -6,7 +6,7 @@ class ArabicKeywordSearchEngine extends KeywordSearchEngine
 {
     protected $id = 'ElasticArabic';
     protected $lang = 'ar';
-    protected $fieldName = 'arabichadithText';
+    protected $fieldName = 'arabicText';
 
     protected function doSearchInternal()
     {
@@ -15,7 +15,7 @@ class ArabicKeywordSearchEngine extends KeywordSearchEngine
 
     protected function doQuery()
     {
-        $fullquery = rawurlencode(self::replace_special_chars(stripslashes(trim($this->query))));
+        $fullquery = rawurlencode(stripslashes($this->query));
         $resultscode = $this->elastic->sendRequest('/arabic/search?q='.$fullquery.'&size='.$this->limit.'&from='.$this->getStartOffset());
 
         if ($resultscode === false) {

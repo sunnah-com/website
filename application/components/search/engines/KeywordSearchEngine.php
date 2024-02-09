@@ -74,7 +74,7 @@ class KeywordSearchEngine extends SearchEngine
         }
 
         foreach ($docs as $doc) {
-            $urn = $doc->_source->englishURN;
+            $urn = $doc->_source->urn;
             $resultset->addResult($this->lang, intval($urn), $doc->highlight);
         }
 

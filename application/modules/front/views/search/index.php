@@ -99,10 +99,13 @@ if (isset($errorMsg)) {
                 $urn_language = "arabic";
             }
             $englishText = formatHighlightIfExists($englishText, $highlights->hadithText[0]);
+            $arabicText = formatHighlightIfExists($arabicText, $highlights->arabicText[0]);;
+            
             $th = new ArabicHadith();
             $th->hadithText = $arabicText;
             $th->process_text();
-            $arabicText = formatHighlightIfExists($th->hadithText, $highlights->arabicText[0]);;
+            $arabicText = $th->hadithText;
+
 
             if ($highlights->collection[0] !== null){
                 $collection['englishTitle'] = "<em>".$collection['englishTitle']."</em>";
