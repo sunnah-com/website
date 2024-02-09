@@ -110,10 +110,10 @@ $config = [
           'password' => $parameters['searchdb_password'],
           'charset' => 'utf8',
         ],
-        'solr' => [
-          'class' => 'app\components\search\engines\SolrConnection',
-          'host' => $parameters['solr_host'],
-          'port' => $parameters['solr_port'],
+        'elastic' => [
+          'class' => 'app\components\search\engines\ElasticConnection',
+          'host' => $parameters['elastic_host'],
+          'port' => $parameters['elastic_port'],
           'username' => $parameters['solr_username'],
           'password' => $parameters['solr_password'],
         ],
