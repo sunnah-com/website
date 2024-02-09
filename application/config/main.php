@@ -38,6 +38,7 @@ $config = [
     ],
 
     'defaultRoute' => 'front/index',
+    // 'catchAll' => ['front/index/maint'],
 
     'modules' => [
         'front' => [
