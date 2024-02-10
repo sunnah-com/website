@@ -35,6 +35,8 @@ class KeywordSearchEngine extends SearchEngine
         }
         $suggestions = $resultset->getSuggestions();
 
+
+        // TODO: This code is deprecated, arabic and english hadith share an index in elastic. This should never be reached
         if ($resultset->getCount() === 0) {
             // If no English results were found, do Arabic search
             $engine = new ArabicKeywordSearchEngine();
@@ -75,7 +77,8 @@ class KeywordSearchEngine extends SearchEngine
 
         foreach ($docs as $doc) {
             $urn = $doc->_source->urn;
-            $resultset->addResult($this->lang, intval($urn), $doc->highlight);
+            $lang = $doc->_source->lang;
+            $resultset->addResult($lang, intval($urn), $doc->highlight);
         }
 
         return $resultset;
