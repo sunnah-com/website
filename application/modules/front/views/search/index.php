@@ -98,16 +98,21 @@ if (isset($errorMsg)) {
             } elseif ($result['language'] === 'ar') {
                 $urn_language = "arabic";
             }
-            $englishText = formatHighlightIfExists($englishText, $highlights->hadithText[0]);
-            $arabicText = formatHighlightIfExists($arabicText, $highlights->arabicText[0]);;
             
+            if (property_exists("highlights", "hadithText")) {
+                $englishText = formatHighlightIfExists($englishText, $highlights->hadithText[0]);
+            }
+            if (property_exists("highlights", "arabicText")) {
+                $arabicText = formatHighlightIfExists($arabicText, $highlights->arabicText[0]);;
+            }
+
             $th = new ArabicHadith();
             $th->hadithText = $arabicText;
             $th->process_text();
             $arabicText = $th->hadithText;
 
 
-            if ($highlights->collection[0] !== null){
+            if (property_exists("highlights", "collection") and $highlights->collection[0] !== null){
                 $collection['englishTitle'] = "<em>".$collection['englishTitle']."</em>";
             }
 
