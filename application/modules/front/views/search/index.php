@@ -99,10 +99,10 @@ if (isset($errorMsg)) {
                 $urn_language = "arabic";
             }
             
-            if (property_exists("highlights", "hadithText")) {
+            if (property_exists($highlights, "hadithText")) {
                 $englishText = formatHighlightIfExists($englishText, $highlights->hadithText[0]);
             }
-            if (property_exists("highlights", "arabicText")) {
+            if (property_exists($highlights, "arabicText")) {
                 $arabicText = formatHighlightIfExists($arabicText, $highlights->arabicText[0]);;
             }
 
@@ -112,7 +112,7 @@ if (isset($errorMsg)) {
             $arabicText = $th->hadithText;
 
 
-            if (property_exists("highlights", "collection") and $highlights->collection[0] !== null){
+            if (property_exists($highlights, "collection") and $highlights->collection[0] !== null){
                 $collection['englishTitle'] = "<em>".$collection['englishTitle']."</em>";
             }
 
