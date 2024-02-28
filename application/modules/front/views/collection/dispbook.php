@@ -118,13 +118,14 @@ else {
 	<div class=clear></div>
 	</div>
 
-    <?php if ((strcmp($collection->name, "hisn") == 0) 
+    <?php if (((strcmp($collection->name, "hisn") == 0) or (strcmp($collection->name, "virtues") == 0))
 			  and (strcmp($this->params['_pageType'], "book") == 0)
 			  and $ourBookID == 1) { ?>
     <div class=chapter_index_container><div class="chapter_index titles collapsible collapsed hisn_chapters_initial_height">
     <?php
         $chapterCount = count($babIDs);
         foreach ($chapters as $chapter) {
+            if ((strcmp($collection->name, "virtues") == 0) and (strcmp(substr(strval($chapter->babID), -2), "00") != 0)) { continue; }
             echo "<div class=\"chapter_link title\" id=cl$chapter->babID>\n";
             echo "<a href=\"#C$chapter->babID\">\n";
             echo "<div class=\"chapter_number title_number\">$chapter->englishBabNumber</div>\n";
