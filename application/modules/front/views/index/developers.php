@@ -14,7 +14,7 @@ on which we invite contributions.
 <div class=section>API</div>
 <div class=content>
 Our API offers access to a portion of our data comprising the sunnah of the Prophet Muhammad (&#xFDFA;). We will add to the data available as we complete manual checks of the data.
-API documentation is available at <a href="https://sunnah.api-docs.io">sunnah.api-docs.io</a>.
+API documentation is available at <a href="https://sunnah.stoplight.io/docs/api/">sunnah.stoplight.io/docs/api/</a>.
 You will need an API key to access this data; you can
 <a href="https://github.com/sunnah-com/api/issues/new?template=request-for-api-access.md&title=Request+for+API+access%3A+%5BYour+Name%5D">create an issue</a>
 on our GitHub repo to request one. You may also request an offline dump of hadith data if that
