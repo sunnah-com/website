@@ -183,7 +183,8 @@ $config = [
                   'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
                 ],
                 
-                '<collectionName:\w+>:<hadithNumber\w+>' => 'front/collection/hadith-by-number',
+                '<collectionName:\w+>:<hadithNumber:\w+>' => 'front/collection/hadith-by-number',
+                '<collectionName:\w+>:<hadithNumber1:\w+>-<hadithNumber2:\w+>' => 'front/collection/hadith-by-number-range',
 
 				'ajax/log/hadithcount' => 'front/index/ajaxhadithcount',
 
@@ -267,7 +268,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['*'],
+        // 'allowedIPs' => ['*'],
     ];
 
     $config['bootstrap'][] = 'gii';

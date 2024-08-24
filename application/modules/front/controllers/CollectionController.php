@@ -368,13 +368,22 @@ class CollectionController extends SController
 		return Yii::$app->runAction('front/collection/urn', ['urn' => $arabicURN]);
 	}
 
+	public function actionHadithByNumberRange($collectionName, $hadithNumber1, $hadithNumber2) {
+		$num = ltrim($hadithNumber1, "0");
+		if ($num !== $hadithNumber1) {
+			return $this->redirect("/$collectionName:$num", 301);
+		}
+		$arabicURN = $this->util->getURNByNumber($collectionName, $hadithNumber1);
+		return Yii::$app->runAction('front/collection/urn', ['urn' => $arabicURN]);
+	}
+
 	// TODO: We could probably get away with a call to actionDispbook here.
 	public function actionUrn($urn) {
         $englishHadith = NULL; $arabicHadith = NULL;
         $viewVars = array();
 
         if (is_null($urn) || !is_numeric($urn)) {
-            $errorMsg = "The resource you are looking for is not available yet or invalid. Click <a href=\"/\">here</a> to go to the home page.";
+            $errorMsg = "The resource urn ".$urn." you are looking for is not available yet or invalid. Click <a href=\"/\">here</a> to go to the home page.";
             throw new NotFoundHttpException($errorMsg);
         }
         

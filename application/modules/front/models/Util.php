@@ -123,19 +123,23 @@ class Util extends Model {
 
         // The last case to check for is multiply numbered hadith
         $results = $this->searchByNumber($collectionName, $num, true);
-		if (!is_null($results)) {
-	        foreach ($results as $result) {
-    	        $resultHadithNumbersArray = explode(",", $result['hadithNumber']);
-        	    foreach ($resultHadithNumbersArray as $resultHadithNumber) {
-            	    if (trim($resultHadithNumber) == $num) return $result['arabicURN'];
-	            }
-    	    }
-		}
-
-		return null;
+	if (!is_null($results)) {
+            foreach ($results as $result) {
+                $resultHadithNumbersArray = explode(",", $result['hadithNumber']);
+       	        foreach ($resultHadithNumbersArray as $resultHadithNumber) {
+       	            if (trim($resultHadithNumber) == $num) return $result['arabicURN'];
+                }
+                $resultHadithNumbersArray = explode("-", $result['hadithNumber']);
+       	        foreach ($resultHadithNumbersArray as $resultHadithNumber) {
+       	            if (trim($resultHadithNumber) == $num) return $result['arabicURN'];
+                }
+            }
 	}
 
-	public function getHadithCount() {
+	return null;
+    }
+
+    public function getHadithCount() {
 		$count = Yii::$app->cache->get("hadithCount");
 		if ($count === false) {
 			$connection = Yii::$app->db;
