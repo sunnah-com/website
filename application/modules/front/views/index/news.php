@@ -2,6 +2,12 @@
 <div class=content>
 <br>
 <p align=center style="font-size: 16px;"><b>View our more detailed <a href="/changelog">changelog</a>.</b></p>
+February 2024: Upgraded search. You can now search by collection and hadith number. For results only from Sahih al-Bukhari for example, add "collection:bukhari" to your query.<br>
+<br>
+January 2024: Completed adding the Bangla translation for <a href="/bukhari">Sahih al-Bukhari</a>. Sahih Muslim is next in sha Allah.<br>
+<br>
+March 2023: Added an Arabic-only collection: <a href="/darimi">Sunan ad-Darimi</a>.<br>
+<br>
 28 May 2020: Beginning a new collection: <a href="/ahmad">Musnad Ahmad</a>.<br>
 <br>
 23 January 2020: <a href="/bulugh">Bulugh al-Maram</a> is now complete.<br>

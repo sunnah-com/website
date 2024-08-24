@@ -1,6 +1,10 @@
 <div class="about">
 <div class=content>
 <br><br>
+28 July 2024: Added <a href="http://sunnah.com/mishkat/27">Kitab al-Fitan (27)</a> in <a href="http://sunnah.com/mishkat">Mishkat al-Masabih</a> (141 hadith).<br>
+<br><br>
+15 July 2020: <b>Beginning a new collection: Mishkat al-Masabih.</b><br>
+<br><br>
 28 May 2020: Added <a href="http://sunnah.com/ahmad/1">Musnad Abu Bakr as-Siddiq (ra) (1)</a> in <a href="http://sunnah.com/ahmad">Musnad Ahmad</a> (81 hadith).<br>
 <b>Beginning a new collection: Musnad Ahmad.</b><br>
 <br><br>
