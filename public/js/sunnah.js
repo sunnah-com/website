@@ -480,7 +480,7 @@
 	
 	if ("searchQuery" in window) {
 		$(".searchquery").val($('<textarea/>').html(searchQuery).text());
-		$(".searchquery").css('color', '#000');
+		// $(".searchquery").css('color', '#000');
 	}
 
 	$(".searchtipslink").click(function() {

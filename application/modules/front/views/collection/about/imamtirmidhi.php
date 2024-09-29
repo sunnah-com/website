@@ -10,7 +10,7 @@ school of thought as the state religion. Anyone who opposed the Mu`tazila school
 of thought would be opposing the state. With the influence of Greek philosophy
 among the people, many Muslims began attempting to reconcile
 between (this brand of) reason and revelation. As a result many deviations were introduced and
-many innocent and weak Muslims were led away from Allah and His Prophet (<img src="/images/sallallahu_alaihi_wa_sallam.png" height="18px">)). 
+many innocent and weak Muslims were led away from Allah and His Prophet (<span id="pbuh_img"></span>). 
 Many scholars of Islam had come to the fore in order to defend the Shari`ah. Forgeries
 and interpolations in Hadith by rulers who wished to fulfill their personal motives
 were common. In the first century `Umar bin Abdul `Aziz (ra) initiated a movement
