@@ -1,7 +1,7 @@
 <div class=about style="font-size: 14px; width: 70%;">
 Ṣaḥīḥ Muslim is a collection of hadīth compiled by Imām Muslim ibn al-Hajjāj al-Naysāburi(rahimahullāh). 
 His collection is considered to be one of the most authentic 
-collections of the Sunnah of the Prophet (<span id="pbuh_img"></span>), and along with
+collections of the Sunnah of the Prophet (ﷺ), and along with
 Ṣaḥīḥ al-Bukhārī forms the "Sahihain," or the "Two Sahihs."
 It contains roughly 7500 hadīth (with repetitions) in 57 books.
 <br>
@@ -54,7 +54,7 @@ mercy on both of them).
 <br><br>
 Imam Muslim considered only such traditions to be
 genuine and authentic as had been transmitted to him by an unbroken chain of
-reliable authorities up to the Prophet (<span id="pbuh_img"></span>) 
+reliable authorities up to the Prophet (ﷺ) 
 and were in perfect harmony with what had been related by
 other narrators whose trustworthiness was unanimously accepted and who were
 free from all defects. He divided narrators and sub-narrators into 3 levels: <br>
