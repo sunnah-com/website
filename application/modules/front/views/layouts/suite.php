@@ -39,27 +39,8 @@
       moon.style.display = "none";
     }
   }
-  let isFirstCall = true;
-  const insertPbuhImage = (isLight) => {
-    // this function will insert pbuh image ( black or withe color ) depending on theme on hadith detail page
-    // on first call we need to wait for ducument to load ( on second call document is already loaded second call can occur if user changes theme while page is loaded)
-    if (isFirstCall) {
-      window.onload = () => {
-        const imgSpan = document.getElementById("pbuh_img");
-        imgSpan.innerHTML = `<img src="/images/sallallahu_alaihi_wa_sallam_${isLight ? "black" : "white"}.png" height="18px">`;
-        isFirstCall = false;
-      }
-    } else {
-
-      const imgSpan = document.getElementById("pbuh_img");
-      imgSpan.innerHTML = `<img src="/images/sallallahu_alaihi_wa_sallam_${isLight ? "black" : "white"}.png" height="18px">`;
-
-    }
-  }
-
   const updateTheme = (isLight) => {
     toggleThmeButtons(isLight);
-    insertPbuhImage(isLight);
     const darkTheme = {
       '--global-text-color': 'white',
       '--primary-text-color': 'white',

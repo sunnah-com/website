@@ -1,7 +1,7 @@
 <div class=about style="font-size: 14px; width: 70%;">
 Ṣaḥīḥ al-Bukhārī is a collection of hadīth compiled by Abu Abdullāh Muhammad Ibn Ismā`īl al-Bukhārī(rahimahullāh). 
 His collection is recognized by the overwhelming majority of the Muslim world to be one of the most authentic 
-collections of the Sunnah of the Prophet (<span id="pbuh_img"></span>).
+collections of the Sunnah of the Prophet (ﷺ).
 It contains roughly 7563 hadīth (with repetitions) in 98 books.
 <br>
 The translation provided here is by Dr. M. Muhsin Khan.
@@ -19,7 +19,7 @@ Imām al-Bukhārī (rahimahullah) first started listening and learning ahādīth
 There are a number of books compiled by Imām al-Bukhārī (rahimahullah). His Ṣaḥīḥ is regarded as the highest authority of the collection of hadīth. He named this book "Al-Jāmi` al-Musnad as-Ṣaḥīḥ al-Mukhtasar min Umuri Rasulullahi sallallāhu 'alaihi wa sallam wa Sunanihi wa Ayyāmihi." After he finished, he showed the manuscript to his teachers Imām Ahmad ibn Hanbal (rahimahullah) for approval, along with Ibn al-Madini, and lastly Ibn Ma`īn. It has also been recorded that it took Imām al-Bukhārī a period of 16 years to gather the ahādīth and to write the Ṣaḥīḥ, which sets the date back to 217 A.H. as the year in which he started the compilation; Imām al-Bukhārī (rahimahullah) being merely 23 years of age.
 
 <br><br>
-Before he actually placed a hadith in his compilation he performed ghusl and prayed two raka`ah nafl prayers asking Allah for guidance. He finalized each hadith in the rawdah of Masjid an-Nabawi (between the Prophet's (<span id="pbuh_img"></span>) grave and his minbar) and wrote the hadīth in the masjid. Only after being completely satisfied with a hadīth did he give it a place in his collection.<br>
+Before he actually placed a hadith in his compilation he performed ghusl and prayed two raka`ah nafl prayers asking Allah for guidance. He finalized each hadith in the rawdah of Masjid an-Nabawi (between the Prophet's (ﷺ) grave and his minbar) and wrote the hadīth in the masjid. Only after being completely satisfied with a hadīth did he give it a place in his collection.<br>
 
 <br><div class=section>Methods of Classification and Annotation:</div>
 Imām al-Bukhārī (rahimahullah) imposed conditions which all narrators and testifiers in the hadith chain must have met before a hadith was included in his book:
