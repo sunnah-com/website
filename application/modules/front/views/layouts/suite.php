@@ -3,8 +3,8 @@
 <a href="https://salah.com">Prayer Times</a> |
 <a href="https://quranicaudio.com">Audio</a>
 <div id="toggle-theme-btn">
-  <img id="sun_theme_toogle_btn" src="./images/sun_icon.svg" alt="toggle Light Thme" />
-  <img id="moon_theme_toggle_btn" src="./images/moon_icon.svg" alt="toggle Dark Thme" />
+  <img id="sun_theme_toogle_btn" src="/images/sun_icon.svg" alt="toggle Light Thme" />
+  <img id="moon_theme_toggle_btn" src="/images/moon_icon.svg" alt="toggle Dark Thme" />
 
 </div>
 <script>
@@ -101,6 +101,7 @@
     localStorage.setItem("theme", "light");
     updateTheme("light")
   })
+
   moon.addEventListener("click", () => {
     localStorage.setItem("theme", "dark");
     updateTheme("dark")
