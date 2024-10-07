@@ -5,11 +5,11 @@
 <div id="toggle-theme-btn">
   <img id="sun_theme_toogle_btn" src="/images/sun_icon.svg" alt="toggle Light Thme" />
   <img id="moon_theme_toggle_btn" src="/images/moon_icon.svg" alt="toggle Dark Thme" />
-
 </div>
 <script>
   const sun = document.getElementById("sun_theme_toogle_btn");
-  const moon = document.getElementById("moon_theme_toggle_btn")
+  const moon = document.getElementById("moon_theme_toggle_btn");
+
   const toggleThemeButtons = (theme) => {
     if (theme === "light") {
       sun.style.display = "none";
@@ -77,6 +77,7 @@
     "--disable_button_bg": "#d6d6d6",
     "--boh_hover_bg": "#ffffff"
   };
+
   const updateTheme = (theme) => {
     toggleThemeButtons(theme);
     const themeVariables = theme === "light" ? lightTheme : darkTheme;
@@ -84,6 +85,7 @@
       document.documentElement.style.setProperty(variable, value);
     });
   };
+
   const initializeTheme = () => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
@@ -97,7 +99,6 @@
     }
   };
   sun.addEventListener("click", () => {
-
     localStorage.setItem("theme", "light");
     updateTheme("light")
   })

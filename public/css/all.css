@@ -267,15 +267,20 @@ textarea {
 	padding:0 7px;
 	
 }
+
 #toggle-theme-btn{
 	height:100%; 
+	display: flex;
 }
+
 #toggle-theme-btn:hover{
 	cursor: pointer;
 }
+
 #toggle-theme-btn svg{
 	height: 100%;
 }
+
 #toggle-theme-btn .moon{
 	display: none;
 }
@@ -283,11 +288,6 @@ textarea {
 #toolbarRight a:hover {
 	text-decoration: underline;
 }
-#toggle-theme-btn {
-	display: flex;
-	
-}
-
 
 #banner {
 	width: 50%;
@@ -603,6 +603,7 @@ textarea {
 	box-sizing: border-box;
 	
 }
+
 input.searchquery{
 	color: var(--primary-text-color);
 }
@@ -729,8 +730,7 @@ input.searchquery{
     border: 0px solid;
     box-sizing: border-box;
     vertical-align: middle;
-	color:#75A1A1;
-
+    color:#75A1A1;
 }
 .arabic_collection_title {
 	vertical-align: top;
@@ -1682,7 +1682,7 @@ input.searchquery{
     background-color: var(--disable_button_bg);
     color: #afafaf;
     box-shadow: none;
-	cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 .hadith_nav_wrapper {
@@ -2138,7 +2138,6 @@ input.searchquery{
 }
 
 em {
-
     border-radius: 4px;
     box-shadow: 1px 0px 0 0px var(--highlight-color), -1px 0px 0 0px var(--highlight-color);
     background: var(--highlight-color);
