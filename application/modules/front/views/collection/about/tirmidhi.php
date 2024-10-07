@@ -1,7 +1,7 @@
 <div class=about style="font-size: 14px; width: 70%;">
 Jāmi` at-Tirmidhī is a collection of hadīth compiled by Imām Abu `Isa Muhammad at-Tirmidhī (rahimahullāh).
 His collection is unanimously considered to be one of the six canonical collections of hadith (Kutub as-Sittah)
-of the Sunnah of the Prophet (<img src="/images/sallallahu_alaihi_wa_sallam.png" height="18px">).
+of the Sunnah of the Prophet (ﷺ).
 It contains roughly 4400 hadīth (with repetitions) in 46 books.
 
 <br>

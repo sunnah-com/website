@@ -78,6 +78,70 @@
     font-weight: normal;
     font-style: normal;
 }
+:root{
+	--global-text-color:#ffffff;
+	/* none */
+	--primary-text-color:#ffffff;
+	/* #000 */
+	--secondary-text-color:#ffffff;
+	/* #666 */
+	--toolbar-bg-color:#272F33; 
+	/* rgba(251, 250, 248, 0.2) */
+	--header-bg:#343A40;
+	/* url(../images/banner_small.png) */
+	--site-bg:#1F2125;
+	/* url(../images/bg_small.png); */
+	--footer-bg:#272F33;
+	/* url(../images/banner_small.png) */
+	--collection_sep_box_shadow:0px 1px 2px 1px rgb(78 65 65 / 50%);
+	/* 0px 1px 2px 1px rgba(204, 204, 204, 0.5) */
+	--indexserachquery_bg: #272F33;
+	/* rgba(255, 255, 255, 0.65) */
+	--indexserachquery_shadow:0px 0px 9pt 2pt #1a1919;
+	/* 0px 0px 9pt 2pt #ccc */
+	--collection_info_bg:#272F33;
+	/* rgba(255, 255, 255, 0.5) */
+	--collection_sep_bg:transparent;
+	/* #ccc */
+	--collection-info_text_color:#ffffff;
+	/* #666 */
+	--book_title_odd_bg:transparent;
+	/* rgba(255, 255, 255, 0.6) */
+	--book_title_even_bg:#272F33;
+	/* rgba(255, 255, 255, 0.4) */
+	--book_rannge_text_color:#ffffff;
+	/* #666 */
+	--crumbs_bg:#272F33;
+	/* rgba(251, 250, 248, 0.2) */
+	--searchquery_bg:#272F33;
+	/* rgba(255, 255, 255, 0.85) */
+	--searchquer_shadow:0px 0px 9px 2pt #2b2b2d;
+	/* 0px 0px 9pt 2pt #75a1a1 */
+	--secondry_block_bg:#272F33;
+	/* rgba(255, 255, 255, 0.5) */
+	--hadith_translation_color:#ffffff;
+	/* #08081a */
+	--sidePanel_bg:#272F33;
+	/* url(../images/banner_small.png) */
+	--indexsearchtips_bg:#272F33;
+	/* rgba(255, 255, 255, 0.5) */
+	--sanad_text_color:#B3B6BC;
+	/* gray */
+	--highlight-color: #3d938c;	
+	--disable_button_bg:#6C757D;
+	/* #d6d6d6 */
+	--boh_hover_bg:#343A40;
+	/* #ffffff */
+	
+
+}
+
+*{
+	color: var(--global-text-color);
+}
+body{
+	background: var(--site-bg);
+}
 
 .clear{ clear:both; }
 
@@ -144,7 +208,9 @@ textarea {
 	width: 0px;
 	padding: 0 7.5px 0 7.5px;
 }
-
+.arabic,.urdu,.bangla,.saws{
+	color: var(--primary-text-color); 
+}
 .sawsimg {
 	height: 15px;
 	margin-bottom: -3px;
@@ -155,7 +221,7 @@ textarea {
 }
 
 #site{
-	background:url(../images/bg_small.png);
+	background: var(--site-bg);
 	background-position: center top;
 	width:100%;
 	min-width: 1170px;
@@ -169,7 +235,7 @@ textarea {
 
 #header {
 	width: 100%;
-	background-image: url(../images/banner_small.png);
+	background: var(--header-bg);
 	background-repeat: repeat;
 	position: relative;
 	z-index: 20;
@@ -183,25 +249,45 @@ textarea {
 	padding-top: 3px;
 	width: 100%;
 	line-height: normal;
-	background-color: rgba(251, 250, 248, 0.2);
+	background-color: var(--toolbar-bg-color);
 }
 
 #toolbarRight {
 	color: #fff;
 	float: right;
 	padding-right: 8px;
+	display: flex;
+	height: 100%;
+	
 }
 
 #toolbarRight a {
 	color: #fff;
 	text-decoration: none;
-	padding:0 2px;
+	padding:0 7px;
+	
+}
+
+#toggle-theme-btn{
+	height:100%; 
+	display: flex;
+}
+
+#toggle-theme-btn:hover{
+	cursor: pointer;
+}
+
+#toggle-theme-btn svg{
+	height: 100%;
+}
+
+#toggle-theme-btn .moon{
+	display: none;
 }
 
 #toolbarRight a:hover {
 	text-decoration: underline;
 }
-
 
 #banner {
 	width: 50%;
@@ -284,7 +370,7 @@ textarea {
 	float: right;  
     margin-left: 20px;
     margin-right: 20px;
-	background-image: url(../images/banner_small.png);
+	background: var(--sidePanel_bg);
 	background-repeat: repeat;
     margin-top: 20px;
     border-radius:10px;
@@ -299,7 +385,7 @@ textarea {
     /* height: 100px; */
     /*position: fixed;*/
     text-align: left;
-    background-color: rgba(251, 250, 248, 0.2);
+    background-color: var(--crumbs_bg);
     font-size: 12px;
     font-family: Arial, Verdana;
     font-weight: bold;
@@ -435,7 +521,7 @@ textarea {
 
 .footer {
     text-align: center;
-	background-image: url(../images/banner_small.png);
+	background: var(--footer-bg);
     background-repeat: repeat;
     width: 100%;
     margin: auto;
@@ -496,8 +582,10 @@ textarea {
 	border-radius: 8px;
 	padding: 0 2.25em 0 .8em;
 	box-sizing: border-box;
-	background-color: rgba(255, 255, 255, 0.65);
-	box-shadow: 0px 0px 9pt 2pt #ccc;
+	background-color: var(--indexserachquery_bg);
+	box-shadow: var(--indexserachquery_shadow);
+	color: var(--primary-text-color);
+	
 }
 
 .indexsearchquery:focus {
@@ -509,10 +597,15 @@ textarea {
 	height: 29px;
 	padding: 0 2em 0 .75em;
 	font-size: 14px;
-	background-color: rgba(255, 255, 255, 0.85);
+	background-color: var(--searchquery_bg);
 	border-radius: 5px;
-	box-shadow: 0px 0px 9pt 2pt #75a1a1;
+	box-shadow: var(--searchquer_shadow);
 	box-sizing: border-box;
+	
+}
+
+input.searchquery{
+	color: var(--primary-text-color);
 }
 
 .indexsearchquery:focus { outline: none; }
@@ -567,9 +660,8 @@ textarea {
 
 #searchtips {
 	width: 300px;
-	background:url(../images/bg_small.png);
+	background:var(--site-bg);
 	background-repeat: repeat-x repeat-y;
-	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
 	border-radius: 4px;
 	color: #666;
@@ -588,7 +680,7 @@ textarea {
 
 #indexsearchtips {
     width: 45%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: var(--indexsearchtips_bg);
     border-radius: 8px;
     color: #666;
     float: right;
@@ -618,10 +710,10 @@ textarea {
 }
 
 .collection_title {
-	background-color: rgba(255, 255, 255, 0.55);
 	width: 90%;
 	margin: auto;
 	border-radius: 5px;
+	background-color: var(--secondry_block_bg);
 }
 
 .english_collection_title {
@@ -638,6 +730,7 @@ textarea {
     border: 0px solid;
     box-sizing: border-box;
     vertical-align: middle;
+    color:#75A1A1;
 }
 .arabic_collection_title {
 	vertical-align: top;
@@ -652,7 +745,6 @@ textarea {
 
 .collection_titles a {
     text-decoration: none;
-    color:#75A1A1;
     line-height: 30px;
 }
 
@@ -662,20 +754,20 @@ textarea {
 }
 
 .collection_sep {
-	background-color: #ccc;
+	background-color: var(--collection_sep_bg);
 	height: 1px;
 	opacity: 0.3;
 	width: 85%;
 	margin: auto;
-	box-shadow: 0px 1px 2px 1px rgba(204, 204, 204, 0.5);
-	-webkit-box-shadow: 0px 1px 2px 1px rgba(204, 204, 204, 0.5);
-	-moz-box-shadow: 0px 1px 2px 1px rgba(204, 204, 204, 0.5);
+	box-shadow:var(--collection_sep_box_shadow);
+	-webkit-box-shadow: var(--collection_sep_box_shadow);
+	-moz-box-shadow: var(--collection_sep_box_shadow);
 }
 
 .crumbs{
     font-size: 13px;
     color: #fff;
-	background-color: rgba(251, 250, 248, 0.2);
+	background-color: var(--crumbs_bg);
 	padding: 3px 0px 5px 5px;
 	padding-left: 17.5%;
 }
@@ -685,9 +777,9 @@ textarea {
 
 .collection_info {
 	width: 95%;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: var(--collection_info_bg);
 	border-radius: 5px;
-	color: #666;
+	color: var(--collection-info_text_color);
 	margin-top: 7px;
 	padding: 10px;
 	box-sizing: border-box;
@@ -762,11 +854,11 @@ textarea {
 }
 
 .title:nth-child(odd) {
-	background-color: rgba(255, 255, 255, 0.6);
+	background-color: var(--book_title_odd_bg);
 }
 
 .title:nth-child(even) {
-	background-color: rgba(255, 255, 255, 0.4);
+	background-color: var(--book_title_even_bg);
 }
 
 .title {
@@ -809,7 +901,7 @@ textarea {
 
 .book_range {
 	float: left;
-	color: #666;
+	color: var(--book_rannge_text_color);
 	padding: 6px 0 0 55px;
 	vertical-align: middle;
 	margin: auto;
@@ -829,6 +921,7 @@ textarea {
 .book_info {
 	width: 94%;
 	padding-left: 10px;
+	color: var(--primary-text-color);
 }
 
 .book_page_colindextitle {
@@ -997,8 +1090,8 @@ textarea {
 }
 
 .chapter {
-    background-color: rgba(255, 255, 255, 0.5);
-    color: #666;
+    background-color: var(--secondry_block_bg);
+    color: var(--secondary-text-color);
     width: 100%;
     padding: 5px 15px 10px 15px;
     border-radius: 10px;
@@ -1092,24 +1185,26 @@ textarea {
 }
 
 .actualHadithContainer {
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: var(--secondry_block_bg);
 	border-radius: 10px;
 	margin: 10px 3px 10px 3px;
 	width: 100%; /* for <1line hadith */
 	box-shadow: 0 21px 28px -21px rgba(0,0,0,.09), 0 22px 29px rgba(0,0,0,.02);
 }
 
-.hadith_narrated {
+.hadith_narrated  {
     font-size:14px;
     font-weight:bold;
-    color:#5d8080;
     text-decoration:none;
     padding-bottom:8px;
+}
+.hadith_narrated p{
+	color:#5d8080;
 }
 
 .text_details{
     font-size:14px;
-    color:#08081a;
+    color:var(--hadith_translation_color);
     text-decoration:none;
     text-align: justify;
 }
@@ -1164,18 +1259,18 @@ textarea {
 .urdu_hadith_full {
     text-decoration:none;
     padding-bottom: 10px;
-    color:#08081a;
+    color:var(--hadith_translation_color);
 }
 
 .bangla_hadith_full {
     text-decoration:none;
     padding-bottom: 10px;
-    color:#08081a;
+    color:var(--hadith_translation_color);
 }
 
 .indonesian_hadith_full{
     font-size:13px;
-    color:#08081a;
+    color:var(--hadith_translation_color);
     text-decoration:none;
 	padding: 10px 0 10px 15px;
 }
@@ -1190,7 +1285,7 @@ textarea {
 .arabic_sanad {
     text-align:justify;
     direction:rtl;
-    color: gray;
+    color:var(--sanad_text_color)
 }
 
 .arabic_text_details {
@@ -1199,13 +1294,13 @@ textarea {
 }
 
 .urdu_sanad {
-    color: gray;
+    color: var(--sanad_text_color);
 }
 
 .hadith_annotation {
     width: 100%;
     font-size: 13px;
-    color:#08081a;
+    color:var(--hadith_translation_color);
     text-decoration:none;
     text-align: justify;
     border: 0px solid;
@@ -1225,8 +1320,10 @@ textarea {
     float: right;
     padding-bottom: 10px;
     border: 0px solid;
-	color: #5F9999;
 	user-select: none;
+}
+.hadith_permalink span{
+	color: #5F9999;
 }
 
 .hadith_permalink a {
@@ -1255,6 +1352,7 @@ textarea {
     padding-right: 5px;
     padding-bottom: 10px;
     /* color: #96691e; */
+	color: var(--primary-text-color);
     float: left;
     /* width: 50%; */
     overflow: auto;
@@ -1317,7 +1415,7 @@ textarea {
 
 .boh {
 	border-radius: 10px;
-	background-color: rgba(255, 255, 255, 0.4);
+	background-color: var(--secondry_block_bg);
 	box-shadow: 0 21px 28px -21px rgba(0,0,0,.09), 0 22px 29px rgba(0,0,0,.02);
 	margin-bottom: 20px;
 }
@@ -1326,7 +1424,7 @@ textarea {
 	margin-bottom: 5em;
 }
 .boh:hover {
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: var(--boh_hover_bg);
 }
 
 .searchlink {
@@ -1349,7 +1447,7 @@ textarea {
 }
 
 .bc_search ~ .actualHadithContainer .hadith_narrated b {
-	color: black
+	color: var(--primary-text-color);
 }
 
 .bc_search ~ .actualHadithContainer .english_hadith_full b {
@@ -1403,7 +1501,7 @@ textarea {
 	height: 35px;
 	margin: auto;
 	border-radius: 8px;
-	color: white;
+	color: var(--primary-text-color);
 	font-size: 20px;
 	text-align: center;
 	cursor: pointer;
@@ -1442,7 +1540,7 @@ textarea {
 	border: 1px solid #fff;
 	box-shadow: 0px 2px 7px #292929;
 	border-radius: 6px;
-	background:url(../images/bg_small.png);
+	background:var(--site-bg);
 	z-index: 50;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -1568,7 +1666,7 @@ textarea {
 .button {
     display: inline-block;
     padding: 7px 20px;
-    background: #f9f7f2;
+    background: var(--secondry_block_bg);
     color: #75a7a8;
     border-radius: 5px;
     box-shadow: 0 1px 24px -7px rgba(0,0,0,.15), 0 15px 24px rgba(0,0,0,.16);
@@ -1581,9 +1679,10 @@ textarea {
 }
 
 .button[disabled] {
-    background-color: #d6d6d6;
+    background-color: var(--disable_button_bg);
     color: #afafaf;
     box-shadow: none;
+    cursor: not-allowed;
 }
 
 .hadith_nav_wrapper {
@@ -2039,11 +2138,16 @@ textarea {
 }
 
 em {
-	--highlight-color: #deebea;
     border-radius: 4px;
     box-shadow: 1px 0px 0 0px var(--highlight-color), -1px 0px 0 0px var(--highlight-color);
     background: var(--highlight-color);
 }
+
+/* Contact  page*/
+.btn.btn-primary{
+	background: var(--secondry_block_bg);
+}
+
 
 /* Medium screen, retina, stuff to override above media query */
 @media
