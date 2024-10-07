@@ -60,7 +60,11 @@ class KeywordSearchEngine extends SearchEngine
         $resultset = new SearchResultset($hits->total->value);
 
         if ($this->hasSuggestionsSupport()) {
-            $suggestions = $resultsarray->suggest->query[0]->options ?? null;
+            // Check english, then arabic suggestions
+            $suggestions = $resultsarray->suggest->english[0]->options ?? null;
+            if ($suggestions == null){
+                $suggestions = $resultsarray->suggest->arabic[0]->options ?? null;
+            }
             if ($suggestions && count($suggestions) > 0) {
                 $resultset->setSuggestions($suggestions[0]->text);
             }
