@@ -132,8 +132,8 @@
 	/* #d6d6d6 */
 	--boh_hover_bg:#343A40;
 	/* #ffffff */
-	
-
+	--button_expand_gradient:linear-gradient(#343a4040, #343a40a8 20%, #343a40 100%);
+	/* linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 51%) 20%, #faf9f6 100%) */
 }
 
 *{
@@ -1056,7 +1056,7 @@ input.searchquery{
     width: 100%;
     height: 6em;
     padding-bottom: .5em;
-    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 51%) 20% ,#faf9f6 100%);
+    background: var(--button_expand_gradient);
     display: flex;
     justify-content: flex-end;
     align-items: center;

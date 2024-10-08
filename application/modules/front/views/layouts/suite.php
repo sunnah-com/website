@@ -46,7 +46,8 @@
     '--sanad_text_color': '#B3B6BC',
     "--highlight-color": "#3d938c",
     "--disable_button_bg": "#6C757D",
-    "--boh_hover_bg": "#343A40"
+    "--boh_hover_bg": "#343A40",
+    "--button_expand_gradient":"linear-gradient(#343a4040, #343a40a8 20%, #343a40 100%)"
   };
   const lightTheme = {
     '--global-text-color': 'none',
@@ -75,7 +76,8 @@
     '--sanad_text_color': 'gray',
     "--highlight-color": "#deebea",
     "--disable_button_bg": "#d6d6d6",
-    "--boh_hover_bg": "#ffffff"
+    "--boh_hover_bg": "#ffffff",
+    "--button_expand_gradient":"linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 51%) 20%, #faf9f6 100%)"
   };
 
   const updateTheme = (theme) => {
