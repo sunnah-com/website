@@ -275,8 +275,8 @@ class Util extends Model {
         $hadith = $this->getHadith($urn, "english");
         $nextURN = EnglishHadith::find()
                                 ->where(['collection' => $hadith->collection, 
-                                         'bookID' => $hadith->bookID, 
-                                         'englishURN' => ['>', $urn]])
+				'bookID' => $hadith->bookID])
+				->andWhere("englishURN > :urn", [':urn' => $urn])
                                 ->orderBy(['englishURN' => SORT_ASC])
                                 ->limit(1)
                                 ->one();
@@ -302,8 +302,8 @@ class Util extends Model {
         $hadith = $this->getHadith($urn, "english");
         $previousURN = EnglishHadith::find()
                                 ->where(['collection' => $hadith->collection, 
-                                         'bookID' => $hadith->bookID, 
-                                         'englishURN' => ['<', $urn]])
+				         'bookID' => $hadith->bookID])
+			        ->andWhere("englishURN < :urn", [':urn' => $urn])
                                 ->orderBy(['englishURN' => SORT_DESC])
                                 ->limit(1)
                                 ->one();
