@@ -274,10 +274,13 @@ class Util extends Model {
     public function getNextURNInCollection($urn) {
         $hadith = $this->getHadith($urn, "english");
         $nextURN = EnglishHadith::find()
-                                ->where("collection = :collection", [':collection' => $hadith->collection])
-                                ->andWhere("bookID = :bookID", [':bookID' => $hadith->bookID])
-                                ->andWhere("englishURN > :urn", [':urn' => $urn])
-                                ->min('englishURN');
+                                ->where(['collection' => $hadith->collection, 
+                                         'bookID' => $hadith->bookID, 
+                                         'englishURN' => ['>', $urn]])
+                                ->orderBy(['englishURN' => SORT_ASC])
+                                ->limit(1)
+                                ->one();
+
         if (is_null($nextURN)) {
             // We're at the end of a book. See if there is a next book.
             $ourBookID = $this->getBook($hadith->collection, $hadith->bookID, "english")->ourBookID;
@@ -289,16 +292,22 @@ class Util extends Model {
                 $nextURN = $this->getBook($hadith->collection, $nextOurBookID)->firstURN;
             }
         }
+        else {
+            $nextURN = $nextURN->englishURN;
+        }
         return $nextURN;
     }
 
     public function getPreviousURNInCollection($urn) {
         $hadith = $this->getHadith($urn, "english");
         $previousURN = EnglishHadith::find()
-                                ->where("collection = :collection", [':collection' => $hadith->collection])
-                                ->andWhere("bookID = :bookID", [':bookID' => $hadith->bookID])
-                                ->andWhere("englishURN < :urn", [':urn' => $urn])
-                                ->max('englishURN');
+                                ->where(['collection' => $hadith->collection, 
+                                         'bookID' => $hadith->bookID, 
+                                         'englishURN' => ['<', $urn]])
+                                ->orderBy(['englishURN' => SORT_DESC])
+                                ->limit(1)
+                                ->one();
+
         if (is_null($previousURN)) {
             // We're at the beginning of a book. See if there is a previous book.
             $ourBookID = $this->getBook($hadith->collection, $hadith->bookID, "english")->ourBookID;
@@ -309,6 +318,9 @@ class Util extends Model {
             if (!is_null($previousOurBookID)) {
                 $previousURN = $this->getBook($hadith->collection, $previousOurBookID)->lastURN;
             }
+        }
+        else {
+            $previousURN = $previousURN->englishURN;
         }
         return $previousURN;
     }
