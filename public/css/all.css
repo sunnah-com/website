@@ -132,8 +132,8 @@
 	/* #d6d6d6 */
 	--boh_hover_bg:#343A40;
 	/* #ffffff */
-	
-
+	--sticky-color: #90b8b9;
+	--link-color: #50a3a3;
 }
 
 *{
@@ -156,7 +156,7 @@ html,body{
 
 a {
 	text-decoration: none;
-	color: #5F9999;
+	color: var(--link-color);
 }
 
 a:hover {
@@ -1338,9 +1338,7 @@ input.searchquery{
 .hadith_permalink a:hover {
     text-decoration: underline;
 }
-.hadith_reference a {
-    color: #037d7d;
-}
+
 .hadith_reference {
     font-size: 11px;
     text-decoration: none;
@@ -1732,7 +1730,7 @@ input.searchquery{
 		border-radius: 6px;
 	}
 	.bttenabled {
-		background-color: #79aaab;
+		background-color: var(--sticky-color);
 		mix-blend-mode: unset;
 	}
 	.bttenabled:before {
@@ -1994,7 +1992,7 @@ input.searchquery{
 
 	.hadith_reference_sticky {
 		display: block;
-		background-color: #90b8b9;
+		background-color: var(--sticky-color);
 		color: white;
 		text-align: right;
 		padding: 5px 20px 7px;
@@ -2003,7 +2001,7 @@ input.searchquery{
 		top: 100px;
 		box-sizing: border-box;
 		z-index: 1;
-		border-top: 2px solid #75a7a8;
+		border-top: 2px solid var(--sticky-color);
 	}
 
     .collection_titles,

@@ -1,0 +1,32 @@
+[data-theme="dark"] {
+    transition: all 0.5s;
+    --global-text-color: white;
+    --primary-text-color: white;
+    --secondary-text-color: #ffffff;
+    --toolbar-bg-color: #272F33;
+    --header-bg: #343A40;
+    --site-bg: #1F2125;
+    --footer-bg: #272F33;
+    --collection_sep_box_shadow: 0px 1px 2px 1px rgb(78 65 65 / 50%);
+    --collection_sep_bg: transparent;
+    --indexserachquery_bg: #272F33;
+    --indexserachquery_shadow: 0px 0px 9pt 2pt #1a1919;
+    --collection_info_bg: #272F33;
+    --collection-info_text_color: #ffffff;
+    --book_title_odd_bg: transparent;
+    --book_title_even_bg: #272F33;
+    --book_rannge_text_color: #ffffff;
+    --crumbs_bg: #272F33;
+    --searchquery_bg: #272F33;
+    --searchquer_shadow: 0px 0px 9px 2pt #2b2b2d;
+    --secondry_block_bg: #272F33;
+    --hadith_translation_color: #ffffff;
+    --sidePanel_bg: #272F33;
+    --indexsearchtips_bg: #272F33;
+    --sanad_text_color: #B3B6BC;
+    --highlight-color: #2f7e78;
+    --disable_button_bg: #6C757D;
+    --boh_hover_bg: #343A40;
+    --sticky-color: #19524d;
+    --link-color: #56D0D0;
+}
