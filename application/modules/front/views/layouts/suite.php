@@ -29,11 +29,14 @@
   const initializeTheme = () => {
     const savedTheme = localStorage.getItem("theme");
     const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersLightMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
 
-    if (savedTheme)
-      updateTheme(savedTheme);
-    else if (prefersDarkMode)
+    if (prefersDarkMode)
       updateTheme('dark');
+    else if(prefersLightMode)
+      updateTheme('light');
+    else if(savedTheme)
+      updateTheme(savedTheme);
     else
       updateTheme('light');
   };
