@@ -81,7 +81,7 @@
     font-style: normal;
 }
 :root{
-	--global-text-color:#ffffff;
+	--global-text-color:none;
 	/* none */
 	--primary-text-color:#ffffff;
 	/* #000 */
