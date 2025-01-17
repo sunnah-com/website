@@ -5,14 +5,12 @@
 			else $stextval = "";
 		}
 ?>
-
+<script src="../../../../../public/reactbuild/bundle.js">
+	</script>
 <div id=search>
     <a class="searchtipslink">Search Tips</a>
     <div id="searchbar">
-        <form name="searchform" action="/search/" method=get id="searchform">
-            <input type="text" class="searchquery" name=q placeholder= "Search …" value="<?php echo htmlspecialchars(strip_tags($stextval)); ?>" />
-            <input type="submit" class="searchsubmit" value="l" />
-        </form>
+	<div id="react-root-searchbar"></div>
     </div>
 
 	<div id="searchtips">
