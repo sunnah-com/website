@@ -3,9 +3,9 @@
     --primary-text-color: #000;
     --secondary-text-color: #666;
     --toolbar-bg-color: rgba(251; 250; 248; 0.2);
-    --header-bg: url('/images/banner_small.png');
-    --site-bg: url('/images/bg_small.png');
-    --footer-bg: url('/images/banner_small.png');
+    --header-bg: url(../images/banner_small.png);
+    --site-bg: url(../images/bg_small.png);
+    --footer-bg: url(../images/banner_small.png);
     --collection_sep_box_shadow: 0px 1px 2px 1px rgba(204; 204; 204; 0.5);
     --collection_sep_bg: #ccc;
     --indexserachquery_bg: rgba(255, 255, 255, 0.65);
@@ -20,7 +20,7 @@
     --searchquer_shadow: 0px 0px 9pt 2pt #75a1a1;
     --secondry_block_bg: rgba(255, 255, 255, 0.5);
     --hadith_translation_color: #08081a;
-    --sidePanel_bg: url('/images/banner_small.png');
+    --sidePanel_bg: url(../images/banner_small.png);
     --indexsearchtips_bg: rgba(255, 255, 255, 0.5);
     --sanad_text_color: gray;
     --highlight-color: #deebea;
