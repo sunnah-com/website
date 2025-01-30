@@ -1,4 +1,4 @@
-<?php
+<div?php
 ?>
 
 <div style="font-size: 16px; padding-top: 0px; padding-bottom: 16px; text-align: center;"> SHARE THIS HADITH</div>
@@ -13,6 +13,30 @@
 	<div class="share_button" style="float: right; padding-top: 13px;">
 		<a href="https://twitter.com/intent/tweet?url=https://sunnah.com<?php echo $_GET['link']; ?>&text=Hadith via @SunnahCom&hashtags=SunnahCom,hadith" target="blank" rel="noopener noreferrer" title="Share Hadith on Twitter" class="icn-twitter"></a>
 	</div>
+
+    <!-- WhatsApp -->
+	<div class="share_button" style="float: right; padding-top: 13px;">
+		<a href="https://api.whatsapp.com/send?text=Hadith via Sunnah.com https://sunnah.com<?php echo $_GET['link']; ?>" 
+		target="_blank"
+		rel="noopener noreferrer"
+		title="Share Hadith on WhatsApp"
+		>
+			<i class="fa-brands fa-whatsapp whatsapp-icon"></i>
+		</a>
+	</div>
+
+	<!-- Telegram -->
+	<div class="share_button" style="float: right; padding-top: 13px;">
+		<a href="https://t.me/share/url?url=https://sunnah.com<?php echo $_GET['link']; ?>&text=Hadith via Sunnah.com" 
+		target="_blank"
+		rel="noopener noreferrer"
+		title="Share Hadith on Telegram"
+		class="icn-telegram"
+		>
+			<i class="fa-brands fa-telegram telegram-icon"></i>
+		</a>
+	</div>
+
 	<div class=clear></div>
 </div>
 
