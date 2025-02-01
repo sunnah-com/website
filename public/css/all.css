@@ -1,6 +1,8 @@
 @charset "utf-8";
 @import url(./themes/dark.css);
 @import url(./themes/light.css);
+@import url(../font-awesome/css/all.css);
+
 /* CSS Document */
 
 
@@ -1655,9 +1657,19 @@ input.searchquery{
 	background: #2caae1;
 }
 .share_button a:hover {
-	background-color: #60aed0;
+	filter: brightness(125%);
 	text-decoration: none;
 }
+
+/* WhatsApp and Telegram share buttons */
+.share_button >.icn-whatsapp{
+	background-color: #07ad07;
+}
+.share_button >.icn-telegram{
+	background-color: #178f92;
+}
+
+
 .hadith_reference_sticky {
     display: none;
 }

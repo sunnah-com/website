@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icn-font';
-  src: url('../font/icn-font.eot?74638021');
-  src: url('../font/icn-font.eot?74638021#iefix') format('embedded-opentype'),
-       url('../font/icn-font.woff2?74638021') format('woff2'),
-       url('../font/icn-font.woff?74638021') format('woff'),
-       url('../font/icn-font.ttf?74638021') format('truetype'),
-       url('../font/icn-font.svg?74638021#icn-font') format('svg');
+  src: url('../font/icn-font.eot?18419088');
+  src: url('../font/icn-font.eot?18419088#iefix') format('embedded-opentype'),
+       url('../font/icn-font.woff2?18419088') format('woff2'),
+       url('../font/icn-font.woff?18419088') format('woff'),
+       url('../font/icn-font.ttf?18419088') format('truetype'),
+       url('../font/icn-font.svg?18419088#icn-font') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,48 +15,47 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'icn-font';
-    src: url('../font/icn-font.svg?74638021#icn-font') format('svg');
+    src: url('../font/icn-font.svg?18419088#icn-font') format('svg');
   }
 }
 */
- 
- [class^="icn-"]:before, [class*=" icn-"]:before {
+[class^="icn-"]:before, [class*=" icn-"]:before {
   font-family: "icn-font";
   font-style: normal;
   font-weight: normal;
   speak: never;
- 
+
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
   margin-right: .2em;
   text-align: center;
   /* opacity: .8; */
- 
+
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
- 
+
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
- 
+
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
   margin-left: .2em;
- 
+
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
- 
+
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- 
+
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
- 
-.icn-left:before { content: '\3c'; } /* '&lt;' */
-.icn-right:before { content: '\3e'; } /* '&gt;' */
+
+.icn-left:before { content: '\3c'; } /* '<' */
+.icn-right:before { content: '\3e'; } /* '>' */
 .icn-fb:before { content: '\66'; } /* 'f' */
 .icn-github-circled:before { content: '\67'; } /* 'g' */
 .icn-share:before { content: '\68'; } /* 'h' */
@@ -66,3 +65,5 @@
 .icn-logo:before { content: '\73'; } /* 's' */
 .icn-twitter:before { content: '\74'; } /* 't' */
 .icn-up:before { content: '\75'; } /* 'u' */
+.icn-whatsapp:before { content: '\f232'; } /* '' */
+.icn-telegram:before { content: '\f2c6'; } /* '' */
