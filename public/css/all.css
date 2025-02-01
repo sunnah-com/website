@@ -1662,30 +1662,13 @@ input.searchquery{
 }
 
 /* WhatsApp and Telegram share buttons */
-
-.share_button a:has(>.whatsapp-icon){
+.share_button >.icn-whatsapp{
 	background-color: #07ad07;
 }
-.share_button a:has(>.telegram-icon){
+.share_button >.icn-telegram{
 	background-color: #178f92;
 }
 
-.share_button .fa-brands {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	width: 1em;
-	height: 1em;
-	margin: 0 0.2em;
-}
-
-.whatsapp-icon {
-	color: white;
-}
-
-.telegram-icon {
-	
-}
 
 .hadith_reference_sticky {
     display: none;
