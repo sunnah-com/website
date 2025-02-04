@@ -4,3 +4,5 @@
 .env.local
 
 **gz
+
+react/node_modules/*
