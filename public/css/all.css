@@ -138,6 +138,7 @@
 	/* #ffffff */
 	--sticky-color: #90b8b9;
 	--link-color: #50a3a3;
+	--pager-bg-color: white;
 }
 
 *{
@@ -1565,7 +1566,7 @@ input.searchquery{
     margin-top: 17px;
 	margin-left: -251px;
 	background:url(../images/bg_small.png);
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: var(--flyout-bg-color);
 	z-index: 10;
 	border-radius: 4px;
 	font-size: 12px;

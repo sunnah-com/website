@@ -1,5 +1,4 @@
 [data-theme="dark"] {
-    transition: all 0.5s;
     --global-text-color: white;
     --primary-text-color: white;
     --secondary-text-color: #ffffff;
@@ -29,4 +28,6 @@
     --boh_hover_bg: #343A40;
     --sticky-color: #19524d;
     --link-color: #56D0D0;
+    --pager-bg-color: #273439;
+    --flyout-bg-color: #343a408a;
 }
