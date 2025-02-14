@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>Copyright (C) 2020 by original authors @ fontello.com</metadata>
+<metadata>Copyright (C) 2025 by original authors @ fontello.com</metadata>
 <defs>
 <font id="icn-font" horiz-adv-x="1000" >
 <font-face font-family="icn-font" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
@@ -27,6 +27,10 @@
 <glyph glyph-name="twitter" unicode="&#x74;" d="M904 622q-37-54-90-93 0-8 0-23 0-73-21-145t-64-139-103-117-144-82-181-30q-151 0-276 81 19-2 43-2 126 0 224 77-59 1-105 36t-64 89q19-3 34-3 24 0 48 6-63 13-104 62t-41 115v2q38-21 82-23-37 25-59 64t-22 86q0 49 25 91 68-83 164-133t208-55q-5 21-5 41 0 75 53 127t127 53q79 0 132-57 61 12 115 44-21-64-80-100 52 6 104 28z" horiz-adv-x="928.6" />
 
 <glyph glyph-name="up" unicode="&#x75;" d="M213 366l-213 0 308 307 310-309-213 0 3-336-195 0 0 338z" horiz-adv-x="618" />
+
+<glyph glyph-name="whatsapp" unicode="&#xf232;" d="M550 307q7 0 54-25t50-30q1-2 1-8 0-18-9-42-9-22-40-37t-57-15q-32 0-106 35-55 25-95 66t-82 103q-41 60-40 108v5q2 50 41 88 14 12 29 12 4 0 10-1t11-1q11 0 15-3t8-16q5-11 19-49t14-41q0-12-19-33t-20-26q0-3 3-8 19-41 57-76 31-30 84-57 7-4 13-4 8 0 30 27t29 28z m-114-296q71 0 136 28t112 74 75 112 28 136-28 136-75 112-112 75-136 28-135-28-112-75-75-112-28-136q0-113 67-205l-44-130 135 43q88-58 192-58z m0 771q86 0 164-34t134-89 90-135 33-163-33-163-90-134-134-90-164-34q-108 0-203 53l-233-75 76 226q-60 99-60 217 0 86 33 163t90 135 134 89 163 34z" horiz-adv-x="857.1" />
+
+<glyph glyph-name="telegram" unicode="&#xf2c6;" d="M664 121l82 386q5 25-6 36t-29 3l-482-185q-16-6-22-14t-2-15 18-11l124-38 286 180q12 8 18 3 4-3-3-8l-231-210-9-127q13 0 25 13l60 58 125-93q36-20 46 22z m336 229q0-102-40-194t-106-160-160-106-194-40-194 40-160 106-106 160-40 194 40 194 106 160 160 106 194 40 194-40 160-106 106-160 40-194z" horiz-adv-x="1000" />
 </font>
 </defs>
 </svg>
