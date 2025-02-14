@@ -8,9 +8,6 @@ require_once(__DIR__.'/functions.php');
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
-define('TRUE', true);
-define('FALSE', false);
-
 $parameters = parse_ini_file(__DIR__ ."/../../.env.local");
 if (array_key_exists("showCarousel", $parameters)) {
     $params['showCarousel'] = $parameters['showCarousel'];
