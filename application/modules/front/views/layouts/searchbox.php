@@ -136,44 +136,6 @@ if (strcmp($this->params['_pageType'], "home")) {
 
 		let selectedCollections = [];
 
-		/**
-		 * Update the filter icon color based on current theme.
-		 * Note: Use getComputedStyle(document.body) because 
-		 * the theme attribute is on the body.
-		 */
-		function updateTheme() {
-			// Get the color value and clean it
-			let colorWithoutHash = getComputedStyle(document.body)
-				.getPropertyValue('--filter-icon-color')
-				.trim()
-				.replace('#', ''); // Remove # if present
-
-			// Expand 3-character hex to 6 characters (e.g., '666' -> '666666')
-			if (colorWithoutHash.length === 3) {
-				colorWithoutHash = colorWithoutHash
-					.split('')
-					.map(char => char + char)
-					.join('');
-			}
-
-			if (filterIcon) {
-				filterIcon.src = `https://imgstore.org/icon/69jia65cyaso/${colorWithoutHash}/128`;
-			}
-		}
-
-		// Initial call after DOM loads
-		updateTheme();
-
-		// Watch for changes to data-theme on the <body>
-		const observer = new MutationObserver(function (mutationsList) {
-			for (const mutation of mutationsList) {
-				if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-					updateTheme();
-				}
-			}
-		});
-		observer.observe(document.body, { attributes: true });
-
 		// Open modal
 		filterBtn.addEventListener("click", function () {
 			filterModal.style.display = "block";
@@ -226,39 +188,24 @@ if (strcmp($this->params['_pageType'], "home")) {
 </script>
 
 <style>
-	/* 
-	   THEME VARIABLES 
-	   Light theme in :root 
-	   Dark theme overrides in [data-theme="dark"]
-
-	   IMPORTANT: Because your data-theme is on <body>, 
-	   you must match it with [data-theme="dark"] 
-	   so that the entire body and its children get the overrides.
-	*/
-	:root {
-		--primary-text-color: #333;
-		--secondary-text-color: #555;
+	body {
 		--secondary-block-bg: #ebebeb;
 		--highlight-color: #3ba08f;
 		--chip-bg: #eaeaea;
 		--chip-hover-bg: #dedede;
 		--chip-selected-bg: #3ba08f;
 		--border-color: rgba(0, 0, 0, 0.2);
-		--filter-icon-color: 333;
-		/* icon color in light theme */
+		--filter-icon-color: #333;
 	}
 
-	[data-theme="dark"] {
-		--primary-text-color: #fff;
-		--secondary-text-color: #ccc;
+	body[data-theme="dark"] {
 		--secondary-block-bg: #343A40;
 		--highlight-color: #3ba08f;
 		--chip-bg: #343A40;
 		--chip-hover-bg: #3d4648;
 		--chip-selected-bg: #3ba08f;
 		--border-color: rgba(255, 255, 255, 0.2);
-		--filter-icon-color: ffffff;
-		/* icon color in dark theme */
+		--filter-icon-color: #ffffff;
 	}
 
 	.clear {
