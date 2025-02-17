@@ -82,6 +82,8 @@
 }
 :root{
 	--global-text-color:none;
+	/* none */
+	--primary-text-color:#ffffff;
 	/* #000 */
 	--secondary-text-color:#ffffff;
 	/* #666 */
@@ -2140,6 +2142,12 @@ em {
     box-shadow: 1px 0px 0 0px var(--highlight-color), -1px 0px 0 0px var(--highlight-color);
     background: var(--highlight-color);
 }
+
+/* Contact  page*/
+.btn.btn-primary{
+	background: var(--secondry_block_bg);
+}
+
 
 /* Medium screen, retina, stuff to override above media query */
 @media
