@@ -29,7 +29,12 @@ if (strcmp($this->params['_pageType'], "home")) {
 				<div id="search-controls">
 					<button type="button" id="filterBtn" class="filter-btn">
 						<span class="filter-btn-content">
-							<img src="https://imgstore.org/icon/69jia65cyaso/ffffff/128" class="filter-icon" id="filterIcon" />
+							<img 
+							src="https://imgstore.org/icon/69jia65cyaso/ffffff/128" 
+							class="filter-icon" 
+							id="filterIcon"
+							referrerpolicy="unsafe-url"
+							/>
 							Filter
 						</span>
 					</button>
@@ -49,7 +54,12 @@ if (strcmp($this->params['_pageType'], "home")) {
 				<!-- DESKTOP COMPONENTS -->
 				<button type="button" id="filterBtn" class="filter-btn">
 					<span class="filter-btn-content">
-						<img src="https://imgstore.org/icon/69jia65cyaso/ffffff/128" class="filter-icon" id="filterIcon" />
+						<img 
+						src="https://imgstore.org/icon/69jia65cyaso/ffffff/128" 
+						class="filter-icon" 
+						id="filterIcon"
+						referrerpolicy="unsafe-url"
+						/>
 						Filter
 					</span>
 				</button>
@@ -132,10 +142,19 @@ if (strcmp($this->params['_pageType'], "home")) {
 		 * the theme attribute is on the body.
 		 */
 		function updateTheme() {
-			// e.g. 'ffffff' if dark, '000000' if light
-			const colorWithoutHash = getComputedStyle(document.body)
+			// Get the color value and clean it
+			let colorWithoutHash = getComputedStyle(document.body)
 				.getPropertyValue('--filter-icon-color')
-				.trim();
+				.trim()
+				.replace('#', ''); // Remove # if present
+
+			// Expand 3-character hex to 6 characters (e.g., '666' -> '666666')
+			if (colorWithoutHash.length === 3) {
+				colorWithoutHash = colorWithoutHash
+					.split('')
+					.map(char => char + char)
+					.join('');
+			}
 
 			if (filterIcon) {
 				filterIcon.src = `https://imgstore.org/icon/69jia65cyaso/${colorWithoutHash}/128`;
@@ -225,7 +244,7 @@ if (strcmp($this->params['_pageType'], "home")) {
 		--chip-hover-bg: #dedede;
 		--chip-selected-bg: #3ba08f;
 		--border-color: rgba(0, 0, 0, 0.2);
-		--filter-icon-color: 000000;
+		--filter-icon-color: 333;
 		/* icon color in light theme */
 	}
 
@@ -374,10 +393,10 @@ if (strcmp($this->params['_pageType'], "home")) {
 		}
 
 		#replacewithmobileordesktop {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		}
 
 		/* Adjust the #search container: stack items vertically */
 		#search {
@@ -393,6 +412,7 @@ if (strcmp($this->params['_pageType'], "home")) {
 			/* Vertical alignment */
 			justify-content: space-between;
 			/* Space between filter button and search tips */
+			margin-bottom: 8px;
 		}
 
 		#search-controls .filter-btn {
