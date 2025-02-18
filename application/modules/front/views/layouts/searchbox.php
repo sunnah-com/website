@@ -164,7 +164,6 @@ if (strcmp($this->params['_pageType'], "home")) {
         --chip-hover-bg: #dedede;
         --chip-selected-bg: #3ba08f;
         --border-color: rgba(0, 0, 0, 0.2);
-        --filter-icon-color: #333;
     }
 
     body[data-theme="dark"] {
@@ -174,7 +173,6 @@ if (strcmp($this->params['_pageType'], "home")) {
         --chip-hover-bg: #3d4648;
         --chip-selected-bg: #3ba08f;
         --border-color: rgba(255, 255, 255, 0.2);
-        --filter-icon-color: #ffffff;
     }
 
     .clear {
