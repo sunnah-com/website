@@ -26,7 +26,7 @@
 
     <!-- WhatsApp -->
 	<div class="share_button" style="float: right; padding-top: 13px;">
-		<a href="https://api.whatsapp.com/send?url=https://sunnah.com<?php echo $_POST['link']; ?>" 
+		<a href="https://api.whatsapp.com/send" 
 			target="_blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on WhatsApp"
@@ -57,7 +57,7 @@
 					const hadithText = <?php echo json_encode($_POST['hadithText']); ?>;
 					const href = $(this).attr('href');
 					const url = new URL(href);
-					
+
 					url.searchParams.set('text', hadithText);
 					$(this).attr('href', url.toString());
 				});
