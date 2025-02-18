@@ -150,7 +150,7 @@
 				//echo "<a href=\"$permalink\">Permalink</a>";
 			if (!isset($hideReportError) or !$hideReportError) echo "<span class=reportlink href=\"javascript: void(0);\" onclick=\"reportHadith(".$urn.", '".$divName."')\">Report Error</span> | ";
 			if (!$hideShare) {
-                echo "<span class=sharelink onclick=\"share('$permalink')\">Share</span> | "; 
+                echo "<span class=sharelink onclick=\"share(this, '$permalink')\">Share</span> | "; 
 			    echo "<span class=copylink title=\"Copy hadith to clipboard\">Copy</span> "; 
 			    echo "<span class=copycbcaret title=\"Change copy options\">▼</span>";
             }
