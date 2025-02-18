@@ -649,14 +649,6 @@ input.searchquery{
     color:#84B8B8;
 }
 
-.searchtipslink {
-	float: right;
-	font-size: 12px;
-	padding-left: 10px;
-	padding-top: 8px;
-	cursor: pointer;
-}
-
 #search a {color: #fff;}
 #searchtips a { color: #5d8080; }
 
@@ -1794,10 +1786,6 @@ input.searchquery{
         max-width: 410px;
         box-sizing: border-box;
         margin: 0 auto;
-        display: grid;
-        grid-area: auto;
-        grid-template-columns: 70px auto;
-        grid-gap: 10px;
         align-content: space-evenly;
         align-items: center;
 	}
@@ -1805,21 +1793,12 @@ input.searchquery{
         font-size: 16px;
         padding-right: 2.7em;
 	}
-    .searchtipslink {
-        position: initial;
-        float: none;
-        display: inline-block;
-        padding-top: 0;
-        vertical-align: middle;
-        padding-left: 0;
-	}
 
 	#indexsearchtips {
 		font-size: 16px;
 		height: 555px;
 	}
 	#searchtips {
-		left: 0;
 		top: 90px;
 		position: absolute;
 	}

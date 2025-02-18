@@ -1,416 +1,334 @@
 <?php
 // Optional logic for $stextval
 if (strcmp($this->params['_pageType'], "home")) {
-	$searchQuery = null;
-	if (strcmp($this->params['_pageType'], "search") == 0) {
-		$searchQuery = $this->params['_searchQuery'];
-	}
-	if (isset($searchQuery)) {
-		$stextval = $searchQuery;
-	} else {
-		$stextval = "";
-	}
+    $searchQuery = null;
+    if (strcmp($this->params['_pageType'], "search") == 0) {
+        $searchQuery = $this->params['_searchQuery'];
+    }
+    if (isset($searchQuery)) {
+        $stextval = $searchQuery;
+    } else {
+        $stextval = "";
+    }
 }
 ?>
 
 <div id="search">
-	<div id="replacewithmobileordesktop"></div>
+    <div class="search-container">
+        <div id="searchbar">
+            <form name="searchform" action="/search/" method="get" id="searchform">
+                <input type="text" class="searchquery" name="q" placeholder="Search …" />
+                <input type="submit" class="searchsubmit" value="l" />
+            </form>
+        </div>
+        <button type="button" id="filterBtn" class="custom-btn">
+            <span class="custom-btn-content filter-icn">
+                <i class="fa-solid fa-sliders"></i>
+            </span>
+        </button>
+        <button type="button" id="filterBtn" class="custom-btn searchtipslink">
+            <span class="custom-btn-content tips-icn">
+                <i class="fa-solid fa-lightbulb"></i>
+            </span>
+        </button>
+    </div>
 
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			const container = document.getElementById("replacewithmobileordesktop");
+    <!-- Modal for selecting collections -->
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Select Collections</h2>
 
-			// Check screen size; you could also check navigator.userAgent.
-			function loadContent() {
-				// If width <= 600px, treat as "mobile"; otherwise "desktop"
-				if (window.matchMedia("(max-width: 600px)").matches) {
-					container.innerHTML = `
-				<!-- MOBILE COMPONENTS -->
-				<div id="search-controls">
-					<button type="button" id="filterBtn" class="filter-btn">
-						<span class="filter-btn-content">
-							<img 
-							src="https://imgstore.org/icon/69jia65cyaso/ffffff/128" 
-							class="filter-icon" 
-							id="filterIcon"
-							referrerpolicy="unsafe-url"
-							/>
-							Filter
-						</span>
-					</button>
-					<div style="float: right;">
-						<a class="searchtipslink">Search Tips</a>
-					</div>
-				</div>
-				<div id="searchbar">
-					<form name="searchform" action="/search/" method="get" id="searchform">
-						<input type="text" class="searchquery" name="q" placeholder="Search …" />
-						<input type="submit" class="searchsubmit" value="l" />
-					</form>
-				</div>
-			`;
-				} else {
-					container.innerHTML = `
-				<!-- DESKTOP COMPONENTS -->
-				<button type="button" id="filterBtn" class="filter-btn">
-					<span class="filter-btn-content">
-						<img 
-						src="https://imgstore.org/icon/69jia65cyaso/ffffff/128" 
-						class="filter-icon" 
-						id="filterIcon"
-						referrerpolicy="unsafe-url"
-						/>
-						Filter
-					</span>
-				</button>
-				<a class="searchtipslink">Search Tips</a>
-				<div id="searchbar">
-					<form name="searchform" action="/search/" method="get" id="searchform">
-						<input type="text" class="searchquery" name="q" placeholder="Search …" />
-						<input type="submit" class="searchsubmit" value="l" />
-					</form>
-				</div>
-			`;
-				}
-			}
+            <div id="collectionChips">
+                <div class="chip" data-value="bukhari">Sahih Bukhari</div>
+                <div class="chip" data-value="muslim">Sahih Muslim</div>
+                <div class="chip" data-value="abudawud">Sunan Abi Dawud</div>
+                <div class="chip" data-value="tirmidhi">Jami' at-Tirmidhi</div>
+                <div class="chip" data-value="nasai">Sunan an-Nasa'i</div>
+                <div class="chip" data-value="ibnmajah">Sunan Ibn Majah</div>
+            </div>
 
-			// Run at load
-			loadContent();
-			// Also reload on resize if you want dynamic switching
-			window.addEventListener("resize", loadContent);
-		});
-	</script>
+            <button id="applyFilterBtn" class="apply-custom-btn">Apply</button>
+        </div>
+    </div>
 
-	<!-- Modal for selecting collections -->
-	<div id="filterModal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<h2>Select Collections</h2>
-
-			<div id="collectionChips">
-				<!-- Example chip structure -->
-				<div class="chip" data-value="bukhari">Sahih Bukhari</div>
-				<div class="chip" data-value="muslim">Sahih Muslim</div>
-				<div class="chip" data-value="abudawud">Sunan Abi Dawud</div>
-				<div class="chip" data-value="tirmidhi">Jami' at-Tirmidhi</div>
-				<div class="chip" data-value="nasai">Sunan an-Nasa'i</div>
-				<div class="chip" data-value="ibnmajah">Sunan Ibn Majah</div>
-				<!-- etc... -->
-			</div>
-
-			<button id="applyFilterBtn" class="apply-filter-btn">Apply</button>
-		</div>
-	</div>
-
-	<div id="searchtips">
-		<div class="clear"></div>
-		<b>Quotes</b> e.g. "pledge allegiance"<br>
-		Searches for the whole phrase instead of individual words
-		<p>
-			<b>Wildcards</b> e.g. test*<br>
-			Matches any set of one or more characters. For example test* would result in test, tester, testers, etc.
-		<p>
-			<b>Fuzzy Search</b> e.g. swore~<br>
-			Finds terms that are similar in spelling. For example swore~ would result in swore, snore, score, etc.
-		<p>
-			<b>Term Boosting</b> e.g. pledge^4 hijrah<br>
-			Boosts words with higher relevance. Here, the word <i>pledge</i> will have higher weight than <i>hijrah</i>
-		<p>
-			<b>Boolean Operators</b> e.g. ("pledge allegiance" OR "shelter) AND prayer<br>
-			Create complex phrase and word queries by using Boolean logic.
-		<p>
-			<a href="/searchtips">More ...</a>
-		<div class="clear"></div>
-	</div>
+    <div id="searchtips">
+        <div class="clear"></div>
+        <b>Quotes</b> e.g. "pledge allegiance"<br>
+        Searches for the whole phrase instead of individual words
+        <p>
+            <b>Wildcards</b> e.g. test*<br>
+            Matches any set of one or more characters. For example test* would result in test, tester, testers, etc.
+        <p>
+            <b>Fuzzy Search</b> e.g. swore~<br>
+            Finds terms that are similar in spelling. For example swore~ would result in swore, snore, score, etc.
+        <p>
+            <b>Term Boosting</b> e.g. pledge^4 hijrah<br>
+            Boosts words with higher relevance. Here, the word <i>pledge</i> will have higher weight than <i>hijrah</i>
+        <p>
+            <b>Boolean Operators</b> e.g. ("pledge allegiance" OR "shelter) AND prayer<br>
+            Create complex phrase and word queries by using Boolean logic.
+        <p>
+            <a href="/searchtips">More ...</a>
+        <div class="clear"></div>
+    </div>
 </div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-		const filterBtn = document.getElementById("filterBtn");
-		const filterModal = document.getElementById("filterModal");
-		const closeModal = document.querySelector("#filterModal .close");
-		const applyFilterBtn = document.getElementById("applyFilterBtn");
-		const chipElements = document.querySelectorAll("#collectionChips .chip");
-		const searchForm = document.getElementById("searchform");
-		const filterIcon = document.getElementById("filterIcon");
+    document.addEventListener("DOMContentLoaded", function () {
+        const filterBtn = document.getElementById("filterBtn");
+        const filterModal = document.getElementById("filterModal");
+        const closeModal = document.querySelector("#filterModal .close");
+        const applyFilterBtn = document.getElementById("applyFilterBtn");
+        const chipElements = document.querySelectorAll("#collectionChips .chip");
+        const searchForm = document.getElementById("searchform");
+        const filterIcon = document.getElementById("filterIcon");
 
-		let selectedCollections = [];
+        let selectedCollections = [];
 
-		// Open modal
-		filterBtn.addEventListener("click", function () {
-			filterModal.style.display = "block";
-		});
+        // Open modal
+        filterBtn.addEventListener("click", function () {
+            filterModal.style.display = "block";
+        });
 
-		// Close modal (x)
-		closeModal.addEventListener("click", function () {
-			filterModal.style.display = "none";
-		});
+        // Close modal (x)
+        closeModal.addEventListener("click", function () {
+            filterModal.style.display = "none";
+        });
 
-		// Close modal if clicking outside
-		window.addEventListener("click", function (event) {
-			if (event.target === filterModal) {
-				filterModal.style.display = "none";
-			}
-		});
+        // Close modal if clicking outside
+        window.addEventListener("click", function (event) {
+            if (event.target === filterModal) {
+                filterModal.style.display = "none";
+            }
+        });
 
-		// Toggle chip selection
-		chipElements.forEach(chip => {
-			chip.addEventListener("click", function () {
-				const value = chip.dataset.value;
-				chip.classList.toggle("selected");
+        // Toggle chip selection
+        chipElements.forEach(chip => {
+            chip.addEventListener("click", function () {
+                const value = chip.dataset.value;
+                chip.classList.toggle("selected");
 
-				if (chip.classList.contains("selected")) {
-					selectedCollections.push(value);
-				} else {
-					selectedCollections = selectedCollections.filter(col => col !== value);
-				}
-			});
-		});
+                if (chip.classList.contains("selected")) {
+                    selectedCollections.push(value);
+                } else {
+                    selectedCollections = selectedCollections.filter(col => col !== value);
+                }
+            });
+        });
 
-		// "Apply" button
-		applyFilterBtn.addEventListener("click", function () {
-			filterModal.style.display = "none";
-		});
+        // "Apply" button
+        applyFilterBtn.addEventListener("click", function () {
+            filterModal.style.display = "none";
+        });
 
-		// Intercept search form to include selected collections
-		searchForm.addEventListener("submit", function (event) {
-			const queryInput = document.querySelector(".searchquery").value;
-			let actionUrl = "/search/?q=" + encodeURIComponent(queryInput);
+        // Intercept search form to include selected collections
+        searchForm.addEventListener("submit", function (event) {
+            const queryInput = document.querySelector(".searchquery").value;
+            let actionUrl = "/search/?q=" + encodeURIComponent(queryInput);
 
-			selectedCollections.forEach(col => {
-				actionUrl += "&collection[]=" + encodeURIComponent(col);
-			});
+            selectedCollections.forEach(col => {
+                actionUrl += "&collection[]=" + encodeURIComponent(col);
+            });
 
-			window.location.href = actionUrl;
-			event.preventDefault();
-		});
-	});
+            window.location.href = actionUrl;
+            event.preventDefault();
+        });
+    });
 </script>
 
 <style>
-	body {
-		--secondary-block-bg: #ebebeb;
-		--highlight-color: #3ba08f;
-		--chip-bg: #eaeaea;
-		--chip-hover-bg: #dedede;
-		--chip-selected-bg: #3ba08f;
-		--border-color: rgba(0, 0, 0, 0.2);
-		--filter-icon-color: #333;
-	}
+    body {
+        --secondary-block-bg: #ebebeb;
+        --highlight-color: #3ba08f;
+        --chip-bg: #eaeaea;
+        --chip-hover-bg: #dedede;
+        --chip-selected-bg: #3ba08f;
+        --border-color: rgba(0, 0, 0, 0.2);
+        --filter-icon-color: #333;
+    }
 
-	body[data-theme="dark"] {
-		--secondary-block-bg: #343A40;
-		--highlight-color: #3ba08f;
-		--chip-bg: #343A40;
-		--chip-hover-bg: #3d4648;
-		--chip-selected-bg: #3ba08f;
-		--border-color: rgba(255, 255, 255, 0.2);
-		--filter-icon-color: #ffffff;
-	}
+    body[data-theme="dark"] {
+        --secondary-block-bg: #343A40;
+        --highlight-color: #3ba08f;
+        --chip-bg: #343A40;
+        --chip-hover-bg: #3d4648;
+        --chip-selected-bg: #3ba08f;
+        --border-color: rgba(255, 255, 255, 0.2);
+        --filter-icon-color: #ffffff;
+    }
 
-	.clear {
-		clear: both;
-	}
+    .clear {
+        clear: both;
+    }
 
+    /* Search Container Layout */
+    .search-container {
+        display: flex;
+        gap: 10px;
+        align-items: stretch;
+    }
 
+    /* Left Column Layout */
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
 
-	/* Filter button */
-	.filter-btn {
-		float: left;
-		margin-right: 10px;
-		padding: 6px 12px;
-		cursor: pointer;
-		background-color: var(--highlight-color);
-		color: var(--primary-text-color);
-		border: none;
-		border-radius: 10px;
-		font-family: "Akzidenz Roman", Arial, sans-serif;
-	}
+    /* Searchbar Layout */
+    #searchbar {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
 
-	.filter-btn:hover {
-		background-color: rgba(59, 160, 143, 0.85);
-	}
+    #searchform {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
 
-	.filter-btn-content {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+    .searchquery {
+        flex: 1;
+        height: 32px;
+    }
 
-	.filter-icon {
-		width: 20px;
-		height: 20px;
-		margin-right: 8px;
-	}
+    .searchsubmit {
+        width: 40px;
+        flex-shrink: 0;
+    }
 
-	/* Modal */
-	.modal {
-		display: none;
-		position: fixed;
-		z-index: 999;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background-color: rgba(0, 0, 0, 0.4);
-	}
+    .filter-icn::after {
+        content: "Filter";
+        padding-left: 5px;
+    }
 
-	.modal-content {
-		background-color: var(--secondary-block-bg);
-		color: var(--primary-text-color);
-		margin: 100px auto;
-		padding: 20px;
-		border: 1px solid var(--border-color);
-		width: 400px;
-		/* Default for desktops */
-		position: relative;
-		border-radius: 8px;
-	}
+    .tips-icn::after {
+        content: "Tips";
+        padding-left: 5px;
+    }
 
-	.modal-content .close {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		color: var(--secondary-text-color);
-		font-size: 24px;
-		font-weight: bold;
-		cursor: pointer;
-	}
+    /* Filter button */
+    .custom-btn {
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: var(--highlight-color);
+        color: var(--primary-text-color);
+        border: none;
+        border-radius: 10px;
+        font-family: "Akzidenz Roman", Arial, sans-serif;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
 
-	.modal-content .close:hover {
-		color: var(--primary-text-color);
-	}
+    .custom-btn:hover {
+        background-color: rgba(59, 160, 143, 0.85);
+    }
 
-	#collectionChips {
-		margin: 20px 0;
-	}
+    .custom-btn-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-	.chip {
-		display: inline-block;
-		padding: 8px 12px;
-		margin: 4px;
-		background-color: var(--chip-bg);
-		color: var(--primary-text-color);
-		border-radius: 16px;
-		cursor: pointer;
-		user-select: none;
-		font-size: 13px;
-		transition: background-color 0.2s ease;
-	}
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
 
-	.chip:hover {
-		background-color: var(--chip-hover-bg);
-	}
+    .modal-content {
+        background-color: var(--secondary-block-bg);
+        color: var(--primary-text-color);
+        margin: 100px auto;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        width: 400px;
+        position: relative;
+        border-radius: 8px;
+    }
 
-	.chip.selected {
-		background-color: var(--chip-selected-bg);
-		color: #fff;
-	}
+    .modal-content .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: var(--secondary-text-color);
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
-	.apply-filter-btn {
-		margin-top: 10px;
-		padding: 6px 12px;
-		cursor: pointer;
-		background-color: var(--highlight-color);
-		color: var(--primary-text-color);
-		border: none;
-		border-radius: 6px;
-		font-family: "Akzidenz Roman", Arial, sans-serif;
-	}
+    .modal-content .close:hover {
+        color: var(--primary-text-color);
+    }
 
-	.apply-filter-btn:hover {
-		background-color: rgba(59, 160, 143, 0.85);
-	}
+    #collectionChips {
+        margin: 20px 0;
+    }
 
-	/* 
-	  MEDIA QUERIES FOR RESPONSIVENESS
-	  Adjust the breakpoint (600px) as needed.
-	*/
-	/* 
-	  MEDIA QUERIES FOR RESPONSIVENESS
-	  Adjust the breakpoint (600px) as needed.
-	*/
-	@media screen and (max-width: 600px) {
+    .chip {
+        display: inline-block;
+        padding: 8px 12px;
+        margin: 4px;
+        background-color: var(--chip-bg);
+        color: var(--primary-text-color);
+        border-radius: 16px;
+        cursor: pointer;
+        user-select: none;
+        font-size: 13px;
+        transition: background-color 0.2s ease;
+    }
 
-		/* Make the modal content narrower so it fits the screen better */
-		.modal-content {
-			width: 90%;
-			margin: 80px auto;
-		}
+    .chip:hover {
+        background-color: var(--chip-hover-bg);
+    }
 
-		#replacewithmobileordesktop {
-			width: 100%;
-			margin: 0;
-			padding: 0;
-		}
+    .chip.selected {
+        background-color: var(--chip-selected-bg);
+        color: #fff;
+    }
 
-		/* Adjust the #search container: stack items vertically */
-		#search {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: flex-start;
-		}
+    .apply-custom-btn {
+        margin-top: 10px;
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: var(--highlight-color);
+        color: var(--primary-text-color);
+        border: none;
+        border-radius: 6px;
+        font-family: "Akzidenz Roman", Arial, sans-serif;
+    }
 
-		#search-controls {
-			width: 100%;
-			display: flex;
-			align-items: center;
-			/* Vertical alignment */
-			justify-content: space-between;
-			/* Space between filter button and search tips */
-			margin-bottom: 8px;
-		}
+    .apply-custom-btn:hover {
+        background-color: rgba(59, 160, 143, 0.85);
+    }
 
-		#search-controls .filter-btn {
-			width: auto;
-			/* Let the button take natural width */
-			margin: 0;
-			/* Remove default margins */
-		}
+    /* Responsive Design */
+    @media screen and (max-width: 760px) {
+        .modal-content {
+            width: 90%;
+            margin: 80px auto;
+        }
 
-		#search-controls .searchtipslink {
-			margin: 0;
-			/* Remove any default margins */
-		}
+        .custom-btn {
+            padding: 6px 8px;
+        }
 
-		/* Force filter button to go full width if desired */
-		.filter-btn {
-			float: none;
-			width: 30%;
-			margin-right: 0;
-			margin-bottom: 10px;
-			justify-content: center;
-			/* Center horizontally */
-			align-items: center;
-		}
+        .filter-icn::after {
+            content: "";
+        }
 
-		/* Make the searchbar also take full width */
-		#searchbar {
-			width: 100%;
-		}
-
-		/* Inside the form, stack the input and submit button if needed */
-		#searchbar form {
-			display: flex;
-			flex-wrap: wrap;
-			width: 100%;
-		}
-
-		.searchquery {
-			flex: 1 1 100%;
-			margin-bottom: 10px;
-		}
-
-		.searchsubmit {
-			width: 10%;
-			/* Or keep a smaller width: e.g. 50px or so, 
-	   but center it or place it next to input gracefully */
-		}
-
-		/* Make chips wrap nicely */
-		.chip {
-			margin: 4px 4px;
-		}
-	}
+        .tips-icn::after {
+            content: "";
+        }
+    }
 </style>
