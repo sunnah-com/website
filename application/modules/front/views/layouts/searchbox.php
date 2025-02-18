@@ -15,12 +15,6 @@ if (strcmp($this->params['_pageType'], "home")) {
 
 <div id="search">
     <div class="search-container">
-        <div id="searchbar">
-            <form name="searchform" action="/search/" method="get" id="searchform">
-                <input type="text" class="searchquery" name="q" placeholder="Search …" />
-                <input type="submit" class="searchsubmit" value="l" />
-            </form>
-        </div>
         <button type="button" id="filterBtn" class="custom-btn">
             <span class="custom-btn-content filter-icn">
                 <i class="fa-solid fa-sliders"></i>
@@ -31,6 +25,12 @@ if (strcmp($this->params['_pageType'], "home")) {
                 <i class="fa-solid fa-lightbulb"></i>
             </span>
         </button>
+        <div id="searchbar">
+            <form name="searchform" action="/search/" method="get" id="searchform">
+                <input type="text" class="searchquery" name="q" placeholder="Search …" />
+                <input type="submit" class="searchsubmit" value="l" />
+            </form>
+        </div>
     </div>
 
     <!-- Modal for selecting collections -->
