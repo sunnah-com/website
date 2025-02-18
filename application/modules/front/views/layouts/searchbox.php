@@ -117,13 +117,7 @@ if (strcmp($this->params['_pageType'], "home")) {
             });
         });
 
-        // "Apply" button
-        applyFilterBtn.addEventListener("click", function () {
-            filterModal.style.display = "none";
-        });
-
-        // Intercept search form to include selected collections
-        searchForm.addEventListener("submit", function (event) {
+        function submit(){
             const queryInput = document.querySelector(".searchquery").value;
             let actionUrl = "/search/?q=" + encodeURIComponent(queryInput);
 
@@ -132,6 +126,16 @@ if (strcmp($this->params['_pageType'], "home")) {
             });
 
             window.location.href = actionUrl;
+        }
+        // "Apply" button
+        applyFilterBtn.addEventListener("click", function () {
+            filterModal.style.display = "none";
+            submit()
+        });
+
+        // Intercept search form to include selected collections
+        searchForm.addEventListener("submit", function (event) {
+            submit()
             event.preventDefault();
         });
     });
