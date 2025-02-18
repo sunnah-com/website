@@ -84,7 +84,21 @@ if (strcmp($this->params['_pageType'], "home")) {
         const searchForm = document.getElementById("searchform");
         const filterIcon = document.getElementById("filterIcon");
 
+        // Parse URL parameters for collections (PHP style array params)
+        const urlParams = new URLSearchParams(window.location.search);
         let selectedCollections = [];
+        let index = 0;
+        while (urlParams.has(`collection[${index}]`)) {
+            selectedCollections.push(urlParams.get(`collection[${index}]`));
+            index++;
+        }
+
+        // Initialize chip selection based on URL parameters
+        chipElements.forEach(chip => {
+            if (selectedCollections.includes(chip.dataset.value)) {
+                chip.classList.add("selected");
+            }
+        });
 
         // Open modal
         filterBtn.addEventListener("click", function () {
@@ -121,16 +135,17 @@ if (strcmp($this->params['_pageType'], "home")) {
             const queryInput = document.querySelector(".searchquery").value;
             let actionUrl = "/search/?q=" + encodeURIComponent(queryInput);
 
-            selectedCollections.forEach(col => {
-                actionUrl += "&collection[]=" + encodeURIComponent(col);
+            selectedCollections.forEach((col, index) => {
+                actionUrl += `&collection[${index}]=${encodeURIComponent(col)}`;
             });
 
             window.location.href = actionUrl;
         }
         // "Apply" button
-        applyFilterBtn.addEventListener("click", function () {
+        applyFilterBtn.addEventListener("click", function (event) {
             filterModal.style.display = "none";
             submit()
+            event.preventDefault()
         });
 
         // Intercept search form to include selected collections
