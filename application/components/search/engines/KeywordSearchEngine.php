@@ -28,6 +28,8 @@ class KeywordSearchEngine extends SearchEngine
     {
         $engine = new EnglishKeywordSearchEngine();
         $engine->setLimitPage($this->limit, $this->page);
+        $engine->setCollections($this->collections);
+
         $resultset = $engine->doSearch($this->query);
 
         if ($resultset === null) {
