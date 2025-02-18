@@ -56,13 +56,9 @@
 				a.each(function(){
 					const hadithText = <?php echo json_encode($_POST['hadithText']); ?>;
 					const href = $(this).attr('href');
-
-					console.log('doing the stuff for a share button');
-					console.log('HREF: '+href);
-
 					const url = new URL(href);
+					
 					url.searchParams.set('text', hadithText);
-					console.log(url);
 					$(this).attr('href', url.toString());
 				});
 			});
