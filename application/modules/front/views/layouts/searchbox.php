@@ -159,7 +159,7 @@ if (strcmp($this->params['_pageType'], "home")) {
 <style>
     [data-theme="light"] {
         --secondary-block-bg: #ebebeb;
-        --chip-bg: rgb(227, 226, 226);
+        --chip-bg: rgba(0, 0, 0, 0.075);
         --chip-hover-bg: #dedede;
         --chip-selected-bg: #3ba08f;
         --border-color: rgba(0, 0, 0, 0.2);
@@ -178,8 +178,9 @@ if (strcmp($this->params['_pageType'], "home")) {
     }
 
     [data-theme="light"] .header{
-        color: var(--link-color);
+        color:  #3d9393;
     }
+
     .clear {
         clear: both;
     }
@@ -261,7 +262,7 @@ if (strcmp($this->params['_pageType'], "home")) {
     }
 
     .apply-btn {
-        padding: 6px 12px;
+        padding: 1rem 2rem;
         cursor: pointer;
         background-color: var(--chip-selected-bg);
         color: white;
@@ -270,6 +271,7 @@ if (strcmp($this->params['_pageType'], "home")) {
         font-family: "Akzidenz Roman", Arial, sans-serif;
         white-space: nowrap;
         flex-shrink: 0;
+        align-self: flex-end;
     }
     .apply-btn:hover {
         background-color: #1c625d;
@@ -288,14 +290,22 @@ if (strcmp($this->params['_pageType'], "home")) {
     }
 
     .modal-content {
+        display: flex;
+        flex-direction: column;
         background-color: var(--secondary-block-bg);
         color: var(--primary-text-color);
         margin: 100px auto;
         padding: 20px;
         border: 1px solid var(--border-color);
         width: 400px;
+        height: 300px;
         position: relative;
         border-radius: 8px;
+    }
+
+    .modal-content .header {
+        padding: 0;
+        margin: 0;
     }
 
     .modal-content .close {
@@ -314,6 +324,7 @@ if (strcmp($this->params['_pageType'], "home")) {
 
     #collectionChips {
         margin: 20px 0;
+        flex: 1;
     }
 
     .chip {
@@ -342,7 +353,8 @@ if (strcmp($this->params['_pageType'], "home")) {
     /* Responsive Design */
     @media screen and (max-width: 760px) {
         .modal-content {
-            width: 90%;
+            box-sizing: border-box;
+            width: 90vw;
             margin: 80px auto;
         }
 
