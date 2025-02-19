@@ -20,6 +20,7 @@ class SearchController extends SController
     public function actionSearch()
     {
         $query = Yii::$app->request->get('q');
+        $collections = Yii::$app->request->get('collection');
         $query = trim($query);
         if ($query === '') {
             return $this->goHome();
@@ -30,10 +31,10 @@ class SearchController extends SController
 
         $page = Yii::$app->request->get('page', 1);
         $page = intval($page);
-        return $this->processSearch($query, $page);
+        return $this->processSearch($query, $page, $collections);
     }
 
-    public function processSearch($query, $page)
+    public function processSearch($query, $page, $collections)
     {
         $this->pathCrumbs('Search Results', '');
 
@@ -41,7 +42,7 @@ class SearchController extends SController
 
         $searchEngine = new KeywordSearchEngine();
         $searchEngine->setLimitPage($limit, $page);
-		
+        $searchEngine->setCollections($collections);
 		set_error_handler(function ($err_severity, $err_msg, $err_file, $err_line, array $err_context)
 							{ throw new \ErrorException($err_msg, 0, $err_severity, $err_file, $err_line); }, E_WARNING);
 		try {

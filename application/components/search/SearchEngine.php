@@ -18,10 +18,18 @@ abstract class SearchEngine
     /** @var int */
     protected $page = 0;
 
+    /** @var array[] */
+    protected $collections;
+
     public function setLimitPage($limit, $page)
     {
         $this->limit = intval($limit);
         $this->page = intval($page);
+    }
+
+    public function setCollections($collections)
+    {
+        $this->collections = $collections;
     }
 
     /**
