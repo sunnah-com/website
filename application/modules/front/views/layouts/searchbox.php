@@ -18,7 +18,7 @@ if (strcmp($this->params['_pageType'], "home")) {
         <div id="searchbar">
             <form name="searchform" action="/search/" method="get" id="searchform">
                 <input type="text" class="searchquery" name="q" placeholder="Search …" />
-                <input type="submit" class="searchsubmit contained-btn" value="l" />
+                <input type="submit" class="searchsubmit search-btn" value="l" />
             </form>
         </div>
         <button type="button" id="filterBtn" class="custom-btn">
@@ -37,7 +37,7 @@ if (strcmp($this->params['_pageType'], "home")) {
     <div id="filterModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Select Collections</h2>
+            <h2 class="header">Select Collections</h2>
 
             <div id="collectionChips">
                 <div class="chip" data-value="bukhari">Sahih Bukhari</div>
@@ -48,7 +48,7 @@ if (strcmp($this->params['_pageType'], "home")) {
                 <div class="chip" data-value="ibnmajah">Sunan Ibn Majah</div>
             </div>
 
-            <button id="applyFilterBtn" class="apply-custom-btn">Apply</button>
+            <button id="applyFilterBtn" class="apply-btn">Apply</button>
         </div>
     </div>
 
@@ -157,22 +157,29 @@ if (strcmp($this->params['_pageType'], "home")) {
 </script>
 
 <style>
-    body {
+    [data-theme="light"] {
         --secondary-block-bg: #ebebeb;
-        --chip-bg: #eaeaea;
+        --chip-bg: rgb(227, 226, 226);
         --chip-hover-bg: #dedede;
         --chip-selected-bg: #3ba08f;
         --border-color: rgba(0, 0, 0, 0.2);
+        --button-highlight-color: rgba(251, 250, 248, 0.2);
+        --search-icon-color: var(--chip-selected-bg);
     }
 
-    body[data-theme="dark"] {
+    [data-theme="dark"] {
         --secondary-block-bg: #343A40;
-        --chip-bg: #343A40;
+        --chip-bg: rgba(44, 48, 52, .7);
         --chip-hover-bg: #3d4648;
         --chip-selected-bg: #3ba08f;
         --border-color: rgba(255, 255, 255, 0.2);
+        --button-highlight-color: #1c625d;
+        --search-icon-color: #ffffff;
     }
 
+    .header{
+        color: var(--link-color);
+    }
     .clear {
         clear: both;
     }
@@ -225,22 +232,9 @@ if (strcmp($this->params['_pageType'], "home")) {
         padding-left: 5px;
     }
 
-    /* Filter button */
-    .custom-btn {
-        padding: 6px 12px;
-        cursor: pointer;
+    .search-btn {
         background-color: var(--highlight-color);
-        color: var(--primary-text-color);
-        border: none;
-        border-radius: 10px;
-        font-family: "Akzidenz Roman", Arial, sans-serif;
-        white-space: nowrap;
-        flex-shrink: 0;
-    }
-
-    .contained-btn {
-        background-color: var(--highlight-color);
-        color: var(--secondary-text-color);
+        color: var(--search-icon-color);
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
     }
@@ -257,7 +251,7 @@ if (strcmp($this->params['_pageType'], "home")) {
         flex-shrink: 0;
     }
     .custom-btn:hover {
-        background-color: rgba(59, 160, 143, 0.85);
+        background-color: var(--button-highlight-color);;
     }
 
     .custom-btn-content {
@@ -266,6 +260,20 @@ if (strcmp($this->params['_pageType'], "home")) {
         justify-content: center;
     }
 
+    .apply-btn {
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: var(--chip-selected-bg);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: "Akzidenz Roman", Arial, sans-serif;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    .apply-btn:hover {
+        background-color: #1c625d;
+    }
     /* Modal */
     .modal {
         display: none;
@@ -322,27 +330,13 @@ if (strcmp($this->params['_pageType'], "home")) {
     }
 
     .chip:hover {
-        background-color: var(--chip-hover-bg);
+        background-color: va        color: white;
+        r(--chip-hover-bg);
     }
 
     .chip.selected {
         background-color: var(--chip-selected-bg);
         color: #fff;
-    }
-
-    .apply-custom-btn {
-        margin-top: 10px;
-        padding: 6px 12px;
-        cursor: pointer;
-        background-color: var(--highlight-color);
-        color: var(--primary-text-color);
-        border: none;
-        border-radius: 6px;
-        font-family: "Akzidenz Roman", Arial, sans-serif;
-    }
-
-    .apply-custom-btn:hover {
-        background-color: rgba(59, 160, 143, 0.85);
     }
 
     /* Responsive Design */
