@@ -133,19 +133,28 @@
 	var sharescriptsInserted = false;
 	var justloaded = false;
 
-	function share(permalink) {		
-		$.get("/share.php", {"link": permalink}, function(data) {
+	function share(button, permalink) {
+		const $hadithContainer = $(button).closest('.actualHadithContainer');
+		
+		if ($hadithContainer.length === 0) {
+			console.error("Error: .actualHadithContainer not found.");
+			return;
+		}
+		
+		const hadithText = getCopyText($hadithContainer);		
+	
+		$.post("/share.php", {link: permalink, hadithText: hadithText }, function(data) {
 			if (!$(".share_mb").length) $("body").append('<div class="share_mb"></div>');
 			$(".share_mb").html(data); 
 			
-			$(".share_mb").css("left", ($(window).width() - $(".share_mb").width())/2+"px");
-			$(".share_mb").css("top", ($(window).height() - $(".share_mb").height())/2.8+"px");
-		
-			$('#sharefuzz, .share_mb').animate({'opacity':'.25'}, 200, 'linear');
-			$('.share_mb').animate({'opacity':'1.00'}, 200, 'linear');
+			$(".share_mb").css("left", ($(window).width() - $(".share_mb").width()) / 2 + "px");
+			$(".share_mb").css("top", ($(window).height() - $(".share_mb").height()) / 2.8 + "px");
+	
+			$('#sharefuzz, .share_mb').animate({'opacity': '.25'}, 200, 'linear');
+			$('.share_mb').animate({'opacity': '1.00'}, 200, 'linear');
 			$('#sharefuzz, .share_mb').css('display', 'block');
-
-			$(".permalink_box").select();			
+	
+			$(".permalink_box").select();            
 		});
 	}	
 
