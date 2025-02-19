@@ -177,7 +177,7 @@ if (strcmp($this->params['_pageType'], "home")) {
         --search-icon-color: #ffffff;
     }
 
-    .header{
+    [data-theme="light"] .header{
         color: var(--link-color);
     }
     .clear {
