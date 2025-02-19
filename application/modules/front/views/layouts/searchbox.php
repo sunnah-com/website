@@ -298,7 +298,6 @@ if (strcmp($this->params['_pageType'], "home")) {
         padding: 20px;
         border: 1px solid var(--border-color);
         width: 400px;
-        height: 300px;
         position: relative;
         border-radius: 8px;
     }
