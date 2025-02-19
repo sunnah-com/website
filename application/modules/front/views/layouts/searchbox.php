@@ -15,6 +15,12 @@ if (strcmp($this->params['_pageType'], "home")) {
 
 <div id="search">
     <div class="search-container">
+        <div id="searchbar">
+            <form name="searchform" action="/search/" method="get" id="searchform">
+                <input type="text" class="searchquery" name="q" placeholder="Search …" />
+                <input type="submit" class="searchsubmit contained-btn" value="l" />
+            </form>
+        </div>
         <button type="button" id="filterBtn" class="custom-btn">
             <span class="custom-btn-content filter-icn">
                 <i class="fa-solid fa-sliders"></i>
@@ -25,12 +31,6 @@ if (strcmp($this->params['_pageType'], "home")) {
                 <i class="fa-solid fa-lightbulb"></i>
             </span>
         </button>
-        <div id="searchbar">
-            <form name="searchform" action="/search/" method="get" id="searchform">
-                <input type="text" class="searchquery" name="q" placeholder="Search …" />
-                <input type="submit" class="searchsubmit" value="l" />
-            </form>
-        </div>
     </div>
 
     <!-- Modal for selecting collections -->
@@ -159,7 +159,6 @@ if (strcmp($this->params['_pageType'], "home")) {
 <style>
     body {
         --secondary-block-bg: #ebebeb;
-        --highlight-color: #3ba08f;
         --chip-bg: #eaeaea;
         --chip-hover-bg: #dedede;
         --chip-selected-bg: #3ba08f;
@@ -168,7 +167,6 @@ if (strcmp($this->params['_pageType'], "home")) {
 
     body[data-theme="dark"] {
         --secondary-block-bg: #343A40;
-        --highlight-color: #3ba08f;
         --chip-bg: #343A40;
         --chip-hover-bg: #3d4648;
         --chip-selected-bg: #3ba08f;
@@ -240,6 +238,24 @@ if (strcmp($this->params['_pageType'], "home")) {
         flex-shrink: 0;
     }
 
+    .contained-btn {
+        background-color: var(--highlight-color);
+        color: var(--secondary-text-color);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .custom-btn {
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: rgba(0,0,0,0);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: "Akzidenz Roman", Arial, sans-serif;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
     .custom-btn:hover {
         background-color: rgba(59, 160, 143, 0.85);
     }
