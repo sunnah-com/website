@@ -54,11 +54,30 @@
 			$('.share_button').each(function(){
 				const a = $(this).find('a').first();
 				a.each(function(){
-					const hadithText = <?php echo json_encode($_POST['hadithText']); ?>;
 					const href = $(this).attr('href');
 					const url = new URL(href);
+					const textParam = a.hasClass('icn-fb')? 'quote' : 'text';
 
-					url.searchParams.set('text', hadithText);
+					let hadithText = <?php echo json_encode($_POST['hadithText']); ?>;
+
+					// if telegram button, handle 4000 character URL limit
+					if(a.hasClass('icn-telegram')){
+						let hadithTextLength = encodeURIComponent(hadithText).length;
+						const urlLength = url.toString().length;
+						const characterLimit = 4000;
+
+						const needsTruncating = hadithTextLength + urlLength > characterLimit;
+						// if truncating is needed, continue shortening hadithText + '...' until it is within the limit
+						if(needsTruncating){
+							while(hadithTextLength + urlLength > characterLimit){
+								hadithText = hadithText.substring(0, hadithText.length-1);
+								hadithTextLength = encodeURIComponent(hadithText+'...').length;
+							}
+							hadithText += '...';
+						}
+					}
+					url.searchParams.set(textParam, hadithText);
+
 					$(this).attr('href', url.toString());
 				});
 			});
