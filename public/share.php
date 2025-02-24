@@ -172,7 +172,7 @@ $hadithText = separateArabicAndEnglish($hadithText);
 
 		.hadith-preview {
 			box-sizing: border-box;
-			max-height: 30vh;
+			max-height: 75vh;
 			overflow: auto;
 			background: rgba(125, 125, 125, 0.1);
 			border-radius: inherit;
