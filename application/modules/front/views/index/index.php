@@ -3,6 +3,14 @@
 	$splitSize=round($num_collections/2, 0, PHP_ROUND_HALF_UP);
 ?>
 
+	<div class="donation-banner-container">
+		<div class="donation-banner">
+			<h3>Support Sunnah.com</h3>
+			<p>Help us continue making authentic hadith accessible to everyone. Your donation makes a difference.</p>
+			<a href="/donate" class="donate-btn">Donate Now</a>
+		</div>
+	</div>
+
 	<div align=center id="indextag">
 		The Hadith of the Prophet Muhammad (صلى الله عليه و سلم) at your fingertips
 	</div>

@@ -33,6 +33,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="<?php echo $this->context->auto_version('/css/all.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
+  <link href="<?php echo $this->context->auto_version('/css/donate.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
   <?php if (strcmp($this->params['_pageType'], "search") == 0) { ?>
   <link href="<?php echo $this->context->auto_version('/css/pager.css'); ?>" media="screen" rel="stylesheet" type="text/css" />
   <?php } ?>
@@ -133,8 +134,84 @@
 	<div class="clear"></div>
 
 </div><!-- site div close -->
+
+<!-- Donation Popup -->
+<div class="donation-popup-overlay"></div>
+<div class="donation-popup">
+    <span class="close-btn">&times;</span>
+    <h2>Support Sunnah.com</h2>
+    <p>Your generous donations help us continue our mission of making authentic hadith accessible to everyone around the world.</p>
+    
+    <div id="classy-popup-donation-widget">
+        <!-- Classy donation widget will be loaded here -->
+    </div>
+    
+    <div class="buttons">
+        <button class="donate-now-btn">Donate Now</button>
+        <button class="maybe-later-btn">Maybe Later</button>
+    </div>
+</div>
+
+<!-- Classy Donation Widget Embed Code for Popup -->
+<script id="classy-popup-script" src="https://cdn.classy.org/classy-embed.js"></script>
+<script>
+// Donation popup functionality
+(function() {
+    // Check if user has seen the popup before
+    function hasSeenPopup() {
+        return localStorage.getItem('donationPopupSeen') === 'true';
+    }
+    
+    // Mark popup as seen
+    function markPopupAsSeen() {
+        localStorage.setItem('donationPopupSeen', 'true');
+    }
+    
+    // Show the popup
+    function showPopup() {
+        $('.donation-popup-overlay, .donation-popup').fadeIn();
+        
+        // Initialize Classy widget if not already initialized
+        if (window.Classy && !document.querySelector('#classy-popup-donation-widget iframe')) {
+            Classy.EmbeddedForm({
+                campaignId: '123456', // Replace with actual Classy campaign ID
+                target: '#classy-popup-donation-widget',
+                theme: 'light',
+                width: '100%',
+                showTitle: false,
+                donateText: 'Support Sunnah.com',
+                onLoad: function() {
+                    console.log('Popup Classy donation form loaded');
+                }
+            });
+        }
+        
+        markPopupAsSeen();
+    }
+    
+    // Close the popup
+    function closePopup() {
+        $('.donation-popup-overlay, .donation-popup').fadeOut();
+    }
+    
+    // Event handlers
+    $('.close-btn, .maybe-later-btn').click(closePopup);
+    
+    $('.donate-now-btn').click(function() {
+        window.location.href = '/donate';
+    });
+    
+    // Show popup if user hasn't seen it before
+    $(document).ready(function() {
+        if (!hasSeenPopup()) {
+            // Delay popup to allow page to load
+            setTimeout(showPopup, 2000);
+        }
+    });
+})();
+</script>
+
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
-
