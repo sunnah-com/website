@@ -1,6 +1,6 @@
 <?php
 function removeURLs($text) {
-    return preg_replace('/https?\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/', '', $text);
+    return preg_replace('/https?\:\/\/[a-zA-Z0-9\-\.]+(?:\:[0-9]+)?(?:\/\S*)?/', '', $text);
 }
 
 function separateArabicAndEnglish($text) {
@@ -41,12 +41,9 @@ $hadithText = separateArabicAndEnglish($hadithText);
 <!-- hadith preview -->
 <div class="hadith-preview">
 	<p>
-		<?php echo nl2br(htmlspecialchars($hadithText)); ?>
+		<?php echo nl2br(htmlspecialchars($hadithText . "https://sunnah.com" . $_POST['link'])); ?>
 	</p>
 </div>
-
-<!-- link display -->
-<input class=permalink_box type="text" value="https://sunnah.com<?php echo $_POST['link']; ?>" size=36 />
 
 <!-- Share buttons -->
 <div class=share_buttons>
