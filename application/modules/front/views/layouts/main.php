@@ -86,12 +86,14 @@
 <div id="site">
 	<div id="header">
 	    <!-- Donation Header -->
+	    <?php if (!isset(Yii::$app->request->pathInfo) || Yii::$app->request->pathInfo !== 'donate'): ?>
 	    <div id="donation-header">
 		<div class="donation-header-content">
 		    <span>Contribute to our mission</span>
 		    <a href="/donate" class="donate-now-btn">Donate Now</a>
 		</div>
 	    </div>
+	    <?php endif; ?>
     	<div id="toolbar">
        		<div id="toolbarRight">
 				<?php echo $this->render('/layouts/suite') ?>
