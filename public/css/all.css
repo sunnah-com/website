@@ -490,7 +490,7 @@ textarea {
     opacity: 0;
     height: 20px;
     width: 20px;
-    background: #bbdada;
+    background: var(--link-color);
     line-height: 21px;
     border-radius: 15px;
     text-align: center;
@@ -507,29 +507,17 @@ textarea {
 	left: 5px;
 }
 .carousel_nav:hover {
-    background-color: #96c0c0
+    filter: brightness(80%);
 }
-/* Aniamted BG */
+
 .hcarousel_container:before {
     content: '';
     position: absolute;
     top: 20px;
     left: -200px;
-    border-bottom: 470px solid #ffffff96;
-    border-left: 470px solid transparent;
-    border-right: 170px solid transparent;
-    animation: 60s spin linear infinite;
-    filter: blur(30px)
 }
 
-
-/* Override carousel gradient for dark mode */
-[data-theme="dark"] .hcarousel_container:before {
-    border-bottom-color: var(--secondry_block_bg);
-}
-
-/* Override carousel container background for dark mode */
-[data-theme="dark"] .hcarousel_container {
+.hcarousel_container {
     background-color: var(--secondry_block_bg);
 }
 
