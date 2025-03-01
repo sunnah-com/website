@@ -76,14 +76,6 @@
     transition: all 0.2s;
 }
 
-[data-theme="light"] .donation-banner .donate-btn:hover {
-    background-color: #5a8080;
-}
-
-[data-theme="dark"] .donation-banner .donate-btn:hover {
-    background-color: #7ad9d9;
-}
-
 #classy-popup-donation-widget {
     margin: 20px 0;
 }
@@ -109,7 +101,8 @@
     height: 28px;
 }
 
-[data-theme="light"] .donation-header-content span {
+
+.donation-header-content span {
     color: white;
     margin-right: 20px;
     font-size: 1em;
@@ -117,30 +110,8 @@
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .donation-header-content span {
-    color: #ffffff;
-    margin-right: 20px;
-    font-size: 1em;
-    font-weight: 500;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-}
 
-[data-theme="light"] .donation-header-content .donate-now-btn {
-    background-color: white;
-    color: #75a1a1;
-    padding: 3px 10px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: all 0.2s;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    line-height: 1.4;
-}
-
-[data-theme="dark"] .donation-header-content .donate-now-btn {
-    background-color: #56D0D0;
-    color: #1F2125;
+.donation-header-content .donate-now-btn {
     padding: 3px 10px;
     border-radius: 4px;
     text-decoration: none;
@@ -151,14 +122,18 @@
     line-height: 1.4;
 }
 
-[data-theme="light"] .donation-header-content .donate-now-btn:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+[data-theme="light"] .donation-header-content .donate-now-btn {
+    background-color: white;
+    color: #75a1a1;
 }
 
-[data-theme="dark"] .donation-header-content .donate-now-btn:hover {
-    background-color: #7ad9d9;
+[data-theme="dark"] .donation-header-content .donate-now-btn {
+    background-color: var(--highlight-color);
+    color: white;
+}
+
+.donation-header-content .donate-now-btn:hover {
+    filter: brightness(80%);
     transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
