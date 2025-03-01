@@ -31,8 +31,8 @@ Every contribution, no matter how small, helps us continue our work. May Allah r
       win.egProps = {
         campaigns: [
           {
-            campaignId: '668860',
-   customDomain: 'give.quran.foundation',
+            campaignId:   <?php echo Yii::$app->params['classyCampaignId']; ?>,
+            customDomain: 'give.quran.foundation',
             donation: {
               inline: {
                 urlParams: { },
@@ -65,4 +65,3 @@ Every contribution, no matter how small, helps us continue our work. May Allah r
       }
     })(window)
   </script>
-
