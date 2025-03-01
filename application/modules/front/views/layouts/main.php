@@ -141,10 +141,7 @@
     <span class="close-btn">&times;</span>
     <h2>Support Sunnah.com</h2>
     <p>Your generous donations help us continue our mission of making authentic hadith accessible to everyone around the world.</p>
-    
-    <div id="classy-popup-donation-widget">
-        <!-- Classy donation widget will be loaded here -->
-    </div>
+
     
     <div class="buttons">
         <button class="donate-now-btn">Donate Now</button>
@@ -152,8 +149,6 @@
     </div>
 </div>
 
-<!-- Classy Donation Widget Embed Code for Popup -->
-<script id="classy-popup-script" src="https://cdn.classy.org/classy-embed.js"></script>
 <script>
 // Donation popup functionality
 (function() {
@@ -170,22 +165,6 @@
     // Show the popup
     function showPopup() {
         $('.donation-popup-overlay, .donation-popup').fadeIn();
-        
-        // Initialize Classy widget if not already initialized
-        if (window.Classy && !document.querySelector('#classy-popup-donation-widget iframe')) {
-            Classy.EmbeddedForm({
-                campaignId: '123456', // Replace with actual Classy campaign ID
-                target: '#classy-popup-donation-widget',
-                theme: 'light',
-                width: '100%',
-                showTitle: false,
-                donateText: 'Support Sunnah.com',
-                onLoad: function() {
-                    console.log('Popup Classy donation form loaded');
-                }
-            });
-        }
-        
         markPopupAsSeen();
     }
     

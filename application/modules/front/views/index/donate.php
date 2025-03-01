@@ -27,28 +27,42 @@ Every contribution, no matter how small, helps us continue our work. May Allah r
 
 <!-- Classy Donation Widget Embed Code -->
 <script>
-// Load Classy donation widget
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://cdn.classy.org/classy-embed.js";
-    js.onload = function() {
-        Classy.EmbeddedForm({
-            campaignId: '123456', // Replace with actual Classy campaign ID
-            target: '#classy-donation-widget',
-            theme: 'light',
-            width: '100%',
-            showTitle: false,
-            donateText: 'Support Sunnah.com',
-            onLoad: function() {
-                console.log('Classy donation form loaded');
-            },
-            onSuccess: function(donation) {
-                console.log('Donation successful', donation);
+    (function (win) {
+      win.egProps = {
+        campaigns: [
+          {
+            campaignId: '668860',
+   customDomain: 'give.quran.foundation',
+            donation: {
+              inline: {
+                urlParams: { },
+                elementSelector: '#classy-donation-widget'
+              }
             }
-        });
-    };
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'classy-widget-script'));
-</script>
+          }
+        ]
+      }
+      win.document.body.appendChild(makeEGScript())
+
+      /** Create the embed script */
+      function makeEGScript() {
+        var egScript = win.document.createElement('script')
+        egScript.setAttribute('type', 'text/javascript')
+        egScript.setAttribute('async', 'true')
+        egScript.setAttribute('src', 'https://sdk.classy.org/embedded-giving.js')
+        return egScript
+      }
+
+      /* Read URL Params from your website. This could potentially
+        * be included in the embed snippet */
+      function readURLParams() {
+        const searchParams = new URLSearchParams(location.search)
+        const validUrlParams = ['c_src', 'c_src2']
+        return validUrlParams.reduce(function toURLParamsMap(urlParamsSoFar, validKey) {
+          const value = searchParams.get(validKey)
+          return value === null ? urlParamsSoFar : { ...urlParamsSoFar, [validKey]: value }
+        }, {})
+      }
+    })(window)
+  </script>
+
