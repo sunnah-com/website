@@ -25,8 +25,8 @@
 	
 		return $hadithText;
 	}		
-	
-	function separateArabicAndEnglish($text) {
+	// Formats the $hadithText for the preview, so lines are properly spaced
+	function formatHadith($text) {
 		$paragraphs = explode("\n", $text);
 		$result = [];
 		$lastWasArabic = false;
@@ -54,7 +54,7 @@
 	}
 
 	$hadithText = $_POST['hadithText'];
-	$hadithText = separateArabicAndEnglish($hadithText);
+	$hadithText = formatHadith($hadithText);
 ?>
 
 
