@@ -521,6 +521,18 @@ textarea {
     animation: 60s spin linear infinite;
     filter: blur(30px)
 }
+
+
+/* Override carousel gradient for dark mode */
+[data-theme="dark"] .hcarousel_container:before {
+    border-bottom-color: var(--secondry_block_bg);
+}
+
+/* Override carousel container background for dark mode */
+[data-theme="dark"] .hcarousel_container {
+    background-color: var(--secondry_block_bg);
+}
+
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .footer {
