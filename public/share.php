@@ -1,47 +1,69 @@
 <?php
-function removeURLs($text) {
-    return preg_replace('/https?\:\/\/[a-zA-Z0-9\-\.]+(?:\:[0-9]+)?(?:\/\S*)?/', '', $text);
-}
+	function truncateHadithText($hadithText, $url) {
+		// URL-encode both the hadithText and the URL
+		$encodedHadithText = rawurlencode($hadithText);
+		$encodedUrl = rawurlencode($url);
+		
+		// Calculate the lengths
+		$hadithTextLength = strlen($encodedHadithText);
+		$urlLength = strlen($encodedUrl);
+		$characterLimit = 4000;
+	
+		// Check if truncating is necessary
+		$totalLength = $hadithTextLength + $urlLength;
+	
+		if ($totalLength > $characterLimit) {
+			// If truncating is needed, shorten the hadithText and add "..." until within the limit
+			while ($totalLength > $characterLimit) {
+				$hadithText = substr($hadithText, 0, strlen($hadithText) - 1);
+				$encodedHadithText = rawurlencode($hadithText);
+				$hadithTextLength = strlen($encodedHadithText);
+				$totalLength = $hadithTextLength + $urlLength;
+			}
+			$hadithText .= '...';
+		}
+	
+		return $hadithText;
+	}		
+	
+	function separateArabicAndEnglish($text) {
+		$paragraphs = explode("\n", $text);
+		$result = [];
+		$lastWasArabic = false;
 
-function separateArabicAndEnglish($text) {
-    $paragraphs = explode("\n", $text);
-    $result = [];
-    $lastWasArabic = false;
+		foreach ($paragraphs as $paragraph) {
+			if (preg_match('/[\x{0600}-\x{06FF}]/u', $paragraph)) {
+				if (!$lastWasArabic && !empty($result)) {
+					$result[] = "\n";
+				}
+				$result[] = $paragraph;
+				$lastWasArabic = true;
+			} else {
+				if ($lastWasArabic) {
+					$result[] = "\n";
+				}
+				$result[] = $paragraph;
+				$lastWasArabic = false;
+			}
+		}
 
-    foreach ($paragraphs as $paragraph) {
-        if (preg_match('/[\x{0600}-\x{06FF}]/u', $paragraph)) {
-            if (!$lastWasArabic && !empty($result)) {
-                $result[] = "\n";
-            }
-            $result[] = $paragraph;
-            $lastWasArabic = true;
-        } else {
-            if ($lastWasArabic) {
-                $result[] = "\n";
-            }
-            $result[] = $paragraph;
-            $lastWasArabic = false;
-        }
-    }
+		$resultText = implode("\n", $result);
+		$resultText = preg_replace("/\n+/", "\n\n", $resultText);  // Clean up multiple newlines
+		
+		return $resultText;
+	}
 
-    $resultText = implode("\n", $result);
-    $resultText = preg_replace("/\n+/", "\n\n", $resultText);  // Clean up multiple newlines
-    
-    return $resultText;
-}
-
-$hadithText = $_POST['hadithText'];
-$hadithText = removeURLs($hadithText);
-$hadithText = separateArabicAndEnglish($hadithText);
-
+	$hadithText = $_POST['hadithText'];
+	$hadithText = separateArabicAndEnglish($hadithText);
 ?>
 
 
 <h1> SHARE THIS HADITH</h1>
+
 <!-- hadith preview -->
 <div class="hadith-preview">
 	<p>
-		<?php echo nl2br(htmlspecialchars($hadithText . "https://sunnah.com" . $_POST['link'])); ?>
+		<?php echo nl2br(htmlspecialchars($hadithText)); ?>
 	</p>
 </div>
 
@@ -57,7 +79,7 @@ $hadithText = separateArabicAndEnglish($hadithText);
 	</div>
 
 	<div class="share_button">
-		<a href="https://twitter.com/intent/tweet?url=https://sunnah.com<?php echo $_POST['link']; ?>&hashtags=SunnahCom,hadith"
+		<a href="https://twitter.com/intent/tweet?url=https://sunnah.com<?php echo $_POST['link']; ?>&text=<?php echo urlencode($_POST['hadithText']); ?>&hashtags=SunnahCom,hadith"
 			target="blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on Twitter"
@@ -67,7 +89,7 @@ $hadithText = separateArabicAndEnglish($hadithText);
 
     <!-- WhatsApp -->
 	<div class="share_button">
-		<a href="https://api.whatsapp.com/send" 
+		<a href="https://api.whatsapp.com/send?url=https://sunnah.com<?php echo $_POST['link']; ?>&text=<?php echo urlencode($_POST['hadithText']); ?>" 
 			target="_blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on WhatsApp"
@@ -78,7 +100,7 @@ $hadithText = separateArabicAndEnglish($hadithText);
 
 	<!-- Telegram -->
 	<div class="share_button">
-		<a href="https://t.me/share/url?url=https://sunnah.com<?php echo $_POST['link']; ?>" 
+		<a href="https://t.me/share/url?url=https://sunnah.com<?php echo $_POST['link']; ?>&text=<?php echo truncateHadithText($_POST['hadithText'], "https://t.me/share/url?url=https://sunnah.com" . $_POST['link']); ?>" 
 			target="_blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on Telegram"
@@ -88,43 +110,6 @@ $hadithText = separateArabicAndEnglish($hadithText);
 	</div>
 
 	<div class=clear></div>
-	<!-- share button script -->
-	<script defer>
-		$(document).ready(function(){
-			const iconClasses = [ 'twitter', 'whatsapp', 'telegram', 'fb' ];
-
-			$('.share_button').each(function(){
-				const a = $(this).find('a').first();
-				a.each(function(){
-					const href = $(this).attr('href');
-					const url = new URL(href);
-					const textParam = a.hasClass('icn-fb')? 'quote' : 'text';
-
-					let hadithText = <?php echo json_encode($_POST['hadithText']); ?>;
-
-					// if telegram button, handle 4000 character URL limit
-					if(a.hasClass('icn-telegram')){
-						let hadithTextLength = encodeURIComponent(hadithText).length;
-						const urlLength = url.toString().length;
-						const characterLimit = 4000;
-
-						const needsTruncating = hadithTextLength + urlLength > characterLimit;
-						// if truncating is needed, continue shortening hadithText + '...' until it is within the limit
-						if(needsTruncating){
-							while(hadithTextLength + urlLength > characterLimit){
-								hadithText = hadithText.substring(0, hadithText.length-1);
-								hadithTextLength = encodeURIComponent(hadithText+'...').length;
-							}
-							hadithText += '...';
-						}
-					}
-					url.searchParams.set(textParam, hadithText);
-
-					$(this).attr('href', url.toString());
-				});
-			});
-		});
-	</script>
 
 	<!-- styling -->
 	 <style>

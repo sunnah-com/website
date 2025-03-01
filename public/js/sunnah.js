@@ -127,15 +127,6 @@
 			$('#sharefuzz').css('display', 'none');
 			$('.share_mb').css('display', 'none');
 		}, 200);
-		// $('#sharefuzz').animate(
-		// 		{'opacity':'0'}, 
-		// 		200, 
-		// 		'linear', 
-		// 		function() {
-		// 			$('#sharefuzz, .share_mb').css('display', 'none');
-		// });
-		// $('#sharefuzz').css('display', 'none');
-		// $('.share_mb').css('display', 'none');
 	}
 	
 	var sharescriptsInserted = false;
