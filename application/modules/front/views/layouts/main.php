@@ -82,9 +82,16 @@
 <body>
 <?php $this->beginBody() ?>
 <div id="fb-root"></div>
-	
+
 <div id="site">
 	<div id="header">
+	    <!-- Donation Header -->
+	    <div id="donation-header">
+		<div class="donation-header-content">
+		    <span>Contribute to our mission</span>
+		    <a href="/donate" class="donate-now-btn">Donate Now</a>
+		</div>
+	    </div>
     	<div id="toolbar">
        		<div id="toolbarRight">
 				<?php echo $this->render('/layouts/suite') ?>
@@ -135,60 +142,6 @@
 
 </div><!-- site div close -->
 
-<!-- Donation Popup -->
-<div class="donation-popup-overlay"></div>
-<div class="donation-popup">
-    <span class="close-btn">&times;</span>
-    <h2>Support Sunnah.com</h2>
-    <p>Your generous donations help us continue our mission of making authentic hadith accessible to everyone around the world.</p>
-
-    
-    <div class="buttons">
-        <button class="donate-now-btn">Donate Now</button>
-        <button class="maybe-later-btn">Maybe Later</button>
-    </div>
-</div>
-
-<script>
-// Donation popup functionality
-(function() {
-    // Check if user has seen the popup before
-    function hasSeenPopup() {
-        return localStorage.getItem('donationPopupSeen') === 'true';
-    }
-    
-    // Mark popup as seen
-    function markPopupAsSeen() {
-        localStorage.setItem('donationPopupSeen', 'true');
-    }
-    
-    // Show the popup
-    function showPopup() {
-        $('.donation-popup-overlay, .donation-popup').fadeIn();
-        markPopupAsSeen();
-    }
-    
-    // Close the popup
-    function closePopup() {
-        $('.donation-popup-overlay, .donation-popup').fadeOut();
-    }
-    
-    // Event handlers
-    $('.close-btn, .maybe-later-btn').click(closePopup);
-    
-    $('.donate-now-btn').click(function() {
-        window.location.href = '/donate';
-    });
-    
-    // Show popup if user hasn't seen it before
-    $(document).ready(function() {
-        if (!hasSeenPopup()) {
-            // Delay popup to allow page to load
-            setTimeout(showPopup, 2000);
-        }
-    });
-})();
-</script>
 
 <?php $this->endBody() ?>
 </body>

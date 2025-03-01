@@ -84,170 +84,81 @@
     background-color: #7ad9d9;
 }
 
-/* Donation Popup Styles */
-.donation-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    display: none;
-}
-
-/* Light theme popup */
-[data-theme="light"] .donation-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 25px;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1001;
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    display: none;
-}
-
-/* Dark theme popup */
-[data-theme="dark"] .donation-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #272F33;
-    padding: 25px;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    display: none;
-}
-
-[data-theme="light"] .donation-popup h2 {
-    color: #444;
-    margin-top: 0;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-[data-theme="dark"] .donation-popup h2 {
-    color: #ffffff;
-    margin-top: 0;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-[data-theme="light"] .donation-popup p {
-    color: #555;
-    margin-bottom: 20px;
-}
-
-[data-theme="dark"] .donation-popup p {
-    color: #B3B6BC;
-    margin-bottom: 20px;
-}
-
-[data-theme="light"] .donation-popup .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    color: #999;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-[data-theme="dark"] .donation-popup .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    color: #B3B6BC;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-[data-theme="light"] .donation-popup .close-btn:hover {
-    color: #555;
-}
-
-[data-theme="dark"] .donation-popup .close-btn:hover {
-    color: #ffffff;
-}
-
-.donation-popup .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-[data-theme="light"] .donation-popup .donate-now-btn {
-    background-color: #75a1a1;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-[data-theme="dark"] .donation-popup .donate-now-btn {
-    background-color: #56D0D0;
-    color: #1F2125;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-[data-theme="light"] .donation-popup .donate-now-btn:hover {
-    background-color: #5a8080;
-}
-
-[data-theme="dark"] .donation-popup .donate-now-btn:hover {
-    background-color: #7ad9d9;
-}
-
-[data-theme="light"] .donation-popup .maybe-later-btn {
-    background-color: #f1f1f1;
-    color: #555;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-[data-theme="dark"] .donation-popup .maybe-later-btn {
-    background-color: #343A40;
-    color: #B3B6BC;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-[data-theme="light"] .donation-popup .maybe-later-btn:hover {
-    background-color: #e5e5e5;
-}
-
-[data-theme="dark"] .donation-popup .maybe-later-btn:hover {
-    background-color: #3F474E;
-}
-
 #classy-popup-donation-widget {
     margin: 20px 0;
+}
+
+/* Donation Header Styles */
+#donation-header {
+    width: 100%;
+    padding: 6px 0;
+    text-align: center;
+    position: relative;
+    z-index: 100;
+    background: var(--crumbs_bg);
+}
+
+
+.donation-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    height: 28px;
+}
+
+[data-theme="light"] .donation-header-content span {
+    color: white;
+    margin-right: 20px;
+    font-size: 1em;
+    font-weight: 500;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .donation-header-content span {
+    color: #ffffff;
+    margin-right: 20px;
+    font-size: 1em;
+    font-weight: 500;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .donation-header-content .donate-now-btn {
+    background-color: white;
+    color: #75a1a1;
+    padding: 3px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    line-height: 1.4;
+}
+
+[data-theme="dark"] .donation-header-content .donate-now-btn {
+    background-color: #56D0D0;
+    color: #1F2125;
+    padding: 3px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+}
+
+[data-theme="light"] .donation-header-content .donate-now-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .donation-header-content .donate-now-btn:hover {
+    background-color: #7ad9d9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
