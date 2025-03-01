@@ -120,32 +120,41 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}
   
-  function close_box() {
-	$('#sharefuzz, .share_mb').animate(
-			{'opacity':'0'}, 
-			200, 
-			'linear', 
-			function() {
-				$('#sharefuzz, .share_mb').css('display', 'none');
-			});
+  	function close_box() {
+		$('#sharefuzz').removeClass('open')
+		$('.share_mb').removeClass('open');
+		setTimeout(() => {
+			$('#sharefuzz').css('display', 'none');
+			$('.share_mb').css('display', 'none');
+		}, 200);
 	}
 	
 	var sharescriptsInserted = false;
 	var justloaded = false;
 
-	function share(permalink) {		
-		$.get("/share.php", {"link": permalink}, function(data) {
+	function share(button, permalink) {
+		const $hadithContainer = $(button).closest('.actualHadithContainer');
+		
+		if ($hadithContainer.length === 0) {
+			console.error("Error: .actualHadithContainer not found.");
+			return;
+		}
+		
+		const hadithText = getCopyText($hadithContainer);		
+	
+		$.post("/share.php", {link: permalink, hadithText: hadithText }, function(data) {
 			if (!$(".share_mb").length) $("body").append('<div class="share_mb"></div>');
 			$(".share_mb").html(data); 
-			
-			$(".share_mb").css("left", ($(window).width() - $(".share_mb").width())/2+"px");
-			$(".share_mb").css("top", ($(window).height() - $(".share_mb").height())/2.8+"px");
-		
-			$('#sharefuzz, .share_mb').animate({'opacity':'.25'}, 200, 'linear');
-			$('.share_mb').animate({'opacity':'1.00'}, 200, 'linear');
-			$('#sharefuzz, .share_mb').css('display', 'block');
+			$('#sharefuzz').css('display', 'block');
+			$('.share_mb').css('display', 'flex');
 
-			$(".permalink_box").select();			
+			// frame after display change, do fade animation
+			setTimeout(() => {
+				$('#sharefuzz').addClass('open');
+				$('.share_mb').addClass('open');
+			}, 0);
+
+			$(".permalink_box").select();            
 		});
 	}	
 
