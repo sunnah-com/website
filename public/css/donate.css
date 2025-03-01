@@ -22,39 +22,38 @@
     margin-right: auto;
 }
 
-[data-theme="light"] .donation-banner h3 {
-    color: #333;
+.donation-banner h3 {
     margin-top: 0;
     margin-bottom: 8px;
     font-size: 1.3em;
     font-weight: bold;
+}
+
+[data-theme="light"] .donation-banner h3 {
+    color: #333;
 }
 
 [data-theme="dark"] .donation-banner h3 {
     color: #ffffff;
-    margin-top: 0;
-    margin-bottom: 8px;
-    font-size: 1.3em;
-    font-weight: bold;
 }
 
-[data-theme="light"] .donation-banner p {
+.donation-banner p {
     color: #444;
     margin-bottom: 12px;
     font-size: 0.95em;
     line-height: 1.4;
 }
 
-[data-theme="dark"] .donation-banner p {
-    color: #B3B6BC;
-    margin-bottom: 12px;
-    font-size: 0.95em;
-    line-height: 1.4;
+[data-theme="light"] .donation-banner p {
+    color: #444;
 }
 
-[data-theme="light"] .donation-banner .donate-btn {
+[data-theme="dark"] .donation-banner p {
+    color: #B3B6BC;
+}
+
+.donation-banner .donate-btn {
     display: inline-block;
-    background-color: #75a1a1;
     color: white;
     padding: 6px 16px;
     border-radius: 4px;
@@ -64,16 +63,14 @@
     transition: all 0.2s;
 }
 
+[data-theme="light"] .donation-banner .donate-btn {
+    background-color: #75a1a1;
+    color: white;
+}
+
 [data-theme="dark"] .donation-banner .donate-btn {
-    display: inline-block;
     background-color: #56D0D0;
     color: #1F2125;
-    padding: 6px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.95em;
-    transition: all 0.2s;
 }
 
 #classy-popup-donation-widget {
