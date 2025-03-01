@@ -6,8 +6,8 @@
 	<div class="donation-banner-container">
 		<div class="donation-banner">
 			<h3>Support Sunnah.com</h3>
-			<p>Help us continue making authentic hadith accessible to everyone. Your donation makes a difference.</p>
-			<a href="/donate" class="donate-btn">Donate Now</a>
+			<p>Help us continue our work. Your donation makes a difference.</p>
+			<a href="/donate" class="donate-btn">Donate</a>
 		</div>
 	</div>
 
