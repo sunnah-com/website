@@ -133,6 +133,7 @@ $config = [
                 'news' => 'front/index/news',
                 'changelog' => 'front/index/change-log',
                 'support' => 'front/index/support',
+                'donate' => 'front/index/donate',
                 'developers' => 'front/index/developers',
                 'contact' => 'front/index/contact',
                 'searchtips' => 'front/index/search-tips',
