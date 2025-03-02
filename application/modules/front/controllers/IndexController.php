@@ -122,6 +122,12 @@ class IndexController extends SController
         $this->view->params['_pageType'] = "about";
 		return $this->render('developers');
     }
+    
+    public function actionDonate() {
+        $this->pathCrumbs('Donate', "/donate");
+        $this->view->params['_pageType'] = "about";
+		return $this->render('donate');
+    }
 
     public function actionContact() {
         $this->pathCrumbs('Contact', "/contact");

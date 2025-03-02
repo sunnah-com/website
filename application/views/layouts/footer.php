@@ -3,6 +3,7 @@
 	<a href="/about">About</a> |
 	<a href="/news">News</a> |
 	<a href="/support">Support</a> |
+	<a href="/donate">Donate</a> |
 	<a href="/developers">Developers</a> |
     <a href="/contact">Contact</a>
 	<div class="sm_links">
@@ -26,4 +27,3 @@ var sc_security="63a57073";
 <img class="statcounter" src="https://c.statcounter.com/7148282/0/63a57073/1/" alt="Web Analytics"></a>
 </div>
 </noscript>
-

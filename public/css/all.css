@@ -1445,8 +1445,8 @@ input.searchquery{
 }
 
 .about {
-    width: 60%;
     padding-left: 10%;
+	padding-right: 10%;
     text-align: justify;
     padding-top: 10px;
     font-size: 16px;
