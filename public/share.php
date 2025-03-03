@@ -3,15 +3,15 @@
 		// URL-encode both the hadithText and the URL
 		$encodedHadithText = rawurlencode($hadithText);
 		$encodedUrl = rawurlencode($url);
-		
+
 		// Calculate the lengths
 		$hadithTextLength = strlen($encodedHadithText);
 		$urlLength = strlen($encodedUrl);
 		$characterLimit = 4000;
-	
+
 		// Check if truncating is necessary
 		$totalLength = $hadithTextLength + $urlLength;
-	
+
 		if ($totalLength > $characterLimit) {
 			// If truncating is needed, shorten the hadithText and add "..." until within the limit
 			while ($totalLength > $characterLimit) {
@@ -22,53 +22,25 @@
 			}
 			$hadithText .= '...';
 		}
-	
+
 		return $hadithText;
-	}		
-	// Formats the $hadithText for the preview, so lines are properly spaced
-	function formatHadith($text) {
-		$paragraphs = explode("\n", $text);
-		$result = [];
-		$lastWasArabic = false;
-
-		foreach ($paragraphs as $paragraph) {
-			if (preg_match('/[\x{0600}-\x{06FF}]/u', $paragraph)) {
-				if (!$lastWasArabic && !empty($result)) {
-					$result[] = "\n";
-				}
-				$result[] = $paragraph;
-				$lastWasArabic = true;
-			} else {
-				if ($lastWasArabic) {
-					$result[] = "\n";
-				}
-				$result[] = $paragraph;
-				$lastWasArabic = false;
-			}
-		}
-
-		$resultText = implode("\n", $result);
-		$resultText = preg_replace("/\n+/", "\n\n", $resultText);  // Clean up multiple newlines
-		
-		return $resultText;
 	}
 
 	$hadithText = $_POST['hadithText'];
-	$hadithText = formatHadith($hadithText);
+	$hadithPreviewText = nl2br(htmlspecialchars($hadithText));
 ?>
 
-
-<h1> SHARE THIS HADITH</h1>
+<h1> SHARE THIS HADITH </h1>
 
 <!-- hadith preview -->
 <div class="hadith-preview">
 	<p>
-		<?php echo nl2br(htmlspecialchars($hadithText)); ?>
+		<?php echo $hadithPreviewText; ?>
 	</p>
 </div>
 
 <!-- Share buttons -->
-<div class=share_buttons>
+<div class="share_buttons">
 	<div class="share_button">
 		<a href="https://www.facebook.com/sharer.php?u=https://sunnah.com<?php echo $_POST['link']; ?>"
 			target="blank"
@@ -110,65 +82,64 @@
 	</div>
 
 	<div class=clear></div>
-
-	<!-- styling -->
-	 <style>
-		.share_mb {
-			display: none;
-			flex-direction: column;
-			height: fit-content;
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			max-width: 90vmin;
-			max-height: 75vh;
-			overflow: auto;
-			gap: 0.25rem;
-			opacity: 0;
-			transition: opacity 0.25s ease;
-			padding: 1rem;
-		}
-
-		.share_mb.open {
-			opacity: 1;
-		}
-
-		.share_mb h1 {
-			text-align: center;
-			margin: 0;
-			padding: 0;
-			font-size: 1.5rem;
-		}
-
-		#sharefuzz {
-			opacity: 0;
-			display: none;
-			transition: opacity 0.25s ease;
-		}
-
-		#sharefuzz.open {
-			opacity: 0.3; 
-		}
-
-
-		.hadith-preview {
-			box-sizing: border-box;
-			max-height: 75vh;
-			overflow: auto;
-			background: rgba(125, 125, 125, 0.1);
-			border-radius: inherit;
-			padding:  0 0.5rem;
-		}
-
-		.share_mb .share_buttons {
-			display: flex;
-			padding-top: 0.5rem;
-		}
-
-		.share_mb .share_button {
-			padding-top: 0;
-		}
-	 </style>
 </div>
 
+<!-- styling -->
+<style>
+	.share_mb {
+		display: none;
+		flex-direction: column;
+		height: fit-content;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		max-width: 90vmin;
+		max-height: 75vh;
+		overflow: auto;
+		gap: 0.25rem;
+		opacity: 0;
+		transition: opacity 0.25s ease;
+		padding: 1rem;
+	}
+
+	.share_mb.open {
+		opacity: 1;
+	}
+
+	.share_mb h1 {
+		text-align: center;
+		margin: 0;
+		padding: 0;
+		font-size: 1.5rem;
+	}
+
+	#sharefuzz {
+		opacity: 0;
+		display: none;
+		transition: opacity 0.25s ease;
+	}
+
+	#sharefuzz.open {
+		opacity: 0.3; 
+	}
+
+
+	.hadith-preview {
+		box-sizing: border-box;
+		max-height: 75vh;
+		overflow: auto;
+		background: rgba(125, 125, 125, 0.1);
+		border-radius: inherit;
+		padding:  0 0.5rem;
+	}
+
+	.share_mb .share_buttons {
+		display: flex;
+		padding-top: 0.5rem;
+	}
+
+	.share_mb .share_button {
+		padding-top: 0;
+	}
+</style>
