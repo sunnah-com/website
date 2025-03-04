@@ -2,15 +2,21 @@
 
 <div class=section>Donate to Support Sunnah.com</div><br>
 <div class=content>
-Your generous donations help us continue our mission of making authentic hadith accessible to everyone around the world. By supporting Sunnah.com, you contribute to:
+Sunnah.com has been an entirely volunteer-supported effort from its inception in 2011. Through the effort of dozens of volunteers all over the world we have put up over 50,000 ahadith and their translations, manually checked them, numbered them according to the most rigorous systems, and added multiple languages. 
+<p>
+In order to continue adding more ahadith, languages, and features at a faster pace, we are moving to a hybrid model with volunteers and paid employees. We are excited to partner with the <a href="https://quran.foundation">Qur'an Foundation</a> to help with this and are launching a fundraising campaign to support it. Your donations help us continue our mission of making authentic hadith accessible to everyone around the world. By supporting Sunnah.com, you contribute to:
 
 <ul>
-<li><b>Expanding our collections</b>: Adding more hadith collections and translations</li>
-<li><b>Improving our platform</b>: Enhancing search capabilities and user experience</li>
-<li><b>Ensuring sustainability</b>: Maintaining servers and infrastructure</li>
+<li><b>Adding data</b>: Adding more hadith books, languages, and hadith-related information such as explanations and narrator biographies.</li>
+<li><b>Adding features</b>: Adding learning journeys, bookmarks, and more platform features for a richer user experience.</li>
+<li><b>Operations</b>: Keeping our servers running and a design refresh.</li>
+<li><b>Commissioning translations</b>: Some of our translations are archaic and we are exploring projects to commission modern translations from qualified scholars.</li>
 </ul>
 
-<div id="classy-donation-widget" style="margin: 30px 0;">
+We highly encourage <b>recurring donations</b> if you are able, as that allows us to plan further out. Please contact us separately if you wish to donate a larger amount directly or through a donor-advised fund.
+<p>
+
+<div id="classy-donation-widget" style="margin: auto;">
     <!-- Classy donation widget will be loaded here -->
 </div>
 
@@ -18,9 +24,6 @@ Your generous donations help us continue our mission of making authentic hadith 
 Every contribution, no matter how small, helps us continue our work. May Allah reward you for your generosity.
 </p>
 
-<p>
-<i>"The likeness of those who spend their wealth in the way of Allah is as the likeness of a grain that grows seven ears, in every ear a hundred grains. Allah gives manifold increase to whom He wills. And Allah is All-Sufficient, All-Knowing." (Quran 2:261)</i>
-</p>
 </div>
 
 </div>
