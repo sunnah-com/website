@@ -26,7 +26,7 @@ if (strcmp($this->params['_pageType'], "home")) {
                 <i class="fa-solid fa-sliders"></i>
             </span>
         </button>
-        <button type="button" id="filterBtn" class="custom-btn searchtipslink">
+        <button type="button" id="tipsBtn" class="custom-btn searchtipslink">
             <span class="custom-btn-content tips-icn">
                 <i class="fa-solid fa-lightbulb"></i>
             </span>
@@ -40,12 +40,24 @@ if (strcmp($this->params['_pageType'], "home")) {
             <h2 class="header">Select Collections</h2>
 
             <div id="collectionChips">
-                <div class="chip" data-value="bukhari">Sahih Bukhari</div>
+                <div class="chip" data-value="bukhari">Sahih al-Bukhari</div>
                 <div class="chip" data-value="muslim">Sahih Muslim</div>
-                <div class="chip" data-value="abudawud">Sunan Abi Dawud</div>
-                <div class="chip" data-value="tirmidhi">Jami' at-Tirmidhi</div>
                 <div class="chip" data-value="nasai">Sunan an-Nasa'i</div>
+                <div class="chip" data-value="abudawud">Sunan Abi Dawud</div>
+                <div class="chip" data-value="tirmidhi">Jami` at-Tirmidhi</div>
                 <div class="chip" data-value="ibnmajah">Sunan Ibn Majah</div>
+                <div class="chip" data-value="malik">Muwatta Malik</div>
+                <div class="chip" data-value="nawawi40">An-Nawawi's 40 Hadith</div>
+                <div class="chip" data-value="riyadussalihin">Riyad as-Salihin</div>
+                <div class="chip" data-value="adab">Al-Adab Al-Mufrad</div>
+                <div class="chip" data-value="qudsi40">40 Hadith Qudsi</div>
+                <div class="chip" data-value="shamail">Ash-Shama'il Al-Muhammadiyah</div>
+                <div class="chip" data-value="bulugh">Bulugh al-Maram</div>
+                <div class="chip" data-value="hisn">Hisn al-Muslim</div>
+                <div class="chip" data-value="ahmad">Musnad Ahmad</div>
+                <div class="chip" data-value="mishkat">Mishkat al-Masabih</div>
+                <div class="chip" data-value="forty">Collections of Forty</div>
+                <div class="chip" data-value="darimi">Sunan ad-Darimi</div>
             </div>
 
             <button id="applyFilterBtn" class="apply-btn">Apply</button>
@@ -276,6 +288,7 @@ if (strcmp($this->params['_pageType'], "home")) {
     .apply-btn:hover {
         background-color: #1c625d;
     }
+
     /* Modal */
     .modal {
         display: none;
@@ -340,8 +353,8 @@ if (strcmp($this->params['_pageType'], "home")) {
     }
 
     .chip:hover {
-        background-color: va        color: white;
-        r(--chip-hover-bg);
+        background-color: var(--chip-hover-bg);
+        color: var(--primary-text-color);
     }
 
     .chip.selected {
