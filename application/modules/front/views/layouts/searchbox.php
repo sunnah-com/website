@@ -11,6 +11,11 @@ if (strcmp($this->params['_pageType'], "home")) {
         $stextval = "";
     }
 }
+
+// Get collections directly from a new Util instance
+use app\modules\front\models\Util;
+$util = new Util();
+$collections = $util->getCollectionsInfo('none', true);
 ?>
 
 <div id="search">
@@ -40,24 +45,15 @@ if (strcmp($this->params['_pageType'], "home")) {
             <h2 class="header">Select Collections</h2>
 
             <div id="collectionChips">
-                <div class="chip" data-value="bukhari">Sahih al-Bukhari</div>
-                <div class="chip" data-value="muslim">Sahih Muslim</div>
-                <div class="chip" data-value="nasai">Sunan an-Nasa'i</div>
-                <div class="chip" data-value="abudawud">Sunan Abi Dawud</div>
-                <div class="chip" data-value="tirmidhi">Jami` at-Tirmidhi</div>
-                <div class="chip" data-value="ibnmajah">Sunan Ibn Majah</div>
-                <div class="chip" data-value="malik">Muwatta Malik</div>
-                <div class="chip" data-value="nawawi40">An-Nawawi's 40 Hadith</div>
-                <div class="chip" data-value="riyadussalihin">Riyad as-Salihin</div>
-                <div class="chip" data-value="adab">Al-Adab Al-Mufrad</div>
-                <div class="chip" data-value="qudsi40">40 Hadith Qudsi</div>
-                <div class="chip" data-value="shamail">Ash-Shama'il Al-Muhammadiyah</div>
-                <div class="chip" data-value="bulugh">Bulugh al-Maram</div>
-                <div class="chip" data-value="hisn">Hisn al-Muslim</div>
-                <div class="chip" data-value="ahmad">Musnad Ahmad</div>
-                <div class="chip" data-value="mishkat">Mishkat al-Masabih</div>
-                <div class="chip" data-value="forty">Collections of Forty</div>
-                <div class="chip" data-value="darimi">Sunan ad-Darimi</div>
+                <?php 
+                if (isset($collections) && is_array($collections)) {
+                    foreach ($collections as $collection) {
+                        if (isset($collection['name']) && isset($collection['englishTitle'])) {
+                            echo '<div class="chip" data-value="' . $collection['name'] . '">' . $collection['englishTitle'] . '</div>';
+                        }
+                    }
+                }
+                ?>
             </div>
 
             <button id="applyFilterBtn" class="apply-btn">Apply</button>
