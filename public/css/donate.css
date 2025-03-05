@@ -70,6 +70,23 @@
     margin: 20px 0;
 }
 
+#classy-donation-widget {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Target embedded content within the donation widget */
+#classy-donation-widget iframe,
+#classy-donation-widget > div {
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
+}
+
 /* Donation Header Styles */
 #donation-header {
     width: 100%;

@@ -10,7 +10,7 @@ Your generous donations help us continue our mission of making authentic hadith 
 <li><b>Ensuring sustainability</b>: Maintaining servers and infrastructure</li>
 </ul>
 
-<div id="classy-donation-widget" style="margin: 30px 0;">
+<div id="classy-donation-widget">
     <!-- Classy donation widget will be loaded here -->
 </div>
 
