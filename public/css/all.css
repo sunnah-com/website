@@ -470,7 +470,7 @@ textarea {
 	font-size: inherit;
 }
 .hcarousel_container {
-    background-color: rgba(250, 248, 244, 0.39);
+    background-color: var(--secondry_block_bg);;
     border-radius: 5px;
     height: 90%;
     margin-top: 5px;
@@ -490,7 +490,7 @@ textarea {
     opacity: 0;
     height: 20px;
     width: 20px;
-    background: #bbdada;
+    background: var(--link-color);
     line-height: 21px;
     border-radius: 15px;
     text-align: center;
@@ -507,20 +507,16 @@ textarea {
 	left: 5px;
 }
 .carousel_nav:hover {
-    background-color: #96c0c0
+    filter: brightness(80%);
 }
-/* Aniamted BG */
+
 .hcarousel_container:before {
     content: '';
     position: absolute;
     top: 20px;
     left: -200px;
-    border-bottom: 470px solid #ffffff96;
-    border-left: 470px solid transparent;
-    border-right: 170px solid transparent;
-    animation: 60s spin linear infinite;
-    filter: blur(30px)
 }
+
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .footer {
