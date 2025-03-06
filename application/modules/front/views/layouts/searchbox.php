@@ -45,19 +45,18 @@ $collections = $util->getCollectionsInfo('none', true);
             <h2 class="header">Select Collections</h2>
 
             <div id="collectionChips">
-                <?php 
+                <?php
                 if (isset($collections) && is_array($collections)) {
                     $totalCollections = count($collections);
-                    $showLimit = 6; // Initial limit to show
-                    
+                    $showLimit = 6;
+
                     foreach ($collections as $index => $collection) {
                         if (isset($collection['name']) && isset($collection['englishTitle'])) {
                             $toggleClass = ($index >= $showLimit) ? 'toggleable-chip hidden' : '';
                             echo '<div class="chip ' . $toggleClass . '" data-value="' . $collection['name'] . '">' . $collection['englishTitle'] . '</div>';
                         }
                     }
-                    
-                    // Add show more/less button if collections > 6
+
                     if ($totalCollections > $showLimit) {
                         echo '<div id="showMoreLessBtn" class="show-more-btn">Show More Collections</div>';
                     }
@@ -148,7 +147,7 @@ $collections = $util->getCollectionsInfo('none', true);
             });
         });
 
-        function submit(){
+        function submit() {
             const queryInput = document.querySelector(".searchquery").value;
             let actionUrl = "/search/?q=" + encodeURIComponent(queryInput);
 
@@ -171,19 +170,12 @@ $collections = $util->getCollectionsInfo('none', true);
             event.preventDefault();
         });
 
-        // Show More/Less functionality with jQuery
         const showMoreLessBtn = document.getElementById("showMoreLessBtn");
         if (showMoreLessBtn) {
-            showMoreLessBtn.addEventListener("click", function() {
-                // Use jQuery to toggle the visibility
+            showMoreLessBtn.addEventListener("click", function () {
                 $(".toggleable-chip").toggleClass("hidden")
-                
-                // Update button text
-                if (this.textContent === "Show More Collections") {
-                    this.textContent = "Show Less";
-                } else {
-                    this.textContent = "Show More Collections";
-                }
+                const isShowingMore = this.textContent === "Show More Collections";
+                this.textContent = isShowingMore ? "Show Less" : "Show More Collections";
             });
         }
     });
@@ -210,8 +202,8 @@ $collections = $util->getCollectionsInfo('none', true);
         --search-icon-color: #ffffff;
     }
 
-    [data-theme="light"] .header{
-        color:  #3d9393;
+    [data-theme="light"] .header {
+        color: #3d9393;
     }
 
     .clear {
@@ -276,7 +268,7 @@ $collections = $util->getCollectionsInfo('none', true);
     .custom-btn {
         padding: 6px 12px;
         cursor: pointer;
-        background-color: rgba(0,0,0,0);
+        background-color: rgba(0, 0, 0, 0);
         color: white;
         border: none;
         border-radius: 10px;
@@ -284,8 +276,10 @@ $collections = $util->getCollectionsInfo('none', true);
         white-space: nowrap;
         flex-shrink: 0;
     }
+
     .custom-btn:hover {
-        background-color: var(--button-highlight-color);;
+        background-color: var(--button-highlight-color);
+        ;
     }
 
     .custom-btn-content {
@@ -306,6 +300,7 @@ $collections = $util->getCollectionsInfo('none', true);
         flex-shrink: 0;
         align-self: flex-end;
     }
+
     .apply-btn:hover {
         background-color: #1c625d;
     }
@@ -383,33 +378,33 @@ $collections = $util->getCollectionsInfo('none', true);
         color: #fff;
     }
 
-/* Show More/Less Button */
-.show-more-btn {
-    display: block;
-    padding: 4px 12px;
-    margin: 10px auto;
-    background-color: transparent;
-    color: var(--chip-selected-bg);
-    border: 1px solid var(--chip-selected-bg);
-    border-radius: 10px;
-    cursor: pointer;
-    user-select: none;
-    font-size: 13px;
-    transition: all 0.2s ease;
-    text-align: center;
-    width: fit-content;
-}
+    /* Show More/Less Button */
+    .show-more-btn {
+        display: block;
+        padding: 4px 12px;
+        margin: 10px auto;
+        background-color: transparent;
+        color: var(--chip-selected-bg);
+        border: 1px solid var(--chip-selected-bg);
+        border-radius: 10px;
+        cursor: pointer;
+        user-select: none;
+        font-size: 13px;
+        transition: all 0.2s ease;
+        text-align: center;
+        width: fit-content;
+    }
 
-.show-more-btn:hover {
-    background-color: rgba(59, 160, 143, 0.1);
-}
+    .show-more-btn:hover {
+        background-color: rgba(59, 160, 143, 0.1);
+    }
 
     .toggleable-chip {
         display: inline-block;
     }
 
     .hidden {
-        display : none
+        display: none
     }
 
     /* Responsive Design */
