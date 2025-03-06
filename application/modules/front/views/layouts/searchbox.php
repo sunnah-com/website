@@ -47,10 +47,19 @@ $collections = $util->getCollectionsInfo('none', true);
             <div id="collectionChips">
                 <?php 
                 if (isset($collections) && is_array($collections)) {
-                    foreach ($collections as $collection) {
+                    $totalCollections = count($collections);
+                    $showLimit = 6; // Initial limit to show
+                    
+                    foreach ($collections as $index => $collection) {
                         if (isset($collection['name']) && isset($collection['englishTitle'])) {
-                            echo '<div class="chip" data-value="' . $collection['name'] . '">' . $collection['englishTitle'] . '</div>';
+                            $toggleClass = ($index >= $showLimit) ? 'toggleable-chip hidden' : '';
+                            echo '<div class="chip ' . $toggleClass . '" data-value="' . $collection['name'] . '">' . $collection['englishTitle'] . '</div>';
                         }
+                    }
+                    
+                    // Add show more/less button if collections > 6
+                    if ($totalCollections > $showLimit) {
+                        echo '<div id="showMoreLessBtn" class="show-more-btn">Show More Collections</div>';
                     }
                 }
                 ?>
@@ -161,6 +170,22 @@ $collections = $util->getCollectionsInfo('none', true);
             submit()
             event.preventDefault();
         });
+
+        // Show More/Less functionality with jQuery
+        const showMoreLessBtn = document.getElementById("showMoreLessBtn");
+        if (showMoreLessBtn) {
+            showMoreLessBtn.addEventListener("click", function() {
+                // Use jQuery to toggle the visibility
+                $(".toggleable-chip").toggleClass("hidden")
+                
+                // Update button text
+                if (this.textContent === "Show More Collections") {
+                    this.textContent = "Show Less";
+                } else {
+                    this.textContent = "Show More Collections";
+                }
+            });
+        }
     });
 </script>
 
@@ -356,6 +381,35 @@ $collections = $util->getCollectionsInfo('none', true);
     .chip.selected {
         background-color: var(--chip-selected-bg);
         color: #fff;
+    }
+
+/* Show More/Less Button */
+.show-more-btn {
+    display: block;
+    padding: 4px 12px;
+    margin: 10px auto;
+    background-color: transparent;
+    color: var(--chip-selected-bg);
+    border: 1px solid var(--chip-selected-bg);
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    text-align: center;
+    width: fit-content;
+}
+
+.show-more-btn:hover {
+    background-color: rgba(59, 160, 143, 0.1);
+}
+
+    .toggleable-chip {
+        display: inline-block;
+    }
+
+    .hidden {
+        display : none
     }
 
     /* Responsive Design */
