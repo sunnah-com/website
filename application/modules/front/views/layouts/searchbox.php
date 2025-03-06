@@ -171,11 +171,12 @@ $collections = $util->getCollectionsInfo('none', true);
         });
 
         const showMoreLessBtn = document.getElementById("showMoreLessBtn");
+        let isHidden = true;
         if (showMoreLessBtn) {
             showMoreLessBtn.addEventListener("click", function () {
-                $(".toggleable-chip").toggleClass("hidden")
-                const isShowingMore = this.textContent === "Show More Collections";
-                this.textContent = isShowingMore ? "Show Less" : "Show More Collections";
+                $(".toggleable-chip").toggleClass("hidden");
+                isHidden = !isHidden
+                this.textContent = isHidden ?  "Show More Collections" : "Show Less" ;
             });
         }
     });
