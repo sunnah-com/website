@@ -377,6 +377,7 @@ $collections = $util->getCollectionsInfo('none', true);
     .chip.selected {
         background-color: var(--chip-selected-bg);
         color: #fff;
+        display: inline-block !important;
     }
 
     /* Show More/Less Button */
