@@ -11,6 +11,11 @@ if (strcmp($this->params['_pageType'], "home")) {
         $stextval = "";
     }
 }
+
+// Get collections directly from a new Util instance
+use app\modules\front\models\Util;
+$util = new Util();
+$collections = $util->getCollectionsInfo('none', true);
 ?>
 
 <div id="search">
@@ -26,7 +31,7 @@ if (strcmp($this->params['_pageType'], "home")) {
                 <i class="fa-solid fa-sliders"></i>
             </span>
         </button>
-        <button type="button" id="filterBtn" class="custom-btn searchtipslink">
+        <button type="button" id="tipsBtn" class="custom-btn searchtipslink">
             <span class="custom-btn-content tips-icn">
                 <i class="fa-solid fa-lightbulb"></i>
             </span>
@@ -40,12 +45,23 @@ if (strcmp($this->params['_pageType'], "home")) {
             <h2 class="header">Select Collections</h2>
 
             <div id="collectionChips">
-                <div class="chip" data-value="bukhari">Sahih Bukhari</div>
-                <div class="chip" data-value="muslim">Sahih Muslim</div>
-                <div class="chip" data-value="abudawud">Sunan Abi Dawud</div>
-                <div class="chip" data-value="tirmidhi">Jami' at-Tirmidhi</div>
-                <div class="chip" data-value="nasai">Sunan an-Nasa'i</div>
-                <div class="chip" data-value="ibnmajah">Sunan Ibn Majah</div>
+                <?php
+                if (isset($collections) && is_array($collections)) {
+                    $totalCollections = count($collections);
+                    $showLimit = 6;
+
+                    foreach ($collections as $index => $collection) {
+                        if (isset($collection['name']) && isset($collection['englishTitle'])) {
+                            $toggleClass = ($index >= $showLimit) ? 'toggleable-chip hidden' : '';
+                            echo '<div class="chip ' . $toggleClass . '" data-value="' . $collection['name'] . '">' . $collection['englishTitle'] . '</div>';
+                        }
+                    }
+
+                    if ($totalCollections > $showLimit) {
+                        echo '<div id="showMoreLessBtn" class="show-more-btn">Show More Collections</div>';
+                    }
+                }
+                ?>
             </div>
 
             <button id="applyFilterBtn" class="apply-btn">Apply</button>
@@ -131,7 +147,7 @@ if (strcmp($this->params['_pageType'], "home")) {
             });
         });
 
-        function submit(){
+        function submit() {
             const queryInput = document.querySelector(".searchquery").value;
             let actionUrl = "/search/?q=" + encodeURIComponent(queryInput);
 
@@ -153,6 +169,16 @@ if (strcmp($this->params['_pageType'], "home")) {
             submit()
             event.preventDefault();
         });
+
+        const showMoreLessBtn = document.getElementById("showMoreLessBtn");
+        let isHidden = true;
+        if (showMoreLessBtn) {
+            showMoreLessBtn.addEventListener("click", function () {
+                $(".toggleable-chip").toggleClass("hidden");
+                isHidden = !isHidden
+                this.textContent = isHidden ?  "Show More Collections" : "Show Less" ;
+            });
+        }
     });
 </script>
 
@@ -177,8 +203,8 @@ if (strcmp($this->params['_pageType'], "home")) {
         --search-icon-color: #ffffff;
     }
 
-    [data-theme="light"] .header{
-        color:  #3d9393;
+    [data-theme="light"] .header {
+        color: #3d9393;
     }
 
     .clear {
@@ -243,7 +269,7 @@ if (strcmp($this->params['_pageType'], "home")) {
     .custom-btn {
         padding: 6px 12px;
         cursor: pointer;
-        background-color: rgba(0,0,0,0);
+        background-color: rgba(0, 0, 0, 0);
         color: white;
         border: none;
         border-radius: 10px;
@@ -251,8 +277,10 @@ if (strcmp($this->params['_pageType'], "home")) {
         white-space: nowrap;
         flex-shrink: 0;
     }
+
     .custom-btn:hover {
-        background-color: var(--button-highlight-color);;
+        background-color: var(--button-highlight-color);
+        ;
     }
 
     .custom-btn-content {
@@ -273,9 +301,11 @@ if (strcmp($this->params['_pageType'], "home")) {
         flex-shrink: 0;
         align-self: flex-end;
     }
+
     .apply-btn:hover {
         background-color: #1c625d;
     }
+
     /* Modal */
     .modal {
         display: none;
@@ -340,13 +370,43 @@ if (strcmp($this->params['_pageType'], "home")) {
     }
 
     .chip:hover {
-        background-color: va        color: white;
-        r(--chip-hover-bg);
+        background-color: var(--chip-hover-bg);
+        color: var(--primary-text-color);
     }
 
     .chip.selected {
         background-color: var(--chip-selected-bg);
         color: #fff;
+        display: inline-block !important;
+    }
+
+    /* Show More/Less Button */
+    .show-more-btn {
+        display: block;
+        padding: 4px 12px;
+        margin: 10px auto;
+        background-color: transparent;
+        color: var(--chip-selected-bg);
+        border: 1px solid var(--chip-selected-bg);
+        border-radius: 10px;
+        cursor: pointer;
+        user-select: none;
+        font-size: 13px;
+        transition: all 0.2s ease;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .show-more-btn:hover {
+        background-color: rgba(59, 160, 143, 0.1);
+    }
+
+    .toggleable-chip {
+        display: inline-block;
+    }
+
+    .hidden {
+        display: none
     }
 
     /* Responsive Design */
