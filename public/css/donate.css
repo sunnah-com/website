@@ -31,7 +31,7 @@
 
 .donation-banner p {
     margin: 0;
-    font-size: 1.15em;
+    font-size: 1.5em;
     line-height: 1.3;
     display: inline-block;
     font-weight: 600;
@@ -110,7 +110,7 @@
 .donation-header-content span {
     color: white;
     margin-right: 20px;
-    font-size: 1em;
+    font-size: 1.3em;
     font-weight: 500;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
@@ -119,7 +119,7 @@
     padding: 3px 10px;
     border-radius: 4px;
     text-decoration: none;
-    font-size: 0.9em;
+    font-size: 1.15em;
     font-weight: bold;
     transition: all 0.2s;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -140,4 +140,19 @@
     filter: brightness(80%);
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+
+    .donation-banner p {
+        font-size: 1.2em;
+    }
+    
+    .donation-header-content span {
+        font-size: 1em;
+    }
+    
+    .donation-header-content .donate-now-btn {
+        font-size: 0.9em;
+    }
 }

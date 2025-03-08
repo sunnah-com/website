@@ -5,7 +5,7 @@
 We are excited to partner with the <a href="https://quran.foundation">Qur'an Foundation</a> to help us fundraise and advance our mission of making authentic hadith knowledge accessible. 
 <p>
 
-<div id="classy-donation-widget" style="display: flex; justify-content: center; margin: 30px auto;">
+<div id="classy-donation-widget">
     <!-- Classy donation widget will be loaded here -->
 </div>
 
