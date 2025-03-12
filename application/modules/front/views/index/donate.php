@@ -62,12 +62,13 @@ Yes, you can donate using PayPal. However, PayPal is only supported for donation
       }
       win.document.body.appendChild(makeEGScript())
 
+   
       /** Create the embed script */
       function makeEGScript() {
         var egScript = win.document.createElement('script')
         egScript.setAttribute('type', 'text/javascript')
         egScript.setAttribute('async', 'true')
-        egScript.setAttribute('src', 'https://sdk.classy.org/embedded-giving.js')
+        egScript.setAttribute('src', '/js/classy-embed.js')
         return egScript
       }
 
@@ -81,5 +82,7 @@ Yes, you can donate using PayPal. However, PayPal is only supported for donation
           return value === null ? urlParamsSoFar : { ...urlParamsSoFar, [validKey]: value }
         }, {})
       }
+
+  
     })(window)
   </script>
