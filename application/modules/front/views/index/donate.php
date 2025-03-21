@@ -14,7 +14,7 @@ We are excited to partner with the <a href="https://quran.foundation">Qur'an Fou
 
 <div class="about">
 <div class=content>
-<div class=section>What do your donations support?</div><br>
+<div class=section><u>What do your donations support?</u></div>
 May Allah SWT reward you for your generosity. Every contribution, no matter how small, helps us continue our work:
 
 <ul>
@@ -29,18 +29,18 @@ May Allah SWT reward you for your generosity. Every contribution, no matter how 
 We highly encourage <b>recurring donations</b> if you are able, as that allows us to plan further out. Please contact us separately if you wish to donate a larger amount directly or through a donor-advised fund.
 </p>
 
-<div class=section>Why are we fundraising?</div>
+<div class=section><u>Why are we fundraising?</u></div>
 <a href="https://sunnah.com">Sunnah.com</a> has been an entirely volunteer-supported effort from its inception in 2011. Through the effort of dozens of volunteers all over the world we have put up over 50,000 ahadith and their translations, manually checked them, numbered them according to the most rigorous systems, and added multiple languages. We are moving to a hybrid model with volunteers and paid employees in order to continue adding more ahadith, languages, and features at a faster pace.
 <p>
 
 <div class=section>Frequently Asked Questions</div><br>
-<b>1. Is my donation tax-deductible?</b><br>
+<b><u>1. Is my donation tax-deductible?</u></b><br>
 <a href="https://sunnah.com/">Sunnah.com</a> is fiscally sponsored by the <a href="https://quran.foundation">Qur'an Foundation</a>, a registered 501(c)(3) non-profit organization in the USA. Donations are tax-deductible in the USA (EIN: 82-4203288).
 <p>
-<b>2. Why does my donation receipt say "Qur'an Foundation, Inc." when I donated to sunnah.com?</b><br>
+<b><u>2. Why does my donation receipt say "Qur'an Foundation, Inc." when I donated to sunnah.com?</u></b><br>
 We are partnering with the <a href="https://quran.foundation">Qur'an Foundation</a> for fiscal sponsorship, which allows us to raise funds.
 <p>
-<b>3. Can I donate through PayPal?</b><br>
+<b><u>3. Can I donate through PayPal?</u></b><br>
 Yes, you can donate using PayPal. However, PayPal is only supported for donations in USD. To see and select the PayPal button, please ensure that you have chosen USD as the selected currency.
 
 
