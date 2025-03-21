@@ -5,10 +5,15 @@
 We are excited to partner with the <a href="https://quran.foundation">Qur'an Foundation</a> to help us fundraise and advance our mission of making authentic hadith knowledge accessible. 
 <p>
 
+</div> <!-- Content class -->
+</div> <!-- About class -->
+
 <div id="classy-donation-widget">
     <!-- Classy donation widget will be loaded here -->
 </div>
 
+<div class="about">
+<div class=content>
 <div class=section>What do your donations support?</div><br>
 May Allah SWT reward you for your generosity. Every contribution, no matter how small, helps us continue our work:
 
