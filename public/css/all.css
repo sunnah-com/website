@@ -238,6 +238,8 @@ textarea {
 
 
 #header {
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	background: var(--header-bg);
 	background-repeat: repeat;
