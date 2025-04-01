@@ -1,35 +1,3 @@
-<?php
-	function truncateHadithText($hadithText, $url) {
-		// URL-encode both the hadithText and the URL
-		$encodedHadithText = rawurlencode($hadithText);
-		$encodedUrl = rawurlencode($url);
-
-		// Calculate the lengths
-		$hadithTextLength = strlen($encodedHadithText);
-		$urlLength = strlen($encodedUrl);
-		$characterLimit = 4000;
-
-		// Check if truncating is necessary
-		$totalLength = $hadithTextLength + $urlLength;
-
-		if ($totalLength > $characterLimit) {
-			// If truncating is needed, shorten the hadithText and add "..." until within the limit
-			while ($totalLength > $characterLimit) {
-				$hadithText = substr($hadithText, 0, strlen($hadithText) - 1);
-				$encodedHadithText = rawurlencode($hadithText);
-				$hadithTextLength = strlen($encodedHadithText);
-				$totalLength = $hadithTextLength + $urlLength;
-			}
-			$hadithText .= '...';
-		}
-
-		return $hadithText;
-	}
-
-	$hadithText = $_POST['hadithText'];
-	$hadithPreviewText = nl2br(htmlspecialchars($hadithText));
-?>
-
 <h1> SHARE THIS HADITH </h1>
 
 <!-- hadith preview -->
