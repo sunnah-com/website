@@ -1,3 +1,8 @@
+<?php
+	$hadithText = $_POST['hadithText'];
+	$hadithPreviewText = nl2br(htmlspecialchars($hadithText));
+?>
+
 <h1> SHARE THIS HADITH </h1>
 
 <!-- hadith preview -->
