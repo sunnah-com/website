@@ -456,7 +456,7 @@
 		document.body.removeChild(dummy);
 	}
 
-	
+
    $(document).ready(function () {  
 
 	$(window).scroll(function() {
@@ -569,6 +569,12 @@
 			}, 500);
 		}
 	});
+
+	const header = document.getElementById('header');
+	const ro = new ResizeObserver(() => {
+	  document.documentElement.style.setProperty('--header-offset', `${header.getBoundingClientRect().height}px`);
+	});
+	ro.observe(header);
   });
 
     var langLoaded = new Object();

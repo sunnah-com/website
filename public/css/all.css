@@ -1990,7 +1990,7 @@ input.searchquery{
 		padding: 5px 20px 7px;
 		position: sticky;
 		left: 0;
-		top: 100px;
+		top: var(--header-offset, 140px);
 		box-sizing: border-box;
 		z-index: 1;
 		border-top: 2px solid var(--sticky-color);
