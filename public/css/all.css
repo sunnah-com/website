@@ -1637,8 +1637,8 @@ input.searchquery{
 .share_button a {
 	text-decoration: none;
 	border-radius: 50%;
-	padding: 3px 1.5px;
-	font-size: .85em;
+	padding: 6px 4px;
+	font-size: 1.25em;
 	color:white;
 }
 .share_button .icn-fb{
