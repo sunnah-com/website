@@ -51,7 +51,7 @@
 	</div>
 
 	<div class="share_button">
-		<a href="https://twitter.com/intent/tweet?url=https://sunnah.com<?php echo $_POST['link']; ?>&text=<?php echo urlencode($_POST['hadithText']); ?>&hashtags=SunnahCom,hadith"
+		<a href="https://twitter.com/intent/tweet?text=<?php echo urlencode($_POST['hadithText']); ?>&hashtags=SunnahCom,hadith"
 			target="blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on Twitter"
@@ -72,7 +72,7 @@
 
 	<!-- Telegram -->
 	<div class="share_button">
-		<a href="https://t.me/share/url?url=https://sunnah.com<?php echo $_POST['link']; ?>&text=<?php echo truncateHadithText($_POST['hadithText'], "https://t.me/share/url?url=https://sunnah.com" . $_POST['link']); ?>" 
+		<a href="https://t.me/share/url?url=https://sunnah.com<?php echo $_POST['link']; ?>" 
 			target="_blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on Telegram"
