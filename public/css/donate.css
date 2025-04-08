@@ -76,6 +76,7 @@
     margin: 30px auto;
     width: 100%;
     box-sizing: border-box;
+    scale: 0.95;
 }
 
 /* Target embedded content within the donation widget */
@@ -85,11 +86,6 @@
     max-width: 100% !important;
     margin: 0 auto !important;
     display: block !important;
-}
-
-/* scale hack to replicate padding */
-#classy-donation-widget iframe {
-    scale: 0.95;
 }
 
 /* Donation Header Styles */
