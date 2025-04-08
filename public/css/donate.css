@@ -87,6 +87,11 @@
     display: block !important;
 }
 
+/* scale hack to replicate padding */
+#classy-donation-widget iframe {
+    scale: 0.95;
+}
+
 /* Donation Header Styles */
 #donation-header {
     width: 100%;
