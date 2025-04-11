@@ -76,6 +76,7 @@
     margin: 30px auto;
     width: 100%;
     box-sizing: border-box;
+    scale: 0.95;
 }
 
 /* Target embedded content within the donation widget */
