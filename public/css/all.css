@@ -145,6 +145,7 @@
 }
 body{
 	background: var(--site-bg);
+	background-image: var(--site-bg);
 }
 
 .clear{ clear:both; }
@@ -226,6 +227,7 @@ textarea {
 
 #site{
 	background: var(--site-bg);
+	background-image: var(--site-bg);
 	background-position: center top;
 	width:100%;
 	min-width: 1170px;
@@ -242,6 +244,7 @@ textarea {
 	flex-direction: column;
 	width: 100%;
 	background: var(--header-bg);
+	background-image: var(--header-bg);
 	background-repeat: repeat;
 	position: relative;
 	z-index: 20;
@@ -377,6 +380,7 @@ textarea {
     margin-left: 20px;
     margin-right: 20px;
 	background: var(--sidePanel_bg);
+	background-image: var(--sidePanel_bg);
 	background-repeat: repeat;
     margin-top: 20px;
     border-radius:10px;
@@ -524,6 +528,7 @@ textarea {
 .footer {
     text-align: center;
 	background: var(--footer-bg);
+	background-image: var(--footer-bg);
     background-repeat: repeat;
     width: 100%;
     margin: auto;
@@ -655,6 +660,7 @@ input.searchquery{
 #searchtips {
 	width: 300px;
 	background:var(--site-bg);
+	background-image: var(--site-bg);
 	background-repeat: repeat-x repeat-y;
 	z-index: 10;
 	border-radius: 4px;
@@ -1534,6 +1540,7 @@ input.searchquery{
 	box-shadow: 0px 2px 7px #292929;
 	border-radius: 6px;
 	background:var(--site-bg);
+	background-image: var(--site-bg);
 	z-index: 50;
 	padding-left: 15px;
 	padding-right: 15px;
