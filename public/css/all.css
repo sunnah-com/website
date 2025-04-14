@@ -1555,7 +1555,7 @@ input.searchquery{
 	gap: 15px;
     margin-top: 17px;
 	margin-left: -251px;
-	background:url(../images/bg_small.png);
+	background:url("bg_small.png");
 	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 10;
 	border-radius: 4px;
