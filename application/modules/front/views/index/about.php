@@ -79,7 +79,7 @@ For Urdu we recommend any Nastaliq font (such as <a href="https://urdufonts.net/
 <a name="SourcesNumbering"><div class=section>6. Sources, numbering, and grading</div></a>
 <div class=content>
 The Arabic text on our website is sourced from <a href="http://www.al-eman.com">al-eman.com</a>
-and hadith.al-islam.com (now defunct). For the English
+and other now-defunct sources. For the English
 we use various translators, a full list of which will appear here shortly inshaAllah.
 The English has been through two iterations of cleaning (spelling corrections etc.).
 We have done our best to provide the most authentic and exact hadith possible.
