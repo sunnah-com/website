@@ -9,7 +9,9 @@
 
 			echo "<div class=\"clear\"></div>";			
 			echo "<div class=bottomItems>\n";
-	    if (($englishExists && strlen($englishEntry->grade1) > 0) or ($arabicExists && strlen($arabicEntry->grade1) > 0)) {
+			if ((($englishExists && strlen($englishEntry->grade1) > 0) or 
+			    ($arabicExists && strlen($arabicEntry->grade1) > 0)) and 
+			   (strcmp($collection->name, "adab") != 0)) {
     	    echo "<div class=hadith_annotation>";
             echo "<table class=gradetable cellspacing=0 cellpadding=0 border=0>";
 
