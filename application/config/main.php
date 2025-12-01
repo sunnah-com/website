@@ -138,6 +138,7 @@ $config = [
                 'contact' => 'front/index/contact',
                 'searchtips' => 'front/index/search-tips',
                 'tce' => 'front/collection/tce',
+                'ihkam' => 'front/collection/ihkam',
                 '<selection:ramadan>' => 'front/collection/selection',
                 '<selection:dhulhijjah>' => 'front/collection/selection',
                 '<selection:ashura>' => 'front/collection/selection',

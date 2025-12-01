@@ -205,6 +205,11 @@ class CollectionController extends SController
                 $viewVars['otherlangs'] = $this->_otherlangs;
             }
             
+            if ($this->_book->bosnianBookID > 0) {
+                $this->_otherlangs['bosnian'] = $this->_book->fetchLangHadith("bosnian");
+                $viewVars['otherlangs'] = $this->_otherlangs;
+            }
+            
             if (!is_null($this->_otherlangs) && count($this->_otherlangs) > 0) {
                 $viewVars['ajaxCrawler'] = true;
             }
@@ -254,6 +259,12 @@ class CollectionController extends SController
 		$this->customSelect($aURNs, true, true);
 	}
 
+	public function actionIhkam() {
+        $aURNs = array(101590, 101860, 107730, 104270, 101350, 101620, 102700, 102490, 102770, 102400, 102920, 101300);
+        $this->_viewVars->pageTitle = "Al-Ihkam";
+        $this->pathCrumbs($this->_viewVars->pageTitle, "");
+        return $this->customSelect($aURNs, true, true);
+    }
 	public function actionSocialmedia() {
 		$aURNs = array(158030, 
 			155850, 
@@ -351,10 +362,11 @@ class CollectionController extends SController
             'chapters' => $this->_chapters,
             'books' => $this->_books,
             'showBookNames' => $showBookNames,
-            'showChapterNumbers' => $showChapterNumbers,
+	    'showChapterNumbers' => $showChapterNumbers,
         ];
 
         $this->view->params['_pageType'] = "book";
+        $this->view->params['pageTitle'] = "Page Title";
 
         return $this->render('tce', $viewVars);
 	}
