@@ -260,11 +260,19 @@ class CollectionController extends SController
 	}
 
 	public function actionIhkam() {
-        $aURNs = array(101590, 101860, 107730, 104270, 101350, 101620, 102700, 102490, 102770, 102400, 102920, 101300);
-        $this->_viewVars->pageTitle = "Al-Ihkam";
+		$aURNs = array(101590, 101860, 107730, 104270, 101350, 
+        101620, 102700, 102490, 102770, 102400, 
+        102920, 101300, 102300, 102280, 102190, 
+        101420, 101520, 101540, 103960, 101610, 
+        102160, 102060, 103390, 105201, 105460,
+        105580, 105321, 186710, 105831, 105870,
+        184010, 184020, 184090);
+        // #33
+		$this->_viewVars->pageTitle = "Al-Ihkam";
         $this->pathCrumbs($this->_viewVars->pageTitle, "");
-        return $this->customSelect($aURNs, true, true);
-    }
+		return $this->customSelect($aURNs, false, true);
+	}
+
 	public function actionSocialmedia() {
 		$aURNs = array(158030, 
 			155850, 
@@ -366,7 +374,11 @@ class CollectionController extends SController
         ];
 
         $this->view->params['_pageType'] = "book";
+<<<<<<< HEAD
         $this->view->params['pageTitle'] = "Page Title";
+=======
+        $this->view->params['pageTitle'] = $this->_viewVars->pageTitle;
+>>>>>>> Adding code for Ihkam collection
 
         return $this->render('tce', $viewVars);
 	}
