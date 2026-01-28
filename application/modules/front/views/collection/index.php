@@ -39,6 +39,13 @@ else {
 	<div class=clear></div>
 	</div>
 
+	<div class="indexsearchcontainer">
+		<div id="indexsearch">
+			<!-- Go to hadith number: -->
+			<input type="number" id="hadithNumberInput" class="indexsearchquery" placeholder="Go to Hadith number &#8230;"/>
+			<button id="hadithNumberButton" style="height: 38px;" class="searchsubmit search-btn" onclick="goToHadithNumber('<?php echo $collection->name; ?>')">></button>
+		</div>
+	</div>
 
 		<div class="book_titles titles">
 				<?php
