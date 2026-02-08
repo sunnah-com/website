@@ -12,13 +12,6 @@
   gtag('config', 'G-PD11DFYVJC');
 </script>
 
-  <?php if (isset($this->params['book']) and (
-			//$this->params['book']->indonesianBookID > 0 or
-			$this->params['book']->urduBookID > 0 or
-			$this->params['book']->banglaBookID > 0 or
-			$this->params['book']->bosnianBookID > 0
-			)
-		) echo "<meta name=\"fragment\" content=\"!\">\n"; ?>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Language" content="EN"/>
   <meta name="description" content="Hadith of the Prophet Muhammad (saws) in English and Arabic"/>
@@ -55,9 +48,9 @@
   <?php if (isset($this->params['book'])) { 
 	$langarray = array();
 	//if ($this->params['book']->indonesianBookID > 0) $langarray[] = 'indonesian';
-	if ($this->params['book']->urduBookID > 0) $langarray[] = 'urdu';
-    if ($this->params['book']->banglaBookID > 0) $langarray[] = 'bangla'; 
-    if ($this->params['book']->bosnianBookID > 0) $langarray[] = 'bosnian'; 
+	if (($this->params['book']->urduBookID ?? 0) > 0) $langarray[] = 'urdu';
+        if (($this->params['book']->banglaBookID ?? 0) > 0) $langarray[] = 'bangla'; 
+        if (($this->params['book']->bosnianBookID ?? 0) > 0) $langarray[] = 'bosnian'; 
   ?>
 
 	<script>
