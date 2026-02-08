@@ -265,9 +265,12 @@ class CollectionController extends SController
         102920, 101300, 102300, 102280, 102190, 
         101420, 101520, 101540, 103960, 101610, 
         102160, 102060, 103390, 105201, 105460,
-        105580, 105321, 186710, 105831, 105870,
-        184010, 184020, 184090);
-        // #33
+        105580, 105321, 186710, 105831, 105870, // 30
+        184010, 184020, 184090, 103570, 105090,
+        105080, 103850, 153550, 185470, 185590,
+        185840, 185800, 185930, 186160, 186390,
+        171510, 186380 );
+
 		$this->_viewVars->pageTitle = "Al-Ihkam";
         $this->pathCrumbs($this->_viewVars->pageTitle, "");
 		return $this->customSelect($aURNs, false, true);
@@ -374,11 +377,7 @@ class CollectionController extends SController
         ];
 
         $this->view->params['_pageType'] = "book";
-<<<<<<< HEAD
-        $this->view->params['pageTitle'] = "Page Title";
-=======
         $this->view->params['pageTitle'] = $this->_viewVars->pageTitle;
->>>>>>> Adding code for Ihkam collection
 
         return $this->render('tce', $viewVars);
 	}
