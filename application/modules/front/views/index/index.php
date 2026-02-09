@@ -1,8 +1,8 @@
 <?php 
-    $num_collections = count($collections);
-    $primaryCount = 9;
-    $primaryCollections = array_slice($collections, 0, $primaryCount);
-    $selectionCollections = array_slice($collections, $primaryCount);
+    $primaryCollections = array_filter($collections, function($c) { return $c['type'] === 'collection'; });
+    $selectionCollections = array_filter($collections, function($c) { return $c['type'] === 'selection'; });
+    $primaryCollections = array_values($primaryCollections);
+    $selectionCollections = array_values($selectionCollections);
     $primarySplit = round(count($primaryCollections) / 2, 0, PHP_ROUND_HALF_UP);
     $selectionSplit = round(count($selectionCollections) / 2, 0, PHP_ROUND_HALF_UP);
 ?>
