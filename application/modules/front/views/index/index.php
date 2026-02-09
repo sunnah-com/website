@@ -1,6 +1,10 @@
 <?php 
     $num_collections = count($collections);
-	$splitSize=round($num_collections/2, 0, PHP_ROUND_HALF_UP);
+    $primaryCount = 9;
+    $primaryCollections = array_slice($collections, 0, $primaryCount);
+    $selectionCollections = array_slice($collections, $primaryCount);
+    $primarySplit = round(count($primaryCollections) / 2, 0, PHP_ROUND_HALF_UP);
+    $selectionSplit = round(count($selectionCollections) / 2, 0, PHP_ROUND_HALF_UP);
 ?>
 
 	<div class="donation-banner-container">
@@ -43,38 +47,87 @@
 	<div class=clear></div>
 	</div>
 
-	<div class=collections>
-    	<div class="collection_titles" style="padding-right: 6px;">
-			<?php 
-				for ($i = 0; $i < $splitSize; $i++)  {
-					$collection = $collections[$i];
-					?>
-					<div class=collection_title>
-						<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
-							<div class=english_collection_title><?php echo $collection['englishTitle']; ?></div>
-							<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
-                   		</a>
-                    	<div class="clear"></div>
-					</div>
-                    <?php if ($i < $splitSize - 1) echo '<div class="collection_sep"></div>';
-			 } ?>
-		</div><!-- end collection titles 1 -->
-        <div class="collection_titles" style="float: right;">
-			<?php 
-				for ($i = $splitSize; $i < $num_collections; $i++) {
-					$collection = $collections[$i]; 
-					?>
-					<div class=collection_title>			
-						<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
-							<div class=english_collection_title><?php echo $collection['englishTitle']; ?></div>
-							<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
-                        </a>
-						<div class="clear"></div>
-					</div>
-                    <?php if ($i < $num_collections - 1) echo '<div class="collection_sep"></div>';
-			 } ?>
-		</div><!-- end collection titles 2 -->
-		<div class="clear"></div>
-	</div> <!-- end collections div -->
+	<!-- Primary Collections Section -->
+	<div class="collection-section">
+		<div class="collection-section-header">
+			<span class="collection-section-title">Primary Collections</span>
+			<span class="collection-section-title-arabic arabic">المصادر الأصلية</span>
+		</div>
+		<div class="collections">
+			<div class="collection_titles" style="padding-right: 6px;">
+				<?php 
+					for ($i = 0; $i < $primarySplit; $i++) {
+						$collection = $primaryCollections[$i];
+						?>
+						<div class="collection_title">
+							<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
+								<div class="english_collection_title"><?php echo $collection['englishTitle']; ?></div>
+								<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
+							</a>
+							<div class="clear"></div>
+						</div>
+						<?php if ($i < $primarySplit - 1) echo '<div class="collection_sep"></div>';
+				 } ?>
+			</div><!-- end primary collection titles 1 -->
+			<div class="collection_titles" style="float: right;">
+				<?php 
+					for ($i = $primarySplit; $i < count($primaryCollections); $i++) {
+						$collection = $primaryCollections[$i];
+						?>
+						<div class="collection_title">
+							<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
+								<div class="english_collection_title"><?php echo $collection['englishTitle']; ?></div>
+								<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
+							</a>
+							<div class="clear"></div>
+						</div>
+						<?php if ($i < count($primaryCollections) - 1) echo '<div class="collection_sep"></div>';
+				 } ?>
+			</div><!-- end primary collection titles 2 -->
+			<div class="clear"></div>
+		</div>
+	</div><!-- end Primary Collections section -->
+
+	<!-- Selections Section -->
+	<div class="collection-section collection-section-selections">
+		<div class="collection-section-header">
+			<span class="collection-section-title">Selections</span>
+			<span class="collection-section-title-arabic arabic">المصادر الثانوية</span>
+		</div>
+		<div class="collections">
+			<div class="collection_titles" style="padding-right: 6px;">
+				<?php 
+					for ($i = 0; $i < $selectionSplit; $i++) {
+						$collection = $selectionCollections[$i];
+						?>
+						<div class="collection_title">
+							<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
+								<div class="english_collection_title"><?php echo $collection['englishTitle']; ?></div>
+								<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
+							</a>
+							<div class="clear"></div>
+						</div>
+						<?php if ($i < $selectionSplit - 1) echo '<div class="collection_sep"></div>';
+				 } ?>
+			</div><!-- end selection titles 1 -->
+			<div class="collection_titles" style="float: right;">
+				<?php 
+					for ($i = $selectionSplit; $i < count($selectionCollections); $i++) {
+						$collection = $selectionCollections[$i];
+						?>
+						<div class="collection_title">
+							<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
+								<div class="english_collection_title"><?php echo $collection['englishTitle']; ?></div>
+								<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
+							</a>
+							<div class="clear"></div>
+						</div>
+						<?php if ($i < count($selectionCollections) - 1) echo '<div class="collection_sep"></div>';
+				 } ?>
+			</div><!-- end selection titles 2 -->
+			<div class="clear"></div>
+		</div>
+	</div><!-- end Selections section -->
+
 	<br>
 	<div align=center style="color: #75A1A1;">Supported languages: English, Arabic, Urdu, Bangla</div>

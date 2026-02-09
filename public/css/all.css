@@ -756,6 +756,75 @@ input.searchquery{
     color:#84B8B8;
 }
 
+/* Collection Section Layout */
+.collection-section {
+	width: 100%;
+	margin: auto;
+	margin-top: 25px;
+}
+
+.collection-section .collections {
+	margin-top: 0;
+}
+
+.collection-section-selections {
+	margin-top: 30px;
+}
+
+.collection-section-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12px;
+	padding: 0 5%;
+}
+
+.collection-section-title {
+	width: 50%;
+	box-sizing: border-box;
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	color: #90b8b9;
+	white-space: nowrap;
+	text-align: right;
+	padding-right: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 15px;
+}
+
+.collection-section-title::before {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: rgba(144, 184, 185, 0.25);
+}
+
+.collection-section-title-arabic {
+	width: 50%;
+	box-sizing: border-box;
+	font-size: 28px;
+	color: #90b8b9;
+	white-space: nowrap;
+	padding-left: 15px;
+	line-height: 1;
+	direction: ltr;
+	text-align: left;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 15px;
+}
+
+.collection-section-title-arabic::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: rgba(144, 184, 185, 0.25);
+}
+
 .collection_sep {
 	background-color: var(--collection_sep_bg);
 	height: 1px;
@@ -1779,6 +1848,44 @@ input.searchquery{
 	.collection_title {
 		width: auto;
 		margin-bottom: 3px;
+	}
+
+	.collection-section {
+		margin-top: 18px;
+	}
+
+	.collection-section-selections {
+		margin-top: 22px;
+	}
+
+	.collection-section-header {
+		padding: 0 2%;
+		margin: 25px 0 20px;
+		border-bottom: 2px solid #bdd9de5c;
+		justify-content: center;
+	}
+
+	.collection-section-title {
+		width: auto;
+		font-size: 15px;
+		letter-spacing: 1px;
+		padding: 0 8px;
+		display: inline;
+	}
+
+	.collection-section-title::before {
+		display: none;
+	}
+
+	.collection-section-title-arabic {
+		width: auto;
+		font-size: 24px;
+		padding-left: 8px;
+		display: inline;
+	}
+
+	.collection-section-title-arabic::after {
+		display: none;
 	}
 
 	.home #nonheader {
