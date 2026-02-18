@@ -333,6 +333,7 @@ class CollectionController extends SController
 
 	public function actionSelection($selection = "ramadan") {
 		if (strcmp($selection, "ramadan") == 0) {
+			$this->_viewVars->pageTitle = "Ramadan Selection";
 			$this->view->params['pageTitle'] = "Ramadan Selection";
 			$aURNs = $this->util->getRamadanURNs();
 		}
