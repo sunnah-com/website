@@ -13,6 +13,8 @@
   gtag('config', 'G-PD11DFYVJC');
 </script>
 
+<?php echo $this->render('_posthog'); ?>
+
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Language" content="EN"/>
   <meta name="description" content="Hadith of the Prophet Muhammad (saws) in several languages"/>
