@@ -318,7 +318,6 @@
 		color: #84B8B8;
 	}
 	
-
     .apply-btn {
         padding: 1rem 2rem;
         cursor: pointer;
