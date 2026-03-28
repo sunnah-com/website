@@ -27,9 +27,8 @@
 		</div>
 
 		<a id="filterBtn" class="custom-btn filter-link">
-			<span class="custom-btn-content">
-				<i class="fa-solid fa-sliders"></i>
-				<span class="filterlabel">Filter</span>
+			<span class="custom-btn-content filter-icn">
+				<i class="fa-solid fa-sliders"></i> Filter
 			</span>
 		</a>
 
@@ -295,17 +294,7 @@
         clear: both;
     }
 
-	.fa-solid {
-		display: inline-block !important;
-		color: #5F9999;
-	}
-
-	.fa-sliders {
-		display: inline-block !important;
-		color: #5F9999;
-	}
-
-    .filterlabel {
+	.custom-btn-content {
 		font-size: 12px;
 		margin-left: 10px;
 		padding-top: 5px;
@@ -314,7 +303,7 @@
 		float: left;
 	}
 
-	.filterlabel::hover {
+	.custom-btn-content:hover {
 		color: #84B8B8;
 	}
 	
@@ -336,6 +325,7 @@
     }
 
     /* Modal */
+	/* Duplicate Codes from Here */
     .modal {
         display: none;
         position: fixed;
