@@ -1,6 +1,6 @@
 /vendor
 /runtime
 .DS_Store
-.env.local
+.env.local*
 
 **gz

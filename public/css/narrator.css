@@ -1,85 +1,394 @@
-.narrator_heading {
-    width: 94%;
-    padding-left: 10px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+/* narrator.css — all rules scoped under .narrator-page to avoid leaking into
+   the rest of the site via all.css. CSS custom properties live in :root since
+   they are inherited and harmless when unused on other pages. */
+
+:root {
+  --surface: #faf9f7;
+  --surface-low: #f4f3f1;
+  --surface-lowest: #fff;
+  --surface-container: #efeeec;
+  --on-surface: #1a1c1b;
+  --primary: #00685b;
+  --primary-container: #0d8373;
+  --primary-fixed: #93f4e0;
+  --on-primary-fixed: #00201b;
+  --secondary: #5b5f63;
+  --secondary-container: #e0e2e8;
+  --on-secondary-container: #616569;
+  --outline-variant: #bdc9c5;
+  --outline-faint: rgba(189, 201, 197, 0.3);
+  --outline-fainter: rgba(189, 201, 197, 0.2);
+  --primary-10: rgba(0, 104, 91, 0.1);
+  --primary-20: rgba(0, 104, 91, 0.2);
+  --teachers-bg: #f4f1ea;
+  --students-bg: #edf1f2;
+  --f-head: "Newsreader", serif;
+  --f-body: "Public Sans", sans-serif;
 }
 
-.narrator_heading_title {
-    float: left;
-    width: 100%;
-    padding: 5px 20px 5px 5px;
-    margin-left: 0px;
-    text-align: justify;
+/* ---------- Box-sizing reset (scoped) ---------- */
+.narrator-page *,
+.narrator-page *::before,
+.narrator-page *::after { box-sizing: border-box; }
+
+/* ---------- Element resets (scoped) ---------- */
+.narrator-page h1,
+.narrator-page h2,
+.narrator-page h3,
+.narrator-page h4,
+.narrator-page p { margin: 0; }
+
+.narrator-page ul { margin: 0; padding: 0; list-style: none; }
+
+.narrator-page a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+.narrator-page a:hover { text-decoration: underline; }
+
+.narrator-page button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  padding: 0;
 }
 
-.narrator_details {
-    float: center;
-    margin-left: 15%;
-    margin-right: 15%;
+/* ---------- Icons ---------- */
+.narrator-page .mso {
+  font-family: "Material Symbols Outlined";
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+.narrator-page .mso-sm { font-size: 14px; margin-right: 0.5rem; }
+.narrator-page .mso-base { font-size: 1rem; }
+.narrator-page .mso-filled { font-variation-settings: "FILL" 1; }
+
+/* ---------- Layout ---------- */
+.narrator-page .container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
+}
+.narrator-page .stack-4 > * + * { margin-top: 1rem; }
+.narrator-page .stack-8 > * + * { margin-top: 2rem; }
+.narrator-page .mb-section { margin-bottom: 4rem; }
+.narrator-page .mt-big { margin-top: 2.5rem; }
+.narrator-page .hidden { display: none; }
+.narrator-page .dim { color: var(--secondary); }
+.narrator-page .em { font-weight: 700; color: var(--on-surface); }
+
+/* ---------- Hero ---------- */
+.narrator-page .hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: end;
+  margin-bottom: 4rem;
+}
+@media (min-width: 768px) {
+  .narrator-page .hero { grid-template-columns: 1fr 1fr; }
 }
 
-.narrator_name_heading_arabic {
-    float: right;
-    font-size: 50px;
-    /* padding-right: 10px; */
-    width: 47%;
+.narrator-page .hero-title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 3rem;
+  letter-spacing: -0.025em;
 }
 
-.narrator_name_heading_english {
-    float: left;
-    font-size: 40px;
-    padding-top: 5px;
-    width: 47%;
-    text-align: left;
+.narrator-page .badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
 }
 
-.left_narrator_details_label {
-    float: left;
-    min-width: 27px;
-    height: 30px;
-    padding-top: 6px;
-    padding-right: 8px;
-    font-size: 20px;
+.narrator-page .pill-primary {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary-container);
+  color: #fff;
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.narrator-page .pill-secondary {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  padding: 0.25rem 0.75rem;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.narrator-page .pill-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+.narrator-page .pill-outline {
+  background: var(--primary-10);
+  color: var(--primary);
+  border: 1px solid var(--primary-20);
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  font-size: 0.875rem;
+  font-weight: 700;
 }
 
-.left_narrator_details_value {
-    width: 30%;
-    float: left;
-    min-height: 30px;
-    padding-top: 6px;
+.narrator-page .fields { display: flex; gap: 1.5rem; }
+.narrator-page [dir="rtl"] .fields { gap: 2rem; }
+
+.narrator-page .label {
+  display: block;
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.125rem;
+}
+.narrator-page .label--m1 { margin-bottom: 0.25rem; }
+.narrator-page .label--m3 { margin-bottom: 0.75rem; }
+.narrator-page .field { display: block; font-family: var(--f-head); font-size: 1.125rem; }
+
+/* ---------- Bio block ---------- */
+.narrator-page .bio-block {
+  background: var(--surface-low);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 4rem;
+}
+.narrator-page .bio-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+@media (min-width: 768px) {
+  .narrator-page .bio-grid { grid-template-columns: 1fr 1fr; }
+}
+.narrator-page .meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.narrator-page .meta-grid.mt-6 { margin-top: 1.5rem; }
+.narrator-page .lineage {
+  color: var(--on-surface);
+  line-height: 1.6;
+  font-style: italic;
+  font-size: 1.125rem;
+}
+.narrator-page .pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.right_narrator_details_value {
-    /* width: 40%; */
-    float: right;
-    font-size: 30px;
-    padding-top: 6px;
-    text-align: right;
+/* ---------- Section headers ---------- */
+.narrator-page .section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.narrator-page .section-head--ar { justify-content: flex-end; margin-bottom: 1rem; }
+.narrator-page .section-title {
+  font-family: var(--f-head);
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--primary);
+}
+.narrator-page .section-title--ar {
+  padding-left: 0;
+  border-left: 0;
+  padding-right: 1rem;
+  border-right: 4px solid var(--primary);
+}
+.narrator-page .section-title-sm {
+  font-family: var(--f-head);
+  font-size: 1.25rem;
+  padding-right: 1rem;
+  border-right: 4px solid var(--primary);
 }
 
-.right_narrator_details_label {
-    float: right;
-    min-width: 27px;
-    font-size: 30px;
-    height: 30px;
-    padding-top: 6px;
-    padding-right: 8px;
-    padding-left: 30px;
-    text-align: left;
+/* ---------- Verdict cards ---------- */
+.narrator-page .verdict {
+  background: var(--surface-lowest);
+  border-left: 4px solid var(--primary);
+  transition: box-shadow 0.15s;
+}
+.narrator-page .verdict:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+.narrator-page .verdict--muted { border-left-color: var(--outline-variant); }
+.narrator-page .verdict-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.narrator-page .verdict-col { padding: 1.5rem; }
+.narrator-page .verdict-col--ar {
+  border-left: 1px solid var(--outline-faint);
+  text-align: right;
+}
+.narrator-page .critic-quote {
+  color: var(--secondary);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 
-.narrator_year {
-    float: right;
+/* ---------- Teacher / Student panels ---------- */
+.narrator-page .panel {
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.narrator-page .panel--teachers { background: var(--teachers-bg); }
+.narrator-page .panel--students { background: var(--students-bg); }
+.narrator-page .panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.narrator-page .panel-label {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--secondary);
+  font-weight: 700;
+}
+.narrator-page .panel-label-ar {
+  font-family: var(--f-head);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--on-surface);
 }
 
-.narrator_year.death {
-    padding-left: 30px;
+.narrator-page .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.125rem 0;
+  gap: 1rem;
+}
+.narrator-page .name-en { font-size: 0.875rem; color: var(--secondary); font-style: italic; }
+.narrator-page .name-ar { text-align: right; }
+.narrator-page .grade { color: var(--secondary); font-size: 0.75rem; }
+
+.narrator-page .show-all-btn,
+.narrator-page .read-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.narrator-page .show-all-btn:hover,
+.narrator-page .read-more-btn:hover { text-decoration: underline; }
+.narrator-page .read-more-btn { display: flex; margin-left: auto; }
+.narrator-page .show-all-body {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--outline-fainter);
 }
 
-.narrator_year.age {
-    text-align: center;
+/* ---------- Accordion ---------- */
+.narrator-page .accordion {
+  background: var(--surface-lowest);
+  overflow: hidden;
+  border-bottom: 1px solid var(--outline-faint);
+}
+.narrator-page .accordion-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  transition: background 0.15s;
+}
+.narrator-page .accordion-btn:hover { background: var(--surface-low); }
+.narrator-page .accordion-title {
+  font-family: var(--f-head);
+  font-size: 1.25rem;
+  color: var(--primary);
+  font-style: italic;
+}
+.narrator-page .accordion-body {
+  padding: 0 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.narrator-page .tarjama-expander {
+  position: relative;
+  overflow: hidden;
+  max-height: 32rem;
+}
+.narrator-page .tarjama-fade {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  background: linear-gradient(to bottom, transparent, var(--surface-lowest));
+}
+.narrator-page .ar-para { margin-bottom: 0.5rem; }
+.narrator-page .sublabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--secondary);
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+.narrator-page .two-col {
+  columns: 2;
+  column-gap: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0.25rem 0;
 }
 
-.narrator_year.hyphen {
-    padding: 0 10px 0 10px;
+/* ---------- Scrollbar ---------- */
+.narrator-page .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.narrator-page .custom-scrollbar::-webkit-scrollbar-track { background: var(--surface-container); }
+.narrator-page .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+/* ---------- Arabic typography ---------- */
+.narrator-page .arabic {
+  font-family: var(--f-head);
+  font-size: 1.25em;
+  line-height: 1.6;
+}
+.narrator-page .arabic-label { font-size: 14px; }
+
+/* Compound overrides where Arabic needs a specific size */
+.narrator-page .hero-title.arabic { font-size: 3.75rem; line-height: 1.1; }
+.narrator-page .pill-secondary.arabic {
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.narrator-page .pill-primary .arabic { font-size: 0.875rem; font-weight: 700; }
+.narrator-page .field.arabic { font-size: 1.25rem; }
+.narrator-page .lineage.arabic { font-size: 1.25rem; }
+.narrator-page .label.arabic-label {
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: normal;
+}
