@@ -13,17 +13,17 @@ class Narrator extends ActiveRecord
     }
 
     /**
-     * Fetch a narrator by rawy_id, with per-row caching.
+     * Fetch a narrator by narrator_id, with per-row caching.
      * Returns null if not found.
      */
-    public static function findByRawyId($rawyId)
+    public static function findByNarratorId($nid)
     {
-        $cacheKey = 'narrator:id:' . (int)$rawyId;
+        $cacheKey = 'narrator:id:' . (int)$nid;
         $cached = Yii::$app->cache->get($cacheKey);
         if ($cached !== false) {
             return $cached ?: null;
         }
-        $narrator = static::findOne(['rawy_id' => (int)$rawyId]);
+        $narrator = static::findOne(['narrator_id' => (int)$nid]);
         if ($narrator !== null) {
             Yii::$app->cache->set($cacheKey, $narrator, Yii::$app->params['cacheTTL']);
         }
@@ -31,10 +31,10 @@ class Narrator extends ActiveRecord
     }
 
     /**
-     * Returns a map of rawy_id => shohra for all narrators, used to resolve
+     * Returns a map of narrator_id => byname for all narrators, used to resolve
      * teacher/student ids without N+1 queries. Cached as a single blob.
      *
-     * @return array  [rawy_id (int) => shohra (string), ...]
+     * @return array  [narrator_id (int) => byname (string), ...]
      */
     public static function getSummaryMap()
     {
@@ -44,18 +44,18 @@ class Narrator extends ActiveRecord
             return $map;
         }
         $rows = Yii::$app->db
-            ->createCommand('SELECT rawy_id, shohra FROM Narrators')
+            ->createCommand('SELECT narrator_id, byname FROM Narrators')
             ->queryAll();
         $map = [];
         foreach ($rows as $row) {
-            $map[(int)$row['rawy_id']] = $row['shohra'];
+            $map[(int)$row['narrator_id']] = $row['byname'];
         }
         Yii::$app->cache->set($cacheKey, $map, Yii::$app->params['cacheTTL']);
         return $map;
     }
 
     /**
-     * Returns the rawy_ids of this narrator's teachers.
+     * Returns the narrator_ids of this narrator's teachers.
      *
      * @return int[]
      */
@@ -68,7 +68,7 @@ class Narrator extends ActiveRecord
     }
 
     /**
-     * Returns the rawy_ids of this narrator's students.
+     * Returns the narrator_ids of this narrator's students.
      *
      * @return int[]
      */
@@ -81,34 +81,794 @@ class Narrator extends ActiveRecord
     }
 
     /**
-     * Parses the alim_opinions field into structured rows.
-     * Each line is "shohra: opinion"; we split on the first colon only,
-     * since opinion text may itself contain colons.
+     * Parses the critic_opinions field into structured rows.
+     * The field is a JSON array of {critic_id, name, opinion} objects.
      *
-     * @return array  [['shohra' => string, 'opinion' => string], ...]
+     * @return array  [['name' => string, 'opinion' => string], ...]
      */
-    public function getAlimOpinions()
+    public function getCriticOpinions()
     {
-        if (empty($this->alim_opinions)) {
+        if (empty($this->critic_opinions)) {
+            return [];
+        }
+        $decoded = json_decode($this->critic_opinions, true);
+        if (!is_array($decoded)) {
             return [];
         }
         $opinions = [];
-        foreach (explode("\n", trim($this->alim_opinions)) as $line) {
-            $line = trim($line);
-            if ($line === '') {
-                continue;
+        foreach ($decoded as $row) {
+            if (!empty($row['name']) && !empty($row['opinion'])) {
+                $opinions[] = [
+                    'name'    => $row['name'],
+                    'opinion' => $row['opinion'],
+                ];
             }
-            $pos = strpos($line, ':');
-            if ($pos === false) {
-                continue;
-            }
-            $opinions[] = [
-                'shohra'  => trim(substr($line, 0, $pos)),
-                'opinion' => trim(substr($line, $pos + 1)),
-            ];
         }
         return $opinions;
     }
+
+    // ──────────────────────────────────────────────────── TRANSLITERATION
+
+    private static function getWordDict(): array
+    {
+        return [
+            // Common first names / patronymics
+            'محمد'      => 'Muhammad',
+            'أحمد'      => 'Ahmad',
+            'عبد'       => '`Abd',
+            'عبدالله'   => '`Abd Allah',
+            'عبد الله'  => '`Abd Allah',
+            'عبدالرحمن' => '`Abd al-Rahman',
+            'عبدالعزيز' => '`Abd al-`Aziz',
+            'عبدالرزاق' => '`Abd al-Razzaq',
+            'عبدالملك'  => '`Abd al-Malik',
+            'عبدالكريم' => '`Abd al-Karim',
+            'علي'       => '`Ali',
+            'عمر'       => '`Umar',
+            'عثمان'     => '`Uthman',
+            'حسن'       => 'Hasan',
+            'حسين'      => 'Husayn',
+            'يحيى'      => 'Yahya',
+            'إبراهيم'   => 'Ibrahim',
+            'إسحاق'     => 'Ishaq',
+            'إسماعيل'   => 'Ismail',
+            'سليمان'    => 'Sulayman',
+            'سفيان'     => 'Sufyan',
+            'حماد'      => 'Hammad',
+            'شعبة'      => 'Shu`ba',
+            'وكيع'      => 'Waki`',
+            'نافع'      => 'Nafi`',
+            'جعفر'      => 'Ja`far',
+            'هشام'      => 'Hisham',
+            'مالك'      => 'Malik',
+            'أنس'       => 'Anas',
+            'زيد'       => 'Zayd',
+            'خالد'      => 'Khalid',
+            'سعيد'      => 'Sa`id',
+            'بشر'       => 'Bishr',
+            'داود'      => 'Dawud',
+            'موسى'      => 'Musa',
+            'عيسى'      => '`Isa',
+            'يوسف'      => 'Yusuf',
+            'طلحة'      => 'Talha',
+            'ربيعة'     => 'Rabi`a',
+            'عبيد'      => '`Ubayd',
+            'عبيدالله'  => '`Ubayd Allah',
+            'معن'       => 'Ma`n',
+            'معاوية'    => 'Mu`awiya',
+            'معمر'      => 'Ma`mar',
+            'قتادة'     => 'Qatada',
+            'حبيب'      => 'Habib',
+            'حميد'      => 'Humayd',
+            'يزيد'      => 'Yazid',
+            'منصور'     => 'Mansur',
+            'مسلم'      => 'Muslim',
+            'روح'       => 'Rawh',
+            'شريك'      => 'Sharik',
+            'وهيب'      => 'Wuhayb',
+            'مطرف'      => 'Mutarrif',
+            'مطر'       => 'Matar',
+            'بكر'       => 'Bakr',
+            'أبوبكر'    => 'Abu Bakr',
+            'عائشة'     => '`Aisha',
+            'فاطمة'     => 'Fatima',
+            'زينب'      => 'Zaynab',
+            'ثور'       => 'Thawr',
+            'صالح'      => 'Salih',
+            'صفوان'     => 'Safwan',
+            'ضمرة'      => 'Damra',
+            'طاوس'      => 'Tawus',
+            'ظالم'      => 'Zalim',
+            'عيينة'     => '`Uyayna',
+            'ميمون'     => 'Maymun',
+            'معين'      => 'Ma`in',
+            'حنبل'      => 'Hanbal',
+            'إدريس'     => 'Idris',
+            'حاتم'      => 'Hatim',
+            'حجر'       => 'Hajar',
+            'شهاب'      => 'Shihab',
+            'عروة'      => '`Urwa',
+            'آدم'       => 'Adam',
+            'عمرو'      => '`Amr',
+            // Allah — needed for `Abd Allah compounds and standalone
+            'الله'      => 'Allah',
+            // Common nisbas (key includes ال prefix for Step-6 lookups)
+            'الزهري'    => 'al-Zuhri',
+            'الأنصاري'  => 'al-Ansari',
+            'القرشي'    => 'al-Qurashi',
+            'المكي'     => 'al-Makki',
+            'المدني'    => 'al-Madani',
+            'الكوفي'    => 'al-Kufi',
+            'البصري'    => 'al-Basri',
+            'الليثي'    => 'al-Laythi',
+            'الأسدي'    => 'al-Asadi',
+            'الحنظلي'   => 'al-Hanzali',
+            'الحميري'   => 'al-Humayri',
+            'الهاشمي'   => 'al-Hashimi',
+            'الرازي'    => 'al-Razi',
+            'الخزاعي'   => 'al-Khuza`i',
+            'العتكي'    => 'al-`Ataki',
+            'الأصبحي'   => 'al-Asbahi',
+            'السهمي'    => 'al-Sahmi',
+            'القيسي'    => 'al-Qaysi',
+            'الحارثي'   => 'al-Harithi',
+            'اليساري'   => 'al-Yasari',
+            'الهروي'    => 'al-Harawi',
+            'القطان'    => 'al-Qattan',
+            'الزهراني'  => 'al-Zahrani',
+            'الخراساني' => 'al-Khurasani',
+            'الصنعاني'  => 'al-Sanani',
+            'الشامي'    => 'al-Shami',
+            'المصري'    => 'al-Masri',
+            'العراقي'   => 'al-`Iraqi',
+            'التميمي'   => 'al-Tamimi',
+            'السلمي'    => 'al-Sulami',
+            'الدمشقي'   => 'al-Dimashqi',
+            'المروزي'   => 'al-Marwazi',
+            'الجعفري'   => 'al-Ja`fari',
+            'المالكي'   => 'al-Maliki',
+            'الحنفي'    => 'al-Hanafi',
+            'الشافعي'   => 'al-Shafi`i',
+            'الحنبلي'   => 'al-Hanbali',
+            'المخزومي'  => 'al-Makhzumi',
+            'العتقي'    => 'al-`Atqi',
+            'الرؤاسي'   => "al-Ru'asi",
+            'الخزرجي'   => 'al-Khazraji',
+            'الديلي'    => 'al-Dayli',
+            // Nisbas / epithets extracted from formerly hard-coded full-name entries
+            'المديني'   => 'al-Madini',
+            'العسقلاني' => 'al-`Asqalani',
+            'الصادق'    => 'al-Sadiq',
+            'الرأي'     => "al-Ra'y",
+            'الهلالي'    => "al-Hilali",
+            'الزبير'    => 'az-Zubayr',
+            'الحميدي'   => 'al-Humaydi',
+            'الأموي'    => 'al-\'Umawi',
+            'راهويه'    => 'Rahawayh',
+            'الهمداني'  => 'al-Hamadani',
+            'العلاء'     => 'al-A`la',
+        ];
+    }
+
+    private static function getCharMap(): array
+    {
+        return [
+            'ب' => 'b',  'ت' => 't',  'ث' => 'th', 'ج' => 'j',  'ح' => 'h',  'خ' => 'kh',
+            'د' => 'd',  'ذ' => 'dh', 'ر' => 'r',  'ز' => 'z',  'س' => 's',  'ش' => 'sh',
+            'ص' => 's',  'ض' => 'd',  'ط' => 't',  'ظ' => 'z',  'ع' => '`a',  'غ' => 'gh',
+            'ف' => 'f',  'ق' => 'q',  'ك' => 'k',  'ل' => 'l',  'م' => 'm',  'ن' => 'n',
+            'ه' => 'h',  'و' => 'w',  'ي' => 'y',  'ة' => 'a',
+            'ء' => "'",  'ئ' => "'",  'ؤ' => "'",
+            'ا' => 'a',  'أ' => 'a',  'إ' => 'i',  'آ' => 'a',
+        ];
+    }
+
+    /**
+     * Transliterates an Arabic name string to simplified Latin script.
+     *
+     * Uses a two-tier approach: word-level dictionary for known names and
+     * nisbas, with a character-level consonant map as fallback. No diacritical
+     * marks are added (simplified IJMES). Structural particles (ibn, bint,
+     * Abu, etc.) are handled explicitly.
+     *
+     * @param  string $arabicText  Raw Arabic text (tashkeel allowed; stripped internally)
+     * @return string
+     */
+    public static function transliterateArabicName(string $arabicText): string
+    {
+        // Strip tashkeel (U+0610–U+061A, U+064B–U+065F) and tatweel (U+0640)
+        $text = preg_replace('/[\x{0610}-\x{061A}\x{064B}-\x{065F}\x{0640}]/u', '', $arabicText);
+        $text = trim($text);
+
+        if ($text === '') {
+            return '';
+        }
+
+        $wordDict = self::getWordDict();
+
+        $words = preg_split('/\s+/u', $text);
+        $n     = count($words);
+        $out   = [];
+
+        for ($i = 0; $i < $n; $i++) {
+            $w = $words[$i];
+
+            // Structural particles
+            if ($w === 'بن' || $w === 'ابن') { $out[] = 'ibn';   continue; }
+            if ($w === 'بنت')                 { $out[] = 'bint';  continue; }
+            if ($w === 'أبو')                 { $out[] = 'Abu';   continue; }
+            if ($w === 'أبي')                 { $out[] = 'Abi';   continue; }
+            if ($w === 'مولى')                { $out[] = 'mawla'; continue; }
+            if ($w === 'ذو')                  { $out[] = 'Dhu';   continue; }
+            if ($w === 'أم')                  { $out[] = 'Umm';   continue; }
+
+            // عبد compound: peek ahead when followed by ال-word
+            if ($w === 'عبد' && $i + 1 < $n && str_starts_with($words[$i + 1], 'ال')) {
+                $next = $words[$i + 1];
+                $stem = mb_substr($next, 2);
+                if (isset($wordDict['ال' . $stem])) {
+                    $out[] = '`Abd ' . $wordDict['ال' . $stem];
+                } else {
+                    $out[] = '`Abd al-' . self::ucfirstTranslit(self::transliterateWord($stem));
+                }
+                $i++;
+                continue;
+            }
+
+            // Word-level dictionary
+            if (isset($wordDict[$w])) {
+                $out[] = $wordDict[$w];
+                continue;
+            }
+
+            // Strip leading ال and look up stem or fall back to char-level
+            if (str_starts_with($w, 'ال')) {
+                $stem = mb_substr($w, 2);
+                if (isset($wordDict['ال' . $stem])) {
+                    $out[] = $wordDict['ال' . $stem];
+                } else {
+                    $out[] = 'al-' . self::ucfirstTranslit(self::transliterateWord($stem));
+                }
+                continue;
+            }
+
+            // Character-level fallback
+            $out[] = self::transliterateWord($w);
+        }
+
+        // Capitalise first token and tokens following relational particles
+        $capitalizeNext   = true;
+        $particleTriggers = ['ibn', 'bint', 'mawla', 'dhu', 'abu', 'abi', 'umm'];
+        for ($i = 0, $count = count($out); $i < $count; $i++) {
+            $lower = mb_strtolower($out[$i]);
+            if ($capitalizeNext && !str_starts_with($out[$i], 'al-')) {
+                $out[$i] = self::ucfirstTranslit($out[$i]);
+            }
+            $capitalizeNext = in_array($lower, $particleTriggers);
+        }
+
+        return implode(' ', $out);
+    }
+
+    /**
+     * Capitalises the first meaningful character of a transliterated token.
+     * Tokens beginning with ` (ayn) or ' (hamza) have their second character
+     * capitalised instead, since the punctuation mark is not a letter.
+     */
+    private static function ucfirstTranslit(string $s): string
+    {
+        if ($s === '') {
+            return $s;
+        }
+        $first = mb_substr($s, 0, 1);
+        if (($first === '`' || $first === "'") && mb_strlen($s) > 1) {
+            return $first . mb_strtoupper(mb_substr($s, 1, 1)) . mb_substr($s, 2);
+        }
+        return mb_strtoupper($first) . mb_substr($s, 1);
+    }
+
+    /**
+     * Character-level transliteration fallback for a single Arabic word.
+     * Maps consonants via CHAR_MAP; collapses consecutive identical special
+     * chars (ayn/hamza); strips trailing ayn/hamza.
+     */
+    private static function transliterateWord(string $word): string
+    {
+        $charMap = self::getCharMap();
+        $chars   = mb_str_split($word);
+        $result  = '';
+        $prev    = '';
+        foreach ($chars as $ch) {
+            $mapped = $charMap[$ch] ?? $ch;
+            // Collapse consecutive identical ayn or hamza
+            if ($mapped === $prev && ($mapped === '`' || $mapped === "'")) {
+                continue;
+            }
+            $result .= $mapped;
+            $prev    = $mapped;
+        }
+        return rtrim($result, "`'");
+    }
+
+    // ──────────────────────────────────────── JARH & TA'DIL TRANSLATION
+
+    /**
+     * Lookup map of Arabic jarh_tadil phrases → curated English translations.
+     * Keys are plain Arabic (no tashkeel). Covers all terms with frequency ≥ 3
+     * from the acquisition dataset.
+     */
+    private static function getJarhTadilMap(): array
+    {
+        return [
+            'مجهول الحال'                              => 'Unknown Status',
+            'ثقة'                                      => 'Trustworthy',
+            'مقبول'                                    => 'Acceptable',
+            'صدوق حسن الحديث'                         => 'Truthful, Good Hadith',
+            'صحابي'                                    => 'Companion',
+            'مجهول'                                    => 'Unknown',
+            'ضعيف الحديث'                              => 'Weak in Hadith',
+            'متروك الحديث'                             => 'Abandoned in Hadith',
+            'انفرد بتوثيقه ابن حبان'                  => 'Deemed Trustworthy by Ibn Hibban Alone',
+            'متهم بالوضع'                              => 'Accused of Fabrication',
+            'منكر الحديث'                              => 'Denounced in Hadith',
+            'ثقة حافظ'                                 => 'Trustworthy, Expert',
+            'ثقة ثبت'                                  => 'Trustworthy, Firm',
+            'متهم بالكذب'                              => 'Accused of Lying',
+            'ثقة مأمون'                                => 'Trustworthy, Reliable',
+            'كذاب'                                     => 'Liar',
+            'مختلف في صحبته'                           => 'Disputed Companionship',
+            'صدوق يخطئ'                                => 'Truthful, Makes Errors',
+            'يضع الحديث'                               => 'Fabricates Hadith',
+            'ثقة إمام'                                 => 'Trustworthy, Imam',
+            'له رؤية'                                  => 'Has Sight',
+            'ثقة متقن'                                 => 'Trustworthy, Precise',
+            'صحابية'                                   => 'Companion',
+            'وضاع'                                     => 'Fabricator',
+            'صحابي صغير'                               => 'Young Companion',
+            'ثقة حجة'                                  => 'Trustworthy, Authority',
+            'صدوق يهم'                                 => 'Truthful, Prone to Error',
+            'صدوق له أوهام'                            => 'Truthful, Has Errors',
+            'له إدراك'                                 => 'Has Perception',
+            'متهم'                                     => 'Accused',
+            'مجهولة الحال'                             => 'Unknown Status',
+            'لم تثبت له صحبة'                          => 'Companionship Not Established',
+            'ثقة محدث'                                 => 'Trustworthy, Hadith Scholar',
+            'ثقة ثقة'                                  => 'Doubly Trustworthy',
+            'صدوق رمي بالتشيع'                         => "Truthful, Accused of Shi'ism",
+            'ثقة صدوق'                                 => 'Trustworthy, Truthful',
+            'صدوق يغرب'                                => 'Truthful, Produces Rare Narrations',
+            'متروك متهم بالكذب'                        => 'Abandoned, Accused of Lying',
+            'مخضرم'                                    => 'Straddles Both Eras',
+            'صدوق كثير الخطأ'                          => 'Truthful, Frequent Errors',
+            'صدوق رمي ببدعة'                           => 'Truthful, Accused of Innovation',
+            'صدوق'                                     => 'Truthful',
+            'حافظ ثقة'                                 => 'Expert, Trustworthy',
+            'ثقة حافظ إمام'                            => 'Trustworthy, Expert, Imam',
+            'صدوق يتشيع'                               => "Truthful, Inclines to Shi'ism",
+            'صدوق سيء الحفظ'                          => 'Truthful, Poor Memory',
+            'ثقة إمام حافظ'                            => 'Trustworthy, Imam, Expert',
+            'ثقة أمين'                                 => 'Trustworthy, Faithful',
+            'إمام حجة'                                 => 'Imam, Authority',
+            'صدوق فيه لين'                             => 'Truthful, Some Weakness',
+            'صدوق رمي بالقدر'                          => 'Truthful, Accused of Qadarism',
+            'صدوق ربما وهم'                            => 'Truthful, Occasionally Errs',
+            'كذاب خبيث'                                => 'Liar, Wicked',
+            'حافظ ثبت'                                 => 'Expert, Firm',
+            'يكذب'                                     => 'Lies',
+            'صدوق تغير بآخره'                          => 'Truthful, Deteriorated Later',
+            'ثقة مخضرم'                                => 'Trustworthy, Straddles Both Eras',
+            'ثقة يرسل'                                 => 'Trustworthy, Makes Mursal Narrations',
+            'ثقة فاضل'                                 => 'Trustworthy, Virtuous',
+            'ثقة ضابط'                                 => 'Trustworthy, Precise',
+            'متهم بالكذب والوضع'                       => 'Accused of Lying, Fabrication',
+            'كذاب وضاع'                                => 'Liar, Fabricator',
+            'صدوق رمي بالإرجاء'                        => "Truthful, Accused of Irja'",
+            'متروك متهم بالوضع'                        => 'Abandoned, Accused of Fabrication',
+            'ثقة له أفراد'                             => 'Trustworthy, Has Unique Narrations',
+            'صدوق سيئ الحفظ'                          => 'Truthful, Poor Memory',
+            'صدوق يخطئ كثيرا'                          => 'Truthful, Frequent Errors',
+            'مختلف في صحبتها'                          => 'Disputed Companionship',
+            'ثقة ثبت فاضل'                             => 'Trustworthy, Firm, Virtuous',
+            'ثقة صالح'                                 => 'Trustworthy, Righteous',
+            'مقبولة'                                   => 'Acceptable',
+            'كذاب يضع الحديث'                          => 'Liar, Fabricates Hadith',
+            'ضعيف'                                     => 'Weak',
+            'صدوق يهم كثيرا'                           => 'Truthful, Frequently Errs',
+            'ثبت حافظ'                                 => 'Firm, Expert',
+            'ثقة حافظ ثبت'                             => 'Trustworthy, Expert, Firm',
+            'صدوق يخطىء'                               => 'Truthful, Makes Errors',
+            'ثقة حافظ مصنف'                            => 'Trustworthy, Expert, Author',
+            'صدوق اختلط بآخره'                         => 'Truthful, Became Confused Later',
+            'ثقة رمي بالنصب'                           => 'Trustworthy, Accused of Nasb',
+            'ثقة حافظ حجة'                             => 'Trustworthy, Expert, Authority',
+            'صدوق ربما أخطأ'                           => 'Truthful, Occasionally Makes Errors',
+            'مختلف في صحبته ، والراجح أنه تابعي'       => 'Disputed Companionship, Likely a Successor',
+            'صدوق له غرائب'                            => 'Truthful, Has Rare Narrations',
+            'ثقة حافظ فقيه'                            => 'Trustworthy, Expert, Jurist',
+            'إمام حافظ'                                => 'Imam, Expert',
+            'متهم بوضع الحديث'                         => 'Accused of Fabricating Hadith',
+            'حافظ متقن'                                => 'Expert, Precise',
+            'حافظ'                                     => 'Expert',
+            'ضعف الحديث'                               => 'Weak, Hadith',
+        ];
+    }
+
+    /**
+     * Translates an Arabic jarh_tadil phrase to English using the curated map.
+     * Strips tashkeel before lookup. Falls back to transliterateArabicName()
+     * for phrases not in the map.
+     *
+     * @param  string $arabic  Raw Arabic jarh_tadil value
+     * @return string
+     */
+    public static function getJarhTadilTier(string $arabic): string
+    {
+        $stripped = trim(preg_replace('/[\x{0610}-\x{061A}\x{064B}-\x{065F}\x{0640}]/u', '', $arabic));
+
+        static $red = [
+            'كذاب', 'كذاب خبيث', 'كذاب وضاع', 'كذاب يضع الحديث',
+            'متهم بالكذب', 'متهم بالوضع', 'متهم بالكذب والوضع', 'متهم بوضع الحديث',
+            'متروك الحديث', 'متروك متهم بالكذب', 'متروك متهم بالوضع',
+            'منكر الحديث', 'يضع الحديث', 'يكذب', 'وضاع',
+        ];
+
+        if (in_array($stripped, $red, true)) {
+            return 'red';
+        }
+
+        static $green = [
+            'صحابي', 'صحابية', 'صحابي صغير',
+            'له رؤية', 'له إدراك',
+            'إمام حجة', 'إمام حافظ',
+            'حافظ', 'حافظ ثقة', 'حافظ ثبت', 'حافظ متقن', 'ثبت حافظ',
+        ];
+
+        if (in_array($stripped, $green, true) || str_starts_with($stripped, 'ثقة')) {
+            return 'green';
+        }
+
+        return 'yellow';
+    }
+
+    public static function translateJarhTadil(string $arabic): string
+    {
+        $stripped = trim(preg_replace('/[\x{0610}-\x{061A}\x{064B}-\x{065F}\x{0640}]/u', '', $arabic));
+        $map      = self::getJarhTadilMap();
+        return $map[$stripped] ?? self::transliterateArabicName($arabic);
+    }
+
+    // ────────────────────────────────────────── RESIDENCE TRANSLATION
+
+    /**
+     * Lookup map of Arabic residence values → English names.
+     * Keys are plain Arabic (no tashkeel). Covers all cities with frequency ≥ 5
+     * from the acquisition dataset.
+     */
+    private static function getResidenceMap(): array
+    {
+        return [
+            'بغداد'               => 'Baghdad',
+            'دمشق'                => 'Damascus',
+            'البصرة'              => 'Basra',
+            'الكوفة'              => 'Kufa',
+            'المدينة'             => 'Madina',
+            'مصر'                 => 'Egypt',
+            'الشام'               => 'al-Sham',
+            'أصبهان'              => 'Isfahan',
+            'نيسابور'             => 'Nishapur',
+            'مكة'                 => 'Makka',
+            'مرو'                 => 'Merv',
+            'الحجاز'              => 'Hijaz',
+            'الري'                => 'al-Rayy',
+            'واسط'                => 'Wasit',
+            'حمص'                 => 'Homs',
+            'خراسان'              => 'Khurasan',
+            'جرجان'               => 'Jurjan',
+            'قزوين'               => 'Qazvin',
+            'هراة'                => 'Herat',
+            'حلب'                 => 'Aleppo',
+            'العراق'              => 'Iraq',
+            'بخارى'               => 'Bukhara',
+            'حران'                => 'Harran',
+            'الموصل'              => 'Mosul',
+            'اليمن'               => 'Yemen',
+            'الرقة'               => 'Raqqa',
+            'حضرموت'              => 'Hadramawt',
+            'الجزيرة'             => 'al-Jazira',
+            'الرملة'              => 'Ramla',
+            'قرطبة'               => 'Córdoba',
+            'الإسكندرية'          => 'Alexandria',
+            'الأندلس'             => 'al-Andalus',
+            'القدس'               => 'Jerusalem',
+            'صنعاء'               => 'Sanaa',
+            'اليمامة'             => 'Yamama',
+            'القاهرة'             => 'Cairo',
+            'المصيصة'             => 'al-Massisa',
+            'سر من رأى'           => 'Samarra',
+            'بلخ'                 => 'Balkh',
+            'طرسوس'               => 'Tarsus',
+            'صور'                 => 'Tyre',
+            'طوس'                 => 'Tus',
+            'المدائن'             => "al-Mada'in",
+            'سمرقند'              => 'Samarkand',
+            'الأهواز'             => 'Ahwaz',
+            'بلاد فارس'           => 'Persia',
+            'بعلبك'               => 'Baalbek',
+            'أنطاكيا'             => 'Antakya',
+            'عسقلان'              => 'Asqalan',
+            'نسا'                 => 'Nisa',
+            'فلسطين'              => 'Palestine',
+            'سرخس'                => 'Sarakhs',
+            'بيروت'               => 'Beirut',
+            'الأنبار'             => 'Anbar',
+            'طبرستان'             => 'Tabaristan',
+            'شيراز'               => 'Shiraz',
+            'تجيب'                => 'Tujib',
+            'تستر'                => 'Tustar',
+            'أطرابلس'             => 'Tripoli',
+            'القيس'               => 'al-Qays',
+            'دينور'               => 'Dinawar',
+            'خوارزم'              => 'Khwarazm',
+            'نصيبين'              => 'Nisibis',
+            'عسكر'                => 'Askar',
+            'زبيد'                => 'Zabid',
+            'تنيس'                => 'Tinnis',
+            'طبرية'               => 'Tiberias',
+            'كرمان'               => 'Kirman',
+            'صيدا'                => 'Sidon',
+            'أيلة'                => 'Ayla',
+            'عكبرا'               => 'Ukbara',
+            'سجستان'              => 'Sijistan',
+            'داريا'               => 'Daraya',
+            'إفريقية'             => 'Ifriqiya',
+            'بيت المقدس'          => 'Jerusalem',
+            'حماة'                => 'Hama',
+            'الأردن'              => 'Jordan',
+            'الثغر'               => 'al-Thaghr',
+            'الحربية'             => 'al-Harbiyya',
+            'الكرخ'               => 'Karkh',
+            'زرق'                 => 'Zarq',
+            'فارس'                => 'Fars',
+            'ترمذ'                => 'Tirmidh',
+            'القيروان'            => 'Qayrawan',
+            'حلوان'               => 'Hulwan',
+            'إشبيلية'             => 'Seville',
+            'إربل'                => 'Erbil',
+            'بلاد الروم'          => 'Byzantine Lands',
+            'همدان'               => 'Hamadan',
+            'سامراء'              => 'Samarra',
+            'مرو الروذ'           => 'Marw al-Ruz',
+            'المغرب'              => 'Al-Maghrib',
+            'الدينور'             => 'Dinawar',
+            'نهاوند'              => 'Nahavand',
+            'الطائف'              => "Ta'if",
+            'رحبة'                => 'Rahba',
+            'المرية'              => 'Almería',
+            'الكرج'               => 'Karaj',
+            'بجيلة'               => 'Bajila',
+            'عبادان'              => 'Abadan',
+            'الدور'               => 'al-Dur',
+            'بنانة'               => 'Banana',
+            'ختلان'               => 'Khuttal',
+            'الرصافة'             => 'Rusafa',
+            'نابلس'               => 'Nablus',
+            'حدان'                => 'Hadan',
+            'عكا'                 => 'Acre',
+            'أبهر'                => 'Abhar',
+            'غرناطة'              => 'Granada',
+            'أذنة'                => 'Adana',
+            'كندى'                => 'Kinda',
+            'طالقان'              => 'Taliqan',
+            'الزعفرانية'          => "al-Za'faraniyya",
+            'منبج'                => 'Manbij',
+            'أبلة'                => 'Ubulla',
+            'ملطية'               => 'Malatya',
+            'رأس العين'           => "Ra's al-'Ayn",
+            'غزة'                 => 'Gaza',
+            'سوسة'                => 'Sousse',
+            'المخرم'              => 'al-Mukharrim',
+            'فرغانة'              => 'Fergana',
+            'حجر'                 => 'Hajar',
+            'نهروان'              => 'Nahrawan',
+            'طرابلس'              => 'Tripoli',
+            'بلنسية'              => 'Valencia',
+            'عمان'                => 'Oman',
+            'بسطام'               => 'Bistam',
+            'القنطرة'             => 'al-Qantara',
+            'الديلم'              => 'Daylam',
+            'دمياط'               => 'Damietta',
+            'بلاد المغرب'         => 'Al-Maghrib',
+            'بيهق'                => 'Bayhaq',
+            'سبتة'                => 'Ceuta',
+            'جنديسابور'           => 'Jundishapur',
+            'نوقان'               => 'Nawqan',
+            'نسف'                 => 'Nasaf',
+            'بالس'                => 'Balis',
+            'جند'                 => 'Jund',
+            'حمير'                => 'Himyar',
+            'عسكر مكرم'           => 'Askar Mukram',
+            'قرقيسيا'             => 'Circesium',
+            'قار'                 => 'Qar',
+            'ساوة'                => 'Saveh',
+            'إسفرايين'            => 'Isfarayin',
+            'إستراباذ'            => 'Astarabad',
+            'مراكش'               => 'Marrakesh',
+            'غافق'                => 'Ghafiq',
+            'الأبلة'              => 'al-Ubulla',
+            'دامغان'              => 'Damghan',
+            'قم'                  => 'Qom',
+            'القارة'              => 'al-Qara',
+            'أبيورد'              => 'Abivard',
+            'جبيل'                => 'Byblos',
+            'الفسطاط'             => 'Fustat',
+            'سرقسطة'              => 'Zaragoza',
+            'الأسكندرية'          => 'Alexandria',
+            'برقة'                => 'Barqa',
+            'قومس'                => 'Qumis',
+            'البحرين'             => 'Bahrain',
+            'جمل'                 => 'Jamal',
+            'طاحية'               => 'Tahiya',
+            'ثور'                 => 'Thawr',
+            'بيكند'               => 'Paykand',
+            'دير العاقول'         => "Dayr al-Aqul",
+            'طليطلة'              => 'Toledo',
+            'خشين'                => 'Khushayn',
+            'ذمار'                => 'Dhamar',
+            'الجبل'               => 'al-Jabal',
+            'النهروان'            => 'al-Nahrawan',
+            'ما وراء النهر'       => 'Transoxiana',
+            'بيت لهيا'            => 'Bayt Lahiya',
+            'كرخ'                 => 'Karkh',
+            'باب الشعير'          => "Bab al-Sha'ir",
+            'الرها'               => 'Edessa',
+            'كش'                  => 'Kesh',
+            'القصر'               => 'al-Qasr',
+            'جبلة'                => 'Jabala',
+            'قنطرة الأشنان'       => 'Qantarat al-Ashnan',
+            'زنجان'               => 'Zanjan',
+            'الصالحية'            => 'al-Salihiyya',
+            'الشاش'               => 'al-Shash',
+            'سنجار'               => 'Sinjar',
+            'قنسرين'              => 'Qinnasrin',
+            'سامة'                => 'Sama',
+            'فارياب'              => 'Faryab',
+            'جرم'                 => 'Jurm',
+            'قديد'                => 'Qudayd',
+            'نرس'                 => 'Nars',
+            'فسا'                 => 'Fasa',
+            'همذان'               => 'Hamadan',
+            'خوزستان'             => 'Khuzistan',
+            'دار القطن'           => 'Dar al-Qutn',
+            'جوين'                => 'Juwayn',
+            'زوزن'                => 'Zawzan',
+            'خرسان'               => 'Khurasan',
+            'دنيسر'               => 'Dunaysir',
+            'دشتك'                => 'Dashtaq',
+            'آمل طبرستان'         => 'Amul, Tabaristan',
+            'الهند'               => 'India',
+            'شطا'                 => 'Shata',
+            'بيت البلاط'          => 'Bayt al-Ballat',
+            'الربذة'              => 'al-Rabadha',
+            'كلواذي'              => 'Kalwadhiy',
+            'المسامعة'            => 'al-Masamia',
+            'البرمكية'            => 'al-Barmakiyya',
+            'دولاب'               => 'Dulab',
+            'رافقة'               => 'Rafiqa',
+            'السند'               => 'Sind',
+            'السوس'               => 'al-Sus',
+            'إصطخر'               => 'Istakhr',
+            'بوشنج'               => 'Pushang',
+            'بست'                 => 'Bust',
+            'خسروجرد'             => 'Khusrawjird',
+            'غزنة'                => 'Ghazna',
+            'باب الأزج'           => 'Bab al-Azaj',
+            'حماه'                => 'Hama',
+            'مرسية'               => 'Murcia',
+            'شاطبة'               => 'Xàtiva',
+            'مقرا'                => 'Maqra',
+            'مأرب'                => 'Marib',
+            'سمنان'               => 'Semnan',
+            'الجيزة'              => 'Giza',
+            'قهستان'              => 'Quhistan',
+            'الجعفر'              => "al-Ja'far",
+            'جونية'               => 'Junieh',
+            'أسوارى'              => 'Aswara',
+            'قيسارية'             => 'Caesarea',
+            'توز'                 => 'Tuz',
+            'أردبيل'              => 'Ardabil',
+            'ميافارقين'           => 'Mayyafariqin',
+            'طابران'              => 'Tabaran',
+            'شيزار'               => 'Shayzar',
+            'أذربيجان'            => 'Azerbaijan',
+            'مالقة'               => 'Málaga',
+            'جماعيل'              => "Jama'il",
+            'المحلة'              => 'al-Mahalla',
+            'بسر'                 => 'Busr',
+            'عدن'                 => 'Aden',
+            'نجران'               => 'Najran',
+            'جهينة'               => 'Juhayna',
+            'قباء'                => 'Quba',
+            'الزبيرية'            => 'al-Zubayriyya',
+            'سكة بني حرام'        => 'Sikkat Bani Haram',
+            'فدك'                 => 'Fadak',
+            'جوبر'                => 'Jawbar',
+            'جرجرايا'             => 'Jarjaraya',
+            'مهرجان'              => 'Mihrajan',
+            'إخميم'               => 'Akhmim',
+            'رشيد'                => 'Rosetta',
+            'تفليس'               => 'Tiflis',
+            'آمد'                 => 'Amid',
+            'أرغيان'              => 'Arghiyan',
+            'فامية'               => 'Apamea',
+            'تونس'                => 'Tunis',
+            'صقلية'               => 'Sicily',
+            'الكرك'               => 'al-Karak',
+            'دانية'               => 'Denia',
+            'شعب الخوز'           => "Shi'b al-Khuz",
+            'طريثيث'              => 'Turaysith',
+            'بغشور'               => 'Baghshur',
+            'قرميسين'             => 'Kermanshah',
+            'الحبشة'              => 'Abyssinia',
+            'مسلية'               => 'Masiliya',
+            'وادي القرى'          => 'Wadi al-Qura',
+            'وحاظة'               => 'Wahaza',
+            'اللاذقية'            => 'Latakia',
+            'جدة'                 => 'Jeddah',
+            'العسكر'              => 'al-Askar',
+            'طهران'               => 'Tehran',
+            'المراغة'             => 'Maragha',
+            'ميانج'               => 'Miyanaj',
+            'يافا'                => 'Jaffa',
+            'حوران'               => 'Hauran',
+            'روذبار'              => 'Rudhbar',
+            'أسداباذ'             => 'Asadabad',
+            'يزد'                 => 'Yazd',
+            'تبريز'               => 'Tabriz',
+            'جزيرة صقلية'         => 'Sicily',
+            'بيسان'               => 'Baysan',
+            'الخليل'              => 'Hebron',
+            'رويان'               => 'Ruyan',
+            'مالين'               => 'Malin',
+            'النيل'               => 'al-Nil',
+            'أبزار'               => 'Abzar',
+            'استراباذ'            => 'Astarabad',
+            'جيل'                 => 'Jil',
+            'عرقة'                => 'Arqa',
+            'رامهرمز'             => 'Ramhormoz',
+            'ميهنة'               => 'Mayhana',
+            'طرطوس'               => 'Tartus',
+            'المعرة'              => "al-Ma'arra",
+            'فوشنج'               => 'Pushang',
+            'فم الصلح'            => 'Fam al-Sulh',
+            'المزة'               => 'al-Mizza',
+            'الرحبة'              => 'al-Rahba',
+            'قاسيون'              => 'Qasiyun',
+            'فاس'                 => 'Fez',
+        ];
+    }
+
+    /**
+     * Translates an Arabic residence value to English using the curated map.
+     * Strips tashkeel before lookup. Falls back to transliterateArabicName()
+     * for values not in the map.
+     *
+     * @param  string $arabic  Raw Arabic residence value
+     * @return string
+     */
+    public static function translateResidence(string $arabic): string
+    {
+        $map   = self::getResidenceMap();
+        $parts = preg_split('/\s*،\s*/u', trim($arabic));
+        $out   = [];
+        foreach ($parts as $part) {
+            $part     = trim($part);
+            $stripped = trim(preg_replace('/[\x{0610}-\x{061A}\x{064B}-\x{065F}\x{0640}]/u', '', $part));
+            $out[]    = $map[$stripped] ?? self::transliterateArabicName($part);
+        }
+        return implode(', ', $out);
+    }
+
+    // ────────────────────────────────────────────────────────────────────────
 
     /**
      * Returns labelled HTML blocks for each non-empty tarjama field.
@@ -118,10 +878,10 @@ class Narrator extends ActiveRecord
     public function getTarjamaBlocks()
     {
         $fields = [
-            'tarjama_tahdheeb' => 'تهذيب الكمال — الحافظ المزي',
-            'tarjama_isaba'    => 'الإصابة',
-            'tarjama_asad'     => 'أسد الغابة',
-            'tarjama_iste3ab'  => 'الاستيعاب',
+            'bio_tahdheeb' => 'تهذيب الكمال — الحافظ المزي',
+            'bio_isaba'    => 'الإصابة',
+            'bio_asad'     => 'أسد الغابة',
+            'bio_iste3ab'  => 'الاستيعاب',
         ];
         $blocks = [];
         foreach ($fields as $field => $label) {

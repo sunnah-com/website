@@ -20,10 +20,11 @@
   --outline-fainter: rgba(189, 201, 197, 0.2);
   --primary-10: rgba(0, 104, 91, 0.1);
   --primary-20: rgba(0, 104, 91, 0.2);
-  --teachers-bg: #f4f1ea;
-  --students-bg: #edf1f2;
+  --teachers-bg: #c4d8de;
+  --students-bg: #d9e8ed;
   --f-head: "Newsreader", serif;
   --f-body: "Public Sans", sans-serif;
+  --f-arabic: KFGQPC Uthman Taha Naskh, KFGQPC Uthmanic Script HAFS, Scheherazade, Trebuchet MS, Arial, Helvetica;
 }
 
 /* ---------- Box-sizing reset (scoped) ---------- */
@@ -84,20 +85,28 @@
 
 /* ---------- Hero ---------- */
 .narrator-page .hero {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   margin-bottom: 4rem;
 }
+.narrator-page .hero-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
 @media (min-width: 768px) {
-  .narrator-page .hero { grid-template-columns: 1fr 1fr; }
+  .narrator-page .hero-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
 }
 
 .narrator-page .hero-title {
   font-family: var(--f-head);
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 2.5rem;
   letter-spacing: -0.025em;
 }
 
@@ -117,6 +126,16 @@
   border-radius: 9999px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+.narrator-page .pill-grade {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.narrator-page .pill-grade--green { background: var(--primary-container); color: #fff; }
+.narrator-page .pill-grade--yellow { background: #d97706; color: #fff; }
+.narrator-page .pill-grade--red { background: #b91c1c; color: #fff; }
 .narrator-page .pill-secondary {
   background: var(--secondary-container);
   color: var(--on-secondary-container);
@@ -166,20 +185,28 @@
   padding: 2rem;
   margin-bottom: 4rem;
 }
-.narrator-page .bio-grid {
+.narrator-page .bio-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.narrator-page .bio-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 1rem;
+  align-items: start;
 }
 @media (min-width: 768px) {
-  .narrator-page .bio-grid { grid-template-columns: 1fr 1fr; }
+  .narrator-page .bio-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
 }
 .narrator-page .meta-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
-.narrator-page .meta-grid.mt-6 { margin-top: 1.5rem; }
 .narrator-page .lineage {
   color: var(--on-surface);
   line-height: 1.6;
@@ -190,7 +217,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 1.5rem;
 }
 
 /* ---------- Section headers ---------- */
@@ -203,10 +229,11 @@
 .narrator-page .section-head--ar { justify-content: flex-end; margin-bottom: 1rem; }
 .narrator-page .section-title {
   font-family: var(--f-head);
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding-left: 1rem;
   border-left: 4px solid var(--primary);
 }
+.narrator-page .section-title.arabic { font-size: 2.25rem; }
 .narrator-page .section-title--ar {
   padding-left: 0;
   border-left: 0;
@@ -220,6 +247,17 @@
   border-right: 4px solid var(--primary);
 }
 
+/* ---------- Coming soon ---------- */
+.narrator-page .coming-soon-pair {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.narrator-page .coming-soon {
+  color: var(--secondary);
+  font-style: italic;
+}
+
 /* ---------- Verdict cards ---------- */
 .narrator-page .verdict {
   background: var(--surface-lowest);
@@ -228,11 +266,21 @@
 }
 .narrator-page .verdict:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
 .narrator-page .verdict--muted { border-left-color: var(--outline-variant); }
+.narrator-page .verdict--ar {
+  border-left: 0;
+  border-right: 4px solid var(--primary);
+  padding: 1.5rem;
+}
 .narrator-page .verdict-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .narrator-page .verdict-col { padding: 1.5rem; }
 .narrator-page .verdict-col--ar {
   border-left: 1px solid var(--outline-faint);
   text-align: right;
+}
+.narrator-page .verdict-scholar {
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 .narrator-page .critic-quote {
   color: var(--secondary);
@@ -258,15 +306,16 @@
 .narrator-page .panel-label {
   display: flex;
   align-items: center;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--secondary);
+  gap: 0.5rem;
+  font-family: var(--f-head);
+  font-size: 1.75rem;
+  color: var(--on-surface);
   font-weight: 700;
 }
+.narrator-page .panel-label .mso { font-size: 1.25rem; }
 .narrator-page .panel-label-ar {
-  font-family: var(--f-head);
-  font-size: 1.25rem;
+  font-family: var(--f-arabic);
+  font-size: 2rem;
   font-weight: 700;
   color: var(--on-surface);
 }
@@ -371,24 +420,27 @@
 
 /* ---------- Arabic typography ---------- */
 .narrator-page .arabic {
-  font-family: var(--f-head);
+  font-family: var(--f-arabic);
   font-size: 1.25em;
   line-height: 1.6;
 }
-.narrator-page .arabic-label { font-size: 14px; }
+.narrator-page .arabic-label { font-size: 16px; }
 
 /* Compound overrides where Arabic needs a specific size */
-.narrator-page .hero-title.arabic { font-size: 3.75rem; line-height: 1.1; }
+.narrator-page .hero-title.arabic { font-size: 3.125rem; line-height: 1.15; }
 .narrator-page .pill-secondary.arabic {
-  font-size: 12px;
+  font-size: 16px;
   text-transform: none;
   letter-spacing: normal;
 }
 .narrator-page .pill-primary .arabic { font-size: 0.875rem; font-weight: 700; }
-.narrator-page .field.arabic { font-size: 1.25rem; }
-.narrator-page .lineage.arabic { font-size: 1.25rem; }
+.narrator-page .field.arabic { font-size: 1.5rem; line-height: 1.6; }
+.narrator-page .lineage.arabic { font-size: 1.5rem; }
+.narrator-page .verdict-scholar.arabic { font-size: 1.25rem; }
+.narrator-page .critic-quote.arabic { font-size: 1.1rem; line-height: 1.8; }
+.narrator-page .name-ar.arabic { font-size: 1.15rem; }
 .narrator-page .label.arabic-label {
-  font-size: 14px;
+  font-size: 16px;
   text-transform: none;
   letter-spacing: normal;
 }
