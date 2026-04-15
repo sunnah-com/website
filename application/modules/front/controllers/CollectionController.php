@@ -269,7 +269,8 @@ class CollectionController extends SController
         184010, 184020, 184090, 103570, 105090,
         105080, 103850, 153550, 185470, 185590,
         185840, 185800, 185930, 186160, 186390,
-        171510, 186380 );
+        171510, 186380, 104500, 140710, 104440, // 50
+        110840, 107860);
 
 		$this->_viewVars->pageTitle = "Al-Ihkam";
         $this->pathCrumbs($this->_viewVars->pageTitle, "");
