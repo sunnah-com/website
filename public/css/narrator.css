@@ -23,8 +23,8 @@
   --teachers-bg: #c4d8de;
   --students-bg: #d9e8ed;
   --f-head: "Newsreader", serif;
-  --f-body: "Public Sans", sans-serif;
-  --f-arabic: KFGQPC Uthman Taha Naskh, KFGQPC Uthmanic Script HAFS, Scheherazade, Trebuchet MS, Arial, Helvetica;
+  --f-body: "Akzidenz Roman", Helvetica, Arial, sans-serif;
+  --f-arabic: "KFGQPC Uthman Taha Naskh", "KFGQPC Uthmanic Script HAFS", Scheherazade, "Trebuchet MS", Arial, Helvetica;
 }
 
 /* ---------- Box-sizing reset (scoped) ---------- */
@@ -143,7 +143,7 @@
 .narrator-page .pill-grade--grade-3 { background: #a16207; color: #fff; } /* 7:    yellow      */
 .narrator-page .pill-grade--grade-4 { background: #c2410c; color: #fff; } /* 8–10: amber-red   */
 .narrator-page .pill-grade--grade-5 { background: #991b1b; color: #fff; } /* 11–12: dark red   */
-.narrator-page .pill-grade .arabic  { font-size: 0.875rem; font-weight: 700; line-height: 1; color: inherit; }
+.narrator-page .pill-grade .arabic  { font-size: 1.25rem; font-weight: 700; line-height: 1; color: inherit; }
 .narrator-page .pill-secondary {
   background: var(--secondary-container);
   color: var(--on-secondary-container);
@@ -166,9 +166,10 @@
   border: 1px solid var(--primary-20);
   padding: 0.5rem 1rem;
   border-radius: 2px;
-  font-size: 0.875rem;
+  font-size: 1.0625rem;
   font-weight: 700;
 }
+.narrator-page .pill-outline.arabic { font-size: 1.25rem; }
 
 .narrator-page .fields { display: flex; gap: 1.5rem; }
 .narrator-page [dir="rtl"] .fields { gap: 2rem; }
@@ -241,7 +242,7 @@
   padding-left: 1rem;
   border-left: 4px solid var(--primary);
 }
-.narrator-page .section-title.arabic { font-size: 2.25rem; }
+.narrator-page .section-title.arabic { font-family: var(--f-arabic); font-size: 2.25rem; }
 .narrator-page .section-title--ar {
   padding-left: 0;
   border-left: 0;
@@ -321,12 +322,6 @@
   font-weight: 700;
 }
 .narrator-page .panel-label .mso { font-size: 1.25rem; }
-.narrator-page .panel-label-ar {
-  font-family: var(--f-arabic);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--on-surface);
-}
 
 .narrator-page .row {
   display: flex;
@@ -335,7 +330,7 @@
   padding: 0.125rem 0;
   gap: 1rem;
 }
-.narrator-page .name-en { font-size: 1rem; color: var(--primary); }
+.narrator-page .name-en { font-size: 1.125rem; color: var(--primary); }
 .narrator-page .name-ar { text-align: right; }
 .narrator-page .grade { color: var(--secondary); font-size: 0.75rem; }
 
@@ -375,7 +370,6 @@
 }
 .narrator-page .accordion-btn:hover { background: var(--surface-low); }
 .narrator-page .accordion-title {
-  font-family: var(--f-head);
   font-size: 1.25rem;
   color: var(--primary);
   font-style: italic;
@@ -401,6 +395,7 @@
   background: linear-gradient(to bottom, transparent, var(--surface-lowest));
 }
 .narrator-page .ar-para { margin-bottom: 0.5rem; }
+.narrator-page .ar-para.arabic { font-size: 1.5rem; }
 .narrator-page .sublabel {
   font-size: 10px;
   text-transform: uppercase;
@@ -413,7 +408,7 @@
 .narrator-page .two-col {
   columns: 2;
   column-gap: 2rem;
-  font-size: 0.875rem;
+  font-size: 1.0625rem;
   line-height: 1.6;
   margin: 0.25rem 0;
 }
@@ -427,15 +422,21 @@
 }
 
 /* ---------- Arabic typography ---------- */
+/* font-family comes from the global .arabic rule in all.css */
 .narrator-page .arabic {
-  font-family: var(--f-arabic);
   font-size: 1.25em;
   line-height: 1.6;
 }
 .narrator-page .arabic-label { font-size: 16px; }
+/* Placed after .arabic so its font-size wins at equal specificity */
+.narrator-page .panel-label-ar {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--on-surface);
+}
 
 /* Compound overrides where Arabic needs a specific size */
-.narrator-page .hero-title.arabic { font-size: 3.125rem; line-height: 1.15; }
+.narrator-page .hero-title.arabic { font-family: var(--f-arabic); font-size: 3.125rem; line-height: 1.15; }
 .narrator-page .pill-secondary.arabic {
   font-size: 16px;
   text-transform: none;
@@ -444,9 +445,9 @@
 .narrator-page .pill-primary .arabic { font-size: 0.875rem; font-weight: 700; }
 .narrator-page .field.arabic { font-size: 1.5rem; line-height: 1.6; }
 .narrator-page .lineage.arabic { font-size: 1.5rem; }
-.narrator-page .verdict-scholar.arabic { font-size: 1.5rem; }
-.narrator-page .critic-quote.arabic { font-size: 1.25rem; line-height: 1.8; }
-.narrator-page .name-ar.arabic { font-size: 1.375rem; }
+.narrator-page .verdict-scholar.arabic { font-size: 1.75rem; }
+.narrator-page .critic-quote.arabic { font-size: 1.5rem; line-height: 1.8; }
+.narrator-page .name-ar.arabic { font-size: 1.625rem; }
 .narrator-page .label.arabic-label {
   font-size: 16px;
   text-transform: none;
@@ -521,9 +522,10 @@
   /* Arabic field size scale-down */
   .narrator-page .field.arabic          { font-size: 1.25rem; }
   .narrator-page .lineage.arabic        { font-size: 1.25rem; }
-  .narrator-page .verdict-scholar.arabic { font-size: 1.25rem; }
-  .narrator-page .critic-quote.arabic   { font-size: 1.1rem; }
-  .narrator-page .name-ar.arabic        { font-size: 1.125rem; }
+  .narrator-page .verdict-scholar.arabic { font-size: 1.375rem; }
+  .narrator-page .critic-quote.arabic   { font-size: 1.2rem; }
+  .narrator-page .name-ar.arabic        { font-size: 1.25rem; }
+  .narrator-page .ar-para.arabic        { font-size: 1.25rem; }
 }
 
 /* =====================================================

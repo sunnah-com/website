@@ -6,10 +6,27 @@
 /** @var array $studentRows    [['narrator_id' => int, 'byname' => string], ...] */
 /** @var array $tarjamaBlocks  [['label' => string, 'html' => string], ...] */
 
-$this->registerJsFile(
-    $this->context->auto_version('/js/narrator.js'),
-    ['position' => \yii\web\View::POS_END]
-);
+$this->registerJs(<<<'JS'
+document.addEventListener("click", (e) => {
+  const toggle = e.target.closest(".show-all-btn, .accordion-btn");
+  if (toggle) {
+    const body = toggle.nextElementSibling;
+    const icon = toggle.querySelector(".show-all-icon, .accordion-icon");
+    body.classList.toggle("hidden");
+    if (icon) icon.textContent = body.classList.contains("hidden") ? "expand_more" : "expand_less";
+    return;
+  }
+
+  const more = e.target.closest(".read-more-btn");
+  if (more) {
+    const expander = more.previousElementSibling;
+    const fade = expander.querySelector(".tarjama-fade");
+    expander.style.maxHeight = "none";
+    fade?.remove();
+    more.remove();
+  }
+});
+JS, \yii\web\View::POS_END);
 
 // Arabic ordinal labels for tabaka (generation tier), 1–12
 $tabaqatAr = [
@@ -247,10 +264,10 @@ $showBio    = $hasLineage || $hasMeta || $hasPills;
     </div>
     <div class="pills" dir="rtl">
       <?php if ($narrator->in_bukhari): ?>
-      <span class="pill-outline">يروي في البخاري</span>
+      <span class="pill-outline arabic">يروي في البخاري</span>
       <?php endif; ?>
       <?php if ($narrator->in_muslim): ?>
-      <span class="pill-outline">يروي في مسلم</span>
+      <span class="pill-outline arabic">يروي في مسلم</span>
       <?php endif; ?>
     </div>
   </div>
@@ -314,7 +331,7 @@ $opinionTotal    = count($criticOpinions);
       <h4 class="panel-label">
         <span class="mso mso-sm">history_edu</span> Teachers
       </h4>
-      <span class="panel-label-ar">المشايخ</span>
+      <span class="panel-label-ar arabic">المشايخ</span>
     </div>
     <ul>
       <?php foreach ($teacherPreview as $row): ?>
@@ -353,7 +370,7 @@ $opinionTotal    = count($criticOpinions);
       <h4 class="panel-label">
         <span class="mso mso-sm">group</span> Students
       </h4>
-      <span class="panel-label-ar">التلاميذ</span>
+      <span class="panel-label-ar arabic">التلاميذ</span>
     </div>
     <ul>
       <?php foreach ($studentPreview as $row): ?>
