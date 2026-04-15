@@ -133,9 +133,17 @@
   border-radius: 9999px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-.narrator-page .pill-grade--green { background: var(--primary-container); color: #fff; }
-.narrator-page .pill-grade--yellow { background: #d97706; color: #fff; }
-.narrator-page .pill-grade--red { background: #b91c1c; color: #fff; }
+.narrator-page .pill-grade--green   { background: var(--primary-container); color: #fff; }
+.narrator-page .pill-grade--yellow  { background: #92400e; color: #fff; }
+.narrator-page .pill-grade--red     { background: #b91c1c; color: #fff; }
+.narrator-page .pill-grade--neutral { background: #fef9c3; color: #713f12; }
+/* Grade-based tiers (reliability_grade 1–12) */
+.narrator-page .pill-grade--grade-1 { background: #065f46; color: #fff; } /* 1–3:  deep emerald   */
+.narrator-page .pill-grade--grade-2 { background: #059669; color: #fff; } /* 4–6:  medium emerald */
+.narrator-page .pill-grade--grade-3 { background: #a16207; color: #fff; } /* 7:    yellow      */
+.narrator-page .pill-grade--grade-4 { background: #c2410c; color: #fff; } /* 8–10: amber-red   */
+.narrator-page .pill-grade--grade-5 { background: #991b1b; color: #fff; } /* 11–12: dark red   */
+.narrator-page .pill-grade .arabic  { font-size: 0.875rem; font-weight: 700; line-height: 1; color: inherit; }
 .narrator-page .pill-secondary {
   background: var(--secondary-container);
   color: var(--on-secondary-container);
@@ -279,12 +287,12 @@
 }
 .narrator-page .verdict-scholar {
   color: var(--primary);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 700;
 }
 .narrator-page .critic-quote {
   color: var(--secondary);
-  font-size: 0.875rem;
+  font-size: 1rem;
   margin-top: 0.25rem;
 }
 
@@ -327,7 +335,7 @@
   padding: 0.125rem 0;
   gap: 1rem;
 }
-.narrator-page .name-en { font-size: 0.875rem; color: var(--secondary); font-style: italic; }
+.narrator-page .name-en { font-size: 1rem; color: var(--primary); }
 .narrator-page .name-ar { text-align: right; }
 .narrator-page .grade { color: var(--secondary); font-size: 0.75rem; }
 
@@ -436,11 +444,123 @@
 .narrator-page .pill-primary .arabic { font-size: 0.875rem; font-weight: 700; }
 .narrator-page .field.arabic { font-size: 1.5rem; line-height: 1.6; }
 .narrator-page .lineage.arabic { font-size: 1.5rem; }
-.narrator-page .verdict-scholar.arabic { font-size: 1.25rem; }
-.narrator-page .critic-quote.arabic { font-size: 1.1rem; line-height: 1.8; }
-.narrator-page .name-ar.arabic { font-size: 1.15rem; }
+.narrator-page .verdict-scholar.arabic { font-size: 1.5rem; }
+.narrator-page .critic-quote.arabic { font-size: 1.25rem; line-height: 1.8; }
+.narrator-page .name-ar.arabic { font-size: 1.375rem; }
 .narrator-page .label.arabic-label {
   font-size: 16px;
   text-transform: none;
   letter-spacing: normal;
+}
+
+/* =====================================================
+   Mobile responsive overrides (< 768px)
+   ===================================================== */
+@media (max-width: 767px) {
+  /* Container */
+  .narrator-page .container {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  /* Hero titles */
+  .narrator-page .hero-title            { font-size: 1.75rem; text-align: center; }
+  .narrator-page .hero-title.arabic     { font-size: 2.25rem; text-align: center; }
+
+  /* Section heads: tighten spacing, keep EN + AR on one line */
+  .narrator-page .section-head          { margin-bottom: 1.25rem; gap: 0.5rem; }
+  .narrator-page .section-title         { font-size: 1.5rem; }
+  .narrator-page .section-title.arabic  { font-size: 1.75rem; }
+
+  /* Bio block */
+  .narrator-page .bio-block { padding: 1.25rem; }
+
+  /* Panel heads: keep EN + AR on one line, tighten margin */
+  .narrator-page .panel-head { margin-bottom: 1rem; }
+  .narrator-page .panel        { padding: 1.25rem; }
+  .narrator-page .panel-label  { font-size: 1.25rem; }
+  .narrator-page .panel-label-ar { font-size: 1.5rem; }
+
+  /* Teacher/student name rows: stack EN above AR */
+  .narrator-page .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
+    padding: 0.5rem 0;
+  }
+  .narrator-page .name-ar { text-align: right; width: 100%; }
+
+  /* Coming-soon pair: stack EN above AR */
+  .narrator-page .coming-soon-pair {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Verdict card padding */
+  .narrator-page .verdict--ar { padding: 1rem; }
+
+  /* Accordion body: reduce horizontal padding */
+  .narrator-page .accordion-body { padding: 0 0.75rem 1.5rem; }
+
+  /* Tarjama two-col list: single column on narrow screens */
+  .narrator-page .two-col { columns: 1; }
+
+  /* Center bilingual content within hero and bio rows so stacked EN/AR align consistently */
+  .narrator-page .hero-row > div,
+  .narrator-page .bio-row > div        { text-align: center; }
+  /* Explicit centering for elements that resist inheritance due to direction: rtl */
+  .narrator-page .lineage              { text-align: center; }
+  .narrator-page .hero-row .badges,
+  .narrator-page .hero-row .fields,
+  .narrator-page .bio-row .pills       { justify-content: center; }
+  /* Meta-grid: single column so a lone item (e.g. Cities) isn't stranded in the left track */
+  .narrator-page .meta-grid            { grid-template-columns: 1fr; }
+  /* Explicit centering on the actual text nodes — inheritance through direction:rtl containers is unreliable */
+  .narrator-page .meta-grid .label,
+  .narrator-page .meta-grid .field     { text-align: center; }
+
+  /* Arabic field size scale-down */
+  .narrator-page .field.arabic          { font-size: 1.25rem; }
+  .narrator-page .lineage.arabic        { font-size: 1.25rem; }
+  .narrator-page .verdict-scholar.arabic { font-size: 1.25rem; }
+  .narrator-page .critic-quote.arabic   { font-size: 1.1rem; }
+  .narrator-page .name-ar.arabic        { font-size: 1.125rem; }
+}
+
+/* =====================================================
+   Dark-mode overrides
+   Redefine every narrator custom property here; all
+   existing rules pick up the new values automatically.
+   ===================================================== */
+[data-theme="dark"] .narrator-page {
+  /* Surfaces */
+  --surface:           #1f2125;
+  --surface-low:       #272f33;   /* bio-block background */
+  --surface-lowest:    #22272b;   /* verdict cards, accordion */
+  --surface-container: #343a40;
+
+  /* Text colours */
+  --on-surface:        #dde3e0;   /* lineage, panel labels */
+  --secondary:         #9caba6;   /* labels (kunya/generation/Cities), critic quotes, dim text */
+
+  /* Primary — lighter teal so it reads on dark backgrounds */
+  --primary:           #4db6a8;
+  --primary-container: #2a8a7c;
+  --primary-fixed:     #4db6a8;
+  --on-primary-fixed:  #001a16;
+  --primary-10:        rgba(77, 182, 168, 0.12);
+  --primary-20:        rgba(77, 182, 168, 0.28);
+
+  /* Secondary container (pill-secondary) */
+  --secondary-container:    #343a40;
+  --on-secondary-container: #b0bbb6;
+
+  /* Borders */
+  --outline-variant:  #3d4a47;
+  --outline-faint:    rgba(61, 74, 71, 0.55);
+  --outline-fainter:  rgba(61, 74, 71, 0.30);
+
+  /* Teacher / Student panels — cool-hued darks, visually distinct
+     from each other and from the general surface colours */
+  --teachers-bg: #1a3040;   /* dark slate-blue */
+  --students-bg: #1b3830;   /* dark teal-green */
 }

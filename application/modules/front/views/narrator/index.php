@@ -39,16 +39,21 @@ $hasBirth = !empty($narrator->date_of_birth);
 $hasDeath = !empty($narrator->death_year);
 $dateEnStr = '';
 $arDateStr = '';
+$toArNums = fn(string $s): string => str_replace(
+    ['0','1','2','3','4','5','6','7','8','9'],
+    ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'],
+    $s
+);
 if ($hasBirth || $hasDeath) {
     if ($hasBirth && $hasDeath) {
         $dateEnStr = $narrator->date_of_birth . ' – ' . $narrator->death_year . ' AH';
-        $arDateStr = $narrator->date_of_birth . ' – ' . $narrator->death_year . ' هـ';
+        $arDateStr = $toArNums($narrator->date_of_birth . ' – ' . $narrator->death_year) . ' هـ';
     } elseif ($hasBirth) {
         $dateEnStr = $narrator->date_of_birth . ' AH';
-        $arDateStr = $narrator->date_of_birth . ' هـ';
+        $arDateStr = $toArNums($narrator->date_of_birth) . ' هـ';
     } else {
         $dateEnStr = 'd. ' . $narrator->death_year . ' AH';
-        $arDateStr = 'ت. ' . $narrator->death_year . ' هـ';
+        $arDateStr = 'ت. ' . $toArNums($narrator->death_year) . ' هـ';
     }
 }
 
@@ -61,7 +66,9 @@ $tabEn      = $tabaqatEn[$tabaka] ?? $tabaka . 'th';
 $enTitle      = $narrator::transliterateArabicName($narrator->byname ?: $narrator->name);
 $enKunya      = !empty($narrator->kunya)             ? $narrator::transliterateArabicName($narrator->kunya)             : '';
 $enGrade      = !empty($narrator->reliability_label) ? $narrator::translateJarhTadil($narrator->reliability_label)      : '';
-$gradeTier    = !empty($narrator->reliability_label) ? $narrator::getJarhTadilTier($narrator->reliability_label)        : 'yellow';
+$gradeTier    = ($narrator->reliability_grade !== null)
+    ? $narrator::getReliabilityGradeTier((int)$narrator->reliability_grade)
+    : 'neutral';
 $enLineage    = !empty($narrator->name)              ? $narrator::transliterateArabicName($narrator->name)              : '';
 $enProfession = !empty($narrator->profession)        ? $narrator::transliterateArabicName($narrator->profession)        : '';
 $enSchool     = !empty($narrator->legal_school)      ? $narrator::transliterateArabicName($narrator->legal_school)      : '';
@@ -94,7 +101,7 @@ $studentTotal   = count($studentRows);
     <div class="badges">
       <?php if (!empty($narrator->reliability_label)): ?>
       <div class="pill-grade pill-grade--<?= $gradeTier ?>">
-        <?php if ($gradeTier === 'green'): ?><span class="mso mso-sm mso-filled">verified</span><?php endif; ?>
+        <?php if ($gradeTier === 'grade-1' || $gradeTier === 'grade-2'): ?><span class="mso mso-sm mso-filled">verified</span><?php endif; ?>
         <span class="pill-text"><?= htmlspecialchars($enGrade) ?></span>
       </div>
       <?php endif; ?>
@@ -105,7 +112,7 @@ $studentTotal   = count($studentRows);
     <div class="badges" dir="rtl">
       <?php if (!empty($narrator->reliability_label)): ?>
       <div class="pill-grade pill-grade--<?= $gradeTier ?>">
-        <?php if ($gradeTier === 'green'): ?><span class="mso mso-sm mso-filled">verified</span>&nbsp;&nbsp;<?php endif; ?>
+        <?php if ($gradeTier === 'grade-1' || $gradeTier === 'grade-2'): ?><span class="mso mso-sm mso-filled">verified</span>&nbsp;&nbsp;<?php endif; ?>
         <span class="arabic"><?= htmlspecialchars($narrator->reliability_label) ?></span>
       </div>
       <?php endif; ?>
@@ -257,7 +264,7 @@ $showBio    = $hasLineage || $hasMeta || $hasPills;
 <?php if (!empty($criticOpinions)): ?>
 <!-- ════════════════════════════════════════ JARH & TA'DIL -->
 <?php
-$OPINION_PREVIEW = 3;
+$OPINION_PREVIEW = 5;
 $opinionPreview  = array_slice($criticOpinions, 0, $OPINION_PREVIEW);
 $opinionRest     = array_slice($criticOpinions, $OPINION_PREVIEW);
 $opinionTotal    = count($criticOpinions);
@@ -312,7 +319,7 @@ $opinionTotal    = count($criticOpinions);
     <ul>
       <?php foreach ($teacherPreview as $row): ?>
       <li class="row">
-        <span class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></span>
+        <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
         <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
           <?= htmlspecialchars($row['byname']) ?>
         </a>
@@ -328,7 +335,7 @@ $opinionTotal    = count($criticOpinions);
       <ul>
         <?php foreach ($teacherRest as $row): ?>
         <li class="row">
-          <span class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></span>
+          <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
           <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
             <?= htmlspecialchars($row['byname']) ?>
           </a>
@@ -351,7 +358,7 @@ $opinionTotal    = count($criticOpinions);
     <ul>
       <?php foreach ($studentPreview as $row): ?>
       <li class="row">
-        <span class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></span>
+        <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
         <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
           <?= htmlspecialchars($row['byname']) ?>
         </a>
@@ -367,7 +374,7 @@ $opinionTotal    = count($criticOpinions);
       <ul>
         <?php foreach ($studentRest as $row): ?>
         <li class="row">
-          <span class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></span>
+          <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
           <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
             <?= htmlspecialchars($row['byname']) ?>
           </a>

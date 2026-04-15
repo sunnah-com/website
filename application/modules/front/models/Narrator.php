@@ -24,9 +24,7 @@ class Narrator extends ActiveRecord
             return $cached ?: null;
         }
         $narrator = static::findOne(['narrator_id' => (int)$nid]);
-        if ($narrator !== null) {
-            Yii::$app->cache->set($cacheKey, $narrator, Yii::$app->params['cacheTTL']);
-        }
+        Yii::$app->cache->set($cacheKey, $narrator, Yii::$app->params['cacheTTL']);
         return $narrator;
     }
 
@@ -111,7 +109,11 @@ class Narrator extends ActiveRecord
 
     private static function getWordDict(): array
     {
-        return [
+        static $dict = null;
+        if ($dict !== null) {
+            return $dict;
+        }
+        return $dict = [
             // Common first names / patronymics
             'محمد'      => 'Muhammad',
             'أحمد'      => 'Ahmad',
@@ -247,12 +249,17 @@ class Narrator extends ActiveRecord
             'راهويه'    => 'Rahawayh',
             'الهمداني'  => 'al-Hamadani',
             'العلاء'     => 'al-A`la',
+            'الرحمن'    => 'ar-Rahman',
         ];
     }
 
     private static function getCharMap(): array
     {
-        return [
+        static $map = null;
+        if ($map !== null) {
+            return $map;
+        }
+        return $map = [
             'ب' => 'b',  'ت' => 't',  'ث' => 'th', 'ج' => 'j',  'ح' => 'h',  'خ' => 'kh',
             'د' => 'd',  'ذ' => 'dh', 'ر' => 'r',  'ز' => 'z',  'س' => 's',  'ش' => 'sh',
             'ص' => 's',  'ض' => 'd',  'ط' => 't',  'ظ' => 'z',  'ع' => '`a',  'غ' => 'gh',
@@ -399,7 +406,11 @@ class Narrator extends ActiveRecord
      */
     private static function getJarhTadilMap(): array
     {
-        return [
+        static $map = null;
+        if ($map !== null) {
+            return $map;
+        }
+        return $map = [
             'مجهول الحال'                              => 'Unknown Status',
             'ثقة'                                      => 'Trustworthy',
             'مقبول'                                    => 'Acceptable',
@@ -490,44 +501,71 @@ class Narrator extends ActiveRecord
             'حافظ متقن'                                => 'Expert, Precise',
             'حافظ'                                     => 'Expert',
             'ضعف الحديث'                               => 'Weak, Hadith',
+            'مختلف في صحبته ، والراجح أنه تابعي ضعيف الحديث' => 'Disputed Companionship, Likely a Successor, Weak in Hadith',
+            'ثقة فقيه حافظ'                            => 'Trustworthy, Jurist, Memorizer',
+            'صدوق ساء حفظه'                            => 'Truthful, Memory Deteriorated',
+            'ثقة رمي بالإرجاء'                         => "Trustworthy, Accused of Irja'",
+            'أحد الحفاظ'                               => 'One of the Memorizers',
+            'صدوق كثير الإرسال'                        => 'Truthful, Frequent Mursal Narrations',
+            'ثقة مدلس'                                 => 'Trustworthy, Practices Tadlis',
+            'مختلف في صحبته ، والراجح أنه تابعي ثقة'  => 'Disputed Companionship, Likely a Trustworthy Successor',
+            'مختلف في صحبته ، والأكثر أنه صحابي'      => 'Disputed Companionship, More Likely a Companion',
+            'ثقة يحفظ'                                 => 'Trustworthy, Good Memory',
+            'صحابية صغيرة'                             => 'Young Companion',
+            'ثقة رمي بالقدر'                           => 'Trustworthy, Accused of Qadarism',
+            'ثقة حافظ متقن'                            => 'Trustworthy, Memorizer, Precise',
+            'صدوق اختلط بأخرة'                         => 'Truthful, Became Confused Later',
+            'لها إدراك'                                => 'Has Perception',
+            'لها رؤية'                                 => 'Has Sight',
+            'ثقة رمي بالتشيع'                          => "Trustworthy, Accused of Shi'ism",
+            'صدوق يغلط'                                => 'Truthful, Makes Mistakes',
+            'لم يثبت له صحبة'                          => 'Companionship Not Established',
+            'ثقة وكان يدلس كثيرا'                      => 'Trustworthy, Practiced Frequent Tadlis',
+            'ثقة مكثر'                                 => 'Trustworthy, Prolific Narrator',
+            'ثقة يدلس'                                 => 'Trustworthy, Practices Tadlis',
+            'صدوق مدلس'                                => 'Truthful, Practices Tadlis',
+            'ثقه'                                      => 'Trustworthy',
+            'ثقة حافظ أمين'                            => 'Trustworthy, Memorizer, Faithful',
+            'ثقة عارف'                                 => 'Trustworthy, Knowledgeable',
+            'ثقة ثبت حافظ'                             => 'Trustworthy, Firm, Memorizer',
+            'ثقة فقيه وكان يرسل'                       => 'Trustworthy, Jurist, Made Mursal Narrations',
+            'لين الحديث'                               => 'Some Weakness in Hadith',
+            'ثقة ثبت إمام'                             => 'Trustworthy, Firm, Imam',
+            'ثقة حافظ نبيل'                            => 'Trustworthy, Memorizer, Noble',
+            'وضاع كذاب'                                => 'Fabricator, Liar',
+            'صدوق فيه تشيع'                            => "Truthful, Has Shi'ite Leanings",
+            'صدوق يخطئ ويخالف'                         => 'Truthful, Makes Errors, Contradicts',
+            'متهم بالوصع'                              => 'Accused of Fabrication',
+            'إمام ثقة'                                 => 'Imam, Trustworthy',
+            'ثقة إمام حجة'                             => 'Trustworthy, Imam, Authority',
+            'ثقة مسند'                                 => 'Trustworthy, Transmitter',
+            'صدوق تغير بآخرة'                          => 'Truthful, Deteriorated Later',
+            'صدوق اختلط'                               => 'Truthful, Became Confused',
         ];
     }
 
     /**
-     * Translates an Arabic jarh_tadil phrase to English using the curated map.
-     * Strips tashkeel before lookup. Falls back to transliterateArabicName()
-     * for phrases not in the map.
+     * Maps a numeric reliability_grade (1–12) to a CSS tier token used on the
+     * pill-grade element. Returns 'neutral' for out-of-range values.
      *
-     * @param  string $arabic  Raw Arabic jarh_tadil value
+     * Tier colour intent:
+     *   grade-1 (1–3)  : dark green   — strongest acceptance
+     *   grade-2 (4–6)  : light green  — accepted
+     *   grade-3 (7)    : yellow       — middling
+     *   grade-4 (8–10) : amber-red    — weak / criticised
+     *   grade-5 (11–12): dark red     — rejected
+     *
+     * @param  int $grade  reliability_grade value from DB
      * @return string
      */
-    public static function getJarhTadilTier(string $arabic): string
+    public static function getReliabilityGradeTier(int $grade): string
     {
-        $stripped = trim(preg_replace('/[\x{0610}-\x{061A}\x{064B}-\x{065F}\x{0640}]/u', '', $arabic));
-
-        static $red = [
-            'كذاب', 'كذاب خبيث', 'كذاب وضاع', 'كذاب يضع الحديث',
-            'متهم بالكذب', 'متهم بالوضع', 'متهم بالكذب والوضع', 'متهم بوضع الحديث',
-            'متروك الحديث', 'متروك متهم بالكذب', 'متروك متهم بالوضع',
-            'منكر الحديث', 'يضع الحديث', 'يكذب', 'وضاع',
-        ];
-
-        if (in_array($stripped, $red, true)) {
-            return 'red';
-        }
-
-        static $green = [
-            'صحابي', 'صحابية', 'صحابي صغير',
-            'له رؤية', 'له إدراك',
-            'إمام حجة', 'إمام حافظ',
-            'حافظ', 'حافظ ثقة', 'حافظ ثبت', 'حافظ متقن', 'ثبت حافظ',
-        ];
-
-        if (in_array($stripped, $green, true) || str_starts_with($stripped, 'ثقة')) {
-            return 'green';
-        }
-
-        return 'yellow';
+        if ($grade >= 1  && $grade <= 3)  return 'grade-1';
+        if ($grade >= 4  && $grade <= 6)  return 'grade-2';
+        if ($grade === 7)                 return 'grade-3';
+        if ($grade >= 8  && $grade <= 10) return 'grade-4';
+        if ($grade >= 11 && $grade <= 12) return 'grade-5';
+        return 'neutral';
     }
 
     public static function translateJarhTadil(string $arabic): string
@@ -546,7 +584,11 @@ class Narrator extends ActiveRecord
      */
     private static function getResidenceMap(): array
     {
-        return [
+        static $map = null;
+        if ($map !== null) {
+            return $map;
+        }
+        return $map = [
             'بغداد'               => 'Baghdad',
             'دمشق'                => 'Damascus',
             'البصرة'              => 'Basra',
