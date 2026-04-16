@@ -38,7 +38,9 @@ class NarratorController extends SController
         }
 
         $this->view->params['_pageType'] = 'narrator';
-        $this->pathCrumbs($narrator->byname ?: $narrator->name, '/narrator/' . (int)$nid);
+        $arabicName = $narrator->byname ?: $narrator->name;
+        $enName     = Narrator::transliterateArabicName($arabicName);
+        $this->pathCrumbs($enName . ' — ' . $arabicName, '/narrator/' . (int)$nid);
 
         $ogDesc = trim(
             ($narrator->byname ?? '')
