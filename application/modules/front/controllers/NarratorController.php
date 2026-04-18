@@ -38,12 +38,12 @@ class NarratorController extends SController
         }
 
         $this->view->params['_pageType'] = 'narrator';
-        $arabicName = $narrator->byname ?: $narrator->name;
+        $arabicName = $narrator->name ?: $narrator->lineage;
         $enName     = Narrator::transliterateArabicName($arabicName);
         $this->pathCrumbs($enName . ' — ' . $arabicName, '/narrator/' . (int)$nid);
 
         $ogDesc = trim(
-            ($narrator->byname ?? '')
+            ($narrator->name ?? '')
             . ($narrator->reliability_label ? ' — ' . $narrator->reliability_label : '')
         );
         if ($ogDesc !== '') {
@@ -78,7 +78,7 @@ class NarratorController extends SController
         $rows = [];
         foreach ($ids as $id) {
             if (isset($summaryMap[$id])) {
-                $rows[] = ['narrator_id' => $id, 'byname' => $summaryMap[$id]];
+                $rows[] = ['narrator_id' => $id, 'name' => $summaryMap[$id]];
             }
         }
         return $rows;

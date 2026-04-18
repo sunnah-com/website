@@ -42,11 +42,11 @@ class Narrator extends ActiveRecord
             return $map;
         }
         $rows = Yii::$app->db
-            ->createCommand('SELECT narrator_id, byname FROM Narrators')
+            ->createCommand('SELECT narrator_id, name FROM Narrators')
             ->queryAll();
         $map = [];
         foreach ($rows as $row) {
-            $map[(int)$row['narrator_id']] = $row['byname'];
+            $map[(int)$row['narrator_id']] = $row['name'];
         }
         Yii::$app->cache->set($cacheKey, $map, Yii::$app->params['cacheTTL']);
         return $map;
@@ -258,15 +258,17 @@ class Narrator extends ActiveRecord
             'الأموي'    => 'al-\'Umawi',
             'راهويه'    => 'Rahawayh',
             'الهمداني'  => 'al-Hamadani',
-            'العلاء'     => 'al-A`la',
+            'العلاء'     => 'al-`Ala',
             'الرحمن'    => 'ar-Rahman',
             'الخطاب'    => 'al-Khattab',
             'الفقيه'    => 'al-Faqih',
             'المسيب'    => 'al-Musayyib',
+            'الثوري'    => 'ath-Thawri',
+            'المالكية'  => 'Maliki',
             'سلمة'      => 'Salama',
             'يونس'      => 'Yunus',
             'شعيب'      => 'Shu`ayb',
-            // Additional first names / patronymics
+            'جريج'      => 'Jurayj',
             'سعد'       => 'Sa`d',
             'نصر'       => 'Nasr',
             'زياد'      => 'Ziyad',
@@ -330,8 +332,8 @@ class Narrator extends ActiveRecord
             'عمارة'     => '`Umara',
             'حمدان'     => 'Hamdan',
             'مصعب'      => 'Mus`ab',
-            'سلام'      => 'Sallam', // uncertain; could be Salam
-            'عقيل'      => '`Aqil', // Could be `Uqayl
+            // 'سلام'      => 'Sallam', // uncertain; could be Salam
+            // 'عقيل'      => '`Aqil', // Could be `Uqayl
             'سلامة'     => 'Salama', // different spelling from سلمة, same transliteration
             'صدقة'      => 'Sadaqa', // vowelization uncertain
             'نوح'       => 'Nuh',
@@ -373,19 +375,19 @@ class Narrator extends ActiveRecord
             'سلم'       => 'Salm',
             'بندار'     => 'Bundar',
             'أسلم'      => 'Aslam',
-            'صبيح'      => 'Sabih', // uncertain; could be Subayh
+            // 'صبيح'      => 'Sabih', // uncertain; could be Subayh
             'بدر'       => 'Badr',
             'بحر'       => 'Bahr',
             'شيبة'      => 'Shayba',
-            'بكير'      => 'Bukayr', // could be Bakeer?
+            //'بكير'      => 'Bukayr', // could be Bakeer?
             'حازم'      => 'Hazim',
             'خزيمة'     => 'Khuzayma',
-            'شبيب'      => 'Shabib', // Shubayb?
+            // 'شبيب'      => 'Shabib', // Shubayb?
             'إياس'      => 'Iyas',
             'عبادة'     => '`Ubada',
             'معروف'     => 'Ma`ruf',
             'شجاع'      => 'Shuja`',
-            'تمام'      => 'Tamam',
+            'تمام'      => 'Tammam',
             'حنظلة'     => 'Hanzala',
             'مرزوق'     => 'Marzuq',
             'جبلة'      => 'Jabala',
@@ -936,6 +938,8 @@ class Narrator extends ActiveRecord
             'ثقة مسند'                                 => 'Trustworthy, Transmitter',
             'صدوق تغير بآخرة'                          => 'Truthful, Deteriorated Later',
             'صدوق اختلط'                               => 'Truthful, Became Confused',
+            'رأس المتقنين وكبير المتثبتين'             => 'Chief of the Precise and Meticulous',
+
         ];
     }
 
@@ -1305,6 +1309,214 @@ class Narrator extends ActiveRecord
         return implode(', ', $out);
     }
 
+    // ────────────────────────────────────────── PROFESSION TRANSLATION
+
+    /**
+     * Lookup map of Arabic profession values → English translations.
+     * Keys are plain Arabic (no tashkeel). Covers all terms with frequency ≥ 10
+     * from the acquisition dataset (decomposed from compound entries).
+     */
+    private static function getProfessionMap(): array
+    {
+        static $map = null;
+        if ($map !== null) {
+            return $map;
+        }
+        return $map = [
+            // Religious / scholarly roles
+            'الفقيه'       => 'Jurist',
+            'القاضي'       => 'Judge',
+            'المقرئ'       => 'Reciter',
+            'الإمام'       => 'Imam',
+            'الخطيب'       => 'Preacher',
+            'الواعظ'       => 'Sermonizer',
+            'المؤذن'       => 'Muezzin',
+            'المفتي'       => 'Mufti',
+            'المحدث'       => 'Hadith Scholar',
+            'الحافظ'       => 'Hadith Master',
+            'المفسر'       => 'Exegete',
+            'المذكر'       => 'Exhorter',
+            'المدرس'       => 'Teacher',
+            'المتكلم'      => 'Theologian',
+            'الناقد'       => 'Hadith Critic',
+            'المستملي'     => 'Dictation Scribe',
+            'الأخباري'     => 'Chronicler',
+            'المؤرخ'       => 'Historian',
+            'النسابة'      => 'Genealogist',
+            'الأصولي'      => 'Usul Scholar',
+            'المسند'       => 'Hadith Transmitter',
+            'الزاهد'       => 'Ascetic',
+            'القاص'        => 'Storyteller',
+            // Legal / civic roles
+            'الشاهد'       => 'Witness',
+            'المعدل'       => 'Accreditor',
+            'المزكي'       => 'Character Witness',
+            'الشروطي'      => 'Notary',
+            'المحتسب'      => 'Market Inspector',
+            'العدل'        => 'Witness of Good Standing',
+            'الوكيل'       => 'Agent',
+            'الوزير'       => 'Vizier',
+            'الأمير'       => 'Commander',
+            'الوالي'       => 'Governor',
+            'الحاجب'       => 'Chamberlain',
+            'النقيب'       => 'Guild Master',
+            'البواب'       => 'Doorkeeper',
+            'الحجبي'       => 'Doorkeeper',
+            'أمير المؤمنين' => 'Commander of the Faithful',
+            // Education / letters
+            'الكاتب'       => 'Scribe',
+            'المؤدب'       => 'Teacher of Letters',
+            'الأديب'       => 'Man of Letters',
+            'النحوي'       => 'Grammarian',
+            'اللغوي'       => 'Linguist',
+            'المعلم'       => 'Teacher',
+            'المكتب'       => 'School Teacher',
+            'الشاعر'       => 'Poet',
+            'الناسخ'       => 'Copyist',
+            'الكتبي'       => 'Bookseller',
+            // Trade / commerce
+            'التاجر'       => 'Merchant',
+            'البزاز'       => 'Cloth Merchant',
+            'الوراق'       => 'Copyist & Bookseller',
+            'العطار'       => 'Spice Merchant',
+            'القطان'       => 'Cotton Merchant',
+            'البزار'       => 'Seed Merchant',
+            'الصيرفي'      => 'Money Changer',
+            'الجوهري'      => 'Jeweller',
+            'السمسار'      => 'Broker',
+            'القزاز'       => 'Raw Silk Merchant',
+            'البيع'        => 'Merchant',
+            'السكري'       => 'Sugar Merchant',
+            'الخزاز'       => 'Silk-blend Merchant',
+            'الدلال'       => 'Auctioneer',
+            'الزعفراني'    => 'Saffron Merchant',
+            'الحريري'      => 'Silk Merchant',
+            'الكتاني'      => 'Linen Merchant',
+            'الرزاز'       => 'Rice Merchant',
+            'الطيالسي'     => 'Robe Merchant',
+            'اللؤلؤي'      => 'Pearl Merchant',
+            'الأشناني'     => 'Alkali Merchant',
+            'الجلاب'       => 'Livestock Trader',
+            'الحناط'       => 'Grain Merchant',
+            'البقال'       => 'Grocer',
+            'التمار'       => 'Date Merchant',
+            'الخشاب'       => 'Timber Merchant',
+            'البزوري'      => 'Seed Merchant',
+            'القراطيسي'    => 'Stationery Merchant',
+            'الجواليقي'    => 'Sack Merchant',
+            'الشعيري'      => 'Barley Merchant',
+            'الدباس'       => 'Treacle Merchant',
+            'العلاف'       => 'Fodder Merchant',
+            'الصواف'       => 'Wool Merchant',
+            'العسال'       => 'Honey Merchant',
+            'الدقيقي'      => 'Flour Merchant',
+            'السمان'       => 'Ghee Merchant',
+            'الشحام'       => 'Fat Merchant',
+            'الصابوني'     => 'Soap Merchant',
+            'الفامي'       => 'Greengrocer',
+            'الكاغدي'      => 'Paper Merchant',
+            'الديباجي'     => 'Brocade Merchant',
+            'السقطي'       => 'Sundries Merchant',
+            'الآجري'       => 'Brick Merchant',
+            'الباقلاني'    => 'Bean Merchant',
+            'اللبان'       => 'Milkman',
+            // Crafts / trades
+            'الصفار'       => 'Coppersmith',
+            'الدقاق'       => 'Flour Dealer',
+            'الخياط'       => 'Tailor',
+            'الصيدلاني'    => 'Pharmacist',
+            'السراج'       => 'Saddler',
+            'الأنماطي'     => 'Carpet Merchant',
+            'الصائغ'       => 'Goldsmith',
+            'الطحان'       => 'Miller',
+            'الخباز'       => 'Baker',
+            'الحداد'       => 'Blacksmith',
+            'الخلال'       => 'Vinegar Maker',
+            'النجار'       => 'Carpenter',
+            'الخفاف'       => 'Slipper Maker',
+            'الفراء'       => 'Furrier',
+            'الكرابيسي'    => 'Canvas Merchant',
+            'القصار'       => 'Fuller',
+            'الآدمي'       => 'Leather Merchant',
+            'الوزان'       => 'Weigher',
+            'الجمال'       => 'Camel Dealer',
+            'الدهان'       => 'Painter',
+            'القلانسي'     => 'Cap Maker',
+            'الذهبي'       => 'Gold Merchant',
+            'الجصاص'       => 'Plasterer',
+            'الخواص'       => 'Basket Weaver',
+            'الضراب'       => 'Minter',
+            'الرفاء'       => 'Darner',
+            'المطرز'       => 'Embroiderer',
+            'الزجاج'       => 'Glassmaker',
+            'الدباغ'       => 'Tanner',
+            'القواس'       => 'Bowyer',
+            'الحنائي'      => 'Henna Merchant',
+            'الصباغ'       => 'Dyer',
+            'النقاش'       => 'Engraver',
+            'النحاس'       => 'Coppersmith',
+            'الخراز'       => 'Leather Worker',
+            'اللباد'       => 'Felt Maker',
+            'النساج'       => 'Weaver',
+            'القصاب'       => 'Butcher',
+            'الغزال'       => 'Thread Spinner',
+            'الزيات'       => 'Oil Merchant',
+            'الوشاء'       => 'Embroiderer',
+            'السماك'       => 'Fishmonger',
+            'النجاد'       => 'Upholsterer',
+            'الحبال'       => 'Rope Maker',
+            'العصار'       => 'Oil Presser',
+            'السباك'       => 'Foundryman',
+            'المغازلي'     => 'Spindle Maker',
+            'الزراد'       => 'Armourer',
+            'الخصاف'       => 'Mat Weaver',
+            'الجواربي'     => 'Stocking Maker',
+            'الصرام'       => 'Date Harvester',
+            // Other occupations
+            'الطبيب'       => 'Physician',
+            'الفرائضي'     => 'Inheritance Specialist',
+            'الفرضي'       => 'Inheritance Specialist',
+            'الرئيس'       => 'Chief',
+            'الخادم'       => 'Servant',
+            'المطوعي'      => 'Pious Volunteer',
+            'الدهقان'      => 'Landowner',
+            'الحاسب'       => 'Accountant',
+            'الخازن'       => 'Treasurer',
+            'السواق'       => 'Herdsman',
+            'النخاس'       => 'Livestock Dealer',
+            'الشرابي'      => 'Cupbearer',
+            'الصياد'       => 'Fisherman',
+            'الحمال'       => 'Porter',
+            'السقاء'       => 'Water Carrier',
+            'الموازيني'    => 'Scales Maker',
+            'البندار'      => 'Merchant',
+            'الطرائفي'     => 'Curiosities Merchant',
+            'القارئ'       => 'Reciter',
+            'البناء'       => 'Builder',
+        ];
+    }
+
+    /**
+     * Translates an Arabic profession value to English using the curated map.
+     * Handles compound values separated by ، and strips : clarifications.
+     * Falls back to transliterateArabicName() for unrecognised terms.
+     *
+     * @param  string $arabic  Raw Arabic profession value
+     * @return string
+     */
+    public static function translateProfession(string $arabic): string
+    {
+        $map   = self::getProfessionMap();
+        $parts = preg_split('/\s*،\s*/u', trim($arabic));
+        $out   = [];
+        foreach ($parts as $part) {
+            $part     = trim(preg_split('/\s*:\s*/u', $part)[0]);
+            $stripped = trim(preg_replace('/[\x{0610}-\x{061A}\x{064B}-\x{065F}\x{0640}]/u', '', $part));
+            $out[]    = $map[$stripped] ?? self::transliterateArabicName($part);
+        }
+        return implode(', ', array_unique($out));
+    }
+
     // ────────────────────────────────────────────────────────────────────────
 
     /**
@@ -1318,7 +1530,7 @@ class Narrator extends ActiveRecord
             'bio_tahdheeb' => 'تهذيب الكمال — الحافظ المزي',
             'bio_isaba'    => 'الإصابة',
             'bio_asad'     => 'أسد الغابة',
-            'bio_iste3ab'  => 'الاستيعاب',
+            'bio_istiab'  => 'الاستيعاب',
         ];
         $blocks = [];
         foreach ($fields as $field => $label) {

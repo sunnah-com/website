@@ -443,8 +443,8 @@
   letter-spacing: normal;
 }
 .narrator-page .pill-primary .arabic { font-size: 0.875rem; font-weight: 700; }
-.narrator-page .field.arabic { font-size: 1.5rem; line-height: 1.6; }
-.narrator-page .lineage.arabic { font-size: 1.5rem; }
+.narrator-page .field.arabic { font-family: var(--f-arabic); font-size: 1.5rem; line-height: 1.6; }
+.narrator-page .lineage.arabic { font-family: var(--f-arabic); font-size: 1.5rem; font-style: normal; }
 .narrator-page .verdict-scholar.arabic { font-size: 1.75rem; }
 .narrator-page .critic-quote.arabic { font-size: 1.5rem; line-height: 1.8; }
 .narrator-page .name-ar.arabic { font-size: 1.625rem; }
@@ -518,6 +518,13 @@
   /* Explicit centering on the actual text nodes — inheritance through direction:rtl containers is unreliable */
   .narrator-page .meta-grid .label,
   .narrator-page .meta-grid .field     { text-align: center; }
+
+  /* Bukhari/Muslim pills: compact so both fit on one line */
+  .narrator-page .pill-outline {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+  }
+  .narrator-page .pill-outline.arabic { font-size: 1rem; }
 
   /* Arabic field size scale-down */
   .narrator-page .field.arabic          { font-size: 1.25rem; }

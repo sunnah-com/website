@@ -80,16 +80,22 @@ $tabAr      = $tabaqatAr[$tabaka] ?? (string)$tabaka;
 $tabEn      = $tabaqatEn[$tabaka] ?? $tabaka . 'th';
 
 // Pre-compute English transliterations for hero and bio fields
-$enTitle      = $narrator::transliterateArabicName($narrator->byname ?: $narrator->name);
+$enTitle      = $narrator::transliterateArabicName($narrator->name ?: $narrator->lineage);
 $enKunya      = !empty($narrator->kunya)             ? $narrator::transliterateArabicName($narrator->kunya)             : '';
 $enGrade      = !empty($narrator->reliability_label) ? $narrator::translateJarhTadil($narrator->reliability_label)      : '';
 $gradeTier    = ($narrator->reliability_grade !== null)
     ? $narrator::getReliabilityGradeTier((int)$narrator->reliability_grade)
     : 'neutral';
-$enLineage    = !empty($narrator->name)              ? $narrator::transliterateArabicName($narrator->name)              : '';
-$enProfession = !empty($narrator->profession)        ? $narrator::transliterateArabicName($narrator->profession)        : '';
+$enLineage    = !empty($narrator->lineage)            ? $narrator::transliterateArabicName($narrator->lineage)            : '';
+$enProfession = !empty($narrator->profession)        ? $narrator::translateProfession($narrator->profession)           : '';
 $enSchool     = !empty($narrator->legal_school)      ? $narrator::transliterateArabicName($narrator->legal_school)      : '';
 $enResidence  = !empty($narrator->residence)         ? $narrator::translateResidence($narrator->residence)              : '';
+$enNasab      = !empty($narrator->nasab)
+    ? implode(', ', array_map(
+        fn($p) => $narrator::transliterateArabicName(trim($p)),
+        explode('،', $narrator->nasab)
+      ))
+    : '';
 
 // Teachers / students: first 5 visible, remainder hidden
 $PREVIEW = 5;
@@ -110,7 +116,7 @@ $studentTotal   = count($studentRows);
   <!-- Title row -->
   <div class="hero-row">
     <h1 class="hero-title"><?= htmlspecialchars($enTitle) ?></h1>
-    <h1 class="hero-title arabic" dir="rtl"><?= htmlspecialchars($narrator->byname ?: $narrator->name) ?></h1>
+    <h1 class="hero-title arabic" dir="rtl"><?= htmlspecialchars($narrator->name ?: $narrator->lineage) ?></h1>
   </div>
 
   <!-- Badges row -->
@@ -177,10 +183,11 @@ $studentTotal   = count($studentRows);
 <!-- ════════════════════════════════════════════════════════════ -->
 
 <?php
-$hasLineage   = !empty($narrator->name);
+$hasLineage   = !empty($narrator->lineage);
 $hasProfession = !empty($narrator->profession);
 $hasSchool    = !empty($narrator->legal_school);
 $hasResidence = !empty($narrator->residence);
+$hasNasab     = !empty($narrator->nasab);
 $hasMeta      = $hasProfession || $hasSchool || $hasResidence;
 $hasPills   = $narrator->in_bukhari || $narrator->in_muslim;
 $showBio    = $hasLineage || $hasMeta || $hasPills;
@@ -199,8 +206,8 @@ $showBio    = $hasLineage || $hasMeta || $hasPills;
       <p class="lineage"><?= htmlspecialchars($enLineage) ?></p>
     </div>
     <div dir="rtl">
-      <span class="label arabic-label label--m3">النسب والنسبة</span>
-      <p class="lineage arabic"><?= htmlspecialchars($narrator->name) ?></p>
+      <span class="label arabic-label label--m3">الاسم الكامل</span>
+      <p class="lineage arabic"><?= htmlspecialchars($narrator->lineage) ?></p>
     </div>
   </div>
   <?php endif; ?>
@@ -247,6 +254,20 @@ $showBio    = $hasLineage || $hasMeta || $hasPills;
         <p class="field arabic"><?= htmlspecialchars($narrator->residence) ?></p>
       </div>
       <?php endif; ?>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <!-- Nasab row -->
+  <?php if ($hasNasab): ?>
+  <div class="bio-row">
+    <div>
+      <span class="label label--m1">Affiliations</span>
+      <p class="field"><?= htmlspecialchars($enNasab) ?></p>
+    </div>
+    <div dir="rtl">
+      <span class="label arabic-label label--m1">النسب والنسبة</span>
+      <p class="field arabic"><?= htmlspecialchars(implode('، ', array_map('trim', explode('،', $narrator->nasab)))) ?></p>
     </div>
   </div>
   <?php endif; ?>
@@ -336,9 +357,9 @@ $opinionTotal    = count($criticOpinions);
     <ul>
       <?php foreach ($teacherPreview as $row): ?>
       <li class="row">
-        <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
+        <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['name'])) ?></a>
         <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
-          <?= htmlspecialchars($row['byname']) ?>
+          <?= htmlspecialchars($row['name']) ?>
         </a>
       </li>
       <?php endforeach; ?>
@@ -352,9 +373,9 @@ $opinionTotal    = count($criticOpinions);
       <ul>
         <?php foreach ($teacherRest as $row): ?>
         <li class="row">
-          <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
+          <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['name'])) ?></a>
           <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
-            <?= htmlspecialchars($row['byname']) ?>
+            <?= htmlspecialchars($row['name']) ?>
           </a>
         </li>
         <?php endforeach; ?>
@@ -375,9 +396,9 @@ $opinionTotal    = count($criticOpinions);
     <ul>
       <?php foreach ($studentPreview as $row): ?>
       <li class="row">
-        <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
+        <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['name'])) ?></a>
         <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
-          <?= htmlspecialchars($row['byname']) ?>
+          <?= htmlspecialchars($row['name']) ?>
         </a>
       </li>
       <?php endforeach; ?>
@@ -391,9 +412,9 @@ $opinionTotal    = count($criticOpinions);
       <ul>
         <?php foreach ($studentRest as $row): ?>
         <li class="row">
-          <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['byname'])) ?></a>
+          <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-en"><?= htmlspecialchars($narrator::transliterateArabicName($row['name'])) ?></a>
           <a href="/narrator/<?= (int)$row['narrator_id'] ?>" class="name-ar arabic">
-            <?= htmlspecialchars($row['byname']) ?>
+            <?= htmlspecialchars($row['name']) ?>
           </a>
         </li>
         <?php endforeach; ?>
