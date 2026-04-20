@@ -30,3 +30,23 @@
     --sticky-color: #19524d;
     --link-color: #56D0D0;
 }
+
+[data-theme="dark"] #cb_flyout {
+    background-image: none;
+    background-color: var(--sidePanel_bg);
+    border-color: #444;
+    box-shadow: 0 4px 8px #111;
+    color: var(--primary-text-color);
+}
+
+[data-theme="dark"] #cb_flyout legend {
+    color: var(--primary-text-color);
+}
+
+[data-theme="dark"] #cb_flyout label {
+    color: var(--primary-text-color);
+}
+
+[data-theme="dark"] #cb_flyout input {
+    accent-color: var(--link-color);
+}
