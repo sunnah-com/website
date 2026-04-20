@@ -632,3 +632,12 @@
 	if ($.cookie('recvis') == null) {
 		$.cookie('recvis', new Date().toString(), { expires: 30, path: '/' } )
 	}
+
+	function goToHadithNumber(collectionName) {
+		var hadithNumber = parseInt($("#hadithNumberInput").val(), 10);
+		
+		if (!isNaN(hadithNumber) && hadithNumber > 0) {
+			var url = "/" + collectionName + ":" + hadithNumber;
+			window.location.href = url;
+		}
+	}
