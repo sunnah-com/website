@@ -446,8 +446,8 @@ $opinionTotal    = count($criticOpinions);
 <section class="stack-4">
   <div class="mt-big">
     <div class="section-head">
-      <h3 class="section-title">Reference Texts</h3>
-      <h3 class="section-title section-title--ar arabic" dir="rtl">النصوص العربية</h3>
+      <h3 class="section-title">Rijal Texts</h3>
+      <h3 class="section-title section-title--ar arabic" dir="rtl">الأقوال الرجالية</h3>
     </div>
     <?php foreach ($tarjamaBlocks as $block): ?>
     <div class="accordion">
