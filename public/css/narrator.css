@@ -370,7 +370,7 @@
 }
 .narrator-page .accordion-btn:hover { background: var(--surface-low); }
 .narrator-page .accordion-title {
-  font-size: 1.25rem;
+  font-size: 2rem;
   color: var(--primary);
   font-style: italic;
 }
@@ -405,6 +405,14 @@
   margin-top: 1.5rem;
   margin-bottom: 0.25rem;
 }
+.narrator-page .sublabel.arabic {
+  font-size: 1.625rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--on-surface);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
 .narrator-page .two-col {
   columns: 2;
   column-gap: 2rem;
@@ -412,6 +420,31 @@
   line-height: 1.6;
   margin: 0.25rem 0;
 }
+
+/* ---------- Tarjama inline markup ---------- */
+.narrator-page .tarjama-scholar {
+  color: #92400e;
+  font-weight: 700;
+}
+.narrator-page .tarjama-verdict {
+  color: var(--on-surface);
+  font-weight: 700;
+}
+.narrator-page .sigla-link,
+.narrator-page .sigla {
+  font-size: 0.7em;
+  font-family: var(--f-arabic);
+  vertical-align: super;
+  line-height: 1;
+  margin-inline-start: 0.15em;
+}
+.narrator-page .sigla-link {
+  color: var(--primary);
+  text-decoration: none;
+  opacity: 0.75;
+}
+.narrator-page .sigla-link:hover { opacity: 1; text-decoration: underline; }
+.narrator-page .sigla { color: var(--secondary); }
 
 /* ---------- Scrollbar ---------- */
 .narrator-page .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -448,6 +481,7 @@
 .narrator-page .verdict-scholar.arabic { font-size: 1.75rem; }
 .narrator-page .critic-quote.arabic { font-size: 1.5rem; line-height: 1.8; }
 .narrator-page .name-ar.arabic { font-size: 1.625rem; }
+.narrator-page .accordion-title.arabic { font-size: 2rem; }
 .narrator-page .label.arabic-label {
   font-size: 16px;
   text-transform: none;
@@ -533,6 +567,7 @@
   .narrator-page .critic-quote.arabic   { font-size: 1.2rem; }
   .narrator-page .name-ar.arabic        { font-size: 1.25rem; }
   .narrator-page .ar-para.arabic        { font-size: 1.25rem; }
+  .narrator-page .sublabel.arabic       { font-size: 1.375rem; }
 }
 
 /* =====================================================
@@ -572,4 +607,8 @@
      from each other and from the general surface colours */
   --teachers-bg: #1a3040;   /* dark slate-blue */
   --students-bg: #1b3830;   /* dark teal-green */
+}
+
+[data-theme="dark"] .narrator-page .tarjama-scholar {
+  color: #fdba74;  /* orange-300 — amber-rust lightened for dark backgrounds */
 }

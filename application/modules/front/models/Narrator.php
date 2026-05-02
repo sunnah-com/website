@@ -1567,6 +1567,13 @@ class Narrator extends ActiveRecord
     {
         // Strip leading reference number + sigla: "[5728] ع " etc.
         $raw = trim(preg_replace('/^\[\d+\][^\[]*/', '', $raw));
+        // Fix stray doubled opening bracket e.g. "[[section]" → "[section]"
+        $raw = str_replace('[[', '[', $raw);
+
+        // Escape HTML entities once for the whole text. Square brackets are
+        // unaffected by htmlspecialchars, so block-level tags still work as
+        // delimiters after this step. No branch below should re-escape.
+        $raw = htmlspecialchars($raw, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
         $html      = '';
         $itemsBuf  = [];
@@ -1574,16 +1581,42 @@ class Narrator extends ActiveRecord
         $inSection = false;
         $inItem    = false;
 
+        // Items store pre-built HTML; do not re-escape at flush time.
         $flushItems = function () use (&$itemsBuf, &$html) {
             if (empty($itemsBuf)) {
                 return;
             }
             $html .= '<ul class="two-col arabic">';
             foreach ($itemsBuf as $item) {
-                $html .= '<li>' . htmlspecialchars($item) . '</li>';
+                $html .= '<li>' . $item . '</li>';
             }
             $html .= '</ul>';
             $itemsBuf = [];
+        };
+
+        // Strip spurious [brackets] wrapping Arabic phrases (e.g. [روى عن]).
+        // Safe after htmlspecialchars since [ ] are not HTML-special chars.
+        // Inline tags are removed entirely so stray [/verdict] inside a [name]
+        // block doesn't leave a literal "/verdict" text fragment.
+        $stripInner = static function ($text) {
+            $text = str_replace(['[scholar]', '[/scholar]', '[verdict]', '[/verdict]'], '', $text);
+            return preg_replace('/\[([^\[\]]*)\]/u', '$1', $text);
+        };
+
+        // Apply inline scholar/verdict tags per-line, closing any span left open
+        // at the line boundary so spans never cross <p> elements.
+        $applyInline = static function (string $line): string {
+            $line = str_replace('[scholar]',  '<span class="tarjama-scholar">', $line);
+            $line = str_replace('[/scholar]', '</span>',                        $line);
+            $line = str_replace('[verdict]',  '<span class="tarjama-verdict">', $line);
+            $line = str_replace('[/verdict]', '</span>',                        $line);
+            $opened = substr_count($line, '<span class="tarjama-scholar">')
+                    + substr_count($line, '<span class="tarjama-verdict">');
+            $closed = substr_count($line, '</span>');
+            if ($opened > $closed) {
+                $line .= str_repeat('</span>', $opened - $closed);
+            }
+            return $line;
         };
 
         $delimiters = '/(\[name\]|\[\/name\]|\[section\]|\[\/section\]|\[item\]|\[\/item\])/';
@@ -1613,23 +1646,21 @@ class Narrator extends ActiveRecord
                     break;
                 default:
                     if ($inName) {
-                        $text = trim($part);
+                        $text = trim($stripInner($part));
                         if ($text !== '') {
                             $html .= '<p class="ar-para arabic"><strong>'
-                                . htmlspecialchars($text)
+                                . $text
                                 . '</strong></p>';
                         }
                     } elseif ($inSection) {
-                        $text = trim($part);
+                        $text = trim($stripInner($part));
                         if ($text !== '') {
-                            $html .= '<div class="sublabel">'
-                                . htmlspecialchars($text)
-                                . '</div>';
+                            $html .= '<div class="sublabel arabic">' . $text . '</div>';
                         }
                     } elseif ($inItem) {
-                        $text = trim($part);
+                        $text = trim($stripInner($part));
                         if ($text !== '') {
-                            $itemsBuf[] = $text;
+                            $itemsBuf[] = static::linkifySigla($text);
                         }
                     } else {
                         $flushItems();
@@ -1640,7 +1671,7 @@ class Narrator extends ActiveRecord
                         );
                         foreach ($lines as $line) {
                             $html .= '<p class="ar-para arabic">'
-                                . htmlspecialchars($line)
+                                . static::linkifySigla($applyInline($line))
                                 . '</p>';
                         }
                     }
@@ -1649,5 +1680,59 @@ class Narrator extends ActiveRecord
 
         $flushItems();
         return $html;
+    }
+
+    /**
+     * Wraps hadith-collection sigla (e.g. خ، م، بخ) in anchor tags or styled spans.
+     * Expects $escaped to already be HTML-escaped (htmlspecialchars applied).
+     */
+    private static function linkifySigla($escaped)
+    {
+        static $map = null;
+        if ($map === null) {
+            $map = [
+                // Two-character sigla first (prevent partial matches on single-char subset)
+                'بخ' => ['/adab',     'Al-Adab Al-Mufrad'],
+                'تم' => ['/shamail',  "Shama'il Muhammadiyah"],
+                'خت' => null,
+                'خد' => null,
+                'سي' => null,
+                'مد' => null,
+                'عس' => null,
+                'قد' => null,
+                'عخ' => null,
+                'صد' => null,
+                'صم' => null,
+                'عم' => null,
+                'مق' => null,
+                'حد' => null,
+                // Single-character sigla
+                'خ'  => ['/bukhari',  'Sahih al-Bukhari'],
+                'م'  => ['/muslim',   'Sahih Muslim'],
+                'د'  => ['/abudawud', 'Sunan Abi Dawud'],
+                'ت'  => ['/tirmidhi', "Jami' al-Tirmidhi"],
+                'س'  => ['/nasai',    "Sunan an-Nasa'i"],
+                'ق'  => ['/ibnmajah', 'Sunan Ibn Majah'],
+                'ع'  => null,
+                '4'  => null,
+                '3'  => null,
+            ];
+        }
+
+        $keys = array_keys($map);
+        $pat  = '/((?:^|[ \t،,]))('. implode('|', array_map('preg_quote', $keys)) . ')(?=[ \t،,.\n]|$)/um';
+
+        return preg_replace_callback($pat, static function ($m) use ($map) {
+            $pre   = $m[1];
+            $sigla = $m[2];
+            $entry = $map[$sigla] ?? null;
+            if ($entry !== null) {
+                $tag = '<a href="' . $entry[0] . '" class="sigla-link" title="'
+                    . htmlspecialchars($entry[1]) . '">' . $sigla . '</a>';
+            } else {
+                $tag = '<span class="sigla">' . $sigla . '</span>';
+            }
+            return $pre . $tag;
+        }, $escaped);
     }
 }
