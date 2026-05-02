@@ -1556,6 +1556,10 @@ class Narrator extends ActiveRecord
      *   [name]...[/name]       → <p><strong>...</strong></p>
      *   [section]...[/section] → <div class="sublabel">...</div>
      *   [item]...[/item]       → accumulated into <ul class="two-col arabic">
+     *   [narrator id="..."]...[/narrator]
+     *                           → linked narrator mention
+     *   [poem]...[/poem]       → formatted verse span
+     *   [hadith-gk-id ... /]   → stripped
      *   plain text             → <p class="ar-para arabic">...</p> per line
      *
      * Leading reference number and sigla (e.g. "[5728] ع ") are stripped.
@@ -1574,6 +1578,7 @@ class Narrator extends ActiveRecord
         // unaffected by htmlspecialchars, so block-level tags still work as
         // delimiters after this step. No branch below should re-escape.
         $raw = htmlspecialchars($raw, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $raw = static::renderTarjamaShortcodes($raw);
 
         $html      = '';
         $itemsBuf  = [];
@@ -1606,15 +1611,24 @@ class Narrator extends ActiveRecord
         // Apply inline scholar/verdict tags per-line, closing any span left open
         // at the line boundary so spans never cross <p> elements.
         $applyInline = static function (string $line): string {
-            $line = str_replace('[scholar]',  '<span class="tarjama-scholar">', $line);
-            $line = str_replace('[/scholar]', '</span>',                        $line);
-            $line = str_replace('[verdict]',  '<span class="tarjama-verdict">', $line);
-            $line = str_replace('[/verdict]', '</span>',                        $line);
-            $opened = substr_count($line, '<span class="tarjama-scholar">')
-                    + substr_count($line, '<span class="tarjama-verdict">');
-            $closed = substr_count($line, '</span>');
-            if ($opened > $closed) {
-                $line .= str_repeat('</span>', $opened - $closed);
+            $openSpans = 0;
+            $line = preg_replace_callback(
+                '/\[(\/?)(scholar|verdict)\]/u',
+                static function ($m) use (&$openSpans) {
+                    if ($m[1] === '') {
+                        $openSpans++;
+                        return '<span class="tarjama-' . $m[2] . '">';
+                    }
+                    if ($openSpans > 0) {
+                        $openSpans--;
+                        return '</span>';
+                    }
+                    return '';
+                },
+                $line
+            );
+            if ($openSpans > 0) {
+                $line .= str_repeat('</span>', $openSpans);
             }
             return $line;
         };
@@ -1670,8 +1684,12 @@ class Narrator extends ActiveRecord
                             'strlen'
                         );
                         foreach ($lines as $line) {
+                            $line = trim($stripInner($applyInline($line)));
+                            if ($line === '') {
+                                continue;
+                            }
                             $html .= '<p class="ar-para arabic">'
-                                . static::linkifySigla($applyInline($line))
+                                . static::linkifySigla($line)
                                 . '</p>';
                         }
                     }
@@ -1680,6 +1698,66 @@ class Narrator extends ActiveRecord
 
         $flushItems();
         return $html;
+    }
+
+    /**
+     * Converts non-structural tarjama shortcodes after the text has already
+     * been HTML-escaped.
+     */
+    private static function renderTarjamaShortcodes(string $escaped): string
+    {
+        $q = '(?:"|&quot;)';
+
+        $escaped = preg_replace('/(?m)^\s*(?:\d+\s+)*\d+\s+&amp;\d+\s*/u', '', $escaped);
+        $escaped = preg_replace(
+            '/(?m)^\s*\d+\s+(?=\[hadith-gk-id\s+id=' . $q . '\d+' . $q . '\s*\/\])/u',
+            '',
+            $escaped
+        );
+        $escaped = preg_replace(
+            '/\[hadith-gk-id\s+id=' . $q . '\d+' . $q . '\s*\/\]/u',
+            '',
+            $escaped
+        );
+
+        $escaped = preg_replace_callback(
+            '/\[narrator\s+id=' . $q . '(\d+)' . $q . '\](.*?)\[\/narrator\]/us',
+            static function ($m) {
+                $id = (int)$m[1];
+                return '<a href="/narrator/' . $id . '" class="tarjama-narrator-link">'
+                    . $m[2]
+                    . '</a>';
+            },
+            $escaped
+        );
+
+        $escaped = preg_replace_callback(
+            '/\[poem\](.*?)\[\/poem\]/us',
+            static function ($m) {
+                $parts = array_map('trim', preg_split('/\[verse-sep\]/u', $m[1]));
+                $parts = array_values(array_filter($parts, 'strlen'));
+                if (empty($parts)) {
+                    return '';
+                }
+
+                $html = '<span class="tarjama-poem" dir="rtl">';
+                foreach ($parts as $index => $part) {
+                    if ($index > 0) {
+                        $html .= '<span class="tarjama-verse-sep" aria-hidden="true"></span>';
+                    }
+                    $html .= '<span class="tarjama-hemistich">' . $part . '</span>';
+                }
+                $html .= '</span>';
+                return $html;
+            },
+            $escaped
+        );
+
+        return str_replace(
+            '[verse-sep]',
+            '<span class="tarjama-verse-sep" aria-hidden="true"></span>',
+            $escaped
+        );
     }
 
     /**
@@ -1719,10 +1797,11 @@ class Narrator extends ActiveRecord
             ];
         }
 
-        $keys = array_keys($map);
-        $pat  = '/((?:^|[ \t،,]))('. implode('|', array_map('preg_quote', $keys)) . ')(?=[ \t،,.\n]|$)/um';
+        $ambiguous = ['قد', 'تم', 'مد', 'عم', 'حد', 'صد', 'صم'];
+        $keys      = array_keys($map);
+        $otherKeys = array_values(array_diff($keys, $ambiguous));
 
-        return preg_replace_callback($pat, static function ($m) use ($map) {
+        $wrapSigla = static function ($m) use ($map) {
             $pre   = $m[1];
             $sigla = $m[2];
             $entry = $map[$sigla] ?? null;
@@ -1733,6 +1812,19 @@ class Narrator extends ActiveRecord
                 $tag = '<span class="sigla">' . $sigla . '</span>';
             }
             return $pre . $tag;
-        }, $escaped);
+        };
+
+        $ambiguousPat = '/((?:^|[ \t،,]))('
+            . implode('|', array_map('preg_quote', $ambiguous))
+            . ')(?=(?:[ \t]*[،,.\n]|$)|(?:[ \t]+(?:'
+            . implode('|', array_map('preg_quote', $otherKeys))
+            . ')(?=[ \t،,.\n]|$)))/um';
+        $escaped = preg_replace_callback($ambiguousPat, $wrapSigla, $escaped);
+
+        $pat = '/((?:^|[ \t،,]))('
+            . implode('|', array_map('preg_quote', $otherKeys))
+            . ')(?=[ \t،,.\n]|$)/um';
+
+        return preg_replace_callback($pat, $wrapSigla, $escaped);
     }
 }

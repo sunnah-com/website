@@ -422,6 +422,12 @@
 }
 
 /* ---------- Tarjama inline markup ---------- */
+.narrator-page .tarjama-narrator-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
 .narrator-page .tarjama-scholar {
   color: #92400e;
   font-weight: 700;
@@ -430,21 +436,59 @@
   color: var(--on-surface);
   font-weight: 700;
 }
+.narrator-page .tarjama-poem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  margin: 0.7rem 0;
+  padding: 0.45rem 0.8rem;
+  max-width: 42rem;
+  background: var(--surface-low);
+  border-inline-start: 3px solid var(--primary-20);
+  border-radius: 6px;
+  color: var(--on-surface);
+  line-height: 1.9;
+}
+.narrator-page .tarjama-hemistich {
+  min-width: 0;
+}
+.narrator-page .tarjama-hemistich:first-child { text-align: start; }
+.narrator-page .tarjama-hemistich:last-child { text-align: end; }
+.narrator-page .tarjama-verse-sep {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--outline-variant);
+  opacity: 0.85;
+}
 .narrator-page .sigla-link,
 .narrator-page .sigla {
-  font-size: 0.7em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9em;
   font-family: var(--f-arabic);
-  vertical-align: super;
+  font-weight: 700;
+  vertical-align: baseline;
   line-height: 1;
-  margin-inline-start: 0.15em;
+  min-width: 1.2em;
+  margin-inline: 0.12em;
+  padding: 0.08em 0.28em 0.14em;
+  border: 1px solid var(--primary-20);
+  border-radius: 999px;
+  background: var(--primary-10);
 }
 .narrator-page .sigla-link {
   color: var(--primary);
   text-decoration: none;
-  opacity: 0.75;
 }
 .narrator-page .sigla-link:hover { opacity: 1; text-decoration: underline; }
-.narrator-page .sigla { color: var(--secondary); }
+.narrator-page .sigla {
+  color: var(--secondary);
+  background: var(--surface-low);
+  border-color: var(--outline-faint);
+}
 
 /* ---------- Scrollbar ---------- */
 .narrator-page .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -538,6 +582,20 @@
 
   /* Tarjama two-col list: single column on narrow screens */
   .narrator-page .two-col { columns: 1; }
+  .narrator-page .tarjama-poem {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    max-width: none;
+    text-align: center;
+  }
+  .narrator-page .tarjama-hemistich:first-child,
+  .narrator-page .tarjama-hemistich:last-child {
+    text-align: center;
+  }
+  .narrator-page .tarjama-verse-sep {
+    width: 2rem;
+    height: 1px;
+  }
 
   /* Center bilingual content within hero and bio rows so stacked EN/AR align consistently */
   .narrator-page .hero-row > div,
