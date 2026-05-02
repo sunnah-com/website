@@ -267,6 +267,8 @@ class Narrator extends ActiveRecord
             'الفقيه'    => 'al-Faqih',
             'المسيب'    => 'al-Musayyib',
             'الثوري'    => 'ath-Thawri',
+            'الطيالسي'  => 'at-Tayalisi',
+            'بذدزبة'    => 'Badhdizba',
             'المالكية'  => 'Maliki',
             'سلمة'      => 'Salama',
             'يونس'      => 'Yunus',
@@ -942,7 +944,7 @@ class Narrator extends ActiveRecord
             'صدوق تغير بآخرة'                          => 'Truthful, Deteriorated Later',
             'صدوق اختلط'                               => 'Truthful, Became Confused',
             'رأس المتقنين وكبير المتثبتين'             => 'Chief of the Precise and Meticulous',
-
+            'جبل الحفظ وإمام الدنيا في فقه الحديث'     => 'Mountain of memory, Imam of the World in Fiqh and Hadith',
         ];
     }
 
