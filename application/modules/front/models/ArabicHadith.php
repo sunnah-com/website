@@ -52,6 +52,22 @@ class ArabicHadith extends Hadith
             $s->getContent());
     }
 
+    public function quranHandler(ShortcodeInterface $s) {
+        $sura = $s->getParameter("sura");
+        $startAya = $s->getParameter("aya_start");
+        $endAya = $s->getParameter("aya_end", $startAya);
+
+        return sprintf('‏<a href="javascript:openquran(%d,%d,%d)">%s</a>',
+            $sura - 1,
+            $startAya,
+            $endAya,
+            $s->getContent());
+    }
+
+    private function stripUnhandledShortcodes($text) {
+        return preg_replace('/\[\/?[a-zA-Z][a-zA-Z0-9_-]*(?:\s+[^\]]*)?\s*\/?\]/u', '', $text);
+    }
+
     private function makeShortcodeParser() {
         $this->facade = new ShortcodeFacade();
         $this->facade->addHandler('prematn', array($this, 'sanadizer'));
@@ -59,6 +75,7 @@ class ArabicHadith extends Hadith
         $this->facade->addHandler('matn', array($this, 'matnizer'));
         $this->facade->addHandler('commentary', array($this, 'commentaryizer'));
         $this->facade->addHandler('narrator', array($this, 'narratorHandler'));
+        $this->facade->addHandler('quran', array($this, 'quranHandler'));
     }
 
     public function process_text()
@@ -69,6 +86,7 @@ class ArabicHadith extends Hadith
         if (strpos($processed_text, "]")) {
             $this->makeShortcodeParser();
             $processed_text = $this->facade->process($processed_text);
+            $processed_text = $this->stripUnhandledShortcodes($processed_text);
             $this->shortcode_parsed = true;
         }
 
