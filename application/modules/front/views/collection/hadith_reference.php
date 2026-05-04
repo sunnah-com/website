@@ -82,12 +82,8 @@
 			if ($book->status == 4) {
 				echo "<tr><td><b>Reference</b></td>";
 				echo "<td>&nbsp;:&nbsp;";
-				$surroundingBeginTag = "";
-				$surroundingEndTag = "";
-				if ($this->params["_pageType"] !== "hadith" ) {
 					$surroundingBeginTag = "<a href=\"$permalink\">";
 					$surroundingEndTag = "</a>";
-				}
                 echo $surroundingBeginTag.$arabicEntry->canonicalReference.$surroundingEndTag;
 				echo "</td></tr>";
 
