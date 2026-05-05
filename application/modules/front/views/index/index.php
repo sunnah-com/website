@@ -1,9 +1,12 @@
 <?php 
-    $primaryCollections = array_filter($collections, function($c) { return $c['type'] === 'collection'; });
+    $primaryCollections = array_filter($collections, function($c) { return $c['type'] === 'primary_collection'; });
+    $secondaryCollections = array_filter($collections, function($c) { return $c['type'] === 'secondary_collection'; });
     $selectionCollections = array_filter($collections, function($c) { return $c['type'] === 'selection'; });
     $primaryCollections = array_values($primaryCollections);
+    $secondaryCollections = array_values($secondaryCollections);
     $selectionCollections = array_values($selectionCollections);
     $primarySplit = round(count($primaryCollections) / 2, 0, PHP_ROUND_HALF_UP);
+    $secondarySplit = round(count($secondaryCollections) / 2, 0, PHP_ROUND_HALF_UP);
     $selectionSplit = round(count($selectionCollections) / 2, 0, PHP_ROUND_HALF_UP);
 ?>
 
@@ -47,11 +50,11 @@
 	<div class=clear></div>
 	</div>
 
-	<!-- Primary Collections Section -->
+	<!-- The Nine Books Section -->
 	<div class="collection-section">
 		<div class="collection-section-header">
-			<span class="collection-section-title">Primary Collections</span>
-			<span class="collection-section-title-arabic arabic">المصادر الأصلية</span>
+			<span class="collection-section-title">The Nine Books</span>
+			<span class="collection-section-title-arabic arabic">الكتب التسعة</span>
 		</div>
 		<div class="collections">
 			<div class="collection_titles" style="padding-right: 6px;">
@@ -86,7 +89,48 @@
 			</div><!-- end primary collection titles 2 -->
 			<div class="clear"></div>
 		</div>
-	</div><!-- end Primary Collections section -->
+	</div><!-- end The Nine Books section -->
+
+	<!-- Other Primary Collections Section -->
+	<div class="collection-section">
+		<div class="collection-section-header">
+			<span class="collection-section-title">Other Primary Collections</span>
+			<span class="collection-section-title-arabic arabic">المصادر الأصلية الأخرى</span>
+		</div>
+		<div class="collections">
+			<div class="collection_titles" style="padding-right: 6px;">
+				<?php 
+					for ($i = 0; $i < $secondarySplit; $i++) {
+						$collection = $secondaryCollections[$i];
+						?>
+						<div class="collection_title">
+							<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
+								<div class="english_collection_title"><?php echo $collection['englishTitle']; ?></div>
+								<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
+							</a>
+							<div class="clear"></div>
+						</div>
+						<?php if ($i < $secondarySplit - 1) echo '<div class="collection_sep"></div>';
+				 } ?>
+			</div><!-- end secondary collection titles 1 -->
+			<div class="collection_titles" style="float: right;">
+				<?php 
+					for ($i = $secondarySplit; $i < count($secondaryCollections); $i++) {
+						$collection = $secondaryCollections[$i];
+						?>
+						<div class="collection_title">
+							<a href="/<?php echo $collection['name']; ?>" style="display: inline;">
+								<div class="english_collection_title"><?php echo $collection['englishTitle']; ?></div>
+								<div class="arabic arabic_collection_title"><?php echo $collection['arabicTitle']; ?></div>
+							</a>
+							<div class="clear"></div>
+						</div>
+						<?php if ($i < count($secondaryCollections) - 1) echo '<div class="collection_sep"></div>';
+				 } ?>
+			</div><!-- end secondary collection titles 2 -->
+			<div class="clear"></div>
+		</div>
+	</div><!-- end Other Primary Collections section -->
 
 	<!-- Selections Section -->
 	<div class="collection-section collection-section-selections">
