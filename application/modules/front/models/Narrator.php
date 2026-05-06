@@ -945,6 +945,7 @@ class Narrator extends ActiveRecord
             'صدوق اختلط'                               => 'Truthful, Became Confused',
             'رأس المتقنين وكبير المتثبتين'             => 'Chief of the Precise and Meticulous',
             'جبل الحفظ وإمام الدنيا في فقه الحديث'     => 'Mountain of memory, Imam of the World in Fiqh and Hadith',
+            'ثقة حافظ فقيه إمام حجة وربما دلس'         => 'Trustworthy, Expert, Jurist, Imam, Authority, occasional tadlis',
         ];
     }
 

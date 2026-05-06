@@ -1863,14 +1863,19 @@ input.searchquery{
 		margin: 25px 0 20px;
 		border-bottom: 2px solid #bdd9de5c;
 		justify-content: center;
+		flex-wrap: nowrap;
 	}
 
 	.collection-section-title {
-		width: auto;
+		width: 50%;
+		min-width: 0;
+		box-sizing: border-box;
 		font-size: 15px;
 		letter-spacing: 1px;
 		padding: 0 8px;
 		display: inline;
+		white-space: normal;
+		text-align: center;
 	}
 
 	.collection-section-title::before {
@@ -1878,10 +1883,14 @@ input.searchquery{
 	}
 
 	.collection-section-title-arabic {
-		width: auto;
+		width: 50%;
+		min-width: 0;
+		box-sizing: border-box;
 		font-size: 24px;
 		padding-left: 8px;
 		display: inline;
+		white-space: normal;
+		text-align: center;
 	}
 
 	.collection-section-title-arabic::after {
