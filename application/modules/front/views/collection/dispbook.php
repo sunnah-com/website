@@ -98,6 +98,7 @@ else {
     		<div class=clear></div>
 		</div>
     	<div class=clear></div>
+		<?php echo $this->render('/collection/_go_to_hadith', array('collectionName' => $collection->name)); ?>
 		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b><?php echo $totalCount; ?></b> hadith</div> -->
 
 	<?php
