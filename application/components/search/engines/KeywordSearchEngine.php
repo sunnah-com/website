@@ -75,7 +75,8 @@ class KeywordSearchEngine extends SearchEngine
         foreach ($docs as $doc) {
             $urn = $doc->_source->urn;
             $lang = $doc->_source->lang;
-            $resultset->addResult($lang, intval($urn), $doc->highlight ?? (object) []);
+            // Pass _source through: the resultset builds models from ->en / ->ar.
+            $resultset->addResult($lang, intval($urn), $doc->highlight ?? (object) [], $doc->_source);
         }
 
         return $resultset;

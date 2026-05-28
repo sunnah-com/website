@@ -6,7 +6,6 @@ use app\modules\front\models\Util;
 use app\modules\front\models\ArabicHadith;
 use app\modules\front\models\EnglishHadith;
 use Yii;
-use yii\db\Query;
 
 class SearchResultset
 {
@@ -19,12 +18,6 @@ class SearchResultset
     /** @var array */
     protected $results;
 
-    /** @var array */
-    private static $LANG_TABLE_DATA = array(
-        'en' => array('hadithTable' => 'EnglishHadithTable', 'urnField' => 'englishURN'),
-        'ar' => array('hadithTable' => 'ArabicHadithTable', 'urnField' => 'arabicURN'),
-    );
-
     public function __construct($count)
     {
         $this->results = [];
@@ -36,12 +29,13 @@ class SearchResultset
         $this->suggestions = $suggestions;
     }
 
-    public function addResult($lang, $urn, $highlighted)
+    public function addResult($lang, $urn, $highlighted, $source = null)
     {
         $this->results[] = array(
             'language' => $lang,
             'urn' => $urn,
             'highlighted' => $highlighted,
+            'source' => $source, // ES _source: carries ->en / ->ar payloads
             'data' => null // filled when calling getResults()
         );
     }
@@ -67,65 +61,54 @@ class SearchResultset
     }
 
     /**
-     * Returns array of valid search results with hadith data filled in
+     * Returns array of valid search results with hadith data filled in.
+     *
+     * Hydrates the hadith models from each hit's _source->en / ->ar payloads,
+     * whose keys are EnglishHadith/ArabicHadith property names (see the SELECTs
+     * in search/main.py). Only the cached collection/book lookups touch the DB.
      *
      * @return array
      */
     public function getResults()
     {
-        $urnsByLang = array();
-        foreach ($this->results as $result) {
-            $urnsByLang[$result['language']][] = $result['urn'];
-        }
-
         $util = new Util();
-
-        $hadithData = array('en' => [], 'ar' => []);
-        foreach ($urnsByLang as $lang => $urns) {
-            $hadithData[$lang] += self::getHadithsByUrn($lang, $urnsByLang[$lang]);
-
-            $matchingUrns[$lang] = $util->getMatchingUrns($lang, $urns);
-            if ($lang === 'en') {
-                $hadithData['ar'] += self::getHadithsByUrn('ar', $matchingUrns[$lang]);
-            } elseif ($lang === 'ar') {
-                $hadithData['en'] += self::getHadithsByUrn('en', $matchingUrns[$lang]);
-            }
-        }
-        
         $collectionData = $util->getCollectionsInfo('indexed');
+
         $newResults = array();
         foreach ($this->results as $result) {
             $lang = $result['language'];
-            $hadith = $hadithData[$lang][$result['urn']] ?? null;
-            if ($hadith === null) {
-                // Main matching hadith doesn't exist for some reason
-                Yii::warning("Hadith [$lang]: {$result['urn']} doesn't exist", 'search');
+            $source = $result['source'];
+
+            // The matched language's payload must be present in the hit's _source.
+            if ($source === null || !isset($source->$lang)) {
+                Yii::warning("Search hit [$lang]: {$result['urn']} missing _source.$lang", 'search');
                 continue;
             }
 
-            if ($lang === 'en') {
-                $enUrn = $result['urn'];
-                $arUrn = $matchingUrns[$lang][$enUrn] ?? null;
-            } elseif ($lang === 'ar') {
-                $arUrn = $result['urn'];
-                $enUrn = $matchingUrns[$lang][$arUrn] ?? null;
+            $collectionName = $source->$lang->collection;
+            $collection = $collectionData[$collectionName] ?? null;
+            if ($collection === null) {
+                Yii::warning("Search hit [$lang]: unknown collection {$collectionName}", 'search');
+                continue;
             }
 
+            // Both languages share one BookData row, so a single lookup off the
+            // matched language feeds both populate() calls (as the old SQL did).
             $bookLanguage = ($lang === 'en') ? 'english' : 'arabic';
-            $book = $util->getBook($hadith['collection'], $hadith['bookID'], $bookLanguage);
+            $book = $util->getBook($collectionName, $source->$lang->bookID, $bookLanguage);
 
             $arabicEntry = null; $englishEntry = null;
-            if (isset($hadithData['ar'][$arUrn]) && !is_null($hadithData['ar'][$arUrn])) {
-                $arabicEntry = new ArabicHadith($hadithData['ar'][$arUrn]);
-                $arabicEntry->populate($util, $collectionData[$hadith['collection']], $book);
+            if (isset($source->ar)) {
+                $arabicEntry = new ArabicHadith((array) $source->ar);
+                $arabicEntry->populate($util, $collection, $book);
             }
-            if (isset($hadithData['en'][$enUrn]) && !is_null($hadithData['en'][$enUrn])) {
-                $englishEntry = new EnglishHadith($hadithData['en'][$enUrn]);
-                $englishEntry->populate($util, $collectionData[$hadith['collection']], $book);
+            if (isset($source->en)) {
+                $englishEntry = new EnglishHadith((array) $source->en);
+                $englishEntry->populate($util, $collection, $book);
             }
 
             $result['data'] = array(
-                'collection' => $collectionData[$hadith['collection']],
+                'collection' => $collection,
                 'book' => $book,
                 'en' => $englishEntry,
                 'ar' => $arabicEntry,
@@ -133,21 +116,5 @@ class SearchResultset
             $newResults[] = $result;
         }
         return $newResults;
-    }
-
-    protected static function getHadithsByUrn($lang, $urns)
-    {
-        $tableData = self::$LANG_TABLE_DATA[$lang];
-        $query = new Query();
-        $query = $query
-            ->select('*')
-            ->from($tableData['hadithTable'])
-            ->where(array('in', $tableData['urnField'], $urns));
-        $arabicSet = $query->all();
-        $results = array();
-        foreach ($arabicSet as $row) {
-            $results[$row[$tableData['urnField']]] = $row;
-        }
-        return $results;
     }
 }
