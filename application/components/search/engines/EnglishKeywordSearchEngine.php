@@ -22,7 +22,11 @@ class EnglishKeywordSearchEngine extends KeywordSearchEngine
                 $url .= '&collection='.rawurlencode($collection);
             }
         }
-        
+
+        if (!empty($this->mode)) {
+            $url .= '&mode='.rawurlencode($this->mode);
+        }
+
         $resultscode = $this->elastic->sendRequest($url);
 
         if ($resultscode === false) {

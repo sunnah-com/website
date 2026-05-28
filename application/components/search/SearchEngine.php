@@ -21,6 +21,9 @@ abstract class SearchEngine
     /** @var array[] */
     protected $collections;
 
+    /** @var string|null */
+    protected $mode;
+
     public function setLimitPage($limit, $page)
     {
         $this->limit = intval($limit);
@@ -30,6 +33,11 @@ abstract class SearchEngine
     public function setCollections($collections)
     {
         $this->collections = $collections;
+    }
+
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
     }
 
     /**
