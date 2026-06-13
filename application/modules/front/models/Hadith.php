@@ -30,6 +30,43 @@ class Hadith extends ActiveRecord
 	public $permalink = null;
 	public $sunnahReference = null;
 
+    /**
+     * Column superset used to hydrate search results from Elasticsearch when the
+     * database is unreachable, so AR construction does not require live schema
+     * introspection. Union of the real EnglishHadith/ArabicHadith columns and
+     * the ES _source field names (see the SELECTs in search/main.py).
+     */
+    private const SCHEMA_FALLBACK = [
+        'englishURN', 'arabicURN', 'collection', 'volumeNumber', 'bookNumber',
+        'bookName', 'babNumber', 'babName', 'hadithNumber', 'hadithText',
+        'bookID', 'grade', 'grade1', 'comments', 'ourHadithNumber',
+        'matchingArabicURN', 'matchingEnglishURN',
+    ];
+
+    /** @var array<string,array> per-class cache of resolved attribute names */
+    private static $_attributesCache = [];
+
+    /**
+     * Attribute names, falling back to a static column list when the DB schema
+     * cannot be loaded (e.g. MySQL outage). Search result data comes from
+     * Elasticsearch, so this keeps results renderable instead of letting a
+     * schema-introspection failure 500 the whole page. When the DB is healthy
+     * this returns the real schema, exactly as before.
+     */
+    public function attributes()
+    {
+        $cls = static::class;
+        if (isset(self::$_attributesCache[$cls])) {
+            return self::$_attributesCache[$cls];
+        }
+        try {
+            return self::$_attributesCache[$cls] = parent::attributes();
+        } catch (\Throwable $e) {
+            \Yii::warning("Hadith schema unavailable for $cls; using static fallback: " . $e->getMessage(), 'search');
+            return self::$_attributesCache[$cls] = self::SCHEMA_FALLBACK;
+        }
+    }
+
     public function __construct($config = []) {
         parent::__construct();
         if (!is_null($config)) {

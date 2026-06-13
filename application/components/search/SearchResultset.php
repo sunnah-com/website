@@ -76,6 +76,7 @@ class SearchResultset
 
         $newResults = array();
         foreach ($this->results as $result) {
+          try {
             $lang = $result['language'];
             $source = $result['source'];
 
@@ -96,6 +97,13 @@ class SearchResultset
             // matched language feeds both populate() calls (as the old SQL did).
             $bookLanguage = ($lang === 'en') ? 'english' : 'arabic';
             $book = $util->getBook($collectionName, $source->$lang->bookID, $bookLanguage);
+            if ($book === null) {
+                // Book metadata unavailable (e.g. DB outage with a cold cache).
+                // The downstream view requires it, so skip this hit rather than
+                // 500 the whole results page.
+                Yii::warning("Search hit [$lang]: book unavailable for {$collectionName}/{$source->$lang->bookID}", 'search');
+                continue;
+            }
 
             $arabicEntry = null; $englishEntry = null;
             if (isset($source->ar)) {
@@ -114,6 +122,12 @@ class SearchResultset
                 'ar' => $arabicEntry,
             );
             $newResults[] = $result;
+          } catch (\Throwable $e) {
+            // Render what we can: drop a single un-hydratable hit instead of
+            // failing the entire search page.
+            Yii::warning("Search hit [{$result['language']}] {$result['urn']} skipped: " . $e->getMessage(), 'search');
+            continue;
+          }
         }
         return $newResults;
     }

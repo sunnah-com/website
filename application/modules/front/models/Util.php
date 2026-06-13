@@ -157,14 +157,20 @@ class Util extends Model {
         $cache_key = "collectionsInfo"."_".(string)$display_only;
 		$this->_collectionsInfo = Yii::$app->cache->get($cache_key);
 		if ($this->_collectionsInfo === false) {
-			$connection = Yii::$app->db;
-            if ($connection == NULL) return array();
-            $showOnHomeCondition = "";
-            if ($display_only) { $showOnHomeCondition = "where showOnHome = 1"; }
-			$query = "SELECT * FROM Collections $showOnHomeCondition order by collectionID ASC";
-			$command = $connection->createCommand($query);
-			$this->_collectionsInfo = $command->queryAll();
-			Yii::$app->cache->set($cache_key, $this->_collectionsInfo, Yii::$app->params['cacheTTL']);
+			try {
+				$connection = Yii::$app->db;
+				if ($connection == NULL) return array();
+				$showOnHomeCondition = "";
+				if ($display_only) { $showOnHomeCondition = "where showOnHome = 1"; }
+				$query = "SELECT * FROM Collections $showOnHomeCondition order by collectionID ASC";
+				$command = $connection->createCommand($query);
+				$this->_collectionsInfo = $command->queryAll();
+				Yii::$app->cache->set($cache_key, $this->_collectionsInfo, Yii::$app->params['cacheTTL']);
+			} catch (\Throwable $e) {
+				// Degrade gracefully on a DB outage instead of taking the page down.
+				Yii::warning("getCollectionsInfo DB lookup failed: " . $e->getMessage(), 'search');
+				return array();
+			}
 		}
 		if (strcmp($mode, "indexed") == 0) {
 			foreach ($this->collectionsInfo as $collection)
@@ -177,10 +183,16 @@ class Util extends Model {
 	public function getCollection($collectionName) {
 		$collection = Yii::$app->cache->get("collection:".$collectionName);
         if ($collection === false) {
-            $collection = Collection::find()
-                ->where('name = :name', [':name' => $collectionName])
-                ->one();
-            Yii::$app->cache->set("collection:".$collectionName, $collection, Yii::$app->params['cacheTTL']);
+            try {
+                $collection = Collection::find()
+                    ->where('name = :name', [':name' => $collectionName])
+                    ->one();
+                Yii::$app->cache->set("collection:".$collectionName, $collection, Yii::$app->params['cacheTTL']);
+            } catch (\Throwable $e) {
+                // Degrade gracefully on a DB outage instead of taking the page down.
+                Yii::warning("getCollection DB lookup failed for $collectionName: " . $e->getMessage(), 'search');
+                return null;
+            }
         }
 		return $collection;
 	}
@@ -190,7 +202,8 @@ class Util extends Model {
         $arabic_books = Yii::$app->cache->get($collectionName."books_arabic");
         $english_books = Yii::$app->cache->get($collectionName."books_english");
         if ($books === false or $arabic_books === false or $english_books === false) {
-			if (strcmp($collectionName, "nasai") == 0 or strcmp($collectionName, "shamail") == 0) $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['abs(ourBookID)' => SORT_ASC, 'englishBookID' => SORT_ASC])->all();
+            try {
+				if (strcmp($collectionName, "nasai") == 0 or strcmp($collectionName, "shamail") == 0) $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['abs(ourBookID)' => SORT_ASC, 'englishBookID' => SORT_ASC])->all();
             else $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['ourBookID' => SORT_ASC])->all();
             foreach ($books_rs as $book) $books[$book->ourBookID] = $book;
             foreach ($books_rs as $book) $arabic_books[$book->arabicBookID] = $book;
@@ -198,6 +211,11 @@ class Util extends Model {
             Yii::$app->cache->set($collectionName."books_arabic", $arabic_books, Yii::$app->params['cacheTTL']);
             Yii::$app->cache->set($collectionName."books_english", $english_books, Yii::$app->params['cacheTTL']);
             Yii::$app->cache->set($collectionName."books", $books, Yii::$app->params['cacheTTL']);
+            } catch (\Throwable $e) {
+                // Degrade gracefully on a DB outage instead of taking the page down.
+                Yii::warning("getBook DB lookup failed for $collectionName: " . $e->getMessage(), 'search');
+                return null;
+            }
         }
 
 		if (is_null($bookID)) return $books;

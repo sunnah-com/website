@@ -72,15 +72,24 @@ abstract class SearchEngine
     public function logQuery($numResults)
     {
         if (defined("YII_ENV") && YII_ENV !== "dev") {
-            $searchdb = Yii::$app->searchdb;
-            $searchdb->createCommand(
-                'INSERT INTO `search_queries` (query, IP, numResults) VALUES (:query, :IP, :numResults)',
-                [
-                    ':query' => $this->query,
-                    ':IP' => Yii::$app->getRequest()->getUserIP(),
-                    ':numResults' => $numResults
-                ]
-            )->execute();
+            // Query logging is non-critical: results already came back from the
+            // search engine. Never let a searchdb outage take down the search page.
+            try {
+                $searchdb = Yii::$app->searchdb;
+                $searchdb->createCommand(
+                    'INSERT INTO `search_queries` (query, IP, numResults) VALUES (:query, :IP, :numResults)',
+                    [
+                        ':query' => $this->query,
+                        ':IP' => Yii::$app->getRequest()->getUserIP(),
+                        ':numResults' => $numResults
+                    ]
+                )->execute();
+            } catch (\Throwable $e) {
+                Yii::warning(
+                    "logQuery failed (non-fatal): {$e->getMessage()}",
+                    'app\components\search\SearchEngine'
+                );
+            }
         }
     }
 }
