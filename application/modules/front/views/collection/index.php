@@ -39,6 +39,7 @@ else {
 	<div class=clear></div>
 	</div>
 
+	<?php echo $this->render('/collection/_go_to_hadith', array('collectionName' => $collectionName)); ?>
 
 		<div class="book_titles titles">
 				<?php
