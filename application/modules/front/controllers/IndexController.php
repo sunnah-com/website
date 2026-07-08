@@ -146,12 +146,21 @@ class IndexController extends SController
     }
 
 	public function actionFlushCache($key = NULL) {
+		// Restrict cache management to loopback callers (server-local maintenance scripts).
+		// Without this guard any anonymous visitor could repeatedly flush the cache
+		// and cause a stampede on the origin database.
+		$remoteIp = Yii::$app->getRequest()->getUserIP();
+		$allowedIps = ['127.0.0.1', '::1'];
+		if (!in_array($remoteIp, $allowedIps, true)) {
+			throw new \yii\web\ForbiddenHttpException('Forbidden.');
+		}
+		if (!Yii::$app->getRequest()->getIsPost()) {
+			throw new \yii\web\MethodNotAllowedHttpException('POST required.');
+		}
 		if (is_null($key)) $success = Yii::$app->cache->flush();
 		else {
 			$key = rawurldecode($key);
 			$success = Yii::$app->cache->delete($key);
-			//Yii::log("Attempting to delete key $key", 'info', 'system.web.CController');
-			//$success = $key;
 		}
 		$this->view->params['success'] = $success;
 		echo $this->renderPartial('flushcache');

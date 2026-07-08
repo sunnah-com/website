@@ -1,6 +1,17 @@
 <?php
-	$hadithText = $_POST['hadithText'];
+	$hadithText = isset($_POST['hadithText']) ? (string)$_POST['hadithText'] : '';
 	$hadithPreviewText = nl2br(htmlspecialchars($hadithText));
+
+	$rawLink = isset($_POST['link']) ? (string)$_POST['link'] : '';
+	// Only allow a site-relative path, e.g. /bukhari/1. Reject anything that
+	// doesn't start with a single '/' or contains characters that could break
+	// out of the href attribute or change the host.
+	$link = '';
+	if (preg_match('#^/[A-Za-z0-9_\-./:?=&%]*$#', $rawLink) && strpos($rawLink, '//') !== 0) {
+		$link = $rawLink;
+	}
+	$linkAttr = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
+	$hadithTextUrl = rawurlencode($hadithText);
 ?>
 
 <h1> SHARE THIS HADITH </h1>
@@ -15,7 +26,7 @@
 <!-- Share buttons -->
 <div class="share_buttons">
 	<div class="share_button">
-		<a href="https://www.facebook.com/sharer.php?u=https://sunnah.com<?php echo $_POST['link']; ?>"
+		<a href="https://www.facebook.com/sharer.php?u=https://sunnah.com<?php echo $linkAttr; ?>"
 			target="blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on Facebook"
@@ -24,7 +35,7 @@
 	</div>
 
 	<div class="share_button">
-		<a href="https://twitter.com/intent/tweet?text=<?php echo urlencode($_POST['hadithText']); ?>&hashtags=SunnahCom,hadith"
+		<a href="https://twitter.com/intent/tweet?text=<?php echo $hadithTextUrl; ?>&hashtags=SunnahCom,hadith"
 			target="blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on Twitter"
@@ -34,7 +45,7 @@
 
     <!-- WhatsApp -->
 	<div class="share_button">
-		<a href="https://api.whatsapp.com/send?url=https://sunnah.com<?php echo $_POST['link']; ?>&text=<?php echo urlencode($_POST['hadithText']); ?>" 
+		<a href="https://api.whatsapp.com/send?url=https://sunnah.com<?php echo $linkAttr; ?>&text=<?php echo $hadithTextUrl; ?>" 
 			target="_blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on WhatsApp"
@@ -45,7 +56,7 @@
 
 	<!-- Telegram -->
 	<div class="share_button">
-		<a href="https://t.me/share/url?url=https://sunnah.com<?php echo $_POST['link']; ?>" 
+		<a href="https://t.me/share/url?url=https://sunnah.com<?php echo $linkAttr; ?>" 
 			target="_blank"
 			rel="noopener noreferrer"
 			title="Share Hadith on Telegram"

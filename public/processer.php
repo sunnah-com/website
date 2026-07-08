@@ -24,8 +24,14 @@ if (isset($_POST['ftype'])) {
 
 		$errortype = $_POST['type']." ".$_POST['othererror'];
 		$errortext = $_POST['re_additional'];
-		$email = $_POST['email'];
-		if (strlen($email) <= 3) $email = $parameters['adminEmail'];
+		$email = isset($_POST['email']) ? trim((string)$_POST['email']) : '';
+		// Reject anything that doesn't look like a valid email address or that
+		// contains CR/LF (mail header injection). Fall back to adminEmail.
+		if (strlen($email) <= 3
+			|| !filter_var($email, FILTER_VALIDATE_EMAIL)
+			|| preg_match('/[\r\n]/', $email)) {
+			$email = $parameters['adminEmail'];
+		}
 		
 		$resp = recaptcha_check_answer(
 				$privatekey,

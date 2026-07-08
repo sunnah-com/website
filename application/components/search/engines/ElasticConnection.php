@@ -36,18 +36,33 @@ class ElasticConnection extends BaseObject
             'Authorization: Basic ' . base64_encode($this->username.':'.$this->password),
         );
 
-        $clientIp = $this->getClientIp();
+        $clientIp = $this->sanitizeHeaderValue($this->getClientIp());
         if (!empty($clientIp)) {
             $headers[] = 'X-Forwarded-For: ' . $clientIp;
             $headers[] = 'X-Real-IP: ' . $clientIp;
         }
 
-        $userAgent = Yii::$app->getRequest()->getUserAgent();
+        $userAgent = $this->sanitizeHeaderValue(Yii::$app->getRequest()->getUserAgent());
         if (!empty($userAgent)) {
             $headers[] = 'User-Agent: ' . $userAgent;
         }
 
         return $headers;
+    }
+
+    /**
+     * Strip CR/LF and other control characters from a value before placing it
+     * in an outbound HTTP header. Prevents header / request smuggling via
+     * client-controlled headers like User-Agent and X-Forwarded-For.
+     */
+    private function sanitizeHeaderValue($value)
+    {
+        if ($value === null) {
+            return '';
+        }
+        // Drop anything that could terminate a header line or inject control chars.
+        $clean = preg_replace('/[\x00-\x1F\x7F]/', '', (string)$value);
+        return trim($clean);
     }
 
     private function getClientIp()
