@@ -56,14 +56,14 @@
 <li>Familiarity with some lesser-known treasures and special features of ḥadīth collections.</li>
 </ul>
 
-<p><b>The famous ḥadīth compilations and the number of thulāthiyyāt reports they contain:</b></p>
+<p><b>The famous ḥadīth compilations and the number of thulāthiyyāt reports they contain</b>, which are a combination of marfu’ and mawqūf, as well as varying levels of authenticity:</p>
 <table style="border-collapse: collapse;">
 <tbody>
 <tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad Sufyān al-Thawrī (d. 161)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">105</td></tr>
 <tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Muwaṭṭaʾ Mālik (d. 179)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">364</td></tr>
 <tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad ʿAbdullāh ibn al-Mubārak (d. 181 H)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">99</td></tr>
 <tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad al-Muʿāfā al-Mawṣilī (d. 185) and Kitāb al-Zuhd</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">47</td></tr>
-<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad al-Shāfiʿī (d. 204)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">40</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad al-Shāfiʿī (d. 204)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">304</td></tr>
 <tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad Abū Dāwūd al-Ṭayālisī (d. 204 H)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">785</td></tr>
 <tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Saʿīd ibn Manṣūr (d. 227 H)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">185</td></tr>
 <tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad Isḥāq ibn Rāhwayh (d. 238)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">5</td></tr>
@@ -77,14 +77,9 @@
 </tbody>
 </table>
 
-<p>A note on scope: this collection focuses on ḥadīth compiled by Aḥmad ibn Ḥanbal, al-Dārimī, al-Bukhārī, Ibn Mājah, al-Tirmidhī, and al-Ṭabarānī. A thulāthī chain is remarkable in proportion to how far the compiler lived from the era of the Prophet ﷺ — three narrators is an unusually short chain for someone writing in the mid-third century AH, but unremarkable for a scholar one or two generations closer to the Companions, such as Abū Ḥanīfah or Mālik. For that reason, and because several of the earlier surveyed works are either not the author's own direct compilation (e.g., the various later collections gathered under the name Musnad Abī Ḥanīfah) or mix in mursal and non-prophetic material extensively (e.g., the Muwaṭṭaʾ), this collection is restricted to the eight compilations above.</p>
+<p><b>A note on scope:</b> this collection focuses on ḥadīth compiled by the latter 8 compilations in the list above: Isḥāq ibn Rāhwayh, Aḥmad ibn Ḥanbal, al-Kashshī, al-Dārimī, al-Bukhārī, Ibn Mājah, al-Tirmidhī, and al-Ṭabarānī. A thulāthī chain is remarkable in proportion to how far the compiler lived from the era of the Prophet ﷺ — three narrators is an unusually short chain for someone writing in the mid-third century AH, but unremarkable for a scholar one or two generations closer to the Companions, such as Abū Ḥanīfah or Mālik. For that reason, and because several of the earlier surveyed works are either not the author's own direct compilation (e.g., the various later collections gathered under the name Musnad Abī Ḥanīfah) or mix in mursal and non-prophetic material (e.g., the Muwaṭṭaʾ), this collection is restricted to the compilations above.</p>
 
-<p><b>There are no thulāthiyyāt narrations found in famous compilations that include:</b></p>
-<ul>
-<li>Ṣaḥīḥ Muslim (d. 261)</li>
-<li>Sunan Abū Dāwūd (d. 275)</li>
-<li>Sunan al-Nasāʾī (d. 303)</li>
-</ul>
+<p>Note: There are no thulāthiyyāt narrations found in famous compilations like Ṣaḥīḥ Muslim (d. 261), Sunan Abū Dāwūd (d. 275), and Sunan al-Nasāʾī (d. 303).</p>
 
 <p>The above list contains thulāthiyyāt attributed to different compilers of ḥadīth, but it does not necessarily mean that they are all authentic reports, as some weak reports are found even within the compilations surveyed here. An analysis and study of thulāthiyyāt is only valuable if it includes the grading of each report (e.g., ṣaḥīḥ, ḥasan, ḍaʿīf, etc.) — this collection grades every report accordingly.</p>
 
