@@ -1483,6 +1483,12 @@ input.searchquery{
     overflow-wrap: anywhere;
 }
 
+.gradetable .grade_label {
+    width: 64px;
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
 .grade_detail_toggle {
     display: inline-flex;
     align-items: baseline;

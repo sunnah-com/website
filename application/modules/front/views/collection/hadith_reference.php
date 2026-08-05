@@ -69,7 +69,7 @@
                     $grade = $english_grades[$i]['grade'];
                     $graded_by = $english_grades[$i]['graded_by'];
                     $grade_detail = $english_grades[$i]['grade_detail'] ?? '';
-                    echo "<td class=english_grade width=\"50px\">";
+                    echo "<td class=\"english_grade grade_label\" width=\"64px\">";
 					if (!$firstGradePrinted) echo "<b>Grade</b>:";
 					echo "</td>";
                     echo "<td class=english_grade width=\"36%\">&nbsp;<b>".$grade."</b>";
@@ -89,7 +89,7 @@
 	    			if (strlen(trim($graded_by)) > 0) echo "&nbsp;&nbsp; (".$graded_by.") ";
                     renderGradeDetail($grade_detail, $grade_detail_panels, 'arabic');
                     echo "</td>";
-		    		echo "<td class=\"arabic_grade arabic\" width=\"50px\">";
+					echo "<td class=\"arabic_grade arabic grade_label\" width=\"64px\">";
 					if (!$firstGradePrinted) echo "<b>حكم</b>&nbsp;&nbsp;&nbsp;:";
 					echo "</td>";
                 } else {
