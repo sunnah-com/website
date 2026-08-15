@@ -96,7 +96,23 @@ class Util extends Model {
             return null;
         }
 
-        // If the hadith is not found and the collection is Muslim, 
+        // If the hadith is not found and the number has a trailing letter suffix
+        // (e.g. "4290b"), the stored hadithNumber may have a space before the
+        // suffix (e.g. "4290 b"). Retry the lookup with the suffix separated out.
+        preg_match('/^(\d+)\s*([a-zA-Z]+)$/', $hadithNumber, $suffixMatches);
+        if (count($suffixMatches) === 3) {
+            $spacedNum = $suffixMatches[1]." ".$suffixMatches[2];
+            $direct = $this->searchByNumber($collectionName, $spacedNum);
+            if (!is_null($direct)) {
+                foreach ($direct as $result) {
+                    $book = $this->getBook($collectionName, $result['bookID'], "arabic");
+                    if ($book->status >= 4) return $result['arabicURN'];
+                }
+                return null;
+            }
+        }
+
+        // If the hadith is not found and the collection is Muslim,
         // rewrite the hadith number to search for
         if ($collectionName === 'muslim') {
 			// Did the user supply a letter?
