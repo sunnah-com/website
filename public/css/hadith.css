@@ -187,8 +187,44 @@
 
 .gradetable {
 	width: 100%;
-	table-layout: fixed;
 	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+}
+
+.grade_row {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.grade_col {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	flex: 1 1 50%;
+	min-width: 0;
+	box-sizing: border-box;
+}
+
+.english_grade_col {
+	padding-right: 10px;
+}
+
+.arabic_grade_col {
+	justify-content: flex-end;
+	padding-left: 10px;
+}
+
+@media (max-width: 768px) {
+	.grade_row {
+		flex-direction: column;
+	}
+
+	.grade_col {
+		flex: 1 1 100%;
+		width: 100%;
+	}
 }
 
 .top_link a span {
@@ -203,25 +239,30 @@ a.action_toTop span     { background-position: -11px 0; }
 a.action_toTop:hover span   { background-position: -11px 0; }
 
 .english_grade {
-	vertical-align: top;
-	font-size: 14px; 
-	font-family: Verdana; 
+	font-size: 14px;
+	font-family: Verdana;
 	padding-top: 10px;
 	text-align: left;
 	overflow-wrap: anywhere;
+	min-width: 0;
 }
 
 .arabic_grade {
-	vertical-align: top; 
-	direction: rtl; 
+	direction: rtl;
 	text-align: right;
 	overflow-wrap: anywhere;
+	min-width: 0;
 }
 
 .gradetable .grade_label {
-	width: 64px;
+	flex: 0 0 64px;
 	white-space: nowrap;
 	overflow-wrap: normal;
+}
+
+.gradetable .grade_value {
+	min-width: 0;
+	overflow-wrap: anywhere;
 }
 
 .grade_detail_toggle {

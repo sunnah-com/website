@@ -37,7 +37,7 @@
 			    ($arabicExists && strlen($arabicGrade1) > 0)) and
 			   (strcmp($collection->name, "adab") != 0)) {
     	    echo "<div class=hadith_annotation>";
-            echo "<table class=gradetable cellspacing=0 cellpadding=0 border=0>";
+            echo "<div class=\"gradetable\">";
             $grade_detail_panels = array();
 
             // This should really happen in the controllers/models
@@ -64,43 +64,45 @@
             $num_grades = max(count($english_grades), count($arabic_grades));
 			$firstGradePrinted = false;
             for ($i = 0; $i < $num_grades; $i++) {
-                echo "<tr>";
+                echo "<div class=\"grade_row\">";
                 if (array_key_exists($i, $english_grades)) {
                     $grade = $english_grades[$i]['grade'];
                     $graded_by = $english_grades[$i]['graded_by'];
                     $grade_detail = $english_grades[$i]['grade_detail'] ?? '';
-                    echo "<td class=\"english_grade grade_label\" width=\"64px\">";
+                    echo "<div class=\"grade_col english_grade_col\">";
+                    echo "<span class=\"english_grade grade_label\">";
 					if (!$firstGradePrinted) echo "<b>Grade</b>:";
-					echo "</td>";
-                    echo "<td class=english_grade width=\"36%\">&nbsp;<b>".$grade."</b>";
+					echo "</span>";
+                    echo "<span class=\"english_grade grade_value\">&nbsp;<b>".$grade."</b>";
                     if (strlen(trim($graded_by)) > 0) echo " (".$graded_by.")";
                     renderGradeDetail($grade_detail, $grade_detail_panels);
-                    echo "</td>";
+                    echo "</span>";
+                    echo "</div>";
                 } else {
-                    echo "<td height=100% class=english_grade></td>";
-                    echo "<td height=100% class=english_grade></td>";
+                    echo "<div class=\"grade_col english_grade_col\"></div>";
                 }
 
                 if (array_key_exists($i, $arabic_grades)) {
                     $grade = $arabic_grades[$i]['grade'];
                     $graded_by = $arabic_grades[$i]['graded_by'];
                     $grade_detail = $arabic_grades[$i]['grade_detail'] ?? '';
-    				echo "<td class=\"arabic_grade arabic\">&nbsp;<b> ".$grade."</b>";
+                    echo "<div class=\"grade_col arabic_grade_col\">";
+    				echo "<span class=\"arabic_grade arabic grade_value\">&nbsp;<b> ".$grade."</b>";
 	    			if (strlen(trim($graded_by)) > 0) echo "&nbsp;&nbsp; (".$graded_by.") ";
                     renderGradeDetail($grade_detail, $grade_detail_panels, 'arabic');
-                    echo "</td>";
-					echo "<td class=\"arabic_grade arabic grade_label\" width=\"64px\">";
+                    echo "</span>";
+					echo "<span class=\"arabic_grade arabic grade_label\">";
 					if (!$firstGradePrinted) echo "<b>حكم</b>&nbsp;&nbsp;&nbsp;:";
-					echo "</td>";
+					echo "</span>";
+                    echo "</div>";
                 } else {
-                    echo "<td height=100% width=60% class=arabic_grade></td>";
-                    echo "<td height=100% width=60% class=arabic_grade></td>";
+                    echo "<div class=\"grade_col arabic_grade_col\"></div>";
                 }
 
-                echo "</tr>";
+                echo "</div>";
 				$firstGradePrinted = true;
             }
-            echo "</table>";
+            echo "</div>";
             if (count($grade_detail_panels) > 0) {
                 echo "<div class=\"grade_detail_panels\">";
                 foreach ($grade_detail_panels as $grade_detail_panel) {
