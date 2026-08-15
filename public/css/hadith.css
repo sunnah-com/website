@@ -216,7 +216,7 @@
 	padding-left: 10px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
 	.grade_row {
 		flex-direction: column;
 	}
@@ -224,10 +224,6 @@
 	.grade_col {
 		flex: 1 1 100%;
 		width: 100%;
-	}
-
-	.arabic_grade_col {
-		justify-content: flex-start;
 	}
 }
 
@@ -259,7 +255,7 @@ a.action_toTop:hover span   { background-position: -11px 0; }
 }
 
 .gradetable .grade_label {
-	flex: 0 0 auto;
+	flex: 0 0 64px;
 	white-space: nowrap;
 	overflow-wrap: normal;
 }
