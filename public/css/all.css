@@ -364,6 +364,34 @@ textarea {
 	display: none;
 }
 
+/*
+ * Sticky-header state, driven by an IntersectionObserver toggling this
+ * class on #site (see sunnah.js) instead of a scroll listener writing
+ * inline styles on every scroll tick. See issue #63.
+ */
+#site.header-stuck #header {
+	position: fixed;
+	top: 0;
+}
+
+#site.header-stuck #topspace {
+	display: block;
+}
+
+#site.header-stuck #toolbar {
+	display: none;
+}
+
+#site.header-stuck #search {
+	bottom: 31px; /* crumbs height + 12 bottom padding */
+}
+
+#site.header-stuck #sidePanel {
+	position: fixed;
+	top: 65px;
+	left: var(--sidePanel-left, auto);
+}
+
 .sidePanelContainer {
 	width: 15%; 
 	float: left;
