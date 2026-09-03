@@ -457,31 +457,51 @@
 	}
 
 
-   $(document).ready(function () {  
+   $(document).ready(function () {
 
-	$(window).scroll(function() {
-		if ($(window).scrollTop() > 750) $("#back-to-top").addClass('bttenabled');
-		else $("#back-to-top").removeClass('bttenabled');
+	// Back-to-top button: toggle only when the 750px threshold is actually
+	// crossed, not on every scroll tick.
+	var pastBackToTop = false;
+	window.addEventListener('scroll', function() {
+		var shouldShow = window.scrollY > 750;
+		if (shouldShow !== pastBackToTop) {
+			pastBackToTop = shouldShow;
+			$("#back-to-top").toggleClass('bttenabled', shouldShow);
+		}
+	}, { passive: true });
 
-		if ($(window).scrollTop() > 25) { // this number is height of short banner + breadcrumbs - 40
-			$("#banner").removeClass('bannerTop');
-			$("#banner").addClass('bannerMiddle');
-			$("#header").css('position', 'fixed');
-			$("#header").css('top', '0');
-			$("#topspace").css('display', 'block');
-			$("#toolbar").css('display', 'none');
-			$("#search").css('bottom', '31px'); // crumbs height + 12 bottom padding
-			$("#sidePanel").css({'position': 'fixed', 'top': '65px', 'left': $(".mainContainer").position().left - $("#sidePanel").width() - 55}); // last number is sidePanelContainer padding
-		}
-		else {
-			$("#banner").removeClass('bannerMiddle');
-			$("#banner").addClass('bannerTop');
-			$("#header").css('position', 'relative');
-			$("#topspace").css('display', 'none');
-			$("#toolbar").css('display', 'block');
-			$("#search").css('bottom', '45px'); // crumbs height + 20 bottom padding
-			$("#sidePanel").css('position', 'static');
-		}
+	// Sticky/compact header: previously a $(window).scroll() handler wrote
+	// several inline styles (position, top, display, bottom) and read
+	// $(".mainContainer").position() on every single scroll event, forcing
+	// a synchronous layout + repaint of the whole page on every scroll tick.
+	// Replaced with an IntersectionObserver, which only fires when the
+	// sentinel actually crosses the viewport edge, and CSS classes
+	// (.header-stuck in all.css) instead of per-tick inline style writes.
+	function updateSidePanelOffset() {
+		var left = $(".mainContainer").position().left - $("#sidePanel").width() - 55; // last number is sidePanelContainer padding
+		document.getElementById('site').style.setProperty('--sidePanel-left', left + 'px');
+	}
+
+	var $site = $("#site");
+	var headerObserver = new IntersectionObserver(function(entries) {
+		var entry = entries[0];
+		var stuck = !entry.isIntersecting;
+		$("#banner").toggleClass('bannerMiddle', stuck).toggleClass('bannerTop', !stuck);
+		if (stuck) updateSidePanelOffset();
+		$site.toggleClass('header-stuck', stuck);
+	}, { threshold: 0 });
+
+	// Observe #header-sentinel, a zero-height marker at the same position
+	// #toolbar used to mark, rather than #toolbar itself: .header-stuck
+	// hides #toolbar via display:none, which removes it from the layout
+	// and stops it from ever re-intersecting the viewport, so the header
+	// could go stuck but never un-stick on scrolling back up (#63 follow-up).
+	// #header-sentinel is never touched by the header-stuck CSS, so it
+	// keeps crossing the boundary in both directions.
+	headerObserver.observe(document.getElementById('header-sentinel'));
+
+	$(window).on('resize', function() {
+		if ($site.hasClass('header-stuck')) updateSidePanelOffset();
 	});
 
 	$("body").append('<div id="sharefuzz"></div>');

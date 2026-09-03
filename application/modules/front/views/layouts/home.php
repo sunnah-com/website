@@ -79,6 +79,7 @@
 <?php $this->beginBody() ?>
 <div id="site">
 	<div id="header">
+    	<div id="header-sentinel"></div>
     	<div id="toolbar">
        		<div id="toolbarRight">
 				<?php echo $this->render('suite') ?>
