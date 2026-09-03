@@ -101,6 +101,11 @@ $pageType = $this->params['_pageType'] ?? null;
 		</div>
 	    </div>
 	    <?php endif; ?>
+    	<!-- Zero-height marker for the sticky-header IntersectionObserver in sunnah.js.
+    	     Must stay outside any #site.header-stuck rule in all.css so it's never
+    	     hidden/repositioned itself -- unlike #toolbar, which the stuck state
+    	     hides, and so can only ever cross the observer's boundary once. -->
+    	<div id="header-sentinel"></div>
     	<div id="toolbar">
        		<div id="toolbarRight">
 				<?php echo $this->render('/layouts/suite') ?>

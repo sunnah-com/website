@@ -491,10 +491,14 @@
 		$site.toggleClass('header-stuck', stuck);
 	}, { threshold: 0 });
 
-	// #toolbar sits at the very top of #header; once it scrolls out of
-	// view the header has passed the same ~25px threshold the old code
-	// checked for via window.scrollTop().
-	headerObserver.observe(document.getElementById('toolbar'));
+	// Observe #header-sentinel, a zero-height marker at the same position
+	// #toolbar used to mark, rather than #toolbar itself: .header-stuck
+	// hides #toolbar via display:none, which removes it from the layout
+	// and stops it from ever re-intersecting the viewport, so the header
+	// could go stuck but never un-stick on scrolling back up (#63 follow-up).
+	// #header-sentinel is never touched by the header-stuck CSS, so it
+	// keeps crossing the boundary in both directions.
+	headerObserver.observe(document.getElementById('header-sentinel'));
 
 	$(window).on('resize', function() {
 		if ($site.hasClass('header-stuck')) updateSidePanelOffset();
