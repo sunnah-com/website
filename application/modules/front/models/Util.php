@@ -223,8 +223,8 @@ class Util extends Model {
 
 		if (is_null($bookID)) return $books;
 		if (is_null($language) and is_numeric($bookID) and array_key_exists($bookID, $books)) return $books[$bookID];
-		if (strcmp($language, "arabic") == 0 && is_numeric($bookID) and array_key_exists($bookID, $arabic_books)) return $arabic_books[$bookID];
-		if (strcmp($language, "english") == 0 && is_numeric($bookID) and array_key_exists($bookID, $english_books)) return $english_books[$bookID];
+		if ($language === "arabic" && is_numeric($bookID) and array_key_exists($bookID, $arabic_books)) return $arabic_books[$bookID];
+		if ($language === "english" && is_numeric($bookID) and array_key_exists($bookID, $english_books)) return $english_books[$bookID];
 		//if (is_null($language) and is_numeric($bookID)) return $books[$bookID];
 		//if (strcmp($language, "arabic") == 0 && is_numeric($bookID)) return $arabic_books[$bookID];
 		//if (strcmp($language, "english") == 0 && is_numeric($bookID)) return $english_books[$bookID];
