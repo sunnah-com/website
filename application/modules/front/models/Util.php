@@ -205,6 +205,9 @@ class Util extends Model {
             try {
 				if (strcmp($collectionName, "nasai") == 0 or strcmp($collectionName, "shamail") == 0) $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['abs(ourBookID)' => SORT_ASC, 'englishBookID' => SORT_ASC])->all();
             else $books_rs = Book::find()->where('collection = :collection', [':collection' => $collectionName])->orderBy(['ourBookID' => SORT_ASC])->all();
+            $books = [];
+            $arabic_books = [];
+            $english_books = [];
             foreach ($books_rs as $book) $books[$book->ourBookID] = $book;
             foreach ($books_rs as $book) $arabic_books[$book->arabicBookID] = $book;
             foreach ($books_rs as $book) $english_books[$book->englishBookID] = $book;
