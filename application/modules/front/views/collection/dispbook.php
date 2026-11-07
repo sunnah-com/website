@@ -9,8 +9,8 @@ function displayBab($chapter, $collection, $ourBookID, $showIntro = true) {
 	$arabicBabName = $chapter->arabicBabName;
 	$englishBabNumber = $chapter->englishBabNumber;
 	$englishBabName = $chapter->englishBabName;
-	$englishIntro = preg_replace("/\n+/", "<br>\n", $chapter->englishIntro);
-	$arabicIntro = preg_replace("/\n+/", "<br>\n", $chapter->arabicIntro);
+	$englishIntro = preg_replace("/\n+/", "<br>\n", (string) $chapter->englishIntro);
+	$arabicIntro = preg_replace("/\n+/", "<br>\n", (string) $chapter->arabicIntro);
 
 	echo "<a name=C$chapter->babID></a>\n";
 	if ((strcmp($collection->name, "bukhari") == 0) and ($ourBookID == 65) and (strcmp(substr($chapter->babID, -2), "00") == 0)) $chapterClassName = "surah";
