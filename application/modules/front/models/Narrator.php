@@ -126,7 +126,7 @@ class Narrator extends ActiveRecord
         return empty($tokens) ? 'all' : implode(',', $tokens);
     }
 
-    public function normalizeNarratedHadithCollectionIds($collectionParam, array $availableCollections = null)
+    public function normalizeNarratedHadithCollectionIds($collectionParam, ?array $availableCollections = null)
     {
         $ids = self::parseCollectionIds($collectionParam);
         if (empty($ids)) {
